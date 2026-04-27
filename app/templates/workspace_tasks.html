@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Tasks — Geopolitical Terminal{% endblock %}
+{% block content %}
+<div class="workspace-tasks-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.workspace') }}">Workspace</a> <span class="breadcrumb-sep">›</span> Tasks
+  </nav>
+  <h1 class="page-title">Policy tasks</h1>
+  <p class="page-intro">Assign follow-ups with optional due dates and links to articles, countries, or digests (entity type + ref).</p>
+
+  <section class="workspace-tasks-create card-like">
+    <h2>New task</h2>
+    <form method="post" action="{{ url_for('main.workspace_tasks') }}" class="workspace-task-form">
+      <input type="hidden" name="action" value="create">
+      <p>
+        <label for="task-title">Title <span class="req">*</span></label>
+        <input type="text" id="task-title" name="title" required maxlength="200" placeholder="e.g. Verify secondary sources for CN trade story">
+      </p>
+      <p>
+        <label for="task-body">Details</label>
+        <textarea id="task-body" name="body" rows="3" maxlength="8000" placeholder="Context, links, acceptance criteria…"></textarea>
+      </p>
+      <div class="workspace-task-row">
+        <p>
+          <label for="task-entity-type">Entity type</label>
+          <select id="task-entity-type" name="entity_type">
+            <option value="">— None —</option>
+            <option value="article">article</option>
+            <option value="country">country</option>
+            <option value="digest">digest</option>
+            <option value="briefing">briefing</option>
+            <option value="saved_view">saved_view</option>
+          </select>
+        </p>
+        <p>
+          <label for="task-entity-ref">Entity ref</label>
+          <input type="text" id="task-entity-ref" name="entity_ref" maxlength="64" placeholder="e.g. 42, CN, 7">
+        </p>
+        <p>
+          <label for="task-due">Due date</label>
+          <input type="date" id="task-due" name="due_date">
+        </p>
+        <p>
+          <label for="task-assignee">Assignee</label>
+          <select id="task-assignee" name="assignee_user_id">
+            <option value="">— Me only —</option>
+            {% for u in assign_users %}
+            {% if u.id != current_user.id %}
+            <option value="{{ u.id }}">{{ u.username }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </p>
+      </div>
+      <button type="submit" class="btn btn-primary">Create task</button>
+    </form>
+  </section>
+
+  <section class="workspace-tasks-open">
+    <h2>Open tasks</h2>
+    {% if tasks_open %}
+    <ul class="workspace-task-list">
+      {% for t in tasks_open %}
+      <li class="workspace-task-item">
+        <div class="workspace-task-main">
+          <strong>{{ t.title }}</strong>
+          {% if t.body %}<p class="workspace-task-body">{{ t.body }}</p>{% endif %}
+          <p class="workspace-task-meta">
+            Owner: {{ t.owner_username or t.owner_user_id }}{% if t.assignee_username %} · Assignee: {{ t.assignee_username }}{% endif %}
+            {% if t.entity_type %} · {{ t.entity_type }}: {{ t.entity_ref }}{% endif %}
+            {% if t.due_date %} · Due {{ t.due_date }}{% endif %}
+          </p>
+        </div>
+        <form method="post" action="{{ url_for('main.workspace_task_status', task_id=t.id) }}" class="inline">
+          <input type="hidden" name="status" value="done">
+          <button type="submit" class="btn btn-secondary btn-sm">Mark done</button>
+        </form>
+        <form method="post" action="{{ url_for('main.workspace_task_status', task_id=t.id) }}" class="inline">
+          <input type="hidden" name="status" value="cancelled">
+          <button type="submit" class="btn-link btn-sm">Cancel</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No open tasks.</p>
+    {% endif %}
+  </section>
+
+  <section class="workspace-tasks-all">
+    <h2>Recent (including done)</h2>
+    {% if tasks_all %}
+    <ul class="workspace-task-list workspace-task-list-compact">
+      {% for t in tasks_all[:40] %}
+      <li class="workspace-task-item {{ 'task-done' if t.status != 'open' else '' }}">
+        <span class="workspace-task-status">{{ t.status }}</span>
+        <strong>{{ t.title }}</strong>
+        <span class="workspace-task-meta-inline">{{ t.created_at[:10] if t.created_at else '' }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

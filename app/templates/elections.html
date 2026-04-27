@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Election calendars — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Election calendars</h1>
+  <p class="page-intro">
+    Upcoming and recent elections by country.
+    <a href="{{ stability_dashboard_url }}">← Political Stability</a>
+    · <a href="{{ situation_room_url }}">Situation Room</a>
+    · <a href="{{ scenario_engine_url }}">Scenario Engine</a> (assess election shock impact)
+  </p>
+
+  {% if upcoming_count is not none or next_12_count is not none or last_updated %}
+  <div class="elections-summary-strip">
+    {% if upcoming_count is not none %}{{ upcoming_count }} upcoming{% endif %}
+    {% if next_12_count is not none %} · {{ next_12_count }} in next 12 months{% endif %}
+    {% if last_updated %} · Last updated: {{ last_updated }}{% endif %}
+    {% if elections_rss_url %} · <a href="{{ elections_rss_url }}">RSS</a>{% endif %}
+    {% if elections_ical_url %} · <a href="{{ elections_ical_url }}">iCal</a>{% endif %}
+  </div>
+  {% endif %}
+
+  {% if presets %}
+  <p class="elections-presets">
+    Quick: {% for label, params in presets %}
+    <a href="{{ url_for('main.elections', **params) }}">{{ label }}</a>{% if not loop.last %} · {% endif %}
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  <form method="get" class="filter-form">
+    <label for="country_code">Country code</label>
+    <input type="text" name="country_code" id="country_code" value="{{ country_code or '' }}" placeholder="e.g. USA" maxlength="10" style="width:5em;">
+    {% if regions %}
+    <label for="region">Region</label>
+    <select name="region" id="region">
+      <option value="">All</option>
+      {% for r in regions %}
+      <option value="{{ r }}" {{ 'selected' if region == r else '' }}>{{ r }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+    <label for="date_from">From date</label>
+    <input type="month" name="date_from" id="date_from" value="{{ date_from or '' }}">
+    <label for="date_to">To date</label>
+    <input type="month" name="date_to" id="date_to" value="{{ date_to or '' }}">
+    <label for="status">Status</label>
+    <select name="status" id="status">
+      <option value="">All</option>
+      {% for s in election_statuses %}
+      <option value="{{ s }}" {{ 'selected' if status == s else '' }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+    <label for="election_type">Type</label>
+    <select name="election_type" id="election_type">
+      <option value="">All</option>
+      {% for et in election_types %}
+      <option value="{{ et }}" {{ 'selected' if election_type == et else '' }}>{{ et }}</option>
+      {% endfor %}
+    </select>
+    <label for="search">Search</label>
+    <input type="text" name="search" id="search" value="{{ search or '' }}" placeholder="Country or notes">
+    <label for="sort">Sort</label>
+    <select name="sort" id="sort">
+      <option value="" {{ 'selected' if not order_by else '' }}>Date (soonest first)</option>
+      <option value="date_desc" {{ 'selected' if order_by == 'date_desc' else '' }}>Date (latest first)</option>
+      <option value="country" {{ 'selected' if order_by == 'country' else '' }}>Country</option>
+      <option value="type" {{ 'selected' if order_by == 'type' else '' }}>Type</option>
+      <option value="status" {{ 'selected' if order_by == 'status' else '' }}>Status</option>
+      <option value="created" {{ 'selected' if order_by == 'created' else '' }}>Recently added</option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <p>
+    <a href="{{ url_for('main.election_add') }}">+ Add election</a>
+    {% if elections_export_url %} · <a href="{{ elections_export_url }}">Export CSV</a>{% endif %}
+  </p>
+
+  {% if not elections %}
+  <p class="empty-state">No elections match. <a href="{{ url_for('main.elections') }}">Clear filters</a> or <a href="{{ url_for('main.election_add') }}">add one</a>.</p>
+  {% else %}
+  <div class="stability-table-wrap">
+    <table class="stability-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Type</th>
+          <th>Date planned</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in elections %}
+        <tr>
+          <td><a href="{{ url_for('main.election_detail', election_id=e.id) }}">{{ e.country_name }}</a> ({{ e.country_code }})</td>
+          <td>{{ e.election_type }}</td>
+          <td>{{ (e.date_planned or '')[:10] }}</td>
+          <td>{{ e.status or '—' }}</td>
+          <td>{{ (e.notes or '—')[:60] }}{% if (e.notes or '')|length > 60 %}…{% endif %}</td>
+          <td><a href="{{ url_for('main.election_edit', election_id=e.id) }}">Edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if total_pages and total_pages > 1 %}
+  <nav class="pagination">
+    Page {{ page }} of {{ total_pages }} ({{ total }} total).
+    {% if query_prev %}<a href="{{ url_for('main.elections', **query_prev) }}">← Prev</a>{% endif %}
+    {% if query_next %}<a href="{{ url_for('main.elections', **query_next) }}">Next →</a>{% endif %}
+  </nav>
+  {% endif %}
+  {% endif %}
+{% endblock %}

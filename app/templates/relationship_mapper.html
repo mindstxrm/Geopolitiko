@@ -1,0 +1,879 @@
+{% extends "base.html" %}
+{% block title %}Relationship Mapper — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+<div class="mapper-page">
+  <header class="mapper-header mapper-header-compact">
+    <div class="mapper-title-row">
+      <div>
+        <h1 class="page-title">Relationship Mapper</h1>
+        <p class="page-intro mapper-subtitle">Alignment, trade dependencies, voting blocs, defense pacts, sanctions.</p>
+      </div>
+      <div class="mapper-header-links" aria-label="Related pages">
+        <a href="{{ url_for('main.integration_dashboard') }}" class="mapper-link-chip">Countries</a>
+        <a href="{{ url_for('main.diplomacy_treaties') }}" class="mapper-link-chip">Treaties</a>
+        <span id="mapper-freshness" class="mapper-freshness"></span>
+      </div>
+    </div>
+
+    <div class="mapper-control-strip" aria-label="Controls">
+      <div class="mapper-toggles" role="group" aria-label="Network type">
+        <button type="button" class="mapper-toggle active" data-mode="diplomatic" aria-pressed="true">Diplomatic</button>
+        <button type="button" class="mapper-toggle" data-mode="economic" aria-pressed="false">Economic</button>
+        <button type="button" class="mapper-toggle" data-mode="military" aria-pressed="false">Military</button>
+        <button type="button" class="mapper-toggle" data-mode="sanctions" aria-pressed="false">Sanctions</button>
+      </div>
+
+      <div class="mapper-search-wrap compact">
+        <input type="text" id="mapper-search" class="mapper-search" placeholder="Search country (name or code)" aria-label="Search country">
+      </div>
+
+      <div class="mapper-focus-wrap compact">
+        <select id="mapper-focus" class="mapper-select" aria-label="Focus on country">
+          <option value="">Focus: — None —</option>
+        </select>
+        <button type="button" id="mapper-fit-view" class="mapper-btn">Fit</button>
+        <button type="button" id="mapper-reset-layout" class="mapper-btn">Reset</button>
+      </div>
+
+      <details class="mapper-advanced">
+        <summary class="mapper-btn mapper-btn-secondary">Controls ▾</summary>
+        <div class="mapper-advanced-body">
+          <div class="mapper-filters">
+            <label for="mapper-region">Region</label>
+            <select id="mapper-region" class="mapper-select" aria-label="Filter by region">
+              <option value="">All</option>
+              <option value="East Asia">East Asia</option>
+              <option value="South Asia">South Asia</option>
+              <option value="Southeast Asia">Southeast Asia</option>
+              <option value="Central Asia">Central Asia</option>
+              <option value="Middle East">Middle East</option>
+              <option value="Africa">Africa</option>
+              <option value="Caribbean">Caribbean</option>
+              <option value="Latin America">Latin America</option>
+              <option value="Europe">Europe</option>
+              <option value="North America">North America</option>
+              <option value="Oceania">Oceania</option>
+            </select>
+            <span id="mapper-min-weight-wrap" class="mapper-min-weight-wrap">
+              <label for="mapper-min-weight">Min alignment</label>
+              <select id="mapper-min-weight" class="mapper-select" aria-label="Minimum alignment percent">
+                <option value="">All</option>
+                <option value="0.5">≥50%</option>
+                <option value="0.7">≥70%</option>
+                <option value="0.8">≥80%</option>
+                <option value="0.9">≥90%</option>
+              </select>
+            </span>
+            <span id="mapper-un-window-wrap" class="mapper-un-wrap" style="display:none">
+              <label for="mapper-un-window">UN window</label>
+              <select id="mapper-un-window" class="mapper-select" aria-label="UN voting time window">
+                <option value="">All-time</option>
+                <option value="12m">12 months</option>
+                <option value="36m">36 months</option>
+              </select>
+            </span>
+            <span id="mapper-un-issue-wrap" class="mapper-un-wrap" style="display:none">
+              <label for="mapper-un-issue">By issue</label>
+              <select id="mapper-un-issue" class="mapper-select" aria-label="UN voting issue filter">
+                <option value="">All issues</option>
+                <option value="human_rights">Human rights</option>
+                <option value="israel_palestine">Israel/Palestine</option>
+                <option value="nuclear">Nuclear</option>
+                <option value="climate">Climate</option>
+                <option value="trade">Trade</option>
+                <option value="security">Security</option>
+                <option value="ukraine">Ukraine</option>
+                <option value="development">Development</option>
+              </select>
+            </span>
+
+            <button type="button" id="mapper-zoom-focus" class="mapper-btn">Zoom to focus</button>
+            <button type="button" id="mapper-export-svg" class="mapper-btn">Export SVG</button>
+            <button type="button" id="mapper-export-png" class="mapper-btn">Export PNG</button>
+            <button type="button" id="mapper-copy-summary" class="mapper-btn">Copy summary</button>
+            <label class="mapper-check-label"><input type="checkbox" id="mapper-show-labels" class="mapper-check"> Show labels</label>
+            <label class="mapper-check-label"><input type="checkbox" id="mapper-simplify" class="mapper-check"> Simplify</label>
+            <label class="mapper-check-label">Label density
+              <select id="mapper-label-density" class="mapper-select" aria-label="Label density">
+                <option value="low">Low</option>
+                <option value="med" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <button type="button" id="mapper-cluster-region" class="mapper-btn">Cluster by region</button>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <p id="mapper-summary" class="mapper-summary compact"></p>
+  </header>
+
+  <div class="mapper-workspace">
+    <div class="mapper-canvas">
+      <div id="mapper-graph" class="mapper-graph" role="img" aria-label="Relationship network: nodes are countries, links are alliances or sanctions. Drag nodes; zoom with scroll."></div>
+
+      <div class="mapper-overlay mapper-overlay-legend" aria-hidden="true">
+        <div class="mapper-overlay-title">Legend</div>
+        <div id="mapper-legend-text" class="mapper-legend">Diplomatic: links = UN voting alignment (thickness = score). Node size = proxy.</div>
+        <details class="mapper-overlay-details">
+          <summary>Region colors</summary>
+          <div class="mapper-bloc-legend" aria-label="Region colours">
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#3b82f6"></span> East Asia</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#8b5cf6"></span> South Asia</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#06b6d4"></span> Southeast Asia</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#f59e0b"></span> Middle East</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#22c55e"></span> Africa</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#ef4444"></span> Latin America</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#6366f1"></span> Europe</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#ec4899"></span> North America</span>
+            <span class="mapper-bloc-item"><span class="mapper-bloc-swatch" style="background:#6b7280"></span> Other</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="mapper-overlay mapper-overlay-hud" aria-hidden="true">
+        <div class="mapper-overlay-title">Stats</div>
+        <div id="mapper-stats" class="mapper-stats"></div>
+      </div>
+    </div>
+
+    <aside class="mapper-inspector" id="mapper-inspector" aria-label="Inspector">
+      <div class="mapper-inspector-header">
+        <div>
+          <div class="mapper-inspector-title" id="mapper-inspector-title">Inspector</div>
+          <div class="mapper-inspector-sub" id="mapper-inspector-sub">Click a node or link</div>
+        </div>
+        <button type="button" class="mapper-inspector-close" id="mapper-inspector-close" aria-label="Close inspector">×</button>
+      </div>
+      <div class="mapper-inspector-tabs" role="tablist" aria-label="Inspector tabs">
+        <button type="button" class="mapper-inspector-tab active" data-tab="details" role="tab" aria-selected="true">Details</button>
+        <button type="button" class="mapper-inspector-tab" data-tab="compare" role="tab" aria-selected="false">Compare</button>
+        <button type="button" class="mapper-inspector-tab" data-tab="stats" role="tab" aria-selected="false">Stats</button>
+      </div>
+      <div class="mapper-inspector-body">
+        <div class="mapper-inspector-pane active" data-pane="details" role="tabpanel">
+          <div id="mapper-edge-panel" class="mapper-edge-panel" aria-live="polite" hidden></div>
+          <div class="mapper-inspector-actions">
+            <a href="#" id="mapper-open-country" class="mapper-btn mapper-btn-primary" hidden>Open country sheet →</a>
+          </div>
+        </div>
+        <div class="mapper-inspector-pane" data-pane="compare" role="tabpanel">
+          <div class="mapper-bilateral">
+            <h3>Compare two countries</h3>
+            <select id="mapper-compare-a" class="mapper-select" aria-label="Country A"><option value="">— Select —</option></select>
+            <select id="mapper-compare-b" class="mapper-select" aria-label="Country B"><option value="">— Select —</option></select>
+            <button type="button" id="mapper-show-connection" class="mapper-btn">Show connection</button>
+            <span id="mapper-connection-result" class="mapper-connection-result" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="mapper-inspector-pane" data-pane="stats" role="tabpanel">
+          <p class="mapper-meta compact">
+            Drag nodes; zoom with scroll. Data sources: UN voting alignment, treaties, sanctions registry.
+          </p>
+          <div id="mapper-stats-panel" class="mapper-stats-panel"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function() {
+  var graphEl = document.getElementById('mapper-graph');
+  var apiBase = {{ url_for('api.api_relationship_graph') | tojson }};
+  var treatyDetailBase = {{ url_for('main.diplomacy_treaty_detail', treaty_id=0) | tojson }}.replace(/0$/, '');
+  var currentMode = 'diplomatic';
+  var currentData = null;
+  var simulation = null;
+  var svg = null;
+  var g = null;
+  var zoomBehavior = null;
+  var nodeById = {};
+  var linkElements = null;
+  var nodeElements = null;
+  var labelElements = null;
+  var focusCode = null;
+  var highlightPath = null;
+  var showLabels = false;
+  var labelDensity = 'med';
+  var hoveredCode = null;
+  var LABEL_THRESHOLD = 80;
+
+  function escapeHtml(str) {
+    if (str == null) return '';
+    var d = document.createElement('div');
+    d.textContent = String(str);
+    return d.innerHTML;
+  }
+
+  function openInspector(tab) {
+    var el = document.getElementById('mapper-inspector');
+    if (el) el.classList.add('open');
+    if (tab) activateInspectorTab(tab);
+  }
+
+  function closeInspector() {
+    var el = document.getElementById('mapper-inspector');
+    if (el) el.classList.remove('open');
+  }
+
+  function setInspectorTitle(t) {
+    var el = document.getElementById('mapper-inspector-title');
+    if (el) el.textContent = t || 'Inspector';
+  }
+
+  function setInspectorSub(t) {
+    var el = document.getElementById('mapper-inspector-sub');
+    if (el) el.textContent = t || '';
+  }
+
+  function showOpenCountry(code) {
+    var a = document.getElementById('mapper-open-country');
+    if (!a || !code) return;
+    a.href = '/country/' + encodeURIComponent(code);
+    a.removeAttribute('hidden');
+  }
+
+  function hideOpenCountry() {
+    var a = document.getElementById('mapper-open-country');
+    if (a) a.setAttribute('hidden', '');
+  }
+
+  function activateInspectorTab(key) {
+    document.querySelectorAll('.mapper-inspector-tab').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mapper-inspector-pane').forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-pane') === key);
+    });
+  }
+
+  function largestComponent(nodes, edges) {
+    var adj = {};
+    nodes.forEach(function(n) { adj[n.id] = []; });
+    (edges || []).forEach(function(e) {
+      var a = e.source.id || e.source, b = e.target.id || e.target;
+      if (!adj[a]) adj[a] = [];
+      if (!adj[b]) adj[b] = [];
+      adj[a].push(b); adj[b].push(a);
+    });
+    var seen = new Set();
+    var best = [];
+    nodes.forEach(function(n) {
+      if (seen.has(n.id)) return;
+      var q = [n.id]; seen.add(n.id);
+      var comp = [];
+      while (q.length) {
+        var x = q.pop();
+        comp.push(x);
+        (adj[x] || []).forEach(function(y) {
+          if (seen.has(y)) return;
+          seen.add(y);
+          q.push(y);
+        });
+      }
+      if (comp.length > best.length) best = comp;
+    });
+    var keep = new Set(best);
+    return {
+      nodes: nodes.filter(function(n) { return keep.has(n.id); }),
+      edges: (edges || []).filter(function(e) {
+        var a = e.source.id || e.source, b = e.target.id || e.target;
+        return keep.has(a) && keep.has(b);
+      })
+    };
+  }
+  var BLOC_COLORS = {
+    "East Asia": "#3b82f6", "South Asia": "#8b5cf6", "Southeast Asia": "#06b6d4", "Central Asia": "#06b6d4",
+    "Middle East": "#f59e0b", "Africa": "#22c55e", "Latin America": "#ef4444", "Europe": "#6366f1",
+    "North America": "#ec4899", "Oceania": "#6b7280", "Caribbean": "#6b7280", "Other": "#6b7280"
+  };
+  var LEGEND = {
+    diplomatic: "Diplomatic: links = UN voting alignment (thickness = score). Node size = proxy.",
+    economic: "Economic: links = trade/investment treaties. Node size = trade flow % GDP.",
+    military: "Military: links = defense pacts. Node size = defense spending.",
+    sanctions: "Sanctions: links = imposing → target. Node size = proxy."
+  };
+  var EMPTY_MSG = {
+    diplomatic: "No UN voting alignment data. Run alignment computation or add UN votes.",
+    economic: "No trade or investment treaties on file. <a href=\"" + {{ url_for('main.diplomacy_treaties') | tojson }} + "\">Add treaties</a> in Diplomacy.",
+    military: "No defense pacts on file. <a href=\"" + {{ url_for('main.diplomacy_treaties') | tojson }} + "\">Add treaties</a> in Diplomacy.",
+    sanctions: "No sanctions links. Add data in Sanctions registry."
+  };
+
+  function buildUrl(mode, region, minWeight, minDegree, unWindow, unIssue) {
+    var q = "mode=" + encodeURIComponent(mode);
+    if (region) q += "&region=" + encodeURIComponent(region);
+    if (minWeight != null && minWeight !== "") q += "&min_weight=" + encodeURIComponent(minWeight);
+    if (minDegree != null && minDegree >= 1) q += "&min_degree=" + encodeURIComponent(minDegree);
+    if (mode === "diplomatic" && unWindow) q += "&un_window=" + encodeURIComponent(unWindow);
+    if (mode === "diplomatic" && unIssue) q += "&un_issue=" + encodeURIComponent(unIssue);
+    return apiBase + "?" + q;
+  }
+
+  function fetchGraph(mode) {
+    var region = document.getElementById("mapper-region") && document.getElementById("mapper-region").value || "";
+    var minW = document.getElementById("mapper-min-weight") && document.getElementById("mapper-min-weight").value || "";
+    var simplifyEl = document.getElementById("mapper-simplify");
+    var simplifying = !!(simplifyEl && simplifyEl.checked);
+    if (simplifying && (!minW || minW === "")) minW = "0.7";
+    var minDegree = simplifying ? 2 : null;
+    var unWindow = document.getElementById("mapper-un-window") && document.getElementById("mapper-un-window").value || "";
+    var unIssue = document.getElementById("mapper-un-issue") && document.getElementById("mapper-un-issue").value || "";
+    return fetch(buildUrl(mode, region, minW, minDegree, unWindow, unIssue)).then(function(r) { return r.json(); });
+  }
+
+  function updatePermalink() {
+    if (typeof history.replaceState === 'undefined') return;
+    var params = new URLSearchParams();
+    params.set('mode', currentMode);
+    var r = document.getElementById("mapper-region"); if (r && r.value) params.set('region', r.value);
+    var m = document.getElementById("mapper-min-weight"); if (m && m.value) params.set('min_weight', m.value);
+    var f = document.getElementById("mapper-focus"); if (f && f.value) params.set('focus', f.value);
+    var a = document.getElementById("mapper-compare-a"); if (a && a.value) params.set('compare_a', a.value);
+    var b = document.getElementById("mapper-compare-b"); if (b && b.value) params.set('compare_b', b.value);
+    var s = document.getElementById("mapper-simplify"); if (s && s.checked) params.set('simplify', '1');
+    var q = params.toString();
+    history.replaceState(null, '', (q ? '?' + q : window.location.pathname));
+  }
+
+  function applyUrlParams() {
+    var params = new URLSearchParams(window.location.search);
+    var mode = params.get('mode'); if (mode && ['diplomatic','economic','military','sanctions'].indexOf(mode) !== -1) currentMode = mode;
+    var region = params.get('region'); if (region) { var el = document.getElementById("mapper-region"); if (el) el.value = region; }
+    var minW = params.get('min_weight'); if (minW) { var el = document.getElementById("mapper-min-weight"); if (el) el.value = minW; }
+    var unW = params.get('un_window'); if (unW) { var el = document.getElementById("mapper-un-window"); if (el) el.value = unW; }
+    var unI = params.get('un_issue'); if (unI) { var el = document.getElementById("mapper-un-issue"); if (el) el.value = unI; }
+    var focus = params.get('focus'); if (focus) { var el = document.getElementById("mapper-focus"); if (el) { el.value = focus; focusCode = focus; } }
+    var compareA = params.get('compare_a'); if (compareA) { var el = document.getElementById("mapper-compare-a"); if (el) el.value = compareA; }
+    var compareB = params.get('compare_b'); if (compareB) { var el = document.getElementById("mapper-compare-b"); if (el) el.value = compareB; }
+    var simplify = params.get('simplify'); if (simplify === '1') { var el = document.getElementById("mapper-simplify"); if (el) el.checked = true; }
+  }
+
+  function applyFocusAndPath(nodes, edges) {
+    if (!nodeElements || !linkElements) return;
+    var focusSet = null;
+    if (focusCode) {
+      focusSet = new Set([focusCode]);
+      edges.forEach(function(e) {
+        var a = e.source.id || e.source; var b = e.target.id || e.target;
+        if (a === focusCode || b === focusCode) { focusSet.add(a); focusSet.add(b); }
+      });
+    }
+    var pathSet = null;
+    if (highlightPath && highlightPath.length) {
+      pathSet = new Set();
+      highlightPath.forEach(function(e) {
+        pathSet.add(e.source.id || e.source);
+        pathSet.add(e.target.id || e.target);
+      });
+    }
+    nodeElements.attr("opacity", function(d) {
+      if (pathSet && pathSet.size) return pathSet.has(d.id) ? 1 : 0.25;
+      if (focusSet && focusSet.size) return focusSet.has(d.id) ? 1 : 0.35;
+      return 1;
+    }).attr("stroke-width", function(d) {
+      if (pathSet && pathSet.has(d.id)) return 3;
+      if (focusSet && focusSet.has(d.id)) return 2.5;
+      return 1.5;
+    });
+    linkElements.attr("stroke-opacity", function(d) {
+      if (pathSet && pathSet.size) {
+        var a = d.source.id || d.source; var b = d.target.id || d.target;
+        var on = highlightPath.some(function(p) { return (p.source.id || p.source) === a && (p.target.id || p.target) === b; });
+        return on ? 1 : 0.15;
+      }
+      if (focusSet && focusSet.size) {
+        var a = d.source.id || d.source; var b = d.target.id || d.target;
+        return (focusSet.has(a) && focusSet.has(b)) ? 0.9 : 0.2;
+      }
+      return 0.6;
+    }).attr("stroke-width", function(d) {
+      if (pathSet && pathSet.size) {
+        var a = d.source.id || d.source; var b = d.target.id || d.target;
+        var on = highlightPath.some(function(p) { return (p.source.id || p.source) === a && (p.target.id || p.target) === b; });
+        return on ? 4 : 1;
+      }
+      return Math.max(0.5, Math.min(4, (d.weight || 1) * 0.8));
+    });
+  }
+
+  function draw(data) {
+    if (!graphEl || typeof d3 === 'undefined') return;
+    d3.select(graphEl).selectAll('*').remove();
+    currentData = data;
+    if (!data.nodes || !data.nodes.length) {
+      var msg = (EMPTY_MSG[data.mode] || EMPTY_MSG.diplomatic);
+      graphEl.innerHTML = '<p class="empty-state">' + msg + '</p>';
+      return;
+    }
+
+    var nodes = data.nodes.map(function(d) { return Object.assign({}, d); });
+    nodeById = {};
+    nodes.forEach(function(n) { nodeById[n.id] = n; });
+    var degree = {};
+    nodes.forEach(function(n) { degree[n.id] = 0; });
+    var edges = (data.edges || []).map(function(d) {
+      var s = nodeById[d.source] || nodeById[d.source && d.source.toUpperCase && d.source.toUpperCase()];
+      var t = nodeById[d.target] || nodeById[d.target && d.target.toUpperCase && d.target.toUpperCase()];
+      if (!s || !t) return null;
+      degree[s.id]++; degree[t.id]++;
+      return {
+        source: s, target: t, weight: d.weight || 1, label: d.label || "",
+        treaty_id: d.treaty_id || null, directed: d.directed || false
+      };
+    }).filter(Boolean);
+
+    var simplifyEl = document.getElementById("mapper-simplify");
+    if (simplifyEl && simplifyEl.checked) {
+      var keep = largestComponent(nodes, edges);
+      nodes = keep.nodes;
+      edges = keep.edges;
+      nodeById = {};
+      nodes.forEach(function(n) { nodeById[n.id] = n; });
+    }
+
+    var width = graphEl.clientWidth || 900;
+    var height = Math.max(400, (graphEl.clientHeight || 500));
+
+    svg = d3.select(graphEl).append('svg').attr('width', width).attr('height', height).attr('viewBox', [0, 0, width, height]);
+    g = svg.append('g');
+
+    var defs = svg.append('defs');
+    defs.append('marker').attr('id', 'arrow-sanctions').attr('viewBox', '0 -5 10 10').attr('refX', 8).attr('refY', 0).attr('markerWidth', 6).attr('markerHeight', 6).attr('orient', 'auto')
+      .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#272b33');
+
+    var colorScale = currentMode === 'diplomatic' ? d3.scaleLinear().domain([0.5, 0.7, 0.9]).range(['#ef4444', '#eab308', '#22c55e']).clamp(true) : null;
+
+    linkElements = g.append('g').attr('class', 'links').selectAll('line').data(edges).join('line')
+      .attr('stroke', function(d) { return colorScale ? colorScale(d.weight) : '#272b33'; })
+      .attr('stroke-opacity', 0.6).attr('stroke-width', function(d) { return Math.max(0.5, Math.min(4, (d.weight || 1) * 0.8)); })
+      .attr('marker-end', function(d) { return (currentMode === 'sanctions' && d.directed) ? 'url(#arrow-sanctions)' : null; })
+      .attr('title', function(d) { return d.label || ''; })
+      .style('cursor', 'pointer')
+      .on('click', function(ev, d) {
+        ev.stopPropagation();
+        openInspector('details');
+        var panel = document.getElementById('mapper-edge-panel');
+        if (!panel) return;
+        var label = (d.label || '').trim();
+        var link = '';
+        if (d.treaty_id && treatyDetailBase) link = '<a href="' + treatyDetailBase + d.treaty_id + '">View treaty</a>';
+        panel.innerHTML = (label ? '<strong>' + escapeHtml(label) + '</strong><br>' : '') + link +
+          '<div class="mapper-edge-meta">' + escapeHtml((d.source.label || d.source.id) + ' \u2192 ' + (d.target.label || d.target.id)) + '</div>';
+        panel.removeAttribute('hidden');
+        setInspectorTitle('Link');
+        setInspectorSub((currentMode || '').toUpperCase());
+        hideOpenCountry();
+      });
+
+    nodeElements = g.append('g').attr('class', 'nodes').selectAll('circle').data(nodes).join('circle')
+      .attr('r', function(d) { return Math.max(3, Math.min(20, (d.size || 2) * 0.5)); })
+      .attr('fill', function(d) { return BLOC_COLORS[d.bloc] || BLOC_COLORS.Other; })
+      .attr('stroke', '#0c0e12').attr('stroke-width', 1.5).style('cursor', 'pointer')
+      .attr('title', function(d) { return d.tooltip || (d.label || d.id); })
+      .call(d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded));
+
+    labelElements = g.append('g').attr('class', 'labels').selectAll('text').data(nodes).join('text')
+      .text(function(d) { return d.label || d.id; }).attr('font-size', 10).attr('fill', '#e6e9ef').attr('dx', 8).attr('dy', 4).style('pointer-events', 'none');
+
+    function labelVisible(d) {
+      if (!showLabels) return false;
+      if (labelDensity === 'high') return true;
+      if (nodes.length <= LABEL_THRESHOLD) return true;
+      var code = d.id;
+      if (hoveredCode && code === hoveredCode) return true;
+      if (focusCode && (code === focusCode || (highlightPath && highlightPath.some(function(p) { var a = p.source.id || p.source; var b = p.target.id || p.target; return a === code || b === code; })))) return true;
+      if (labelDensity === 'low') return (degree[code] || 0) >= 4;
+      return (degree[code] || 0) >= 2;
+    }
+
+    simulation = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(edges).id(function(d) { return d.id; }).distance(80))
+      .force('charge', d3.forceManyBody().strength(-120))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .on('tick', ticked);
+
+    function ticked() {
+      linkElements.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; }).attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
+      nodeElements.attr('cx', function(d) { return d.x; }).attr('cy', function(d) { return d.y; });
+      labelElements.attr('x', function(d) { return d.x; }).attr('y', function(d) { return d.y; }).style('visibility', function(d) { return labelVisible(d) ? 'visible' : 'hidden'; });
+      applyFocusAndPath(nodes, edges);
+    }
+
+    function dragStarted(e) { if (!e.active) simulation.alphaTarget(0.3).restart(); e.subject.fx = e.subject.x; e.subject.fy = e.subject.y; }
+    function dragged(e) { e.subject.fx = e.x; e.subject.fy = e.y; }
+    function dragEnded(e) { if (!e.active) simulation.alphaTarget(0); e.subject.fx = null; e.subject.fy = null; }
+
+    nodeElements
+      .on('mouseover', function(ev, d) { hoveredCode = d.id; if (simulation) simulation.alpha(0.02).restart(); })
+      .on('mouseout', function() { hoveredCode = null; if (simulation) simulation.alpha(0.02).restart(); })
+      .on('click', function(ev, d) {
+        ev.stopPropagation();
+        openInspector('details');
+        setInspectorTitle(d.label || d.id);
+        setInspectorSub(d.bloc || '—');
+        var panel = document.getElementById('mapper-edge-panel');
+        if (panel) {
+          panel.innerHTML = '<strong>' + escapeHtml(d.label || d.id) + '</strong><br>' +
+            '<span class="muted">' + escapeHtml(d.id) + '</span>' +
+            (d.tooltip ? '<div class="mapper-node-tooltip">' + escapeHtml(d.tooltip) + '</div>' : '');
+          panel.removeAttribute('hidden');
+        }
+        showOpenCountry(d.id);
+        if (ev && ev.altKey && d.id) window.location.href = '/country/' + d.id;
+      });
+
+    zoomBehavior = d3.zoom().scaleExtent([0.2, 4]).on('zoom', function(ev) { g.attr('transform', ev.transform); });
+    svg.call(zoomBehavior);
+
+    applyFocusAndPath(nodes, edges);
+    populateDropdowns(data.nodes);
+    var nc = (data.node_count != null) ? data.node_count : (data.nodes && data.nodes.length);
+    var ec = (data.edge_count != null) ? data.edge_count : (data.edges && data.edges.length);
+    var sumEl = document.getElementById('mapper-summary');
+    if (sumEl) sumEl.textContent = (nc != null && ec != null) ? nc + ' countries, ' + ec + ' links.' : '';
+    updateStats(nodes, edges);
+    if (data.updated_at) {
+      var el = document.getElementById('mapper-freshness');
+      if (el) el.textContent = ' Data as of ' + (data.updated_at || '').slice(0, 10) + '.';
+    }
+    updatePermalink();
+  }
+
+  function updateStats(nodes, edges) {
+    var panel = document.getElementById('mapper-stats');
+    if (!panel || !nodes || !nodes.length) return;
+    var degree = {};
+    nodes.forEach(function(n) { degree[n.id] = 0; });
+    (edges || []).forEach(function(e) {
+      var a = e.source.id || e.source; var b = e.target.id || e.target;
+      degree[a] = (degree[a] || 0) + 1; degree[b] = (degree[b] || 0) + 1;
+    });
+    var sorted = nodes.slice().sort(function(a, b) { return (degree[b.id] || 0) - (degree[a.id] || 0); });
+    var top5 = sorted.slice(0, 5).map(function(n) { return (n.label || n.id) + ' (' + (degree[n.id] || 0) + ')'; }).join(', ');
+    var text = 'Most connected: ' + (top5 || '—');
+    panel.textContent = text;
+    panel.style.display = top5 ? '' : 'none';
+    var panel2 = document.getElementById('mapper-stats-panel');
+    if (panel2) panel2.textContent = text;
+  }
+
+  function populateDropdowns(nodes) {
+    var opts = nodes.slice().sort(function(a,b) { return (a.label || a.id).localeCompare(b.label || b.id); });
+    var focusSel = document.getElementById('mapper-focus');
+    var aSel = document.getElementById('mapper-compare-a');
+    var bSel = document.getElementById('mapper-compare-b');
+    function fill(sel) {
+      if (!sel) return;
+      var cur = sel.value;
+      sel.innerHTML = sel.id === 'mapper-focus' ? '<option value="">— None —</option>' : '<option value="">— Select —</option>';
+      opts.forEach(function(n) {
+        var o = document.createElement('option');
+        o.value = n.id;
+        o.textContent = (n.label || n.id) + ' (' + n.id + ')';
+        sel.appendChild(o);
+      });
+      if (cur && sel.querySelector('option[value="' + cur + '"]')) sel.value = cur;
+    }
+    fill(focusSel); fill(aSel); fill(bSel);
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mapper-toggle').forEach(function(b) {
+      var on = b.getAttribute('data-mode') === mode;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
+    var legendEl = document.getElementById('mapper-legend-text');
+    if (legendEl) legendEl.textContent = LEGEND[mode] || LEGEND.diplomatic;
+    var minWrap = document.getElementById('mapper-min-weight-wrap');
+    if (minWrap) minWrap.style.display = mode === 'diplomatic' ? '' : 'none';
+
+    graphEl.innerHTML = '<p class="mapper-loading">Loading…</p>';
+    graphEl.classList.add('mapper-loading-active');
+    fetchGraph(mode).then(function(data) {
+      graphEl.classList.remove('mapper-loading-active');
+      graphEl.innerHTML = '';
+      focusCode = null;
+      highlightPath = null;
+      draw(data);
+    }).catch(function() {
+      graphEl.classList.remove('mapper-loading-active');
+      graphEl.innerHTML = '<p class="empty-state">Failed to load graph data.</p>';
+    });
+  }
+
+  function refreshGraph() {
+    graphEl.innerHTML = '<p class="mapper-loading">Loading…</p>';
+    graphEl.classList.add('mapper-loading-active');
+    fetchGraph(currentMode).then(function(data) {
+      graphEl.classList.remove('mapper-loading-active');
+      graphEl.innerHTML = '';
+      focusCode = document.getElementById('mapper-focus') && document.getElementById('mapper-focus').value || null;
+      if (!focusCode) highlightPath = null;
+      draw(data);
+    }).catch(function() {
+      graphEl.classList.remove('mapper-loading-active');
+      graphEl.innerHTML = '<p class="empty-state">Failed to load graph data. <button type="button" class="mapper-btn mapper-retry-btn">Retry</button></p>';
+      var retryBtn = graphEl.querySelector('.mapper-retry-btn');
+      if (retryBtn) retryBtn.addEventListener('click', function() { refreshGraph(); });
+    });
+  }
+
+  document.querySelectorAll('.mapper-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() { setMode(btn.getAttribute('data-mode')); });
+  });
+
+  var regionEl = document.getElementById('mapper-region');
+  if (regionEl) regionEl.addEventListener('change', function() { refreshGraph(); });
+  var minEl = document.getElementById('mapper-min-weight');
+  if (minEl) minEl.addEventListener('change', function() { refreshGraph(); });
+  var unWindowEl = document.getElementById('mapper-un-window');
+  if (unWindowEl) unWindowEl.addEventListener('change', function() { refreshGraph(); });
+  var unIssueEl = document.getElementById('mapper-un-issue');
+  if (unIssueEl) unIssueEl.addEventListener('change', function() { refreshGraph(); });
+
+  var focusEl = document.getElementById('mapper-focus');
+  if (focusEl) focusEl.addEventListener('change', function() {
+    focusCode = this.value || null;
+    highlightPath = null;
+    if (connResult) connResult.textContent = '';
+    if (currentData && currentData.nodes && currentData.edges) {
+      var edges = (currentData.edges || []).map(function(d) {
+        var s = nodeById[d.source] || nodeById[d.source && d.source.toUpperCase && d.source.toUpperCase()];
+        var t = nodeById[d.target] || nodeById[d.target && d.target.toUpperCase && d.target.toUpperCase()];
+        return s && t ? { source: s, target: t, weight: d.weight, label: d.label } : null;
+      }).filter(Boolean);
+      applyFocusAndPath(currentData.nodes, edges);
+    }
+  });
+
+  var resetBtn = document.getElementById('mapper-reset-layout');
+  if (resetBtn) resetBtn.addEventListener('click', function() {
+    if (!simulation || !currentData || !currentData.nodes) return;
+    currentData.nodes.forEach(function(n) { n.fx = null; n.fy = null; });
+    simulation.alpha(1).restart();
+  });
+
+  var exportBtn = document.getElementById('mapper-export-svg');
+  if (exportBtn) exportBtn.addEventListener('click', function() {
+    if (!svg || !graphEl) return;
+    var clone = graphEl.querySelector('svg');
+    if (!clone) return;
+    var s = new XMLSerializer().serializeToString(clone);
+    var blob = new Blob([s], { type: 'image/svg+xml' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'relationship-mapper-' + currentMode + '.svg';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  function findPath(a, b, edges) {
+    var adj = {};
+    edges.forEach(function(e) {
+      var s = e.source.id || e.source, t = e.target.id || e.target;
+      if (!adj[s]) adj[s] = []; adj[s].push({ to: t, edge: e });
+      if (!adj[t]) adj[t] = []; adj[t].push({ to: s, edge: e });
+    });
+    var q = [{ code: a, path: [] }], seen = new Set([a]);
+    while (q.length) {
+      var cur = q.shift();
+      if (cur.code === b) return cur.path;
+      (adj[cur.code] || []).forEach(function(x) {
+        if (seen.has(x.to)) return;
+        seen.add(x.to);
+        q.push({ code: x.to, path: cur.path.concat([x.edge]) });
+      });
+    }
+    return null;
+  }
+
+  var showConnBtn = document.getElementById('mapper-show-connection');
+  var connResult = document.getElementById('mapper-connection-result');
+  if (showConnBtn && connResult) showConnBtn.addEventListener('click', function() {
+    var a = document.getElementById('mapper-compare-a') && document.getElementById('mapper-compare-a').value;
+    var b = document.getElementById('mapper-compare-b') && document.getElementById('mapper-compare-b').value;
+    connResult.textContent = '';
+    highlightPath = null;
+    if (!a || !b || a === b) { connResult.textContent = 'Select two different countries.'; applyFocusAndPath(currentData && currentData.nodes || [], []); return; }
+    if (!currentData || !currentData.edges || !currentData.nodes.length) { connResult.textContent = 'Load graph first.'; return; }
+    var edges = (currentData.edges || []).map(function(d) {
+      var s = nodeById[d.source] || nodeById[d.source && d.source.toUpperCase && d.source.toUpperCase()];
+      var t = nodeById[d.target] || nodeById[d.target && d.target.toUpperCase && d.target.toUpperCase()];
+      return s && t ? { source: s, target: t, weight: d.weight, label: d.label } : null;
+    }).filter(Boolean);
+    var path = findPath(a, b, edges);
+    if (path && path.length) {
+      highlightPath = path;
+      var pathNodes = [a];
+      path.forEach(function(edge) {
+        var s = edge.source.id || edge.source, t = edge.target.id || edge.target;
+        pathNodes.push(pathNodes[pathNodes.length - 1] === s ? t : s);
+      });
+      var pathLabels = pathNodes.map(function(id) { var n = nodeById[id]; return n ? (n.label || id) : id; });
+      connResult.textContent = path.length + ' step(s): ' + pathLabels.join(' \u2192 ');
+      connResult.innerHTML = path.length + ' step(s): ' + pathLabels.join(' \u2192 ');
+    } else {
+      connResult.textContent = 'No direct path between these countries.';
+      connResult.innerHTML = 'No direct path between these countries.';
+    }
+    applyFocusAndPath(currentData.nodes, edges);
+  });
+
+  var fitBtn = document.getElementById('mapper-fit-view');
+  if (fitBtn) fitBtn.addEventListener('click', function() {
+    if (!svg || !g || !currentData || !currentData.nodes || !currentData.nodes.length) return;
+    var bounds = g.node().getBBox();
+    var w = graphEl.clientWidth || 900, h = Math.max(400, graphEl.clientHeight || 500);
+    var pad = 60;
+    var scale = Math.min((w - pad) / bounds.width, (h - pad) / bounds.height, 2) || 0.5;
+    var cx = bounds.x + bounds.width / 2, cy = bounds.y + bounds.height / 2;
+    var tx = w / 2 - cx * scale, ty = h / 2 - cy * scale;
+    if (zoomBehavior) svg.transition().duration(400).call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+
+  var zoomFocusBtn = document.getElementById('mapper-zoom-focus');
+  if (zoomFocusBtn) zoomFocusBtn.addEventListener('click', function() {
+    if (!focusCode || !nodeById[focusCode] || !svg || !zoomBehavior) return;
+    var n = nodeById[focusCode];
+    var x = n.x, y = n.y;
+    var w = graphEl.clientWidth || 900, h = Math.max(400, graphEl.clientHeight || 500);
+    var scale = 1.8;
+    var tx = w / 2 - x * scale, ty = h / 2 - y * scale;
+    if (zoomBehavior) svg.transition().duration(400).call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+
+  var showLabelsEl = document.getElementById('mapper-show-labels');
+  if (showLabelsEl) {
+    showLabelsEl.checked = false;
+    showLabelsEl.addEventListener('change', function() { showLabels = this.checked; if (simulation) simulation.alpha(0.1).restart(); });
+  }
+
+  var labelDensityEl = document.getElementById('mapper-label-density');
+  if (labelDensityEl) labelDensityEl.addEventListener('change', function() { labelDensity = this.value || 'med'; if (simulation) simulation.alpha(0.05).restart(); });
+
+  var simplifyEl = document.getElementById('mapper-simplify');
+  if (simplifyEl) simplifyEl.addEventListener('change', function() { refreshGraph(); });
+
+  document.querySelectorAll('.mapper-inspector-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() { openInspector(btn.getAttribute('data-tab') || 'details'); });
+  });
+  var closeBtn = document.getElementById('mapper-inspector-close');
+  if (closeBtn) closeBtn.addEventListener('click', function() { closeInspector(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeInspector();
+  });
+
+  var searchEl = document.getElementById('mapper-search');
+  if (searchEl) searchEl.addEventListener('input', function() {
+    var q = (this.value || '').trim().toLowerCase();
+    if (!q) return;
+    var match = null;
+    if (currentData && currentData.nodes) {
+      for (var i = 0; i < currentData.nodes.length; i++) {
+        var n = currentData.nodes[i];
+        if ((n.label && n.label.toLowerCase().indexOf(q) !== -1) || (n.id && n.id.toLowerCase().indexOf(q) !== -1)) { match = n; break; }
+      }
+    }
+    if (match && zoomBehavior && svg) {
+      var x = match.x, y = match.y;
+      if (x == null) return;
+      var w = graphEl.clientWidth || 900, h = Math.max(400, graphEl.clientHeight || 500);
+      var scale = 2;
+      var tx = w / 2 - x * scale, ty = h / 2 - y * scale;
+      svg.transition().duration(300).call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+      var focusSel = document.getElementById('mapper-focus'); if (focusSel) focusSel.value = match.id;
+      focusCode = match.id; highlightPath = null; if (connResult) connResult.textContent = '';
+      if (currentData && currentData.nodes && currentData.edges) {
+        var edges = (currentData.edges || []).map(function(d) { var s = nodeById[d.source]; var t = nodeById[d.target]; return s && t ? { source: s, target: t } : null; }).filter(Boolean);
+        applyFocusAndPath(currentData.nodes, edges);
+      }
+    }
+  });
+
+  var clusterBtn = document.getElementById('mapper-cluster-region');
+  if (clusterBtn) clusterBtn.addEventListener('click', function() {
+    if (!simulation || !currentData || !currentData.nodes.length) return;
+    var regionX = {}, regionY = {};
+    var k = 0;
+    currentData.nodes.forEach(function(n) {
+      var bloc = n.bloc || 'Other';
+      if (regionX[bloc] == null) { regionX[bloc] = 0; regionY[bloc] = 0; k++; }
+      regionX[bloc] += n.x; regionY[bloc] += n.y;
+    });
+    Object.keys(regionX).forEach(function(b) { regionX[b] /= (currentData.nodes.filter(function(n) { return (n.bloc || 'Other') === b; }).length); regionY[b] /= (currentData.nodes.filter(function(n) { return (n.bloc || 'Other') === b; }).length); });
+    var width = graphEl.clientWidth || 900, height = Math.max(400, graphEl.clientHeight || 500);
+    var cols = Math.ceil(Math.sqrt(Object.keys(regionX).length));
+    var idx = 0;
+    Object.keys(regionX).sort().forEach(function(b) {
+      var i = idx % cols, j = Math.floor(idx / cols);
+      regionX[b] = width * (0.2 + 0.6 * (i + 0.5) / cols);
+      regionY[b] = height * (0.2 + 0.6 * (j + 0.5) / Math.ceil(Object.keys(regionX).length / cols));
+      idx++;
+    });
+    currentData.nodes.forEach(function(n) { n.fx = regionX[n.bloc || 'Other']; n.fy = regionY[n.bloc || 'Other']; });
+    simulation.alpha(0.5).restart();
+    setTimeout(function() { currentData.nodes.forEach(function(n) { n.fx = null; n.fy = null; }); simulation.alpha(0.3).restart(); }, 800);
+  });
+
+  var exportPngBtn = document.getElementById('mapper-export-png');
+  if (exportPngBtn) exportPngBtn.addEventListener('click', function() {
+    var svgEl = graphEl && graphEl.querySelector('svg');
+    if (!svgEl) return;
+    var svgData = new XMLSerializer().serializeToString(svgEl);
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    var blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    img.onload = function() {
+      canvas.width = img.width; canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(function(blob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'relationship-mapper-' + currentMode + '.png';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }, 'image/png');
+    };
+    img.src = url;
+  });
+
+  var copySummaryBtn = document.getElementById('mapper-copy-summary');
+  if (copySummaryBtn) copySummaryBtn.addEventListener('click', function() {
+    var region = document.getElementById('mapper-region'); var r = region && region.value ? region.value : 'All';
+    var nc = (currentData && currentData.node_count != null) ? currentData.node_count : (currentData && currentData.nodes ? currentData.nodes.length : 0);
+    var ec = (currentData && currentData.edge_count != null) ? currentData.edge_count : (currentData && currentData.edges ? currentData.edges.length : 0);
+    var date = (currentData && currentData.updated_at) ? (currentData.updated_at + '').slice(0, 10) : '';
+    var text = 'Relationship Mapper – ' + currentMode + ', ' + r + ', ' + nc + ' countries, ' + ec + ' links.' + (date ? ' Data as of ' + date + '.' : '');
+    navigator.clipboard.writeText(text).then(function() { copySummaryBtn.textContent = 'Copied!'; setTimeout(function() { copySummaryBtn.textContent = 'Copy summary'; }, 1500); });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      focusCode = null; highlightPath = null;
+      var f = document.getElementById('mapper-focus'); if (f) f.value = '';
+      if (connResult) connResult.textContent = '';
+      var panel = document.getElementById('mapper-edge-panel'); if (panel) { panel.innerHTML = ''; panel.setAttribute('hidden', ''); }
+      if (currentData && currentData.nodes && currentData.edges && applyFocusAndPath) {
+        var edges = (currentData.edges || []).map(function(d) { var s = nodeById[d.source]; var t = nodeById[d.target]; return s && t ? { source: s, target: t } : null; }).filter(Boolean);
+        applyFocusAndPath(currentData.nodes, edges);
+      }
+    }
+  });
+
+  applyUrlParams();
+  setMode(currentMode);
+})();
+</script>
+{% endblock %}

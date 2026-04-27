@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Compare countries (military &amp; security) — Geopolitical News{% endblock %}
+{% block content %}
+<div class="conflict-compare-page">
+  <h1 class="page-title">Compare countries: military &amp; security</h1>
+  <p class="page-intro">Side-by-side defense spending, border incidents, exercises, military movement, naval deployments, arms trade.</p>
+
+  <form method="get" action="{{ url_for('main.conflict_compare') }}" class="compare-form">
+    <label for="country_a">Country A</label>
+    <select id="country_a" name="country_a">
+      <option value="">— Select —</option>
+      {% for c in country_list %}<option value="{{ c.code }}" {{ 'selected' if c.code == country_a else '' }}>{{ c.name }} ({{ c.code }})</option>{% endfor %}
+    </select>
+    <label for="country_b">Country B</label>
+    <select id="country_b" name="country_b">
+      <option value="">— Select —</option>
+      {% for c in country_list %}<option value="{{ c.code }}" {{ 'selected' if c.code == country_b else '' }}>{{ c.name }} ({{ c.code }})</option>{% endfor %}
+    </select>
+    <button type="submit">Compare</button>
+  </form>
+
+  {% if country_a or country_b %}
+  <div class="compare-grid">
+    <div class="compare-col">
+      <h2>{{ country_a or '—' }}</h2>
+      {% if data_a %}
+      <p class="compare-meta">Region: {{ data_a.region or '—' }}</p>
+      <h3>Defense spending</h3>
+      {% if data_a.defense %}<ul class="data-list">{% for d in data_a.defense[:5] %}<li>{{ d.year }}: {{ "%.0f"|format(d.spending_usd_billions or 0) }} bn USD ({{ "%.1f"|format(d.pct_gdp or 0) }}% GDP)</li>{% endfor %}</ul>{% else %}<p class="empty-state">No data.</p>{% endif %}
+      <h3>Border incidents</h3>
+      {% if data_a.incidents %}<ul class="data-list">{% for i in data_a.incidents[:5] %}<li>{{ (i.incident_date or '')[:10] }}: {{ i.summary or '—' }} <span class="severity-pill">{{ i.severity or '—' }}</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Military movement</h3>
+      {% if data_a.movement %}<ul class="data-list">{% for m in data_a.movement[:5] %}<li>{{ (m.observed_date or '')[:10] }}: {{ m.detection_type or '—' }} — {{ (m.summary or '—')[:80] }}</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Arms (as supplier)</h3>
+      {% if data_a.arms_supplier %}<ul class="data-list">{% for a in data_a.arms_supplier[:5] %}<li>{{ a.recipient_country }}: {{ "%.0f"|format(a.value_usd_millions or 0) }} m USD ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Arms (as recipient)</h3>
+      {% if data_a.arms_recipient %}<ul class="data-list">{% for a in data_a.arms_recipient[:5] %}<li>{{ a.supplier_country }}: {{ "%.0f"|format(a.value_usd_millions or 0) }} m USD ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      {% else %}<p class="empty-state">Select a country.</p>{% endif %}
+    </div>
+    <div class="compare-col">
+      <h2>{{ country_b or '—' }}</h2>
+      {% if data_b %}
+      <p class="compare-meta">Region: {{ data_b.region or '—' }}</p>
+      <h3>Defense spending</h3>
+      {% if data_b.defense %}<ul class="data-list">{% for d in data_b.defense[:5] %}<li>{{ d.year }}: {{ "%.0f"|format(d.spending_usd_billions or 0) }} bn USD ({{ "%.1f"|format(d.pct_gdp or 0) }}% GDP)</li>{% endfor %}</ul>{% else %}<p class="empty-state">No data.</p>{% endif %}
+      <h3>Border incidents</h3>
+      {% if data_b.incidents %}<ul class="data-list">{% for i in data_b.incidents[:5] %}<li>{{ (i.incident_date or '')[:10] }}: {{ i.summary or '—' }} <span class="severity-pill">{{ i.severity or '—' }}</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Military movement</h3>
+      {% if data_b.movement %}<ul class="data-list">{% for m in data_b.movement[:5] %}<li>{{ (m.observed_date or '')[:10] }}: {{ m.detection_type or '—' }} — {{ (m.summary or '—')[:80] }}</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Arms (as supplier)</h3>
+      {% if data_b.arms_supplier %}<ul class="data-list">{% for a in data_b.arms_supplier[:5] %}<li>{{ a.recipient_country }}: {{ "%.0f"|format(a.value_usd_millions or 0) }} m USD ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      <h3>Arms (as recipient)</h3>
+      {% if data_b.arms_recipient %}<ul class="data-list">{% for a in data_b.arms_recipient[:5] %}<li>{{ a.supplier_country }}: {{ "%.0f"|format(a.value_usd_millions or 0) }} m USD ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">None.</p>{% endif %}
+      {% else %}<p class="empty-state">Select a country.</p>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

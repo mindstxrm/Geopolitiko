@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ election.country_name }} — {{ election.election_type }} — Elections — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <p class="back-link"><a href="{{ url_for('main.approval_protests') }}#elections">← Election calendars</a> · <a href="{{ stability_dashboard_url }}">Political Stability</a></p>
+  <h1 class="page-title">{{ election.country_name }} — {{ election.election_type }}</h1>
+  <p class="election-meta">
+    <span class="election-type">{{ election.election_type }}</span>
+    · <a href="{{ url_for('main.country_dashboard', country_code=election.country_code) }}">{{ election.country_name }}</a> ({{ election.country_code }})
+    {% if election.date_planned %} · {{ (election.date_planned or '')[:10] }}{% endif %}
+    {% if election.status %}<span class="election-status"> · {{ election.status }}</span>{% endif %}
+  </p>
+  {% if election.notes %}
+  <div class="election-notes">
+    <h2>Notes</h2>
+    <p>{{ election.notes }}</p>
+  </div>
+  {% endif %}
+  <p class="election-actions">
+    <a href="{{ url_for('main.election_edit', election_id=election.id) }}">Edit</a>
+    · <a href="{{ scenario_engine_url }}">Run scenario (election upset)</a>
+    <form method="post" action="{{ url_for('main.election_delete', election_id=election.id) }}" class="inline-form" style="display:inline;" onsubmit="return confirm('Remove this election from the calendar?');">
+      <button type="submit" class="link-button danger">Delete</button>
+    </form>
+  </p>
+{% endblock %}

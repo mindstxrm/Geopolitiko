@@ -1,0 +1,852 @@
+{% extends "base.html" %}
+{% block title %}{{ channel.name }} — Intelligence Messaging{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% set search_sender_label = namespace(s='') %}
+{% if search_from_user %}
+  {% for m in members %}
+    {% if m.user_id == search_from_user %}{% set search_sender_label.s = m.author_display or m.username %}{% endif %}
+  {% endfor %}
+{% endif %}
+{% block content %}
+<div class="messaging-page messaging-channel-page" data-channel-id="{{ channel.id }}" data-channel-slug="{{ channel.slug }}" id="messaging-channel-root">
+  <nav class="breadcrumbs messaging-breadcrumbs-compact" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span> {{ channel.name }}
+  </nav>
+  <header class="messaging-channel-header">
+    <div class="messaging-channel-header-top">
+      <div class="messaging-channel-header-titles">
+        <h1 class="page-title messaging-channel-title-inline"><span class="messaging-channel-name-text">{{ channel.name }}</span> <span class="channel-type-badge channel-type-badge-inline">{{ channel_type_label(channel.channel_type) }}{% if channel.invite_only %} · Invite-only{% endif %}</span></h1>
+      </div>
+      <div class="channel-header-actions channel-header-actions-primary">
+        <button type="button" class="btn btn-secondary" id="skip-to-latest" title="Scroll to latest">Skip to latest</button>
+        <button type="button" class="btn btn-secondary" id="shortcuts-btn" title="Keyboard shortcuts (?)">?</button>
+        <details class="messaging-channel-more">
+          <summary class="messaging-channel-more-summary">More</summary>
+          <div class="messaging-channel-more-menu">
+            {% if can_invite %}
+            <p class="messaging-more-menu-label">Invite</p>
+            <form method="post" action="{{ url_for('main.messaging_create_invite_route', channel_id=channel.id) }}" class="messaging-more-form">
+              <button type="submit" class="btn btn-secondary btn-block">Create invite link</button>
+            </form>
+            <form method="post" action="{{ url_for('main.messaging_invite_by_username', channel_id=channel.id) }}" class="messaging-more-form messaging-invite-user-form">
+              <input type="text" name="username" placeholder="Username to invite" class="invite-username-input invite-username-input-block" aria-label="Username to invite">
+              <button type="submit" class="btn btn-secondary btn-block">Send invite</button>
+            </form>
+            <div class="messaging-more-sep" role="separator"></div>
+            {% endif %}
+            {% if is_muted %}
+            <form method="post" action="{{ url_for('main.messaging_unmute', channel_id=channel.id) }}" class="messaging-more-form"><button type="submit" class="btn btn-secondary btn-block">Unmute</button></form>
+            {% else %}
+            <form method="post" action="{{ url_for('main.messaging_mute', channel_id=channel.id) }}" class="messaging-more-form"><button type="submit" class="btn btn-secondary btn-block">Mute</button></form>
+            {% endif %}
+            <form method="post" action="{{ url_for('main.messaging_mark_read', channel_id=channel.id) }}" class="messaging-more-form"><button type="submit" class="btn btn-secondary btn-block">Mark read</button></form>
+            <form method="post" action="{{ url_for('main.messaging_star', channel_id=channel.id) }}" class="messaging-more-form">
+              <input type="hidden" name="starred" value="{{ '0' if starred else '1' }}">
+              <button type="submit" class="btn btn-secondary btn-block">{{ 'Unstar channel' if starred else 'Star channel' }}</button>
+            </form>
+            {% if can_manage_roles %}
+            <a href="{{ url_for('main.messaging_audit', slug=channel.slug) }}" class="btn btn-secondary btn-block">Audit log</a>
+            <a href="{{ url_for('main.messaging_channel_settings', slug=channel.slug) }}" class="btn btn-secondary btn-block">Settings</a>
+            {% endif %}
+            <form method="post" action="{{ url_for('main.messaging_leave', channel_id=channel.id) }}" class="messaging-more-form" onsubmit="return confirm('Leave this channel?');">
+              <button type="submit" class="btn btn-secondary btn-block messaging-leave-btn">Leave channel</button>
+            </form>
+          </div>
+        </details>
+      </div>
+    </div>
+    {% if channel.description %}<p class="channel-description">{{ channel.description }}</p>{% endif %}
+    {% if can_manage_roles and invite_requests %}
+    <details class="invite-requests-box messaging-invite-requests-details" open>
+      <summary>Pending invite requests ({{ invite_requests|length }})</summary>
+      <div class="invite-requests-inner">
+        {% for r in invite_requests %}
+        <div class="invite-request-row">
+          <span class="invite-request-user">{{ r.username }}</span>
+          <form method="post" action="{{ url_for('main.messaging_resolve_invite_request', channel_id=channel.id) }}" class="inline invite-request-actions">
+            <input type="hidden" name="request_id" value="{{ r.id }}">
+            <button type="submit" name="grant" value="1" class="btn btn-primary btn-sm">Grant</button>
+            <button type="submit" name="grant" value="0" class="btn btn-secondary btn-sm">Deny</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </details>
+    {% endif %}
+  </header>
+
+  <div class="messaging-mobile-tabs" id="messaging-mobile-tabs" role="tablist" aria-label="Channel view">
+    <button type="button" class="messaging-mobile-tab is-active" role="tab" id="messaging-tab-thread" aria-selected="true" aria-controls="messaging-panel-thread" data-tab="thread">Messages</button>
+    <button type="button" class="messaging-mobile-tab" role="tab" id="messaging-tab-members" aria-selected="false" aria-controls="messaging-panel-members" data-tab="members">Members</button>
+  </div>
+
+  <div class="messaging-channel-body" data-mobile-tab="thread">
+    <div class="messaging-channel-thread" id="messaging-panel-thread" role="tabpanel" aria-labelledby="messaging-tab-thread" data-mobile-panel="thread">
+  <form method="get" action="{{ url_for('main.messaging_channel', slug=channel.slug) }}" class="message-search-form messaging-search-form-enhanced" id="channel-search-form">
+    <div class="message-search-primary">
+      <input type="search" name="q" value="{{ search_q or '' }}" placeholder="Search in channel…" aria-label="Search messages">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    {% if search_q or search_date_from or search_date_to or search_from_user %}
+    <div class="message-search-active-filters" aria-label="Active filters">
+      {% if search_q %}<span class="search-filter-chip" title="Search text">“{{ search_q[:48] }}{% if search_q|length > 48 %}…{% endif %}”</span>{% endif %}
+      {% if search_date_from %}<span class="search-filter-chip">From {{ search_date_from }}</span>{% endif %}
+      {% if search_date_to %}<span class="search-filter-chip">To {{ search_date_to }}</span>{% endif %}
+      {% if search_from_user and search_sender_label.s %}<span class="search-filter-chip">From: {{ search_sender_label.s }}</span>{% elif search_from_user %}<span class="search-filter-chip">Sender #{{ search_from_user }}</span>{% endif %}
+      <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}" class="message-search-clear">Clear all</a>
+    </div>
+    {% endif %}
+    <details class="message-search-advanced">
+      <summary>Date range &amp; sender</summary>
+      <div class="message-search-advanced-fields">
+        <label class="sr-only" for="msg-search-date-from">From date</label>
+        <input type="date" id="msg-search-date-from" name="date_from" value="{{ search_date_from or '' }}" title="From date" class="filter-date" aria-label="From date">
+        <label class="sr-only" for="msg-search-date-to">To date</label>
+        <input type="date" id="msg-search-date-to" name="date_to" value="{{ search_date_to or '' }}" title="To date" class="filter-date" aria-label="To date">
+        <label class="sr-only" for="msg-search-sender">Sender</label>
+        <select id="msg-search-sender" name="from_user" aria-label="Filter by sender">
+          <option value="">All senders</option>
+          {% for m in members %}
+          <option value="{{ m.user_id }}" {{ 'selected' if search_from_user == m.user_id else '' }}>{{ m.author_display or m.username }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary">Apply filters</button>
+      </div>
+    </details>
+  </form>
+
+  <div class="channel-first-time-hint" id="channel-hint" role="region" aria-label="Tips" style="display:none;">
+    <p><strong>Tips:</strong> Use @username to mention. Reply creates a thread. Pin important messages (admins). <kbd>Ctrl+Enter</kbd> to send. <button type="button" class="btn-link dismiss-hint" aria-label="Dismiss">Dismiss</button></p>
+  </div>
+
+  <div id="messaging-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <section class="messaging-messages messaging-messages-compact" aria-label="Messages" id="message-list-container" aria-live="polite">
+    {% if pinned %}
+    <div class="pinned-message pinned-message-sticky" id="pinned-message">
+      <span class="pinned-label">Pinned</span>
+      <div class="message-meta">
+        <span class="message-author">{{ pinned.author_display or pinned.username }}{% if pinned.is_verified_analyst %} <span class="verified-badge">✓</span>{% endif %}</span>
+        <time class="message-time">{{ pinned.created_at[:19].replace('T', ' ') if pinned.created_at else '' }}</time>
+      </div>
+      <div class="message-content">{{ pinned.content | message_markdown | safe }}</div>
+      {% if pinned.attachment_type %}
+      <div class="message-attachment">
+        {% if pinned.attachment_type == 'article' %}
+        <a href="{{ url_for('main.article_detail', article_id=pinned.attachment_id) }}">View article #{{ pinned.attachment_id }}</a>
+        {% elif pinned.attachment_type == 'digest' %}
+        <a href="{{ url_for('main.digest_detail', digest_id=pinned.attachment_id) }}">View digest</a>
+        {% elif pinned.attachment_type == 'watchlist' %}
+        <a href="{{ url_for('main.watchlist_detail', watchlist_id=pinned.attachment_id) }}">View watchlist</a>
+        {% elif pinned.attachment_type == 'alert' %}
+        <a href="{{ url_for('main.alert_detail', alert_id=pinned.attachment_id) }}">View alert</a>
+        {% elif pinned.attachment_type == 'briefing' %}
+        <a href="{{ url_for('main.export_briefing_load', briefing_id=pinned.attachment_id) }}">View saved briefing</a>
+        {% elif pinned.attachment_type == 'country' and pinned.attachment_extra %}
+        <a href="{{ url_for('main.country_dashboard', country_code=pinned.attachment_extra) }}">Country: {{ pinned.attachment_extra }}</a>
+        {% elif pinned.attachment_type == 'risk' %}
+        <a href="{{ url_for('main.risk_dashboard') }}">Risk dashboard</a>
+        {% elif pinned.attachment_type == 'saved_view' %}
+        <a href="{{ url_for('main.load_saved_view', view_id=pinned.attachment_id) }}">View saved view</a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if can_manage_roles %}
+      <form method="post" action="{{ url_for('main.messaging_unpin', channel_id=channel.id) }}" class="inline"><button type="submit" class="btn-link">Unpin</button></form>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if not messages and not pinned %}
+      <p class="empty-state">No messages yet. Be the first to post.</p>
+    {% else %}
+      <ul class="message-list" id="message-list">
+        {% for m in messages %}
+        <li class="message-item" data-message-id="{{ m.id }}">
+          <div class="message-meta">
+            <span class="message-author">{{ m.author_display or m.username }}{% if m.is_verified_analyst %} <span class="verified-badge" title="Verified analyst">✓</span>{% endif %}</span>
+            <time class="message-time" datetime="{{ m.created_at }}">{{ m.created_at[:19].replace('T', ' ') if m.created_at else '' }}</time>
+            {% if m.edited_at %}<span class="edited-label">edited</span>{% endif %}
+          </div>
+          <div class="message-content">{{ m.content | message_markdown | safe }}</div>
+          {% if m.attachment_type %}
+          <div class="message-attachment">
+            {% if m.attachment_type == 'article' %}
+            <a href="{{ url_for('main.article_detail', article_id=m.attachment_id) }}">View article #{{ m.attachment_id }}</a>
+            {% elif m.attachment_type == 'digest' %}
+            <a href="{{ url_for('main.digest_detail', digest_id=m.attachment_id) }}">View digest</a>
+            {% elif m.attachment_type == 'watchlist' %}
+            <a href="{{ url_for('main.watchlist_detail', watchlist_id=m.attachment_id) }}">View watchlist</a>
+            {% elif m.attachment_type == 'alert' %}
+            <a href="{{ url_for('main.alert_detail', alert_id=m.attachment_id) }}">View alert</a>
+            {% elif m.attachment_type == 'briefing' %}
+            <a href="{{ url_for('main.export_briefing_load', briefing_id=m.attachment_id) }}">View saved briefing</a>
+            {% elif m.attachment_type == 'country' and m.attachment_extra %}
+            <a href="{{ url_for('main.country_dashboard', country_code=m.attachment_extra) }}">Country: {{ m.attachment_extra }}</a>
+            {% elif m.attachment_type == 'risk' %}
+            <a href="{{ url_for('main.risk_dashboard') }}">Risk dashboard</a>
+            {% elif m.attachment_type == 'saved_view' %}
+            <a href="{{ url_for('main.load_saved_view', view_id=m.attachment_id) }}">View saved view</a>
+            {% else %}
+            Attachment: {{ m.attachment_type }}{% if m.attachment_id %} #{{ m.attachment_id }}{% endif %}
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="message-reactions">
+            {% for r in (message_reactions.get(m.id) or []) %}
+            <span class="reaction-pill">
+              <form method="post" action="{{ url_for('main.messaging_reaction', channel_id=channel.id, message_id=m.id) }}" class="inline reaction-form">
+                <input type="hidden" name="emoji" value="{{ r.emoji }}">
+                <input type="hidden" name="action" value="{{ 'remove' if current_user.id in r.user_ids else 'add' }}">
+                <button type="submit" class="reaction-btn {{ 'reacted' if current_user.id in r.user_ids else '' }}" title="{{ r.usernames | join(', ') }}">{{ r.emoji }} {{ r.user_ids | length }}</button>
+              </form>
+            </span>
+            {% endfor %}
+            <form method="post" action="{{ url_for('main.messaging_reaction', channel_id=channel.id, message_id=m.id) }}" class="inline reaction-add-form">
+              <input type="hidden" name="action" value="add">
+              <button type="submit" name="emoji" value="👍" class="btn-link reaction-emoji" title="Add reaction">👍</button>
+              <button type="submit" name="emoji" value="❤️" class="btn-link reaction-emoji">❤️</button>
+              <button type="submit" name="emoji" value="🔥" class="btn-link reaction-emoji">🔥</button>
+            </form>
+          </div>
+          <div class="message-actions">
+            <button type="button" class="btn-link reply-btn" data-message-id="{{ m.id }}" data-username="{{ m.username }}" data-content="{{ (m.content or '') | e }}">Reply</button>
+            <button type="button" class="btn-link quote-btn" data-message-id="{{ m.id }}" data-username="{{ m.username }}" data-content="{{ (m.content or '') | e }}">Quote</button>
+            {% if can_manage_roles %}
+            <form method="post" action="{{ url_for('main.messaging_pin', channel_id=channel.id, message_id=m.id) }}" class="inline"><button type="submit" class="btn-link">Pin</button></form>
+            {% endif %}
+            {% if m.user_id == current_user.id %}<a href="{{ url_for('main.messaging_edit', channel_id=channel.id, message_id=m.id) }}" class="btn-link">Edit</a>
+            <form method="post" action="{{ url_for('main.messaging_delete', channel_id=channel.id, message_id=m.id) }}" class="inline" onsubmit="return confirm('Delete this message?');"><button type="submit" class="btn-link">Delete</button></form>
+            {% endif %}
+            <form method="post" action="{{ url_for('main.messaging_report', channel_id=channel.id, message_id=m.id) }}" class="inline">
+              <input type="text" name="reason" placeholder="Reason (optional)" class="report-reason">
+              <button type="submit" class="btn-link">Report</button>
+            </form>
+          </div>
+          {% set reply_count = reply_counts.get(m.id, 0) %}
+          {% if reply_count and reply_count > 0 %}
+          <div class="thread-replies-wrap" data-parent-id="{{ m.id }}" data-channel-id="{{ channel.id }}">
+            <button type="button" class="btn-link load-replies-btn" data-parent-id="{{ m.id }}" data-count="{{ reply_count }}">Load {{ reply_count }} repl{{ reply_count == 1 and 'y' or 'ies' }}</button>
+            <ul class="thread-replies" style="display:none;"></ul>
+          </div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if messages and messages|length >= 50 %}
+    <p class="load-more-wrap"><button type="button" class="btn btn-secondary" id="load-more" data-before-id="{{ (messages|last).id }}">Load older messages</button></p>
+    {% endif %}
+  </section>
+
+  <section class="messaging-composer" aria-label="Compose message" id="composer-section">
+    <form method="post" action="{{ url_for('main.messaging_send_message', channel_id=channel.id) }}" class="message-form" id="message-form">
+      <input type="hidden" name="parent_id" id="reply-parent-id" value="">
+      <div class="message-form-label-row">
+        <label for="msg-content" class="message-form-label-short">Message <span class="message-form-label-meta">(encrypted at rest · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to send)</span></label>
+        <button type="button" class="btn-link message-form-help-link" id="composer-help-btn" aria-label="Formatting and mention help">Formatting &amp; @mentions</button>
+      </div>
+      <div class="msg-content-wrap" style="position:relative;">
+        <textarea id="msg-content" name="content" rows="3" placeholder="Type your message… Type @ to mention" maxlength="10000" required aria-label="Message content" autocomplete="off"></textarea>
+        <div id="mention-suggest" class="mention-suggest" role="listbox" aria-label="Mention a channel member" style="display:none;"></div>
+      </div>
+
+      <div class="msg-attach-bar msg-attach-bar-row">
+        <input type="hidden" name="attachment_type" id="form-attachment-type" value="">
+        <input type="hidden" name="attachment_id" id="form-attachment-id" value="">
+        <input type="hidden" name="attachment_country_code" id="form-attachment-country" value="">
+        <button type="button" class="btn btn-secondary msg-attach-toggle" id="msg-attach-toggle" aria-expanded="false" aria-controls="msg-attach-panel">+ Add attachment</button>
+        <span class="msg-attach-chip" id="msg-attach-chip" style="display:none;"><span class="msg-attach-chip-text" id="msg-attach-chip-text"></span><button type="button" class="msg-attach-chip-remove" id="msg-attach-chip-remove" aria-label="Remove attachment">×</button></span>
+      </div>
+
+      <div class="msg-attach-panel" id="msg-attach-panel" role="region" aria-label="Choose attachment" hidden>
+        <div class="msg-attach-search-wrap">
+          <label for="msg-attach-search" class="sr-only">Search or enter ID / country code</label>
+          <input type="text" id="msg-attach-search" class="msg-attach-search" placeholder="Search or enter ID (e.g. 42), country code (CN, US), or type &quot;risk&quot;" autocomplete="off">
+          <div class="msg-attach-suggest" id="msg-attach-suggest"></div>
+        </div>
+        <div class="msg-attach-recent">
+          <span class="msg-attach-recent-title">Recently used</span>
+          <ul class="msg-attach-recent-list" id="msg-attach-recent-list"></ul>
+        </div>
+        <div class="msg-attach-quick">
+          <button type="button" class="msg-attach-quick-btn" data-type="risk" data-label="Risk dashboard">Risk dashboard</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+  </section>
+
+    </div>
+
+  <aside class="messaging-sidebar" id="messaging-panel-members" role="tabpanel" aria-labelledby="messaging-tab-members" data-mobile-panel="members">
+    <details class="messaging-sidebar-details" open>
+      <summary class="messaging-sidebar-summary">Members <span class="messaging-sidebar-count">({{ members | length }})</span></summary>
+      <div class="messaging-sidebar-body">
+        <label for="member-filter-input" class="sr-only">Filter members by name</label>
+        <input type="search" id="member-filter-input" class="member-filter-input" placeholder="Filter members…" autocomplete="off" aria-label="Filter members">
+    <ul class="member-list" id="member-list">
+      {% for m in members %}
+      <li class="member-list-item" data-member-search="{{ ((m.author_display or '') ~ ' ' ~ (m.username or ''))|lower|trim }}">
+        <span class="member-name">{{ m.author_display or m.username }}</span>
+        {% if can_manage_roles %}
+        <form method="post" action="{{ url_for('main.messaging_set_member_role_route', channel_id=channel.id, user_id=m.user_id) }}" class="member-role-form">
+          <select name="role" onchange="this.form.submit()">
+            <option value="member" {{ 'selected' if m.role == 'member' else '' }}>member</option>
+            <option value="verified_analyst" {{ 'selected' if m.role == 'verified_analyst' else '' }}>verified</option>
+            <option value="admin" {{ 'selected' if m.role == 'admin' else '' }}>admin</option>
+          </select>
+        </form>
+        {% else %}
+        <span class="member-role">{{ m.role }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% if verified_members %}
+    <h4 class="verified-list-heading">Verified analysts</h4>
+    <ul class="verified-list">
+      {% for m in verified_members %}
+      <li class="member-list-item" data-member-search="{{ ((m.author_display or '') ~ ' ' ~ (m.username or ''))|lower|trim }}"><span class="verified-badge">✓</span> {{ m.author_display or m.username }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+      </div>
+    </details>
+  </aside>
+  </div>
+</div>
+<div class="shortcuts-modal" id="shortcuts-modal" role="dialog" aria-label="Keyboard shortcuts" style="display:none;">
+  <div class="shortcuts-content">
+    <h3>Keyboard shortcuts</h3>
+    <ul>
+      <li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> — Send message</li>
+      <li><kbd>?</kbd> — Show this panel</li>
+      <li><kbd>Esc</kbd> — Close</li>
+    </ul>
+    <button type="button" class="btn btn-secondary" id="shortcuts-close">Close</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var channelId = {{ channel.id }};
+  var channelSlug = "{{ channel.slug }}";
+  var channelMembers = [
+    {% for m in members %}
+    { "username": {{ m.username | tojson }}, "display": {{ (m.author_display or m.username) | tojson }}}{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ];
+  var currentUserId = {{ current_user.id | default(0) }};
+  var lastMessageId = null;
+  var form = document.getElementById('message-form');
+  var textarea = document.getElementById('msg-content');
+  var list = document.getElementById('message-list');
+  var container = document.getElementById('message-list-container');
+  var draftKey = 'messaging_draft_' + channelId;
+  var mentionSuggest = document.getElementById('mention-suggest');
+  var mentionSelectedIndex = 0;
+
+  function saveDraft() {
+    if (textarea && window.localStorage) try { localStorage.setItem(draftKey, textarea.value); } catch (e) {}
+  }
+  function loadDraft() {
+    if (textarea && window.localStorage) try {
+      var d = localStorage.getItem(draftKey);
+      if (d) { textarea.value = d; }
+    } catch (e) {}
+  }
+  if (textarea) {
+    loadDraft();
+    textarea.addEventListener('input', saveDraft);
+    textarea.addEventListener('change', saveDraft);
+  }
+  if (form) form.addEventListener('submit', function() {
+    if (window.localStorage) try { localStorage.removeItem(draftKey); } catch (e) {}
+  });
+
+  function getCaretPosition(el) {
+    if (el.selectionStart != null) return el.selectionStart;
+    return 0;
+  }
+  function setCaretPosition(el, pos) {
+    el.focus();
+    if (el.setSelectionRange) el.setSelectionRange(pos, pos);
+  }
+  function showMentionSuggest(query) {
+    var q = (query || '').toLowerCase();
+    var filtered = channelMembers.filter(function(m) {
+      return m.username.toLowerCase().indexOf(q) !== -1 || (m.display && m.display.toLowerCase().indexOf(q) !== -1);
+    });
+    mentionSelectedIndex = 0;
+    if (!mentionSuggest) return;
+    mentionSuggest.innerHTML = '';
+    if (filtered.length === 0) {
+      mentionSuggest.style.display = 'none';
+      return;
+    }
+    filtered.forEach(function(m, i) {
+      var div = document.createElement('div');
+      div.className = 'mention-suggest-item' + (i === 0 ? ' selected' : '');
+      div.setAttribute('role', 'option');
+      div.setAttribute('data-username', m.username);
+      div.textContent = m.display || m.username;
+      div.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        insertMention(m.username);
+        mentionSuggest.style.display = 'none';
+      });
+      mentionSuggest.appendChild(div);
+    });
+    mentionSuggest.style.display = 'block';
+  }
+  function insertMention(username) {
+    if (!textarea) return;
+    var val = textarea.value;
+    var start = getCaretPosition(textarea);
+    var before = val.slice(0, start);
+    var atIndex = before.lastIndexOf('@');
+    if (atIndex === -1) return;
+    var newText = val.slice(0, atIndex) + '@' + username + ' ' + val.slice(start);
+    textarea.value = newText;
+    setCaretPosition(textarea, atIndex + username.length + 2);
+    saveDraft();
+  }
+  function applyMentionSelection() {
+    var items = mentionSuggest && mentionSuggest.querySelectorAll('.mention-suggest-item');
+    if (!items || !items.length) return;
+    var sel = items[mentionSelectedIndex];
+    if (sel) {
+      insertMention(sel.getAttribute('data-username'));
+      mentionSuggest.style.display = 'none';
+    }
+  }
+  function updateMentionSelectionHighlight() {
+    var items = mentionSuggest && mentionSuggest.querySelectorAll('.mention-suggest-item');
+    if (!items) return;
+    for (var i = 0; i < items.length; i++) items[i].classList.toggle('selected', i === mentionSelectedIndex);
+  }
+
+  if (textarea && mentionSuggest) {
+    textarea.addEventListener('input', function() {
+      var val = textarea.value;
+      var pos = getCaretPosition(textarea);
+      var before = val.slice(0, pos);
+      var atIndex = before.lastIndexOf('@');
+      if (atIndex === -1 || /\s/.test(before.slice(atIndex + 1))) {
+        mentionSuggest.style.display = 'none';
+        return;
+      }
+      var query = before.slice(atIndex + 1);
+      showMentionSuggest(query);
+    });
+    textarea.addEventListener('keydown', function(e) {
+      if (mentionSuggest.style.display === 'block' && mentionSuggest.querySelectorAll('.mention-suggest-item').length > 0) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          mentionSelectedIndex = (mentionSelectedIndex + 1) % mentionSuggest.querySelectorAll('.mention-suggest-item').length;
+          updateMentionSelectionHighlight();
+          return;
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          var n = mentionSuggest.querySelectorAll('.mention-suggest-item').length;
+          mentionSelectedIndex = (mentionSelectedIndex - 1 + n) % n;
+          updateMentionSelectionHighlight();
+          return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          applyMentionSelection();
+          return;
+        }
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          mentionSuggest.style.display = 'none';
+          return;
+        }
+      }
+    });
+  }
+  document.addEventListener('click', function(e) {
+    if (!mentionSuggest || mentionSuggest.style.display !== 'block') return;
+    var t = e.target;
+    if (textarea && textarea.contains && textarea.contains(t)) return;
+    if (mentionSuggest.contains && mentionSuggest.contains(t)) return;
+    mentionSuggest.style.display = 'none';
+  });
+  if (mentionSuggest) mentionSuggest.addEventListener('click', function(e) { e.stopPropagation(); });
+
+  var jumpToId = {{ jump_to_message_id or 'null' }};
+  if (jumpToId && list) {
+    var el = list.querySelector('[data-message-id="' + jumpToId + '"]');
+    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.add('highlight-message'); setTimeout(function() { el.classList.remove('highlight-message'); }, 2000); }
+  }
+
+  document.getElementById('skip-to-latest') && document.getElementById('skip-to-latest').addEventListener('click', function() {
+    if (container) container.scrollTop = container.scrollHeight;
+    var last = list && list.lastElementChild;
+    if (last) last.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  });
+
+  var modal = document.getElementById('shortcuts-modal');
+  document.getElementById('shortcuts-btn') && document.getElementById('shortcuts-btn').addEventListener('click', function() { if (modal) modal.style.display = 'block'; });
+  document.getElementById('shortcuts-close') && document.getElementById('shortcuts-close').addEventListener('click', function() { if (modal) modal.style.display = 'none'; });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === '?' && !e.ctrlKey && !e.metaKey && !document.activeElement || document.activeElement.tagName === 'BODY') {
+      e.preventDefault();
+      if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+    }
+    if (e.key === 'Escape' && modal) modal.style.display = 'none';
+  });
+
+  var hint = document.getElementById('channel-hint');
+  var composerHelpBtn = document.getElementById('composer-help-btn');
+  function syncComposerHelpAria() {
+    if (!composerHelpBtn || !hint) return;
+    composerHelpBtn.setAttribute('aria-expanded', window.getComputedStyle(hint).display !== 'none' ? 'true' : 'false');
+  }
+  if (hint && window.localStorage) {
+    var hintKey = 'messaging_hint_seen_' + channelId;
+    if (!localStorage.getItem(hintKey)) { hint.style.display = 'block'; }
+    hint.querySelector('.dismiss-hint') && hint.querySelector('.dismiss-hint').addEventListener('click', function() {
+      hint.style.display = 'none';
+      try { localStorage.setItem(hintKey, '1'); } catch (e) {}
+      syncComposerHelpAria();
+    });
+  }
+  if (composerHelpBtn && hint) {
+    composerHelpBtn.addEventListener('click', function() {
+      var vis = window.getComputedStyle(hint).display !== 'none';
+      hint.style.display = vis ? 'none' : 'block';
+      syncComposerHelpAria();
+    });
+    syncComposerHelpAria();
+  }
+
+  (function mobileChannelTabs() {
+    var mq = window.matchMedia('(max-width: 768px)');
+    var channelBody = document.querySelector('.messaging-channel-body');
+    var tabThread = document.getElementById('messaging-tab-thread');
+    var tabMembers = document.getElementById('messaging-tab-members');
+    var panelThread = document.getElementById('messaging-panel-thread');
+    var panelMembers = document.getElementById('messaging-panel-members');
+    function applyPanels() {
+      if (!channelBody) return;
+      if (!mq.matches) {
+        channelBody.removeAttribute('data-mobile-tab');
+        if (panelThread) { panelThread.removeAttribute('hidden'); panelThread.removeAttribute('aria-hidden'); }
+        if (panelMembers) { panelMembers.removeAttribute('hidden'); panelMembers.removeAttribute('aria-hidden'); }
+        return;
+      }
+      var tab = channelBody.getAttribute('data-mobile-tab') || 'thread';
+      channelBody.setAttribute('data-mobile-tab', tab);
+      if (panelThread) panelThread.setAttribute('aria-hidden', tab !== 'thread' ? 'true' : 'false');
+      if (panelMembers) panelMembers.setAttribute('aria-hidden', tab !== 'members' ? 'true' : 'false');
+    }
+    function setTab(which) {
+      if (!channelBody || !mq.matches) return;
+      channelBody.setAttribute('data-mobile-tab', which);
+      if (tabThread) {
+        tabThread.classList.toggle('is-active', which === 'thread');
+        tabThread.setAttribute('aria-selected', which === 'thread' ? 'true' : 'false');
+      }
+      if (tabMembers) {
+        tabMembers.classList.toggle('is-active', which === 'members');
+        tabMembers.setAttribute('aria-selected', which === 'members' ? 'true' : 'false');
+      }
+      applyPanels();
+    }
+    if (tabThread) tabThread.addEventListener('click', function() { setTab('thread'); });
+    if (tabMembers) tabMembers.addEventListener('click', function() { setTab('members'); });
+    if (typeof mq.addEventListener === 'function') mq.addEventListener('change', applyPanels);
+    else if (typeof mq.addListener === 'function') mq.addListener(applyPanels);
+    applyPanels();
+  })();
+
+  (function memberListFilter() {
+    var input = document.getElementById('member-filter-input');
+    if (!input) return;
+    var items = document.querySelectorAll('#messaging-channel-root .member-list-item[data-member-search]');
+    input.addEventListener('input', function() {
+      var q = (input.value || '').trim().toLowerCase();
+      items.forEach(function(li) {
+        var hay = (li.getAttribute('data-member-search') || '').toLowerCase();
+        li.style.display = !q || hay.indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+  })();
+
+  document.querySelectorAll('.reply-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var mid = this.getAttribute('data-message-id');
+      var username = this.getAttribute('data-username');
+      document.getElementById('reply-parent-id').value = mid;
+      if (textarea) {
+        textarea.placeholder = 'Reply to ' + username + '…';
+        textarea.focus();
+      }
+    });
+  });
+  document.querySelectorAll('.quote-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var username = this.getAttribute('data-username');
+      var content = (this.getAttribute('data-content') || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').split('\n').slice(0, 5).join('\n');
+      var quote = '> @' + username + ': ' + content.replace(/\n/g, '\n> ') + '\n\n';
+      if (textarea) {
+        textarea.value = quote + textarea.value;
+        textarea.focus();
+      }
+    });
+  });
+
+  document.querySelectorAll('.load-replies-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var parentId = this.getAttribute('data-parent-id');
+      var wrap = this.closest('.thread-replies-wrap');
+      var ul = wrap && wrap.querySelector('ul.thread-replies');
+      if (!ul || ul.children.length) return;
+      this.disabled = true;
+      fetch('/api/messaging/channels/' + channelId + '/messages?parent_id=' + parentId + '&limit=50')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.messages || !data.messages.length) { btn.textContent = 'No replies'; return; }
+          data.messages.forEach(function(r) {
+            var li = document.createElement('li');
+            li.className = 'thread-reply';
+            var content = (r.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            li.innerHTML = '<span class="message-author">' + (r.author_display || r.username || '').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span> <span class="message-content">' + content + '</span> <time class="message-time">' + (r.created_at ? r.created_at.slice(0,19).replace('T',' ') : '') + '</time>';
+            ul.appendChild(li);
+          });
+          ul.style.display = 'block';
+          btn.style.display = 'none';
+        })
+        .catch(function() { btn.disabled = false; });
+    });
+  });
+
+  if (form) form.addEventListener('submit', function() {
+    if (window.localStorage) try { localStorage.removeItem(draftKey); } catch (e) {}
+    var t = document.getElementById('form-attachment-type');
+    var idEl = document.getElementById('form-attachment-id');
+    var countryEl = document.getElementById('form-attachment-country');
+    if (t && t.value && window.localStorage && window.MsgAttachRecent) {
+      MsgAttachRecent.pushRecent({ type: t.value, id: idEl ? idEl.value : '', extra: countryEl ? countryEl.value : '', label: document.getElementById('msg-attach-chip').textContent || '' });
+    }
+  });
+
+  (function attachPanel() {
+    var RECENT_KEY = 'msg_recent_attachments';
+    var MAX_RECENT = 20;
+    var COUNTRY_CODES = { CN:'China',US:'United States',GB:'United Kingdom',DE:'Germany',FR:'France',JP:'Japan',SG:'Singapore',TW:'Taiwan',RU:'Russia',IN:'India',KR:'South Korea',AU:'Australia',CA:'Canada',BR:'Brazil',MX:'Mexico',IT:'Italy',ES:'Spain',NL:'Netherlands',ID:'Indonesia',MY:'Malaysia',TH:'Thailand',VN:'Vietnam',PH:'Philippines',PL:'Poland',TR:'Turkey',SA:'Saudi Arabia',AE:'UAE',ZA:'South Africa',EG:'Egypt',NG:'Nigeria' };
+    var ID_TYPES = [ { type: 'article', label: 'Article' }, { type: 'digest', label: 'Digest' }, { type: 'watchlist', label: 'Watchlist' }, { type: 'alert', label: 'Alert' }, { type: 'briefing', label: 'Saved briefing' }, { type: 'saved_view', label: 'Saved view' } ];
+
+    function getRecent() {
+      try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function saveRecent(arr) {
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify(arr.slice(-MAX_RECENT))); } catch (e) {}
+    }
+    window.MsgAttachRecent = {
+      pushRecent: function(item) {
+        var arr = getRecent().filter(function(r) { return !(r.type === item.type && String(r.id) === String(item.id) && String(r.extra || '') === String(item.extra || '')); });
+        arr.push({ type: item.type, id: item.id || '', extra: item.extra || '', label: item.label || (item.type + ' ' + (item.id || item.extra || '')) });
+        saveRecent(arr);
+      }
+    };
+
+    var toggle = document.getElementById('msg-attach-toggle');
+    var panel = document.getElementById('msg-attach-panel');
+    var searchInput = document.getElementById('msg-attach-search');
+    var suggestEl = document.getElementById('msg-attach-suggest');
+    var recentList = document.getElementById('msg-attach-recent-list');
+    var chip = document.getElementById('msg-attach-chip');
+    var formType = document.getElementById('form-attachment-type');
+    var formId = document.getElementById('form-attachment-id');
+    var formCountry = document.getElementById('form-attachment-country');
+
+    function setAttachment(type, id, extra, label) {
+      formType.value = type || '';
+      formId.value = id || '';
+      formCountry.value = extra || '';
+      var chipText = document.getElementById('msg-attach-chip-text');
+      if (chip) {
+        if (type) { if (chipText) chipText.textContent = label || (type + (id ? ' #' + id : '') + (extra ? ' ' + extra : '')); chip.style.display = 'inline-flex'; }
+        else { if (chipText) chipText.textContent = ''; chip.style.display = 'none'; }
+      }
+      closePanel();
+    }
+    function closePanel() {
+      if (panel) { panel.setAttribute('hidden', ''); panel.style.display = 'none'; panel.classList.remove('is-open'); }
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      if (searchInput) searchInput.value = '';
+      renderSuggest('');
+    }
+    function openPanel() {
+      if (panel) { panel.removeAttribute('hidden'); panel.style.display = 'block'; panel.classList.add('is-open'); }
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      renderRecent();
+      if (searchInput) searchInput.focus();
+    }
+
+    function renderSuggest(q) {
+      if (!suggestEl) return;
+      suggestEl.innerHTML = '';
+      q = (q || '').trim();
+      var qLower = q.toLowerCase();
+      if (qLower === 'risk') {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'msg-attach-suggest-item';
+        btn.textContent = 'Risk dashboard';
+        btn.addEventListener('click', function() { setAttachment('risk', 0, '', 'Risk dashboard'); });
+        suggestEl.appendChild(btn);
+        return;
+      }
+      if (q.length >= 2 && q.length <= 3) {
+        var code = q.toUpperCase();
+        if (COUNTRY_CODES[code]) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'msg-attach-suggest-item';
+          b.textContent = 'Country: ' + code + ' — ' + COUNTRY_CODES[code];
+          b.addEventListener('click', function() { setAttachment('country', '', code, 'Country: ' + code); });
+          suggestEl.appendChild(b);
+        }
+        var matches = Object.keys(COUNTRY_CODES).filter(function(c) { return c.indexOf(code) === 0 || COUNTRY_CODES[c].toLowerCase().indexOf(qLower) !== -1; }).slice(0, 5);
+        matches.forEach(function(c) {
+          if (c === code) return;
+          var bt = document.createElement('button');
+          bt.type = 'button';
+          bt.className = 'msg-attach-suggest-item';
+          bt.textContent = c + ' — ' + COUNTRY_CODES[c];
+          bt.addEventListener('click', function() { setAttachment('country', '', c, 'Country: ' + c); });
+          suggestEl.appendChild(bt);
+        });
+        return;
+      }
+      if (/^\d+$/.test(q)) {
+        ID_TYPES.forEach(function(t) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'msg-attach-suggest-item';
+          b.textContent = t.label + ' #' + q;
+          b.addEventListener('click', function() { setAttachment(t.type, q, '', t.label + ' #' + q); });
+          suggestEl.appendChild(b);
+        });
+      }
+    }
+
+    function renderRecent() {
+      if (!recentList) return;
+      recentList.innerHTML = '';
+      getRecent().slice().reverse().slice(0, 10).forEach(function(r) {
+        var li = document.createElement('li');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'msg-attach-recent-item';
+        btn.textContent = r.label || (r.type + (r.id ? ' #' + r.id : '') + (r.extra ? ' ' + r.extra : ''));
+        btn.addEventListener('click', function() { setAttachment(r.type, r.id, r.extra, r.label); });
+        li.appendChild(btn);
+        recentList.appendChild(li);
+      });
+    }
+
+    if (toggle && panel) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (panel.classList.contains('is-open')) closePanel(); else openPanel();
+      });
+    }
+    if (searchInput && suggestEl) {
+      searchInput.addEventListener('input', function() { renderSuggest(this.value); });
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePanel();
+      });
+    }
+    var quickWrap = document.getElementById('msg-attach-quick');
+    var quickBtn = quickWrap && quickWrap.querySelector('.msg-attach-quick-btn');
+    if (quickBtn) quickBtn.addEventListener('click', function() {
+      setAttachment(this.getAttribute('data-type'), '0', '', this.getAttribute('data-label'));
+    });
+    var removeBtn = document.getElementById('msg-attach-chip-remove');
+    if (removeBtn) removeBtn.addEventListener('click', function(e) { e.preventDefault(); setAttachment('', '', '', ''); });
+  })();
+  if (textarea) {
+    textarea.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (form) form.submit();
+      }
+    });
+  }
+
+  if (list && list.children.length) {
+    var last = list.lastElementChild;
+    if (last) lastMessageId = parseInt(last.getAttribute('data-message-id'), 10);
+  }
+
+  function poll() {
+    if (!lastMessageId) return;
+    fetch('/api/messaging/channels/' + channelId + '/messages?after_id=' + lastMessageId + '&limit=50')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.messages && data.messages.length) {
+          var announce = data.messages.length + ' new message' + (data.messages.length !== 1 ? 's' : '');
+          if (container) {
+            container.setAttribute('aria-live', 'polite');
+            var announcer = document.getElementById('messaging-announcer');
+            if (announcer) { announcer.textContent = announce; announcer.setAttribute('aria-live', 'polite'); }
+          }
+          if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+            try { new Notification(channelSlug + ': ' + announce, { body: (data.messages[0] && (data.messages[0].author_display || data.messages[0].username) ? (data.messages[0].author_display || data.messages[0].username) + ': ' : '') + ((data.messages[0] && data.messages[0].content) || '').slice(0, 80) }); } catch (e) {}
+          }
+          data.messages.forEach(function(m) {
+            var li = document.createElement('li');
+            li.className = 'message-item';
+            li.setAttribute('data-message-id', m.id);
+            li.innerHTML = '<div class="message-meta"><span class="message-author">' + (m.author_display || m.username || '').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span><time class="message-time">' + (m.created_at ? m.created_at.slice(0,19).replace('T',' ') : '') + '</time></div><div class="message-content">' + (m.content || '').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
+            list.appendChild(li);
+            lastMessageId = m.id;
+          });
+        }
+      })
+      .catch(function() {});
+  }
+  if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+
+  setInterval(poll, 15000);
+
+  var loadMoreBtn = document.getElementById('load-more');
+  if (loadMoreBtn && list) {
+    loadMoreBtn.addEventListener('click', function() {
+      var beforeId = this.getAttribute('data-before-id');
+      if (!beforeId) return;
+      this.disabled = true;
+      fetch('/api/messaging/channels/' + channelId + '/messages?before_id=' + beforeId + '&limit=50')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.messages || !data.messages.length) {
+            loadMoreBtn.parentNode.removeChild(loadMoreBtn);
+            return;
+          }
+          data.messages.forEach(function(m) {
+            var li = document.createElement('li');
+            li.className = 'message-item';
+            li.setAttribute('data-message-id', m.id);
+            var content = (m.content || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            li.innerHTML = '<div class="message-meta"><span class="message-author">' + (m.author_display || m.username || '').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span><time class="message-time">' + (m.created_at ? m.created_at.slice(0,19).replace('T',' ') : '') + '</time></div><div class="message-content">' + content + '</div>';
+            list.insertBefore(li, list.firstChild);
+          });
+          loadMoreBtn.setAttribute('data-before-id', data.messages[0].id);
+          loadMoreBtn.disabled = false;
+          if (data.messages.length < 50) loadMoreBtn.parentNode.removeChild(loadMoreBtn);
+        })
+        .catch(function() { loadMoreBtn.disabled = false; });
+    });
+  }
+})();
+</script>
+{% endblock %}

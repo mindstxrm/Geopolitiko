@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Live Streams — Geopolitical Terminal{% endblock %}
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('main.index') }}">Intelligence</a> <span class="breadcrumb-sep">›</span> Live Streams
+</nav>
+{% endblock %}
+{% block content %}
+<div class="live-streams-page">
+  <h1 class="page-title">Live News Streams</h1>
+  <p class="page-intro">Free live video feeds from international broadcasters. Streams may be geo-restricted. <a href="{{ url_for('main.workspace', layout='2', t1='/live', t2='/feed') }}">Open in Workspace</a> to watch alongside the Intelligence Feed.</p>
+
+  <div class="live-streams-grid">
+    {% for s in streams %}
+    <div class="live-stream-card">
+      <div class="live-stream-header">
+        <h2 class="live-stream-name">{{ s.name }}</h2>
+        <a href="{{ s.homepage }}" target="_blank" rel="noopener" class="live-stream-link">Watch on site ↗</a>
+      </div>
+      {% if s.note %}<p class="live-stream-note">{{ s.note }}</p>{% endif %}
+      {% if s.embed_url %}
+      {% if s.embed_type == 'iframe' %}
+      <div class="live-stream-embed live-stream-embed-iframe">
+        <iframe src="{{ s.embed_url }}" title="{{ s.name }} live stream" allowfullscreen loading="lazy"></iframe>
+      </div>
+      {% elif s.embed_type == 'youtube' %}
+      <div class="live-stream-embed live-stream-embed-youtube">
+        <iframe src="{{ s.embed_url }}" title="{{ s.name }} live stream" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      </div>
+      {% endif %}
+      {% else %}
+      <p class="live-stream-fallback"><a href="{{ s.homepage }}" target="_blank" rel="noopener" class="btn btn-secondary">Open {{ s.name }} live →</a></p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <p class="live-streams-footer">Streams are provided by broadcasters. Availability varies by region. Geopolitical Terminal does not host or re-stream video.</p>
+</div>
+{% endblock %}

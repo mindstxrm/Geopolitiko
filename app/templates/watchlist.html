@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ watchlist.name }} — Watchlist — Geopolitical News{% endblock %}
+
+{% block content %}
+  <section class="watchlist-header chat-draggable" data-chat-drag="1" data-chat-type="watchlist" data-chat-id="{{ watchlist.id }}" data-chat-extra="" data-chat-label="{{ watchlist.name }}">
+    <a href="{{ url_for('main.index') }}" class="back-link">← News</a>
+    <div class="watchlist-title-row">
+      <h1 class="page-title">{{ watchlist.name }}</h1>
+      {% if current_user.is_authenticated %}
+      {% set forward_type = 'watchlist' %}
+      {% set forward_id = watchlist.id %}
+      {% set forward_extra = '' %}
+      {% set forward_label = watchlist.name %}
+      {% include 'messaging/forward_to_chat.html' %}
+      {% endif %}
+      <a href="{{ url_for('main.watchlist_edit', watchlist_id=watchlist.id) }}" class="btn btn-secondary">Edit</a>
+      <form method="post" action="{{ url_for('main.watchlist_delete', watchlist_id=watchlist.id) }}" class="delete-form" onsubmit="return confirm('Remove this watchlist?');">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+    {% if watchlist.topics_list %}
+    <p class="page-intro">Topics: {% for t in watchlist.topics_list %}<span class="topic-tag">{{ t }}</span>{% if not loop.last %} {% endif %}{% endfor %}</p>
+    {% endif %}
+  </section>
+
+  <section class="articles">
+    {% if not articles %}
+      <p class="empty-state">No articles match this watchlist yet. Run <code>python run_jobs.py --topics</code> to tag articles, or add different topics.</p>
+    {% else %}
+      <ul class="article-list">
+        {% for a in articles %}
+        <li class="article-card">
+          {% if a.image_url %}
+          <div class="article-card-media">
+            <a href="{{ a.url }}" target="_blank" rel="noopener" class="article-image-link"><img src="{{ a.image_url }}" alt="" class="article-thumb" loading="lazy"></a>
+          </div>
+          {% endif %}
+          {% if a.video_url and not a.image_url %}
+          <div class="article-card-media article-video-wrap">
+            <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          {% endif %}
+          <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+          <div class="article-meta">
+            <span class="source">{{ a.source_name }}</span>
+            {% if a.published_utc %}
+            <span class="date">{{ a.published_utc[:10] }}</span>
+            {% endif %}
+          </div>
+          {% if a.summary %}
+          <p class="article-summary">{{ a.summary }}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+{% endblock %}
+

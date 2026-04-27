@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Treaty clause comparator — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Treaty clause comparator</h1>
+  <p class="page-intro">AI-powered comparison of two treaty texts: dispute resolution, termination, escalation clauses, key differences. Paste text or select treaties that have full text stored.</p>
+
+  <form method="post" class="diplomacy-form compare-form">
+    <div class="compare-columns">
+      <div class="compare-col">
+        <label for="treaty_id_a">Or select treaty A</label>
+        <select id="treaty_id_a" name="treaty_id_a">
+          <option value="">— Paste text below —</option>
+          {% for t in treaties %}
+          <option value="{{ t.id }}" {{ 'selected' if (preselected_treaty_id_a|string == t.id|string or request.form.get('treaty_id_a')|string == t.id|string) else '' }}>{{ t.name }}</option>
+          {% endfor %}
+        </select>
+        <label for="text_a">Text A</label>
+        <textarea id="text_a" name="text_a" rows="12" placeholder="Paste first treaty text…">{{ request.form.get('text_a', '') }}</textarea>
+      </div>
+      <div class="compare-col">
+        <label for="treaty_id_b">Or select treaty B</label>
+        <select id="treaty_id_b" name="treaty_id_b">
+          <option value="">— Paste text below —</option>
+          {% for t in treaties %}
+          <option value="{{ t.id }}" {{ 'selected' if (preselected_treaty_id_b|string == t.id|string or request.form.get('treaty_id_b')|string == t.id|string) else '' }}>{{ t.name }}</option>
+          {% endfor %}
+        </select>
+        <label for="text_b">Text B</label>
+        <textarea id="text_b" name="text_b" rows="12" placeholder="Paste second treaty text…">{{ request.form.get('text_b', '') }}</textarea>
+      </div>
+    </div>
+    <button type="submit">Compare (AI)</button>
+  </form>
+
+  {% if result %}
+  <section class="compare-result">
+    <h2>Comparison result</h2>
+    {% if result.treaty_a_name or result.treaty_b_name %}
+    <p class="compare-treaty-names">Treaty A: {{ result.treaty_a_name or 'Text A' }} · Treaty B: {{ result.treaty_b_name or 'Text B' }}</p>
+    {% endif %}
+    {% if result.error %}
+    <p class="error">{{ result.error }}</p>
+    {% endif %}
+    {% if result.comparison %}
+    <div class="comparison-text">{{ result.comparison }}</div>
+    {% endif %}
+    {% if result.key_differences %}
+    <h3>Key differences</h3>
+    <ul>
+      {% for d in result.key_differences %}
+      <li>{{ d }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if result.clauses_a %}
+    <h3>Clauses in Text A</h3>
+    <ul>
+      {% for c in result.clauses_a %}
+      <li><strong>{{ c.type }}</strong>: {{ c.summary }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if result.clauses_b %}
+    <h3>Clauses in Text B</h3>
+    <ul>
+      {% for c in result.clauses_b %}
+      <li><strong>{{ c.type }}</strong>: {{ c.summary }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+  {% endif %}
+  <p><a href="{{ url_for('main.diplomacy_dashboard') }}">← Diplomacy</a></p>
+{% endblock %}

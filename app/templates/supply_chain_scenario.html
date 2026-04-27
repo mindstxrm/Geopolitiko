@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Chokepoint scenario — Supply Chain — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Chokepoint scenario: if closed → impact</h1>
+  <p class="page-intro">Select a chokepoint and one or more countries to see an instant impact tree (sectors, exposure %, impact level). Optionally compare two chokepoints.</p>
+
+  <form method="post" class="scenario-form" id="scenario-form">
+    <div class="form-row">
+      <label for="chokepoint_id">If this chokepoint closes</label>
+      <select id="chokepoint_id" name="chokepoint_id" required>
+        <option value="">— Select chokepoint —</option>
+        {% for cp in chokepoints %}
+        <option value="{{ cp.id }}" {{ 'selected' if (result and result.chokepoint and result.chokepoint.id == cp.id) or (preselected_chokepoint and preselected_chokepoint|string == cp.id|string) else '' }}>{{ cp.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-row scenario-compare-row">
+      <label for="chokepoint_id_b">Compare with (optional)</label>
+      <select id="chokepoint_id_b" name="chokepoint_id_b">
+        <option value="">— None —</option>
+        {% for cp in chokepoints %}
+        <option value="{{ cp.id }}" {{ 'selected' if result_b and result_b.chokepoint and result_b.chokepoint.id == cp.id else '' }}>{{ cp.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Impact on these countries (leave empty = all countries with flow data)</label>
+      <div class="scenario-country-toolbar">
+        <input type="text" id="scenario-country-search" class="trade-search" placeholder="Search country name or code" aria-label="Search countries">
+        <button type="button" id="scenario-select-top" class="trade-btn">Select top 10 by exposure</button>
+      </div>
+      <div class="country-checkboxes" id="scenario-country-list">
+        {% for c in countries %}
+        <label class="country-check" data-name="{{ (c.country_name or '')|lower }}" data-code="{{ (c.country_code or '')|lower }}"><input type="checkbox" name="countries" value="{{ c.country_code }}" {{ 'checked' if c.country_code in selected_countries else '' }}> {{ c.country_name }} ({{ c.country_code }})</label>
+        {% endfor %}
+      </div>
+    </div>
+    <button type="submit">Run scenario</button>
+  </form>
+  <script>
+  (function() {
+    var flowsByChokepoint = {{ flows_by_chokepoint | tojson }};
+    var searchEl = document.getElementById('scenario-country-search');
+    var listEl = document.getElementById('scenario-country-list');
+    var selectTopBtn = document.getElementById('scenario-select-top');
+    var chokepointSelect = document.getElementById('chokepoint_id');
+    if (searchEl && listEl) {
+      searchEl.addEventListener('input', function() {
+        var q = (this.value || '').trim().toLowerCase();
+        listEl.querySelectorAll('.country-check').forEach(function(label) {
+          var name = label.getAttribute('data-name') || '';
+          var code = label.getAttribute('data-code') || '';
+          label.style.display = (!q || name.indexOf(q) !== -1 || code.indexOf(q) !== -1) ? '' : 'none';
+        });
+      });
+    }
+    if (selectTopBtn && chokepointSelect && flowsByChokepoint) {
+      selectTopBtn.addEventListener('click', function() {
+        var id = chokepointSelect.value;
+        if (!id) return;
+        var flows = flowsByChokepoint[id];
+        if (!flows || !flows.length) return;
+        var seen = {};
+        var top = [];
+        for (var i = 0; i < flows.length && top.length < 10; i++) {
+          var code = flows[i].country_code;
+          if (code && !seen[code]) { seen[code] = true; top.push(code); }
+        }
+        listEl.querySelectorAll('.country-check input[type="checkbox"]').forEach(function(cb) {
+          cb.checked = top.indexOf(cb.value) !== -1;
+        });
+      });
+    }
+  })();
+  </script>
+
+  {% if result %}
+  <section class="scenario-result" id="scenario-result">
+    <h2>Scenario tree</h2>
+    {% if result.error %}
+    <p class="error">{{ result.error }}</p>
+    {% else %}
+    <p class="scenario-summary"><strong>{{ result.summary }}</strong></p>
+    <div class="scenario-export-buttons">
+      <button type="button" id="scenario-export-csv" class="trade-btn">Export CSV</button>
+      <button type="button" id="scenario-export-pdf" class="trade-btn">Print / Save as PDF</button>
+    </div>
+    <div class="scenario-trees {% if result_b and not result_b.error %}scenario-trees-compare{% endif %}">
+      <div class="scenario-tree-wrap">
+        <h3 class="scenario-tree-title">If closed: {{ result.chokepoint.name }}</h3>
+        <div class="scenario-tree">
+          <div class="tree-node tree-root">
+            <span class="tree-label">If closed: {{ result.chokepoint.name }}</span>
+          </div>
+          {% for country in result.countries %}
+          <div class="tree-node tree-country impact-{{ country.max_impact }}">
+            <span class="tree-label">{{ country.country_name }} ({{ country.country_code }}) — max impact: <strong>{{ country.max_impact }}</strong></span>
+            <ul class="tree-sectors">
+              {% for s in country.sectors %}
+              <li>
+                <span class="sector-name">{{ s.sector }}</span>
+                <span class="sector-exposure">exposure {{ "%.0f"|format(s.exposure_pct or 0) }}%</span>
+                <span class="sector-impact impact-{{ (s.impact_if_closed or '')|lower }}">{{ s.impact_if_closed or '—' }}</span>
+                {% if s.notes %}<span class="sector-notes">{{ s.notes }}</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if result_b and not result_b.error %}
+      <div class="scenario-tree-wrap">
+        <h3 class="scenario-tree-title">If closed: {{ result_b.chokepoint.name }}</h3>
+        <div class="scenario-tree">
+          <div class="tree-node tree-root">
+            <span class="tree-label">If closed: {{ result_b.chokepoint.name }}</span>
+          </div>
+          {% for country in result_b.countries %}
+          <div class="tree-node tree-country impact-{{ country.max_impact }}">
+            <span class="tree-label">{{ country.country_name }} ({{ country.country_code }}) — max impact: <strong>{{ country.max_impact }}</strong></span>
+            <ul class="tree-sectors">
+              {% for s in country.sectors %}
+              <li>
+                <span class="sector-name">{{ s.sector }}</span>
+                <span class="sector-exposure">exposure {{ "%.0f"|format(s.exposure_pct or 0) }}%</span>
+                <span class="sector-impact impact-{{ (s.impact_if_closed or '')|lower }}">{{ s.impact_if_closed or '—' }}</span>
+                {% if s.notes %}<span class="sector-notes">{{ s.notes }}</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <script>
+    (function() {
+      var result = {{ result | tojson }};
+      var csvBtn = document.getElementById('scenario-export-csv');
+      if (csvBtn && result && !result.error) {
+        csvBtn.addEventListener('click', function() {
+          if (result.error || !result.countries) return;
+          var rows = [['Chokepoint', 'Country', 'Country code', 'Max impact', 'Sector', 'Exposure %', 'Impact if closed', 'Notes']];
+          result.countries.forEach(function(c) {
+            (c.sectors || []).forEach(function(s, i) {
+              rows.push([
+                i === 0 ? result.chokepoint.name : '',
+                i === 0 ? c.country_name : '',
+                i === 0 ? c.country_code : '',
+                i === 0 ? c.max_impact : '',
+                s.sector || '',
+                (s.exposure_pct != null ? Math.round(s.exposure_pct) : ''),
+                s.impact_if_closed || '',
+                s.notes || ''
+              ]);
+            });
+          });
+          var csv = rows.map(function(r) { return r.map(function(cell) { return '"' + String(cell).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+          var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'chokepoint-scenario-' + (result.chokepoint.slug || result.chokepoint.id) + '.csv';
+          a.click();
+          URL.revokeObjectURL(a.href);
+        });
+      }
+      var pdfBtn = document.getElementById('scenario-export-pdf');
+      if (pdfBtn) pdfBtn.addEventListener('click', function() { window.print(); });
+    })();
+    </script>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <p><a href="{{ url_for('main.supply_chain_dashboard') }}" class="back-link">← Supply chain</a></p>
+{% endblock %}

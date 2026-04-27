@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Audit log — {{ channel.name }}{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}">{{ channel.name }}</a> <span class="breadcrumb-sep">›</span>
+    Audit log
+  </nav>
+  <h1 class="page-title">Audit log — {{ channel.name }}</h1>
+  <p class="page-intro">Recent actions in this channel (admin only).</p>
+  <table class="audit-table">
+    <thead>
+      <tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+      {% for e in log %}
+      <tr>
+        <td>{{ e.created_at[:19].replace('T', ' ') if e.created_at else '' }}</td>
+        <td>{{ e.author_display or e.username or '—' }}</td>
+        <td>{{ e.action }}</td>
+        <td>{% if e.details %}{{ e.details }}{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}">Back to channel</a></p>
+</div>
+{% endblock %}

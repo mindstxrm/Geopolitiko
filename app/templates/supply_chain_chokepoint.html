@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{ chokepoint.name }} — Supply Chain — Geopolitical News{% endblock %}
+{% block content %}
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.supply_chain_dashboard') }}">Supply chain</a>
+    <span class="breadcrumb-sep">→</span>
+    <span>{{ chokepoint.name }}</span>
+  </nav>
+  <h1 class="page-title">{{ chokepoint.name }}</h1>
+  <p class="chokepoint-meta">{{ chokepoint.region }} · Commodities: {{ chokepoint.commodities or '—' }}</p>
+  {% if chokepoint.description %}
+  <p class="chokepoint-desc">{{ chokepoint.description }}</p>
+  {% endif %}
+  {% if chokepoint.alternative_routes %}
+  <p class="trade-alternatives"><strong>Alternatives:</strong> {{ chokepoint.alternative_routes }}</p>
+  {% endif %}
+  {% if chokepoint.risk_score is not none %}
+  <p class="trade-criticality">Criticality score: <strong>{{ chokepoint.risk_score | int }}</strong>/100</p>
+  {% endif %}
+  <p><a href="{{ url_for('main.supply_chain_scenario') }}?chokepoint={{ chokepoint.id }}">Run scenario: if closed → impact on countries</a> · <a href="{{ conflict_url }}">Conflict & military dashboard</a> (naval/region context)</p>
+
+  <h2>Trade flows (by country & sector)</h2>
+  {% if not flows %}
+  <p class="empty-state">No flow data for this chokepoint.</p>
+  {% else %}
+  <button type="button" id="chokepoint-export-csv" class="trade-btn">Export CSV</button>
+  <h3>Exposure by sector</h3>
+  <div id="chokepoint-sector-pie" class="trade-sector-pie" aria-label="Exposure by sector"></div>
+  <h3>Exposure by country</h3>
+  <div id="chokepoint-exposure-chart" class="trade-exposure-chart-standalone" aria-label="Exposure by country"></div>
+  <div class="flows-table-wrap">
+    <table class="flows-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Sector</th>
+          <th>Exposure %</th>
+          <th>Impact if closed</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in flows %}
+        <tr>
+          <td><strong>{{ f.country_name }}</strong> ({{ f.country_code }})</td>
+          <td>{{ f.sector }}</td>
+          <td>{{ "%.0f"|format(f.exposure_pct or 0) }}%</td>
+          <td><span class="impact-pill impact-{{ (f.impact_if_closed or '')|lower }}">{{ f.impact_if_closed or '—' }}</span></td>
+          <td>{{ f.notes or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script>
+  (function() {
+    var flows = {{ flows | tojson }};
+    var bySector = {};
+    flows.forEach(function(f) {
+      var s = f.sector || 'Other';
+      if (!bySector[s]) bySector[s] = 0;
+      bySector[s] += parseFloat(f.exposure_pct) || 0;
+    });
+    var sectorTotal = Object.keys(bySector).reduce(function(s, k) { return s + bySector[k]; }, 0);
+    var pieEl = document.getElementById('chokepoint-sector-pie');
+    if (pieEl && sectorTotal > 0) {
+      var colors = ['#3b82f6','#8b5cf6','#06b6d4','#f59e0b','#22c55e','#ef4444','#6366f1','#ec4899'];
+      var sortedSectors = Object.keys(bySector).sort(function(a,b) { return bySector[b] - bySector[a]; });
+      var acc = 0;
+      var parts = sortedSectors.map(function(s, i) {
+        var pct = (bySector[s] / sectorTotal) * 100;
+        var start = acc;
+        acc += pct;
+        return colors[i % colors.length] + ' ' + start + '% ' + acc + '%';
+      }).join(', ');
+      pieEl.innerHTML = '<div class="trade-pie-chart" style="background: conic-gradient(' + parts + ');" title="Exposure by sector"></div><ul class="trade-pie-legend"></ul>';
+      var leg = pieEl.querySelector('.trade-pie-legend');
+      sortedSectors.forEach(function(s, i) {
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="trade-pie-legend-swatch" style="background:' + (colors[i % colors.length]) + '"></span> ' + s + ' ' + Math.round((bySector[s] / sectorTotal) * 100) + '%';
+        leg.appendChild(li);
+      });
+    }
+    var byCountry = {};
+    flows.forEach(function(f) {
+      var code = f.country_code;
+      if (!byCountry[code]) byCountry[code] = { name: f.country_name || code, total: 0 };
+      byCountry[code].total += parseFloat(f.exposure_pct) || 0;
+    });
+    var sorted = Object.keys(byCountry).map(function(k) { return { code: k, name: byCountry[k].name, total: byCountry[k].total }; }).sort(function(a,b) { return b.total - a.total; });
+    var chartEl = document.getElementById('chokepoint-exposure-chart');
+    if (chartEl && sorted.length) {
+      var maxT = Math.max.apply(null, sorted.map(function(x) { return x.total; })) || 1;
+      chartEl.innerHTML = sorted.slice(0, 12).map(function(x) {
+        var w = Math.max(5, (x.total / maxT) * 100);
+        return '<div class="trade-chart-bar"><span class="trade-chart-label">' + (x.name || x.code) + '</span><span class="trade-chart-track"><span class="trade-chart-fill" style="width:' + w + '%"></span></span><span class="trade-chart-pct">' + Math.round(x.total) + '%</span></div>';
+      }).join('');
+    }
+    var btn = document.getElementById('chokepoint-export-csv');
+    if (btn && flows.length) btn.addEventListener('click', function() {
+      var headers = ['Country', 'Country code', 'Sector', 'Exposure %', 'Impact if closed', 'Notes'];
+      var rows = flows.map(function(f) { return [f.country_name || '', f.country_code || '', f.sector || '', (f.exposure_pct != null ? Math.round(f.exposure_pct) : ''), f.impact_if_closed || '', (f.notes || '').replace(/"/g, '""')]; });
+      var csv = [headers.join(','), rows.map(function(r) { return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n')].join('\n');
+      var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'chokepoint-' + {{ (chokepoint.slug or chokepoint.id) | tojson }} + '-flows.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  })();
+  </script>
+  {% endif %}
+  <p><a href="{{ url_for('main.supply_chain_dashboard') }}" class="back-link">← Supply chain</a></p>
+{% endblock %}

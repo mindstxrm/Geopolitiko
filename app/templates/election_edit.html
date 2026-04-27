@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Edit election — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Edit election</h1>
+  <p class="page-intro"><a href="{{ url_for('main.approval_protests') }}#elections">← Election calendars</a></p>
+
+  <form method="post" class="diplomacy-form">
+    <label for="country_code">Country code *</label>
+    <input type="text" id="country_code" name="country_code" value="{{ election.country_code or '' }}" required maxlength="10" list="country_codes">
+    <datalist id="country_codes">{% for c in (countries or []) %}<option value="{{ c.country_code }}">{{ c.country_name }}</option>{% endfor %}</datalist>
+    <label for="country_name">Country name *</label>
+    <input type="text" id="country_name" name="country_name" value="{{ election.country_name or '' }}" required list="country_names">
+    <datalist id="country_names">{% for c in (countries or []) %}<option value="{{ c.country_name }}">{{ c.country_code }}</option>{% endfor %}</datalist>
+    <label for="election_type">Election type *</label>
+    <select id="election_type" name="election_type" required>
+      {% for et in election_types %}
+      <option value="{{ et }}" {{ 'selected' if election.election_type == et else '' }}>{{ et }}</option>
+      {% endfor %}
+    </select>
+    <label for="date_planned">Date planned *</label>
+    <input type="month" id="date_planned" name="date_planned" value="{{ (election.date_planned or '')[:7] }}" required>
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="">—</option>
+      {% for s in election_statuses %}
+      <option value="{{ s }}" {{ 'selected' if election.status == s else '' }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes" rows="2">{{ election.notes or '' }}</textarea>
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

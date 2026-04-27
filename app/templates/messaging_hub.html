@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Intelligence Messaging — Geopolitical Terminal{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page messaging-hub-page">
+  <header class="messaging-hub-header">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Intelligence Messaging
+    </nav>
+    <div class="messaging-hub-header-row">
+      <div class="messaging-hub-titles">
+        <h1 class="page-title">Intelligence Messaging</h1>
+        <p class="page-intro messaging-hub-intro">Private, invite-only channels. Encrypted at rest.</p>
+      </div>
+      <div class="messaging-hub-toolbar" role="toolbar" aria-label="Messaging actions">
+        <a href="{{ url_for('main.messaging_create_channel_route') }}" class="btn btn-primary">Create channel</a>
+        <a href="{{ url_for('main.messaging_directory') }}" class="btn btn-secondary">Directory</a>
+        <a href="{{ url_for('main.messaging_search') }}" class="btn btn-secondary">Search</a>
+        {% if notifications and notifications|length > 0 %}
+        <a href="{{ url_for('main.messaging_notifications_page') }}" class="btn btn-secondary">Notifications <span class="messaging-hub-toolbar-badge">{{ notifications|length }}</span></a>
+        {% endif %}
+        <a href="{{ url_for('main.messaging_reports_inbox') }}" class="btn btn-secondary">Report inbox</a>
+      </div>
+    </div>
+  </header>
+
+  <form method="get" action="{{ url_for('main.messaging_hub') }}" class="hub-filters messaging-hub-filters">
+    <label class="hub-filter-check"><input type="checkbox" name="unread" value="1" {{ 'checked' if unread_only else '' }} onchange="this.form.submit()"> Unread only</label>
+    <label class="hub-filter-sort">Sort <select name="sort" onchange="this.form.submit()" aria-label="Sort channels">
+      <option value="activity" {{ 'selected' if sort == 'activity' else '' }}>Latest activity</option>
+      <option value="unread" {{ 'selected' if sort == 'unread' else '' }}>Unread first</option>
+    </select></label>
+    {% if unread_only %}<input type="hidden" name="unread" value="1">{% endif %}
+  </form>
+
+  {% if not channels %}
+  <div class="onboarding-banner messaging-onboarding" role="region" aria-label="Get started">
+    <p><strong>Join your first channel.</strong> Browse the <a href="{{ url_for('main.messaging_directory') }}">channel directory</a> and request an invite, or create a channel.</p>
+  </div>
+  {% endif %}
+
+  <div class="messaging-hub-grid">
+    <section class="messaging-channels-section messaging-hub-column">
+      <h2 class="messaging-hub-column-title">Your channels</h2>
+      {% if not channels %}
+        <p class="empty-state">You are not in any channels yet. Create one, or ask a member for an invite link.</p>
+      {% else %}
+        <ul class="messaging-channel-list messaging-channel-list-dense">
+          {% for c in channels %}
+          <li class="channel-row {{ 'starred' if c.starred else '' }}">
+            <form method="post" action="{{ url_for('main.messaging_star', channel_id=c.id) }}" class="star-form inline">
+              <input type="hidden" name="starred" value="{{ '0' if c.starred else '1' }}">
+              <button type="submit" class="btn-icon star-btn" title="{{ 'Unstar' if c.starred else 'Star' }}" aria-label="{{ 'Unstar' if c.starred else 'Star' }}">{% if c.starred %}★{% else %}☆{% endif %}</button>
+            </form>
+            <a href="{{ url_for('main.messaging_channel', slug=c.slug) }}" class="messaging-channel-row-link">
+              <span class="channel-name">{{ c.name }}</span>
+              <span class="channel-meta">{{ channel_type_label(c.channel_type) }}{% if c.invite_only %} · Invite-only{% endif %}</span>
+              {% if (c.unread_count or 0) > 0 %}
+              <span class="unread-badge" aria-label="{{ c.unread_count }} unread">{{ c.unread_count }}</span>
+              {% endif %}
+            </a>
+            {% if c.role in ('admin', 'verified_analyst') %}<span class="channel-role">{{ c.role }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+
+    <section class="discover-section messaging-hub-column">
+      <h2 class="messaging-hub-column-title">Discover</h2>
+      <p class="discover-blurb">Featured channels. <a href="{{ url_for('main.messaging_directory') }}">Full directory</a></p>
+      {% if featured_channels %}
+      <ul class="messaging-channel-list messaging-channel-list-dense discover-list">
+        {% for c in featured_channels %}
+        <li>
+          <a href="{{ url_for('main.messaging_channel', slug=c.slug) }}" class="messaging-channel-row-link">
+            <span class="channel-name">{{ c.name }}</span>
+            <span class="channel-meta">{{ c.description or channel_type_label(c.channel_type) }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">No featured channels yet. <a href="{{ url_for('main.messaging_directory') }}">Browse directory</a>.</p>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

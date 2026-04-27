@@ -1,0 +1,432 @@
+{% extends "base.html" %}
+
+{% block title %}Insights — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <a href="#insights-pane-digests" class="skip-link">Skip to insights</a>
+  {% set w = window or '7d' %}
+  <h1 class="page-title">Insights</h1>
+  <p class="page-intro">Digests, trends, impact metrics, and story clusters.</p>
+  {% if last_scrape_time %}
+  <p class="insights-meta">Data updated: {{ (last_scrape_time or '')[:19].replace('T', ' ') }} UTC</p>
+  {% endif %}
+  <div class="insights-header-actions">
+    <a href="{{ url_for('main.insights_digests_rss', type=request.args.get('type', '')) }}" class="insights-rss-link">Digests RSS</a>
+    <button type="button" class="insights-copy-link-btn" data-page-url="{{ request.url }}">Copy link to this view</button>
+  </div>
+
+  {% if today_count is not none and yesterday_count is not none %}
+  <p class="insights-today-hint">Today: <strong>{{ today_count }}</strong> stories (yesterday: {{ yesterday_count }})</p>
+  {% endif %}
+
+  <div class="insights-command-strip" role="toolbar" aria-label="Insights controls">
+    <div class="insights-command-metrics">
+      <h2 class="sr-only">Impact metrics</h2>
+      {% if impact_summary.total %}
+      <a href="{{ url_for('main.index', window=w) }}" class="metric-card metric-card-link">
+        <span class="metric-label">Stories ({{ w }})</span>
+        <span class="metric-value">{{ impact_summary.total }}</span>
+      </a>
+      <a href="{{ url_for('main.index', window=w, impact='high') }}" class="metric-card metric-card-link">
+        <span class="metric-label">High impact</span>
+        <span class="metric-value metric-high">{{ impact_summary.high }}</span>
+      </a>
+      <a href="{{ url_for('main.index', window=w, impact='med') }}" class="metric-card metric-card-link">
+        <span class="metric-label">Medium</span>
+        <span class="metric-value metric-med">{{ impact_summary.medium }}</span>
+      </a>
+      <a href="{{ url_for('main.index', window=w, impact='low') }}" class="metric-card metric-card-link">
+        <span class="metric-label">Low</span>
+        <span class="metric-value metric-low">{{ impact_summary.low }}</span>
+      </a>
+      {% else %}
+      <span class="sidebar-empty">Run <code>python run_jobs.py --topics --impact</code> to see impact metrics. <a href="{{ url_for('main.index') }}">View feed</a></span>
+      {% endif %}
+    </div>
+
+    <div class="insights-command-right">
+      <section class="time-window" aria-label="Time window">
+        <span class="time-window-label">Window:</span>
+        <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window='1d') }}" class="time-window-chip {{ 'active' if w == '1d' else '' }}">24h</a>
+        <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window='3d') }}" class="time-window-chip {{ 'active' if w == '3d' else '' }}">3d</a>
+        <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window='7d') }}" class="time-window-chip {{ 'active' if w == '7d' else '' }}">7d</a>
+        <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window='30d') }}" class="time-window-chip {{ 'active' if w == '30d' else '' }}">30d</a>
+      </section>
+
+      <div class="insights-tabs" role="tablist" aria-label="Insights tabs">
+        <button type="button" class="insights-tab" role="tab" aria-selected="false" data-pane="digests">Digests</button>
+        <button type="button" class="insights-tab" role="tab" aria-selected="false" data-pane="trending">Trending</button>
+        <button type="button" class="insights-tab" role="tab" aria-selected="false" data-pane="clusters">Clusters</button>
+        <button type="button" class="insights-tab" role="tab" aria-selected="false" data-pane="charts">Charts</button>
+      </div>
+
+      <button type="button" class="insights-sidebar-open-btn" id="insights-sidebar-open-btn" aria-controls="insights-sidebar-panel" aria-expanded="false">Sidebar</button>
+    </div>
+  </div>
+
+  <div class="insights-workspace-grid">
+    <main class="insights-canvas" aria-label="Insights canvas">
+      <section class="insights-pane" id="insights-pane-digests" data-pane="digests">
+        {% if thematic_briefing and thematic_topic %}
+        <details class="insights-card-details" {% if thematic_briefing.summary or thematic_briefing.bullets %}open{% endif %}>
+          <summary class="insights-card-summary">Thematic briefing: {{ thematic_topic }}</summary>
+          {% if thematic_briefing.summary %}<div class="synthesis-prose">{{ thematic_briefing.summary }}</div>{% endif %}
+          {% if thematic_briefing.bullets %}
+          <ul class="synthesis-bullets-list">
+            {% for b in thematic_briefing.bullets %}
+            <li>{{ b }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          <p class="insights-thematic-other">Other themes: <a href="{{ url_for('main.insights', thematic='US-China', window=window or '7d', type=request.args.get('type') or '') }}">US–China</a> · <a href="{{ url_for('main.insights', thematic='Russia-Ukraine', window=window or '7d', type=request.args.get('type') or '') }}">Russia–Ukraine</a> · <a href="{{ url_for('main.insights', thematic='Middle East', window=window or '7d', type=request.args.get('type') or '') }}">Middle East</a></p>
+        </details>
+        {% endif %}
+
+        {% if divergences %}
+        <details class="insights-card-details" open>
+          <summary class="insights-card-summary">Signal divergences</summary>
+          <p class="insights-meta">Model mismatches that may warrant follow-up</p>
+          <ul>
+            {% for d in divergences %}
+            <li class="divergence-item-inline"><strong>{{ d.title }}</strong> — {{ (d.detail or '')[:120] }}{% if (d.detail or '')|length > 120 %}…{% endif %}</li>
+            {% endfor %}
+          </ul>
+          <p><a href="{{ url_for('main.synthesis_divergences') }}">View all divergences</a></p>
+        </details>
+        {% endif %}
+
+        <section id="insights-digests" class="analysis-section">
+          <h2>Digests</h2>
+          <form method="get" class="filter-form" action="{{ url_for('main.insights') }}">
+            <input type="hidden" name="window" value="{{ window or '7d' }}">
+            {% if thematic_topic %}<input type="hidden" name="thematic" value="{{ thematic_topic }}">{% endif %}
+            <label for="type">Type</label>
+            <select name="type" id="type" onchange="this.form.submit()">
+              <option value="">All</option>
+              <option value="daily" {{ 'selected' if request.args.get('type') == 'daily' else '' }}>Daily</option>
+              <option value="weekly" {{ 'selected' if request.args.get('type') == 'weekly' else '' }}>Weekly</option>
+            </select>
+          </form>
+          <p class="insights-section-links"><a href="{{ url_for('main.insights_digests_rss', type=request.args.get('type', '')) }}">RSS</a></p>
+          {% if not digests %}
+            <p class="empty-state">No digests yet. Run <code>python run_jobs.py --digest</code> to generate. <a href="{{ url_for('main.index') }}">View feed</a></p>
+          {% else %}
+            <ul class="digest-list">
+              {% for d in digests %}
+              <li class="digest-list-item">
+                <a href="{{ url_for('main.digest_detail', digest_id=d.id) }}" class="digest-link">
+                  <strong>{{ d.title }}</strong>
+                  <span class="digest-meta">{{ d.digest_type }} — {{ d.created_at[:10] }}</span>
+                  {% if d.preview %}<span class="digest-preview">{{ d.preview }}</span>{% endif %}
+                </a>
+                <a href="{{ url_for('main.export_digest_pdf', digest_id=d.id) }}" class="digest-export-pdf">Export PDF</a>
+              </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      </section>
+
+      <section class="insights-pane" id="insights-pane-trending" data-pane="trending">
+        <section id="insights-trending" class="analysis-section">
+          <h2>Trending topics ({{ '24h' if w == '1d' else ('3d' if w == '3d' else ('30 days' if w == '30d' else '7 days')) }})</h2>
+          {% if not trending %}
+            <p class="empty-state">Run <code>python run_jobs.py --topics</code> to extract topics from articles. <a href="{{ url_for('main.index') }}">View feed</a></p>
+          {% else %}
+            <ul class="trending-list">
+              {% for topic, count in trending %}
+              <li><a href="{{ url_for('main.index', topic=topic, window=w) }}" class="topic-tag topic-tag-large">{{ topic }}</a> <span class="count">({{ count }})</span></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      </section>
+
+      <section class="insights-pane" id="insights-pane-clusters" data-pane="clusters">
+        <section id="insights-clusters" class="analysis-section">
+          <h2>Story clusters (multi-source coverage)</h2>
+          {% if not clusters %}
+            <p class="empty-state">Run <code>python run_jobs.py --cluster</code> to group similar stories. <a href="{{ url_for('main.index') }}">View feed</a></p>
+          {% else %}
+            <ul class="cluster-list">
+              {% for c in clusters %}
+              <li>
+                <a href="{{ url_for('main.cluster_detail', cluster_id=c.cluster_id) }}">
+                  <span class="cluster-label">{{ c.label }}</span>
+                  <span class="cluster-meta">— {{ c.count }} article(s)</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      </section>
+
+      <section class="insights-pane" id="insights-pane-charts" data-pane="charts">
+        <section id="insights-charts" class="analysis-section">
+          <h2>Charts</h2>
+          <div class="charts-grid">
+            <figure class="chart-card">
+              <h3>Stories per day ({{ w }})</h3>
+              <canvas id="storiesChart" height="120" role="img" aria-label="Line chart: number of stories per day for the selected window"></canvas>
+            </figure>
+            <figure class="chart-card">
+              <h3>Domains distribution ({{ w }})</h3>
+              <canvas id="domainsChart" height="120" role="img" aria-label="Bar chart: top impact domains by story count"></canvas>
+            </figure>
+            {% if impact_summary and (impact_summary.high or impact_summary.medium or impact_summary.low) %}
+            <figure class="chart-card">
+              <h3>Impact distribution ({{ w }})</h3>
+              <canvas id="impactChart" height="120" role="img" aria-label="Bar chart: high, medium, and low impact story counts"></canvas>
+            </figure>
+            {% endif %}
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <aside class="insights-sidebar" id="insights-sidebar-panel">
+      <button type="button" class="insights-sidebar-close-btn" id="insights-sidebar-close-btn" aria-label="Close sidebar">×</button>
+
+      {% if event_type_counts %}
+      <section class="analysis-section">
+        <h2>Risk categories ({{ w }})</h2>
+        <ul class="trending-list">
+          {% for et, cnt in event_type_counts %}
+          <li><a href="{{ url_for('main.index', risk_category=et, window=w) }}" class="topic-tag topic-tag-large">{{ et }}</a> <span class="count">({{ cnt }})</span></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if spike_topics or declining_topics %}
+      <details class="analysis-section insights-sidebar-details">
+        <summary>Spiking / Declining</summary>
+        <p class="insights-spike-toggle">
+          <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window=w, spike='24h') }}" class="time-window-chip {{ 'active' if spike_window == '24h' else '' }}">24h vs prior 24h</a>
+          <a href="{{ url_for('main.insights', type=request.args.get('type', ''), window=w, spike='7d') }}" class="time-window-chip {{ 'active' if spike_window == '7d' else '' }}">7d vs prior 7d</a>
+        </p>
+        {% if spike_topics %}
+        <h3>Spiking ↑</h3>
+        <ul class="trending-list">
+          {% for topic, recent, prior in spike_topics %}
+          <li><a href="{{ url_for('main.index', topic=topic, window=w) }}" class="topic-tag topic-tag-large">{{ topic }}</a> <span class="count">↑ {{ recent }} (was {{ prior }})</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if declining_topics %}
+        <h3>Declining ↓</h3>
+        <ul class="trending-list">
+          {% for topic, recent, prior in declining_topics %}
+          <li><a href="{{ url_for('main.index', topic=topic, window=w) }}" class="topic-tag topic-tag-large">{{ topic }}</a> <span class="count">↓ {{ recent }} (was {{ prior }})</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </details>
+      {% endif %}
+
+      {% if top_sources %}
+      <details class="analysis-section insights-sidebar-details">
+        <summary>Top sources ({{ w }})</summary>
+        <ul class="trending-list">
+          {% for s in top_sources %}
+          <li><a href="{{ url_for('main.index', source=s.source_name, window=w) }}" class="topic-tag topic-tag-large">{{ s.source_name }}</a> <span class="count">({{ s.count }})</span></li>
+          {% endfor %}
+        </ul>
+      </details>
+      {% endif %}
+
+      {% if alerts %}
+      <details class="analysis-section insights-sidebar-details">
+        <summary>Alert activity ({{ w }})</summary>
+        <p><a href="{{ url_for('main.alerts_list') }}">Manage alerts</a></p>
+        <ul class="insights-alert-list">
+          {% for a in alerts %}
+          <li><a href="{{ url_for('main.alert_detail', alert_id=a.id) }}">{{ a.name }}{% if alert_count_by_id.get(a.id) %} <span class="alert-badge">({{ alert_count_by_id.get(a.id) }})</span>{% endif %}</a></li>
+          {% endfor %}
+        </ul>
+      </details>
+      {% endif %}
+
+      <section class="analysis-section insights-quick-links">
+        <h2>Quick links</h2>
+        <ul class="insights-quick-links-list">
+          <li><a href="{{ url_for('main.index') }}">Intelligence Feed</a></li>
+          <li><a href="{{ url_for('main.alerts_list') }}">Watchlists</a></li>
+          <li><a href="{{ url_for('main.situation_room') }}">Situation Room</a></li>
+          <li><a href="{{ url_for('main.approval_protests') }}">Elections &amp; approval</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <div class="insights-footer">
+    <p><a href="{{ url_for('main.alerts_list') }}">→ Watchlists</a> — Create and manage topic/country watchlists with alerts.</p>
+  </div>
+
+  <div class="insights-sidebar-backdrop" id="insights-sidebar-backdrop" aria-hidden="true"></div>
+
+  <script>
+    const dailyData = {{ daily_counts|tojson }};
+    const domainData = {{ domain_counts|tojson }};
+    const impactSummary = {{ (impact_summary or {})|tojson }};
+    var isDark = document.body.classList.contains("terminal");
+
+    function setActivePane(paneKey) {
+      var tabs = document.querySelectorAll(".insights-tab");
+      var panes = document.querySelectorAll(".insights-pane");
+      tabs.forEach(function (t) {
+        var active = t.getAttribute("data-pane") === paneKey;
+        t.classList.toggle("active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      panes.forEach(function (p) {
+        var active = p.getAttribute("data-pane") === paneKey;
+        p.classList.toggle("active", active);
+      });
+      if (paneKey === "charts") resizeInsightsCharts();
+    }
+
+    function resizeInsightsCharts() {
+      if (!window.__insightsCharts) return;
+      Object.keys(window.__insightsCharts).forEach(function (k) {
+        var chart = window.__insightsCharts[k];
+        if (chart && chart.resize) chart.resize();
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var btn = document.querySelector(".insights-copy-link-btn");
+      if (btn) btn.addEventListener("click", function () {
+        var url = btn.getAttribute("data-page-url") || window.location.href;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy link to this view"; }, 2000); });
+        } else {
+          var ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+          btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy link to this view"; }, 2000);
+        }
+      });
+      var storiesCtx = document.getElementById("storiesChart");
+      var domainsCtx = document.getElementById("domainsChart");
+      var impactCtx = document.getElementById("impactChart");
+      var lineColor = isDark ? "rgba(96, 165, 250, 1)" : "#2563eb";
+      var lineFill = isDark ? "rgba(96, 165, 250, 0.15)" : "rgba(37, 99, 235, 0.12)";
+      var barColor = isDark ? "rgba(96, 165, 250, 0.8)" : "rgba(37, 99, 235, 0.75)";
+      var tickColor = isDark ? "#94a3b8" : "#64748b";
+
+      window.__insightsCharts = window.__insightsCharts || {};
+      if (storiesCtx && Array.isArray(dailyData)) {
+        const labels = dailyData.map(d => d.day);
+        const counts = dailyData.map(d => d.count);
+        window.__insightsCharts.stories = new Chart(storiesCtx, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [{
+              label: "Stories",
+              data: counts,
+              borderColor: lineColor,
+              backgroundColor: lineFill,
+              tension: 0.25,
+              fill: true
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { maxTicksLimit: 6, color: tickColor } },
+              y: { beginAtZero: true, ticks: { precision: 0, color: tickColor } }
+            }
+          }
+        });
+      }
+
+      if (domainsCtx && Array.isArray(domainData)) {
+        const labels = domainData.map(d => d[0]);
+        const counts = domainData.map(d => d[1]);
+        window.__insightsCharts.domains = new Chart(domainsCtx, {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [{
+              label: "Stories",
+              data: counts,
+              backgroundColor: barColor
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { autoSkip: false, maxRotation: 45, minRotation: 0, color: tickColor } },
+              y: { beginAtZero: true, ticks: { precision: 0, color: tickColor } }
+            }
+          }
+        });
+      }
+
+      if (impactCtx && impactSummary && (impactSummary.high || impactSummary.medium || impactSummary.low)) {
+        window.__insightsCharts.impact = new Chart(impactCtx, {
+          type: "bar",
+          data: {
+            labels: ["High", "Medium", "Low"],
+            datasets: [{
+              label: "Stories",
+              data: [impactSummary.high || 0, impactSummary.medium || 0, impactSummary.low || 0],
+              backgroundColor: [
+                isDark ? "rgba(239, 68, 68, 0.8)" : "rgba(220, 38, 38, 0.75)",
+                isDark ? "rgba(251, 191, 36, 0.8)" : "rgba(245, 158, 11, 0.75)",
+                isDark ? "rgba(34, 197, 94, 0.8)" : "rgba(22, 163, 74, 0.75)"
+              ]
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: tickColor } },
+              y: { beginAtZero: true, ticks: { precision: 0, color: tickColor } }
+            }
+          }
+        });
+      }
+
+      // Tabs: show one pane at a time.
+      var tabs = document.querySelectorAll(".insights-tab");
+      tabs.forEach(function (t) {
+        t.addEventListener("click", function () {
+          var paneKey = t.getAttribute("data-pane") || "digests";
+          try { localStorage.setItem("insights-active-tab", paneKey); } catch (e) {}
+          setActivePane(paneKey);
+          window.location.hash = "insights-" + paneKey;
+        });
+      });
+
+      // Sidebar drawer (mobile)
+      var sidebarOpen = document.getElementById("insights-sidebar-open-btn");
+      var sidebarClose = document.getElementById("insights-sidebar-close-btn");
+      var sidebarPanel = document.getElementById("insights-sidebar-panel");
+      var sidebarBackdrop = document.getElementById("insights-sidebar-backdrop");
+      function setSidebarOpen(open) {
+        if (!sidebarPanel) return;
+        sidebarPanel.classList.toggle("open", !!open);
+        if (sidebarBackdrop) sidebarBackdrop.setAttribute("aria-hidden", String(!open));
+        if (sidebarOpen) sidebarOpen.setAttribute("aria-expanded", String(!!open));
+      }
+      if (sidebarOpen) sidebarOpen.addEventListener("click", function () { setSidebarOpen(true); });
+      if (sidebarClose) sidebarClose.addEventListener("click", function () { setSidebarOpen(false); });
+      if (sidebarBackdrop) sidebarBackdrop.addEventListener("click", function () { setSidebarOpen(false); });
+
+      var initialPane = "digests";
+      var hash = (window.location.hash || "").replace("#", "");
+      if (hash === "insights-charts") initialPane = "charts";
+      else if (hash === "insights-digests") initialPane = "digests";
+      else if (hash === "insights-trending") initialPane = "trending";
+      else if (hash === "insights-clusters") initialPane = "clusters";
+      try {
+        var saved = localStorage.getItem("insights-active-tab");
+        if (saved) initialPane = saved;
+      } catch (e) {}
+
+      setActivePane(initialPane);
+    });
+  </script>
+{% endblock %}

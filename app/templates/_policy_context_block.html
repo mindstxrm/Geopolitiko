@@ -1,0 +1,58 @@
+{# Expects: policy_context (dict), entity_type, entity_ref, request, current_user #}
+{% set pc = policy_context or {} %}
+{% if pc.get('content_updated_since_visit') %}
+<div class="policy-updated-banner" role="status">
+  <strong>Updated since your last visit</strong> — content or ingest timestamp changed. Re-check primary sources before citing.
+</div>
+{% endif %}
+{% if pc.get('entity_change_log') %}
+<details class="policy-change-log">
+  <summary>Change history ({{ (pc.entity_change_log or [])|length }} recent)</summary>
+  <ul class="policy-change-log-list">
+    {% for ev in pc.entity_change_log %}
+    <li><time datetime="{{ ev.created_at }}">{{ ev.created_at[:19].replace('T', ' ') }} UTC</time> — {{ ev.summary }}</li>
+    {% endfor %}
+  </ul>
+</details>
+{% endif %}
+{% if current_user.is_authenticated %}
+<section class="policy-object-thread" aria-label="Team discussion thread">
+  <h2 class="policy-thread-heading">Discussion thread</h2>
+  <p class="policy-thread-hint">Internal notes and replies tied to this page (separate from Messaging channels).</p>
+  {% if pc.get('object_thread_comments') %}
+  <ul class="policy-thread-list">
+    {% for c in pc.object_thread_comments %}
+    <li class="policy-thread-item {% if c.parent_id %}policy-thread-reply{% endif %}">
+      <span class="policy-thread-meta"><strong>{{ c.username }}</strong> · <time datetime="{{ c.created_at }}">{{ c.created_at[:19].replace('T', ' ') }}</time></span>
+      <div class="policy-thread-body">{{ c.body }}</div>
+      <details class="policy-thread-reply-form-wrap">
+        <summary>Reply</summary>
+        <form method="post" action="{{ url_for('main.workspace_object_thread_post') }}" class="policy-thread-form">
+          <input type="hidden" name="entity_type" value="{{ entity_type }}">
+          <input type="hidden" name="entity_ref" value="{{ entity_ref }}">
+          <input type="hidden" name="parent_id" value="{{ c.id }}">
+          <input type="hidden" name="next" value="{{ request.url }}">
+          <label class="sr-only" for="reply-body-{{ c.id }}">Reply</label>
+          <textarea id="reply-body-{{ c.id }}" name="body" rows="2" required maxlength="8000" placeholder="Reply…"></textarea>
+          <button type="submit" class="btn btn-secondary btn-sm">Post reply</button>
+        </form>
+      </details>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="policy-thread-empty">No comments yet.</p>
+  {% endif %}
+  <form method="post" action="{{ url_for('main.workspace_object_thread_post') }}" class="policy-thread-form policy-thread-new">
+    <input type="hidden" name="entity_type" value="{{ entity_type }}">
+    <input type="hidden" name="entity_ref" value="{{ entity_ref }}">
+    <input type="hidden" name="next" value="{{ request.url }}">
+    <label for="policy-thread-new-body">New comment</label>
+    <textarea id="policy-thread-new-body" name="body" rows="3" required maxlength="8000" placeholder="Add a comment for your team…"></textarea>
+    <button type="submit" class="btn btn-primary btn-sm">Post</button>
+  </form>
+  <p class="policy-thread-tasks"><a href="{{ url_for('main.workspace_tasks') }}">Open tasks</a> — assign follow-ups with due dates.</p>
+</section>
+{% else %}
+<p class="policy-thread-login-hint"><a href="{{ url_for('main.login') }}">Log in</a> to view or post team discussion threads.</p>
+{% endif %}

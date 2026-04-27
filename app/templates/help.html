@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% block title %}Help & Getting started — Geopolitical Terminal{% endblock %}
+{% block body_extra_class %} terminal-help-page{% endblock %}
+{% block content %}
+<div class="help-page" id="help-page-root">
+  <header class="help-page-header">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Help
+    </nav>
+    <h1 class="page-title">Help & Getting started</h1>
+    <p class="page-intro">Learn how to navigate the platform, use synthesis and indicators, and understand key concepts.</p>
+  </header>
+
+  <div class="help-page-layout">
+    <nav class="help-tablist" role="tablist" aria-label="Help sections" id="help-section-tabs">
+      <button type="button" role="tab" id="help-tab-getting-started" class="help-tab" aria-selected="true" aria-controls="getting-started" data-section="getting-started">Getting started</button>
+      <button type="button" role="tab" id="help-tab-synthesis" class="help-tab" aria-selected="false" aria-controls="synthesis" data-section="synthesis">Synthesis</button>
+      <button type="button" role="tab" id="help-tab-indicators" class="help-tab" aria-selected="false" aria-controls="indicators" data-section="indicators">Indicator guide</button>
+      <button type="button" role="tab" id="help-tab-institutional-models" class="help-tab" aria-selected="false" aria-controls="institutional-models" data-section="institutional-models">Institutional models</button>
+      <button type="button" role="tab" id="help-tab-glossary" class="help-tab" aria-selected="false" aria-controls="glossary" data-section="glossary">Glossary</button>
+      <button type="button" role="tab" id="help-tab-policy-workflows" class="help-tab" aria-selected="false" aria-controls="policy-workflows" data-section="policy-workflows">Think tanks</button>
+      <button type="button" role="tab" id="help-tab-reference" class="help-tab" aria-selected="false" aria-controls="reference" data-section="reference">Reference</button>
+    </nav>
+
+    <div class="help-tabpanels">
+      <section id="getting-started" role="tabpanel" aria-labelledby="help-tab-getting-started" class="help-tab-panel help-section is-active" data-section="getting-started" tabindex="-1">
+        <h2 class="help-panel-title">Getting started</h2>
+        <p>Geopolitical Terminal provides a <strong>Situation Room</strong> (global map), <strong>Intelligence Feed</strong>, <strong>Risk Engine</strong>, country dashboards, <strong>Scenario Engine</strong>, and <strong>Workspace</strong> for multi-panel views.</p>
+        <ul class="help-list">
+          <li><strong>Start:</strong> <a href="{{ url_for('main.situation_room') }}">Situation Room</a> — map layers (Political Stability, Conflict, Sanctions, Trade, Supply Chain). Use quick links to Feed, Risk, Elections.</li>
+          <li><strong>Search:</strong> Top bar — choose type (Country, Region, Risk, etc.) and type to jump (e.g. workspace shortcuts). <kbd>/</kbd> or <kbd>⌘K</kbd> focus.</li>
+          <li><strong>Compare:</strong> <a href="{{ url_for('main.workspace') }}">Workspace</a> — 2–4 panels. You choose any screen per panel (dropdown + path); <strong>Quick examples</strong> on the toolbar load sample layouts only.</li>
+          <li><strong>Think tanks:</strong> See the <a href="#policy-workflows" class="help-hash-link">Think tanks</a> tab — citations, brief mode, shareable URLs, and briefing workflow.</li>
+        </ul>
+        <p class="help-tour-cta"><a href="{{ url_for('main.situation_room') }}?tour=1" class="btn btn-secondary">Start 3-step tour</a></p>
+      </section>
+
+      <section id="synthesis" role="tabpanel" aria-labelledby="help-tab-synthesis" class="help-tab-panel help-section" data-section="synthesis" hidden tabindex="-1">
+        <h2 class="help-panel-title">Synthesis</h2>
+        <p>Synthesis is integrated across the platform. LLM summaries aggregate fragility, GEPI, risk, sanctions, articles, events. Requires <code>OPENAI_API_KEY</code>.</p>
+        <h3>Where synthesis appears</h3>
+        <ul class="help-list">
+          <li><a href="{{ url_for('main.situation_room') }}">Situation Room</a> — Escalation trajectory, signal divergences, system briefing link</li>
+          <li><a href="{{ url_for('main.country_dashboard', country_code='USA') }}">Country Dashboard</a> — Operating Picture tab (summary + bullets), Executive One-Pager</li>
+          <li><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> — Escalation trajectory</li>
+          <li><a href="{{ url_for('main.insights') }}">Insights</a> — Thematic briefings (US–China, Russia–Ukraine, Middle East), signal divergences</li>
+        </ul>
+        <h3>Full-page views</h3>
+        <ul class="help-list help-list-inline">
+          <li><a href="{{ url_for('main.synthesis_meta_briefing') }}">Meta-briefing</a></li>
+          <li><a href="{{ url_for('main.synthesis_trajectory') }}">Escalation trajectory</a></li>
+          <li><a href="{{ url_for('main.synthesis_divergences') }}">Cross-signal divergence</a></li>
+          <li><a href="{{ url_for('main.synthesis_executive') }}">Executive one-pager</a></li>
+          <li><a href="{{ url_for('main.synthesis_thematic', topic='US-China') }}">US–China</a></li>
+          <li><a href="{{ url_for('main.synthesis_thematic', topic='Russia-Ukraine') }}">Russia–Ukraine</a></li>
+          <li><a href="{{ url_for('main.synthesis_thematic', topic='Middle East') }}">Middle East</a></li>
+        </ul>
+      </section>
+
+      <section id="indicators" role="tabpanel" aria-labelledby="help-tab-indicators" class="help-tab-panel help-section" data-section="indicators" hidden tabindex="-1">
+        <h2 class="help-panel-title">Indicator guide</h2>
+        <p>14 policy-oriented data layers (ordered 1–14). Expand <strong>Scope &amp; data</strong> for detail; <strong>Where it appears</strong> is always visible.</p>
+        <div class="help-indicators-grid">
+          <article class="help-indicator-card">
+            <h4>1. Macro stress</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>GDP growth, inflation, debt, sovereign rating, bond spreads.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.integration_dashboard') }}">Countries & Regions</a>, <a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a>, Country Dashboard → Economic</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>2. Energy &amp; commodity</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Oil, gas, LNG, rare earths, grain exposure.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Economic</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>3. Military capability</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Defense spending, troops, naval tonnage, arms trade, alliances.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Security</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>4. Public opinion</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Approval ratings, protests, coup history, elections.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.approval_protests') }}">Elections & protests</a>, Country Dashboard → Stability</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>5. Trade flow</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Top export/import partners, sectoral breakdown.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Economic</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>6. Elite &amp; institutional</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Governance, CBI, party structure, SOEs.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Stability</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>7. Conflict events</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>ACLED, Uppsala UCDP, ICEWS.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.conflict_dashboard') }}">Military & Security</a>, Country Dashboard → Stability</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>8. Capital flows</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>FDI, portfolio flows, SWF.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Economic</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>9. Multilateral</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>WTO, IMF, World Bank, NATO, AIIB, BRI.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Treaties</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>10. Geospatial</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Ports, cables, pipelines, chokepoints.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chains</a></p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>11. Legislative</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Sanctions bills, defense spending, export controls.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.diplomacy_legislative') }}">Legislative tracker</a></p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>12. Technology</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Chip exports, critical tech, export restrictions.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Economic</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>13. Climate &amp; resource</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>Water stress, food insecurity, disaster frequency.</p></details>
+            <p class="help-indicator-where">→ Country Dashboard → Stability, Risk Engine</p>
+          </article>
+          <article class="help-indicator-card">
+            <h4>14. Air space</h4>
+            <details class="help-indicator-details"><summary>Scope &amp; data</summary><p>No-fly zones, flight restrictions, aviation corridors. Trade routes extend to air cargo.</p></details>
+            <p class="help-indicator-where">→ <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chains</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="institutional-models" role="tabpanel" aria-labelledby="help-tab-institutional-models" class="help-tab-panel help-section" data-section="institutional-models" hidden tabindex="-1">
+        <h2 class="help-panel-title">Institutional models</h2>
+        <p>GEPI, CDEI, SFI, Fragility power the Risk Engine, country dashboards, and article implications.</p>
+        <details class="help-details">
+          <summary>GEPI (Escalation Pressure Index)</summary>
+          <p>Forward-looking pressure gauge. Channels: military, sanctions, rhetoric, domestic unrest, diplomacy breakdown, supply-chain stress. <code>GEPI(t) = σ( Σ w_k · z_k(t) )</code>. Daily global index 0–1.</p>
+        </details>
+        <details class="help-details">
+          <summary>CDEI (Chokepoint Disruption Exposure)</summary>
+          <p>Per-country vulnerability to chokepoint disruptions. Flow share × dynamic risk × logistics penalty. Output: one number per country; per sector (energy, food, tech).</p>
+        </details>
+        <details class="help-details">
+          <summary>SFI (Sanctions Friction Index)</summary>
+          <p>How hard sanctions bite. <code>SFI(t) = Σ I_e · E_e · C_e</code> — severity × enforceability × graph centrality.</p>
+        </details>
+        <details class="help-details">
+          <summary>Fragility (CFC-LSM)</summary>
+          <p>Hidden state from observed indicators: food inflation, FX stress, protests, repression, elite splits, fiscal stress. Kalman/particle filter. Outputs: level, trend, jump risk.</p>
+        </details>
+        <details class="help-details">
+          <summary>GEG, TBCS, MLAT, Escalation Hazard</summary>
+          <p><strong>GEG:</strong> Typed causal event graph. <strong>TBCS:</strong> Treaty vs behavior alignment. <strong>MLAT:</strong> Multi-layer alignment (vote, trade, security, tech, narrative). <strong>Escalation Hazard:</strong> P(escalation within H days).</p>
+        </details>
+      </section>
+
+      <section id="glossary" role="tabpanel" aria-labelledby="help-tab-glossary" class="help-tab-panel help-section" data-section="glossary" hidden>
+        <h2 class="help-panel-title">Glossary</h2>
+        <dl class="help-glossary help-glossary-columns">
+          <dt>Risk score</dt>
+          <dd>0–100 from article volume/impact. Used on map and Risk Engine.</dd>
+          <dt>GEPI / CDEI / SFI / Fragility</dt>
+          <dd>Institutional models. See <a href="#institutional-models" class="help-hash-link">Institutional models</a> tab.</dd>
+          <dt>Confidence (C) / Signal (S)</dt>
+          <dd>Feed: C = article confidence 0–100. S = signal vs noise.</dd>
+          <dt>Contained / Regional / Systemic</dt>
+          <dd>Scenario Engine outcome paths.</dd>
+          <dt>Workspace</dt>
+          <dd>Multi-panel view; you pick pages per panel or use quick examples.</dd>
+          <dt>Impact score</dt>
+          <dd>Article impact (high/medium/low or 1–10).</dd>
+        </dl>
+      </section>
+
+      <section id="policy-workflows" role="tabpanel" aria-labelledby="help-tab-policy-workflows" class="help-tab-panel help-section" data-section="policy-workflows" hidden tabindex="-1">
+        <h2 class="help-panel-title">Think tanks &amp; workflows</h2>
+        <p class="help-lead">Geopolitical Terminal is built for <strong>monitor → triage → analyze → brief</strong> loops. Use the tools below for auditability and team handoff.</p>
+        <h3>Every page</h3>
+        <ul class="help-list">
+          <li><strong>As of &amp; feed time</strong> — Top context strip shows UTC “as of” and last feed ingestion (where available).</li>
+          <li><strong>Copy page link</strong> — Captures the full URL including filters and query params for shareable workspace state.</li>
+          <li><strong>Brief mode</strong> — Larger type and less chrome for reading or presenting; toggled from the strip.</li>
+          <li><strong>Method &amp; data limits</strong> — Expandable note on sources, models, and verification expectations.</li>
+          <li><strong>On first visit</strong> — Optional role picker (stored only in your browser) adjusts emphasis; dismiss with Skip.</li>
+        </ul>
+        <h3>Citations &amp; references</h3>
+        <ul class="help-list">
+          <li>Articles, digests, and country dashboards show a stable <strong>GN-…</strong> reference and <strong>Copy citation</strong> (APA-style line with URL and access date).</li>
+          <li>Exports (e.g. briefing PDF) include a footer disclaimer; use <strong>Confidential</strong> cover options in the builder when needed.</li>
+        </ul>
+        <h3>Collaboration &amp; outputs</h3>
+        <ul class="help-list">
+          <li><a href="{{ url_for('main.saved_views_list') }}">Saved views</a> — Persist filter sets; combine with “Copy page link” for colleagues.</li>
+          <li><a href="{{ url_for('main.export_briefing') }}">Briefing builder</a> — PDF/DOCX packs for meetings; article pages link in with one click.</li>
+          <li><strong>Sensitivity &amp; legal review</strong> — In the briefing builder, set export labels (public / internal / restricted) and “legal review required”; defaults live under <a href="{{ url_for('main.account') }}">Account</a>. PDFs and DOCX headers show the label.</li>
+          {% if current_user.is_authenticated %}
+          <li><strong>Tasks</strong> — <a href="{{ url_for('main.workspace_tasks') }}">Tools → Tasks</a>: assign work with due dates and optional entity links.</li>
+          {% else %}
+          <li><strong>Tasks</strong> — Available after <a href="{{ url_for('main.login') }}">log in</a> under Tools → Tasks.</li>
+          {% endif %}
+          <li><strong>Discussion threads</strong> — On articles, digests, and country dashboards, logged-in users can post threaded comments tied to that page (not the same as Messaging channels).</li>
+          <li><strong>Change history</strong> — Articles log text updates on re-ingest; saved briefings log edits. “Updated since your last visit” uses your last view timestamp.</li>
+          <li><a href="{{ url_for('main.messaging_hub') }}">Intelligence Messaging</a> — Drag items from pages into channels for team discussion.</li>
+          <li><a href="{{ url_for('main.workspace') }}">Workspace</a> — Multi-panel layouts; share the URL to replicate layout.</li>
+        </ul>
+        <h3>Role-based navigation</h3>
+        <p class="help-muted">If you picked a role in the first-run dialog, the app may simplify the top nav (e.g. Comms hides Security &amp; Politics groups; Monitor hides Scenario Engine under Tools). Stored only in your browser.</p>
+        <h3>Trust &amp; limitations</h3>
+        <p class="help-muted">Scores and LLM synthesis are indicative. They are <strong>not</strong> forecasts of government action, legal outcomes, or markets. Always corroborate with primary documents and institutional process.</p>
+        <p class="help-tour-cta"><button type="button" class="btn btn-secondary" id="help-reset-onboarding">Show role picker again</button></p>
+      </section>
+
+      <section id="reference" role="tabpanel" aria-labelledby="help-tab-reference" class="help-tab-panel help-section" data-section="reference" hidden tabindex="-1">
+        <h2 class="help-panel-title">Reference</h2>
+        <details class="help-ref-block">
+          <summary>Navigation</summary>
+          <p>Sidebar: Geography, Security & Diplomacy, Politics, Intelligence, Tools (Scenario, Reports, Workspace).</p>
+        </details>
+        <details class="help-ref-block">
+          <summary>Keyboard shortcuts</summary>
+          <div class="help-shortcuts-card">
+            <div class="help-shortcuts-grid">
+              <div class="help-sc-key"><kbd>/</kbd> or <kbd>⌘K</kbd></div>
+              <div class="help-sc-desc">Focus command bar</div>
+              <div class="help-sc-key"><kbd>⌘⇧1</kbd> … <kbd>⌘⇧4</kbd></div>
+              <div class="help-sc-desc">Workspace example layouts</div>
+              <div class="help-sc-key"><kbd>⌘⇧W</kbd></div>
+              <div class="help-sc-desc">Open Workspace</div>
+              <div class="help-sc-key"><kbd>1</kbd> … <kbd>4</kbd> <span class="help-sc-note">(on Workspace)</span></div>
+              <div class="help-sc-desc">Switch layout</div>
+              <div class="help-sc-key"><kbd>Ctrl+1</kbd> … <kbd>Ctrl+4</kbd></div>
+              <div class="help-sc-desc">Focus panel URL</div>
+              <div class="help-sc-key"><kbd>Escape</kbd></div>
+              <div class="help-sc-desc">Close overlay</div>
+            </div>
+          </div>
+        </details>
+        <details class="help-ref-block">
+          <summary>Accounts & API</summary>
+          <p><a href="{{ url_for('main.register') }}">Register</a> for saved views, alerts, briefings. <a href="{{ url_for('main.account') }}">Account</a> → create API key. Use <code>X-API-Key</code> or <code>Authorization: Bearer</code>.</p>
+        </details>
+        <details class="help-ref-block">
+          <summary>Intelligence Messaging</summary>
+          <p><a href="{{ url_for('main.messaging_hub') }}">Messaging</a> — private invite-only channels, encrypted at rest. Unread counts, @mentions, reactions, star channels, global search. 30 msg/min.</p>
+        </details>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('help-page-root');
+  if (!root) return;
+  var tabs = root.querySelectorAll('.help-tablist [role="tab"]');
+  var panels = root.querySelectorAll('.help-tabpanels [role="tabpanel"]');
+  var sectionIds = ['getting-started', 'synthesis', 'indicators', 'institutional-models', 'glossary', 'policy-workflows', 'reference'];
+
+  function showSection(id, opts) {
+    opts = opts || {};
+    if (sectionIds.indexOf(id) === -1) id = 'getting-started';
+    tabs.forEach(function (tab) {
+      var on = tab.getAttribute('data-section') === id;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.classList.toggle('is-active', on);
+    });
+    panels.forEach(function (panel) {
+      var on = panel.getAttribute('data-section') === id;
+      panel.classList.toggle('is-active', on);
+      panel.hidden = !on;
+    });
+    if (!opts.skipHash) {
+      try {
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+        else location.hash = id;
+      } catch (e) {}
+    }
+    var tbp = root.querySelector('.help-tabpanels');
+    if (tbp) tbp.scrollTop = 0;
+    var activePanel = document.getElementById(id);
+    if (activePanel && opts.focusPanel) {
+      try {
+        activePanel.focus({ preventScroll: true });
+      } catch (e) {}
+    }
+  }
+
+  function hashToSection() {
+    var h = (location.hash || '').replace(/^#/, '');
+    if (h && sectionIds.indexOf(h) !== -1) return h;
+    return 'getting-started';
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      showSection(this.getAttribute('data-section'), { focusPanel: true });
+    });
+  });
+
+  root.querySelectorAll('.help-hash-link[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = this.getAttribute('href').slice(1);
+      if (sectionIds.indexOf(id) !== -1) {
+        e.preventDefault();
+        showSection(id, { focusPanel: true });
+      }
+    });
+  });
+
+  window.addEventListener('hashchange', function () {
+    showSection(hashToSection(), { skipHash: true });
+  });
+
+  showSection(hashToSection(), { skipHash: true });
+  if (location.hash && sectionIds.indexOf(location.hash.replace(/^#/, '')) !== -1) {
+    try {
+      history.replaceState(null, '', location.hash);
+    } catch (e) {}
+  }
+
+  var resetOnb = document.getElementById('help-reset-onboarding');
+  if (resetOnb) {
+    resetOnb.addEventListener('click', function () {
+      try {
+        localStorage.removeItem('gt_onboarding_done_v1');
+      } catch (e) {}
+      window.location.reload();
+    });
+  }
+})();
+</script>
+{% endblock %}

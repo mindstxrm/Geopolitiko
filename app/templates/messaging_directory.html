@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Channel directory — Intelligence Messaging{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span>
+    Directory
+  </nav>
+  <h1 class="page-title">Channel directory</h1>
+  <p class="page-intro">Browse all channels. Channels are invite-only; request access and an admin will approve.</p>
+
+  <ul class="messaging-channel-list directory-list">
+    {% for c in channels %}
+    <li>
+      <div class="channel-dir-info">
+        <span class="channel-name">{{ c.name }}</span>
+        <span class="channel-meta">{{ channel_type_label(c.channel_type) }} · {{ c.member_count or 0 }} members{% if c.invite_only %} · Invite-only{% endif %}</span>
+        {% if c.description %}<p class="channel-dir-desc">{{ c.description }}</p>{% endif %}
+      </div>
+      <div class="channel-dir-actions">
+        {% if c.slug in my_slugs %}
+        <a href="{{ url_for('main.messaging_channel', slug=c.slug) }}" class="btn btn-secondary">Open</a>
+        {% else %}
+        <form method="post" action="{{ url_for('main.messaging_request_invite', channel_id=c.id) }}" style="display:inline;">
+          <button type="submit" class="btn btn-primary">Request invite</button>
+        </form>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if not channels %}
+  <p class="empty-state">No channels yet. <a href="{{ url_for('main.messaging_create_channel_route') }}">Create one</a>.</p>
+  {% endif %}
+  <p><a href="{{ url_for('main.messaging_hub') }}">Back to Messaging</a></p>
+</div>
+{% endblock %}

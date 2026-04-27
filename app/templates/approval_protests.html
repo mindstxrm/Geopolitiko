@@ -1,0 +1,819 @@
+{% extends "base.html" %}
+{% block title %}Elections, approval & protests — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Elections, approval & protests</h1>
+  <p class="page-intro">
+    Election calendars, leader and government approval ratings, and protest events.
+    {% if return_to %}<a href="{{ return_to }}">← Back</a> · {% endif %}
+    <a href="{{ stability_dashboard_url }}">Political Stability</a>
+    · <a href="{{ situation_room_url }}">Situation Room</a>
+    · <a href="{{ scenario_engine_url }}">Scenario Engine</a>
+  </p>
+
+  <div class="approval-protests-top">
+  <div class="approval-protests-summary-strip">
+    {% if upcoming_count is not none or next_12_count is not none %}<span>{{ upcoming_count or 0 }} upcoming elections</span>{% if next_12_count is not none %}<span> · {{ next_12_count }} in next 12 months</span>{% endif %}{% endif %}
+    {% if approval_total is not none %}<span> · {{ approval_total }} approval polls</span>{% endif %}
+    {% if protest_total is not none %}<span> · {{ protest_total }} protests</span>{% endif %}
+    {% if low_approval_count is not none and low_approval_count > 0 %}
+    <span> · <strong>{{ low_approval_count }} low approval (&lt;{{ low_approval_threshold|int }}%)</strong></span>
+    {% endif %}
+    {% if protests_last_30_count is not none %}<span> · {{ protests_last_30_count }} protests (last 30 days)</span>{% endif %}
+    {% if election_last_updated %} · Elections: {{ election_last_updated }}{% endif %}
+    {% if elections_rss_url %} · <a href="{{ elections_rss_url }}">RSS</a>{% endif %}
+    {% if elections_ical_url %} · <a href="{{ elections_ical_url }}">iCal</a>{% endif %}
+    {% if approval_last_updated %} · Approval: {{ approval_last_updated }}{% endif %}
+    {% if protest_last_updated %} · Protests: {{ protest_last_updated }}{% endif %}
+    · <a href="{{ clear_filters_url }}">Clear filters</a>
+    · <a href="{{ url_for('main.approval_protests_import') }}">Bulk import CSV</a>
+  </div>
+
+  <div class="approval-protests-tabs" role="tablist" aria-label="Registry sections">
+    <button type="button" class="approval-protests-tab" data-pane="elections" role="tab" aria-selected="true">Elections</button>
+    <button type="button" class="approval-protests-tab" data-pane="approval" role="tab" aria-selected="false">Approval ratings</button>
+    <button type="button" class="approval-protests-tab" data-pane="protests" role="tab" aria-selected="false">Protest tracking</button>
+  </div>
+
+  <div class="approval-protests-active-filters" id="approval-protests-active-filters" aria-label="Active filters"></div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}{% for category, msg in messages %}<p class="flash {{ category or 'message' }}">{{ msg }}</p>{% endfor %}{% endif %}
+  {% endwith %}
+
+  <div class="approval-protests-workspace">
+  <main class="approval-protests-main">
+
+  <section class="risk-section approval-protests-pane active" id="elections" data-pane="elections" aria-labelledby="elections-heading">
+    <h2 id="elections-heading">Election calendars</h2>
+    {% if upcoming_count is not none or next_12_count is not none or election_last_updated %}
+    <div class="elections-summary-strip">
+      {% if upcoming_count is not none %}{{ upcoming_count }} upcoming{% endif %}
+      {% if next_12_count is not none %} · {{ next_12_count }} in next 12 months{% endif %}
+      {% if election_last_updated %} · Last updated: {{ election_last_updated }}{% endif %}
+      {% if elections_rss_url %} · <a href="{{ elections_rss_url }}">RSS</a>{% endif %}
+      {% if elections_ical_url %} · <a href="{{ elections_ical_url }}">iCal</a>{% endif %}
+    </div>
+    {% endif %}
+    {% if election_presets %}
+    <p class="elections-presets">
+      Quick: {% for label, params in election_presets %}
+      <a href="{{ url_for('main.approval_protests', **params) }}#elections">{{ label }}</a>{% if not loop.last %} · {% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
+    <form method="get" class="filter-form" aria-label="Filter elections">
+      <input type="hidden" name="approval_country_code" value="{{ approval_params.country_code or '' }}">
+      <input type="hidden" name="approval_region" value="{{ approval_params.region or '' }}">
+      <input type="hidden" name="approval_date_from" value="{{ approval_params.date_from or '' }}">
+      <input type="hidden" name="approval_date_to" value="{{ approval_params.date_to or '' }}">
+      <input type="hidden" name="approval_subject" value="{{ approval_params.subject or '' }}">
+      <input type="hidden" name="approval_page" value="{{ approval_params.page }}">
+      <input type="hidden" name="approval_per_page" value="{{ approval_params.per_page or 15 }}">
+      <input type="hidden" name="protest_country_code" value="{{ protest_params.country_code or '' }}">
+      <input type="hidden" name="protest_region" value="{{ protest_params.region or '' }}">
+      <input type="hidden" name="protest_date_from" value="{{ protest_params.date_from or '' }}">
+      <input type="hidden" name="protest_date_to" value="{{ protest_params.date_to or '' }}">
+      <input type="hidden" name="protest_trigger" value="{{ protest_params.trigger_topic or '' }}">
+      <input type="hidden" name="protest_search" value="{{ protest_params.search or '' }}">
+      <input type="hidden" name="protest_page" value="{{ protest_params.page }}">
+      <input type="hidden" name="protest_per_page" value="{{ protest_params.per_page or 15 }}">
+      <label for="election_country_code">Country code</label>
+      <input type="text" name="election_country_code" id="election_country_code" value="{{ election_country_code or '' }}" placeholder="e.g. USA" maxlength="10" style="width:5em;">
+      {% if regions %}
+      <label for="election_region">Region</label>
+      <select name="election_region" id="election_region">
+        <option value="">All</option>
+        {% for r in regions %}
+        <option value="{{ r }}" {{ 'selected' if election_region == r else '' }}>{{ r }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+      <label for="election_date_from">From date</label>
+      <input type="month" name="election_date_from" id="election_date_from" value="{{ election_date_from or '' }}">
+      <label for="election_date_to">To date</label>
+      <input type="month" name="election_date_to" id="election_date_to" value="{{ election_date_to or '' }}">
+      <label for="election_status">Status</label>
+      <select name="election_status" id="election_status">
+        <option value="">All</option>
+        {% for s in election_statuses %}
+        <option value="{{ s }}" {{ 'selected' if election_status == s else '' }}>{{ s }}</option>
+        {% endfor %}
+      </select>
+      <label for="election_type">Type</label>
+      <select name="election_type" id="election_type">
+        <option value="">All</option>
+        {% for et in election_types %}
+        <option value="{{ et }}" {{ 'selected' if election_type == et else '' }}>{{ et }}</option>
+        {% endfor %}
+      </select>
+      <label for="election_search">Search</label>
+      <input type="text" name="election_search" id="election_search" value="{{ election_search or '' }}" placeholder="Country or notes">
+      <label for="election_sort">Sort</label>
+      <select name="election_sort" id="election_sort">
+        <option value="" {{ 'selected' if not election_order_by else '' }}>Date (soonest first)</option>
+        <option value="date_desc" {{ 'selected' if election_order_by == 'date_desc' else '' }}>Date (latest first)</option>
+        <option value="country" {{ 'selected' if election_order_by == 'country' else '' }}>Country</option>
+        <option value="type" {{ 'selected' if election_order_by == 'type' else '' }}>Type</option>
+        <option value="status" {{ 'selected' if election_order_by == 'status' else '' }}>Status</option>
+        <option value="created" {{ 'selected' if election_order_by == 'created' else '' }}>Recently added</option>
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+    <p>
+      <a href="{{ url_for('main.election_add') }}">+ Add election</a>
+      {% if elections_export_url %} · <a href="{{ elections_export_url }}">Export CSV</a>{% endif %}
+    </p>
+    {% if not elections %}
+    <p class="empty-state">No elections match. <a href="{{ clear_filters_url }}#elections">Clear filters</a> or <a href="{{ url_for('main.election_add') }}">add one</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Type</th>
+            <th>Date planned</th>
+            <th>Status</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in elections %}
+          <tr class="approval-protests-row" data-item='{{ {"kind":"election","id":e.id,"country_code":e.country_code or "","country_name":e.country_name or "","election_type":e.election_type or "","date_planned":((e.date_planned or "")[:10]),"status":e.status or "","notes":e.notes or "","detail_url":url_for("main.election_detail", election_id=e.id),"edit_url":url_for("main.election_edit", election_id=e.id)} | tojson }}'>
+            <td><a href="{{ url_for('main.election_detail', election_id=e.id) }}">{{ e.country_name }}</a> ({{ e.country_code }})</td>
+            <td>{{ e.election_type }}</td>
+            <td>{{ (e.date_planned or '')[:10] }}</td>
+            <td>{{ e.status or '—' }}</td>
+            <td>{{ (e.notes or '—')[:60] }}{% if (e.notes or '')|length > 60 %}…{% endif %}</td>
+            <td><a href="{{ url_for('main.election_edit', election_id=e.id) }}">Edit</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if election_total_pages and election_total_pages > 1 %}
+    <nav class="pagination">
+      Page {{ election_page }} of {{ election_total_pages }} ({{ election_total }} total).
+      {% if election_query_prev %}<a href="{{ url_for('main.approval_protests', **election_query_prev) }}#elections">← Prev</a>{% endif %}
+      {% if election_query_next %}<a href="{{ url_for('main.approval_protests', **election_query_next) }}#elections">Next →</a>{% endif %}
+    </nav>
+    {% endif %}
+    {% endif %}
+  </section>
+
+  <section class="risk-section approval-protests-pane" id="approval" data-pane="approval" aria-labelledby="approval-heading">
+    <h2 id="approval-heading">Approval ratings</h2>
+    <p class="approval-note">Low approval (&lt;<span id="low-threshold-value">{{ low_approval_threshold|int }}</span>%) may indicate elevated political risk.</p>
+    <form method="get" class="filter-form approval-filters" aria-label="Filter approval ratings">
+      <input type="hidden" name="protest_country_code" value="{{ protest_params.country_code or '' }}">
+      <input type="hidden" name="protest_region" value="{{ protest_params.region or '' }}">
+      <input type="hidden" name="protest_date_from" value="{{ protest_params.date_from or '' }}">
+      <input type="hidden" name="protest_date_to" value="{{ protest_params.date_to or '' }}">
+      <input type="hidden" name="protest_trigger" value="{{ protest_params.trigger_topic or '' }}">
+      <input type="hidden" name="protest_search" value="{{ protest_params.search or '' }}">
+      <input type="hidden" name="protest_page" value="{{ protest_params.page }}">
+      <input type="hidden" name="protest_per_page" value="{{ protest_params.per_page or 15 }}">
+      <label for="approval_country_code">Country code</label>
+      <input type="text" id="approval_country_code" name="approval_country_code" value="{{ approval_params.country_code or '' }}" placeholder="e.g. USA" style="width:5em;" aria-label="Approval country code">
+      {% if regions %}
+      <label for="approval_region">Region</label>
+      <select id="approval_region" name="approval_region" aria-label="Approval region">
+        <option value="">All</option>
+        {% for r in regions %}
+        <option value="{{ r }}" {{ 'selected' if approval_params.region == r else '' }}>{{ r }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+      <label for="approval_date_from">From</label>
+      <input type="date" id="approval_date_from" name="approval_date_from" value="{{ approval_params.date_from or '' }}" aria-label="Approval date from">
+      <label for="approval_date_to">To</label>
+      <input type="date" id="approval_date_to" name="approval_date_to" value="{{ approval_params.date_to or '' }}" aria-label="Approval date to">
+      <details class="filter-more" id="approval-more-filters">
+        <summary>More filters</summary>
+        <label for="approval_subject">Subject</label>
+        <input type="text" id="approval_subject" name="approval_subject" value="{{ approval_params.subject or '' }}" placeholder="e.g. President">
+        <label for="approval_min">Min %</label>
+        <input type="number" id="approval_min" name="approval_min" value="{{ approval_params.min_approval or '' }}" min="0" max="100" step="0.1" style="width:4em;">
+        <label for="approval_max">Max %</label>
+        <input type="number" id="approval_max" name="approval_max" value="{{ approval_params.max_approval or '' }}" min="0" max="100" step="0.1" style="width:4em;">
+        <label for="approval_source">Source</label>
+        <input type="text" id="approval_source" name="approval_source" value="{{ approval_params.source or '' }}" placeholder="e.g. Gallup">
+      </details>
+      <label for="approval_sort">Sort</label>
+      <select id="approval_sort" name="approval_sort" aria-label="Sort approval by">
+        <option value="" {{ 'selected' if not approval_params.order_by else '' }}>Date (newest)</option>
+        <option value="approval_asc" {{ 'selected' if approval_params.order_by == 'approval_asc' else '' }}>Approval low→high</option>
+        <option value="approval_desc" {{ 'selected' if approval_params.order_by == 'approval_desc' else '' }}>Approval high→low</option>
+        <option value="country" {{ 'selected' if approval_params.order_by == 'country' else '' }}>Country</option>
+      </select>
+      <label for="approval_per_page">Per page</label>
+      <select id="approval_per_page" name="approval_per_page" aria-label="Approval results per page">
+        <option value="15" {{ 'selected' if approval_per_page == 15 else '' }}>15</option>
+        <option value="30" {{ 'selected' if approval_per_page == 30 else '' }}>30</option>
+        <option value="50" {{ 'selected' if approval_per_page == 50 else '' }}>50</option>
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+    {% if subject_presets %}
+    <p class="preset-chips">Subject: {% for subj in subject_presets %}<a href="{{ url_for('main.approval_protests', approval_subject=subj) }}">{{ subj }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+    {% endif %}
+    <p>
+      <a href="{{ url_for('main.approval_add') }}">+ Add approval rating</a>
+      {% if approval_export_url %} · <a href="{{ approval_export_url }}">Export CSV</a> · <a href="{{ approval_export_url }}{{ '&' if '?' in approval_export_url else '?' }}format=xlsx">Export XLSX</a>{% endif %}
+      · <a href="{{ url_for('main.approval_protests', approval_max=low_approval_threshold) }}">Low approval (&lt;{{ low_approval_threshold|int }}%)</a>
+      {% if approval_last_30_from and approval_last_30_to %}
+      · <a href="{{ url_for('main.approval_protests', approval_date_from=approval_last_30_from, approval_date_to=approval_last_30_to) }}">Last 30 days</a>
+      {% endif %}
+    </p>
+    {% if approval_timeseries and approval_timeseries|length > 0 %}
+    <details class="approval-protests-chart-card" open>
+      <summary>Approval rating over time</summary>
+      <p class="chart-caption"><strong>Approval rating over time</strong> — trend for selected filters. Values are approval %. A reference line marks the low-approval threshold.</p>
+      <div class="chart-wrap" style="max-width:700px;height:260px;" data-low-threshold="{{ low_approval_threshold|int }}">
+        <canvas id="approvalTimeseriesChart" aria-label="Approval rating over time by poll date"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    {% if approval_latest_bars and approval_latest_bars|length > 0 %}
+    <details class="approval-protests-chart-card" open>
+      <summary>Latest approval by country</summary>
+      <p class="chart-caption"><strong>Latest approval by country</strong> — one poll per country (lowest approval first). Bars below the threshold may indicate elevated political risk.</p>
+      <div class="chart-wrap" style="max-width:560px;height:280px;" data-low-threshold="{{ low_approval_threshold|int }}">
+        <canvas id="approvalLatestChart" aria-label="Latest approval percentage by country"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    {% if not approval %}
+    <p class="empty-state">No approval data. <a href="{{ clear_filters_url }}">Clear filters</a> or <a href="{{ url_for('main.approval_add') }}">add one</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table" role="grid" aria-readonly="true" caption="Approval ratings list">
+        <caption class="sr-only">Approval ratings with country, subject, approval percentage, poll date, source</caption>
+        <thead>
+          <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Subject</th>
+            <th scope="col"><a href="{{ url_for('main.approval_protests', **approval_sort_asc) }}#approval">Approval %</a></th>
+            <th scope="col">Poll date</th>
+            <th scope="col">Source</th>
+            <th scope="col">Added</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in approval %}
+          <tr class="approval-protests-row" data-item='{{ {"kind":"approval","id":a.id,"country_code":a.country_code or "","country_name":a.country_name or "","subject":a.subject or "","approval_pct":a.approval_pct or 0,"poll_date":((a.poll_date or "")[:10]),"source":a.source or "","created_at":((a.created_at or "")[:10]),"edit_url":url_for("main.approval_edit", rating_id=a.id),"protests_url":(url_for("main.approval_protests", protest_country_code=a.country_code) ~ "#protests")} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=a.country_code) }}">{{ a.country_name }}</a> ({{ a.country_code }}) · <a href="{{ url_for('main.approval_protests', protest_country_code=a.country_code) }}#protests">Protests</a></td>
+            <td>{{ a.subject }}</td>
+            <td><span class="approval-pct {{ 'low' if (a.approval_pct or 0) < low_approval_threshold else '' }}">{{ "%.0f"|format(a.approval_pct or 0) }}%</span></td>
+            <td>{{ (a.poll_date or '—')[:10] }}</td>
+            <td>{{ a.source or '—' }}</td>
+            <td>{{ (a.created_at or '—')[:10] }}</td>
+            <td><a href="{{ url_for('main.approval_edit', rating_id=a.id) }}">Edit</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if approval_pages and approval_pages > 1 %}
+    <nav class="pagination" aria-label="Approval pagination">
+      Page {{ approval_page }} of {{ approval_pages }} ({{ approval_total }} total).
+      {% if approval_query_prev %}<a href="{{ url_for('main.approval_protests', **approval_query_prev) }}#approval">← Prev</a>{% endif %}
+      {% if approval_query_next %}<a href="{{ url_for('main.approval_protests', **approval_query_next) }}#approval">Next →</a>{% endif %}
+    </nav>
+    {% endif %}
+    {% endif %}
+  </section>
+
+  <section class="risk-section approval-protests-pane" id="protests" data-pane="protests" aria-labelledby="protests-heading">
+    <h2 id="protests-heading">Protest tracking</h2>
+    <form method="get" class="filter-form protest-filters" aria-label="Filter protests">
+      <input type="hidden" name="approval_country_code" value="{{ approval_params.country_code or '' }}">
+      <input type="hidden" name="approval_region" value="{{ approval_params.region or '' }}">
+      <input type="hidden" name="approval_date_from" value="{{ approval_params.date_from or '' }}">
+      <input type="hidden" name="approval_date_to" value="{{ approval_params.date_to or '' }}">
+      <input type="hidden" name="approval_subject" value="{{ approval_params.subject or '' }}">
+      <input type="hidden" name="approval_min" value="{{ approval_params.min_approval or '' }}">
+      <input type="hidden" name="approval_source" value="{{ approval_params.source or '' }}">
+      <input type="hidden" name="approval_page" value="{{ approval_params.page }}">
+      <input type="hidden" name="approval_per_page" value="{{ approval_params.per_page }}">
+      <label for="protest_country_code">Country code</label>
+      <input type="text" id="protest_country_code" name="protest_country_code" value="{{ protest_params.country_code or '' }}" placeholder="e.g. USA" style="width:5em;" aria-label="Protest country code">
+      {% if regions %}
+      <label for="protest_region">Region</label>
+      <select id="protest_region" name="protest_region" aria-label="Protest region">
+        <option value="">All</option>
+        {% for r in regions %}
+        <option value="{{ r }}" {{ 'selected' if protest_params.region == r else '' }}>{{ r }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+      <label for="protest_date_from">From</label>
+      <input type="date" id="protest_date_from" name="protest_date_from" value="{{ protest_params.date_from or '' }}">
+      <label for="protest_date_to">To</label>
+      <input type="date" id="protest_date_to" name="protest_date_to" value="{{ protest_params.date_to or '' }}">
+      <label for="protest_trigger">Trigger</label>
+      {% if trigger_topics %}
+      <select id="protest_trigger" name="protest_trigger" aria-label="Protest trigger topic">
+        <option value="">All</option>
+        {% for t in trigger_topics %}
+        <option value="{{ t }}" {{ 'selected' if protest_params.trigger_topic == t else '' }}>{{ t }}</option>
+        {% endfor %}
+      </select>
+      {% else %}
+      <input type="text" id="protest_trigger" name="protest_trigger" value="{{ protest_params.trigger_topic or '' }}" placeholder="e.g. Economic">
+      {% endif %}
+      <label for="protest_search">Search</label>
+      <input type="text" id="protest_search" name="protest_search" value="{{ protest_params.search or '' }}" placeholder="Summary or trigger">
+      <label for="protest_sort">Sort</label>
+      <select id="protest_sort" name="protest_sort" aria-label="Sort protests by">
+        <option value="" {{ 'selected' if not protest_params.order_by else '' }}>Date (newest)</option>
+        <option value="date_asc" {{ 'selected' if protest_params.order_by == 'date_asc' else '' }}>Date (oldest)</option>
+        <option value="country" {{ 'selected' if protest_params.order_by == 'country' else '' }}>Country</option>
+      </select>
+      <label for="protest_per_page">Per page</label>
+      <select id="protest_per_page" name="protest_per_page" aria-label="Protests per page">
+        <option value="15" {{ 'selected' if protest_per_page == 15 else '' }}>15</option>
+        <option value="30" {{ 'selected' if protest_per_page == 30 else '' }}>30</option>
+        <option value="50" {{ 'selected' if protest_per_page == 50 else '' }}>50</option>
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+    <p>
+      <a href="{{ url_for('main.protest_add') }}">+ Add protest event</a>
+      {% if protest_export_url %} · <a href="{{ protest_export_url }}">Export CSV</a> · <a href="{{ protest_export_url }}{{ '&' if '?' in protest_export_url else '?' }}format=xlsx">Export XLSX</a>{% endif %}
+      {% if protest_last_30_from and protest_last_30_to %}
+      · <a href="{{ url_for('main.approval_protests', protest_date_from=protest_last_30_from, protest_date_to=protest_last_30_to) }}">Last 30 days</a>
+      {% endif %}
+    </p>
+    {% if protest_counts_country and protest_counts_country|length > 0 %}
+    <details class="approval-protests-chart-card" open>
+      <summary>Protest events by country</summary>
+      <p class="chart-caption"><strong>Protest events by country</strong> — number of events in the selected date range (highest first).</p>
+      <div class="chart-wrap" style="max-width:520px;height:240px;">
+        <canvas id="protestCountryChart" aria-label="Number of protest events by country"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    {% if protest_counts_trigger and protest_counts_trigger|length > 0 %}
+    <details class="approval-protests-chart-card" open>
+      <summary>Protest events by trigger topic</summary>
+      <p class="chart-caption"><strong>Protest events by trigger topic</strong> — what issues drove the protests in the selected period.</p>
+      <div class="chart-wrap" style="max-width:480px;height:220px;">
+        <canvas id="protestTriggerChart" aria-label="Number of protest events by trigger topic"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    {% if not protests %}
+    <p class="empty-state">No protest events. <a href="{{ clear_filters_url }}">Clear filters</a> or <a href="{{ url_for('main.protest_add') }}">add one</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table" role="grid" aria-readonly="true">
+        <caption class="sr-only">Protest events with country, date, summary, size, trigger</caption>
+        <thead>
+          <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Date</th>
+            <th scope="col">Summary</th>
+            <th scope="col">Size</th>
+            <th scope="col">Trigger</th>
+            <th scope="col">Location</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in protests %}
+          <tr class="approval-protests-row" data-item='{{ {"kind":"protest","id":p.id,"country_code":p.country_code or "","country_name":p.country_name or "","event_date":((p.event_date or "")[:10]),"summary":p.summary or "","estimated_size":p.estimated_size or "","trigger_topic":p.trigger_topic or "","location":p.location or "","edit_url":url_for("main.protest_edit", protest_id=p.id)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=p.country_code) }}">{{ p.country_name }}</a> ({{ p.country_code }}) · <a href="{{ url_for('main.approval_protests', approval_country_code=p.country_code) }}#approval">Approval</a></td>
+            <td>{{ (p.event_date or '—')[:10] }}</td>
+            <td>{% if (p.summary or '')|length > 80 %}<details><summary>{{ (p.summary or '—')[:80] }}…</summary>{{ p.summary or '—' }}</details>{% else %}{{ p.summary or '—' }}{% endif %}</td>
+            <td>{{ p.estimated_size or '—' }}</td>
+            <td>{{ p.trigger_topic or '—' }}</td>
+            <td>{{ p.location or '—' }}</td>
+            <td><a href="{{ url_for('main.protest_edit', protest_id=p.id) }}">Edit</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if protest_pages and protest_pages > 1 %}
+    <nav class="pagination" aria-label="Protest pagination">
+      Page {{ protest_page }} of {{ protest_pages }} ({{ protest_total }} total).
+      {% if protest_query_prev %}<a href="{{ url_for('main.approval_protests', **protest_query_prev) }}#protests">← Prev</a>{% endif %}
+      {% if protest_query_next %}<a href="{{ url_for('main.approval_protests', **protest_query_next) }}#protests">Next →</a>{% endif %}
+    </nav>
+    {% endif %}
+    {% endif %}
+  </section>
+  </main>
+
+  <aside class="approval-protests-inspector" id="approval-protests-inspector" aria-label="Inspector">
+    <div class="approval-protests-inspector-head">
+      <div>
+        <div class="approval-protests-inspector-title" id="approval-protests-inspector-title">Inspector</div>
+        <div class="approval-protests-inspector-sub" id="approval-protests-inspector-sub">Click a row to preview.</div>
+      </div>
+      <button type="button" class="approval-protests-inspector-close" id="approval-protests-inspector-close" aria-label="Close inspector">×</button>
+    </div>
+    <div class="approval-protests-inspector-body">
+      <div class="approval-protests-inspector-card">
+        <div class="approval-protests-inspector-card-title" id="approval-protests-inspector-kind">—</div>
+        <div class="approval-protests-inspector-name" id="approval-protests-inspector-name">—</div>
+        <div class="approval-protests-inspector-meta" id="approval-protests-inspector-meta"></div>
+        <div class="approval-protests-inspector-desc" id="approval-protests-inspector-desc"></div>
+        <div class="approval-protests-inspector-actions">
+          <a href="#" class="approval-protests-chip" id="approval-protests-inspector-open" hidden target="_blank" rel="noopener">Open</a>
+          <a href="#" class="approval-protests-chip approval-protests-chip-secondary" id="approval-protests-inspector-edit" hidden target="_self" rel="noopener">Edit</a>
+        </div>
+      </div>
+      <details class="approval-protests-inspector-help" open>
+        <summary>Tips</summary>
+        <p class="muted">Filters apply across this registry page. Click any row to preview it here.</p>
+      </details>
+    </div>
+  </aside>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var isDark = document.body.classList.contains("terminal");
+  var lineColor = isDark ? "rgba(96, 165, 250, 1)" : "#2563eb";
+  var lineFill = isDark ? "rgba(96, 165, 250, 0.15)" : "rgba(37, 99, 235, 0.12)";
+  var barColor = isDark ? "rgba(96, 165, 250, 0.8)" : "rgba(37, 99, 235, 0.75)";
+  var lowApprovalColor = isDark ? "rgba(239, 68, 68, 0.85)" : "rgba(220, 38, 38, 0.8)";
+  var thresholdLineColor = isDark ? "rgba(248, 113, 113, 0.9)" : "rgba(239, 68, 68, 0.9)";
+  var tickColor = isDark ? "#94a3b8" : "#64748b";
+  var palette = isDark
+    ? ["rgba(96, 165, 250, 1)", "rgba(34, 197, 94, 0.9)", "rgba(250, 204, 21, 0.9)", "rgba(168, 85, 247, 0.9)", "rgba(6, 182, 212, 0.9)"]
+    : ["#2563eb", "#16a34a", "#ca8a04", "#9333ea", "#0891b2"];
+
+  var charts = window.__approvalProtestsCharts = window.__approvalProtestsCharts || {};
+
+  var timeseriesData = {{ approval_timeseries|tojson|safe }};
+  var latestBars = {{ approval_latest_bars|tojson|safe }};
+  var protestCountryData = {{ protest_counts_country|tojson|safe }};
+  var protestTriggerData = {{ protest_counts_trigger|tojson|safe }};
+
+  function getLowThreshold(containerId) {
+    var wrap = document.getElementById(containerId) && document.getElementById(containerId).closest(".chart-wrap");
+    if (wrap && wrap.dataset.lowThreshold) return parseInt(wrap.dataset.lowThreshold, 10);
+    return 35;
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // —— Approval timeseries: show one line per subject (single country) or one line per country (multi-country)
+    if (timeseriesData && timeseriesData.length > 0) {
+      var el = document.getElementById("approvalTimeseriesChart");
+      var wrap = el && el.closest(".chart-wrap");
+      var lowThreshold = (wrap && wrap.dataset.lowThreshold) ? parseInt(wrap.dataset.lowThreshold, 10) : 35;
+      if (el) {
+        var dateSet = {};
+        timeseriesData.forEach(function(d) {
+          var d0 = (d.poll_date || "").slice(0, 10);
+          if (d0) dateSet[d0] = true;
+        });
+        var allDates = Object.keys(dateSet).sort();
+        var labels = allDates.length ? allDates : timeseriesData.map(function(d) { return (d.poll_date || "").slice(0, 10); });
+
+        var countries = {};
+        timeseriesData.forEach(function(d) {
+          var c = d.country_code || "";
+          if (c) countries[c] = (d.country_name || c);
+        });
+        var countryCount = Object.keys(countries).filter(Boolean).length;
+
+        var bySeries = {};
+        var seriesKeys = [];
+        if (countryCount <= 1) {
+          timeseriesData.forEach(function(d) {
+            var subj = (d.subject || "Approval").trim();
+            if (!bySeries[subj]) { bySeries[subj] = []; seriesKeys.push(subj); }
+            bySeries[subj].push({ date: (d.poll_date || "").slice(0, 10), pct: d.approval_pct });
+          });
+          seriesKeys = seriesKeys.slice(0, 5);
+        } else {
+          timeseriesData.forEach(function(d) {
+            var key = (d.country_name || d.country_code || "").trim() || "—";
+            if (!bySeries[key]) { bySeries[key] = []; seriesKeys.push(key); }
+            bySeries[key].push({ date: (d.poll_date || "").slice(0, 10), pct: d.approval_pct });
+          });
+          seriesKeys = seriesKeys.slice(0, 6);
+        }
+        if (seriesKeys.length === 0) seriesKeys = ["Approval"];
+
+        var datasets = seriesKeys.map(function(key, i) {
+          var points = bySeries[key] || [];
+          var byDate = {};
+          points.forEach(function(p) { byDate[p.date] = p.pct; });
+          var values = labels.map(function(d) { return byDate[d] != null ? byDate[d] : null; });
+          var pal = palette[i % palette.length];
+          var fillColor = pal.replace("1)", "0.12)").replace("0.9)", "0.12)");
+          return {
+            label: key,
+            data: values,
+            borderColor: pal,
+            backgroundColor: fillColor,
+            tension: 0.25,
+            fill: false
+          };
+        });
+        if (datasets.length === 0) {
+          var values = timeseriesData.map(function(d) { return d.approval_pct != null ? d.approval_pct : null; });
+          datasets = [{ label: "Approval %", data: values, borderColor: lineColor, backgroundColor: lineFill, tension: 0.25, fill: true }];
+        }
+        datasets.push({
+          label: "Low approval threshold (" + lowThreshold + "%)",
+          data: labels.map(function() { return lowThreshold; }),
+          borderColor: thresholdLineColor,
+          borderDash: [6, 4],
+          fill: false,
+          pointRadius: 0,
+          pointHoverRadius: 0
+        });
+        charts.approvalTimeseries = new Chart(el, {
+          type: "line",
+          data: { labels: labels, datasets: datasets },
+          options: {
+            plugins: { legend: { display: true, position: "top", labels: { color: tickColor, boxWidth: 12 } } },
+            scales: {
+              x: {
+                title: { display: true, text: "Poll date", color: tickColor },
+                ticks: { maxTicksLimit: 10, color: tickColor }
+              },
+              y: {
+                min: 0,
+                max: 100,
+                title: { display: true, text: "Approval %", color: tickColor },
+                ticks: { color: tickColor }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // —— Latest approval by country: label = Country (Subject), color bars below threshold
+    if (latestBars && latestBars.length > 0) {
+      var el = document.getElementById("approvalLatestChart");
+      if (el) {
+        var lowThreshold = getLowThreshold("approvalLatestChart");
+        var labels = latestBars.map(function(d) {
+          var c = (d.country_code || d.country_name || "").trim();
+          var s = (d.subject || "").trim();
+          return s ? c + " (" + s + ")" : c;
+        });
+        var values = latestBars.map(function(d) { return d.approval_pct; });
+        var colors = values.map(function(v) { return (v != null && v < lowThreshold) ? lowApprovalColor : barColor; });
+        charts.approvalLatest = new Chart(el, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [{ label: "Approval %", data: values, backgroundColor: colors }]
+          },
+          options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                min: 0,
+                max: 100,
+                title: { display: true, text: "Approval %", color: tickColor },
+                ticks: { color: tickColor }
+              },
+              y: { ticks: { color: tickColor, maxRotation: 0, autoSkip: true } }
+            }
+          }
+        });
+      }
+    }
+
+    // —— Protest events by country
+    if (protestCountryData && protestCountryData.length > 0) {
+      var el = document.getElementById("protestCountryChart");
+      if (el) {
+        var labels = protestCountryData.map(function(d) {
+          return (d.country_name || d.country_code || "").trim() || "—";
+        });
+        var values = protestCountryData.map(function(d) { return d.cnt; });
+        charts.protestCountry = new Chart(el, {
+          type: "bar",
+          data: { labels: labels, datasets: [{ label: "Number of events", data: values, backgroundColor: barColor }] },
+          options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                beginAtZero: true,
+                title: { display: true, text: "Number of events", color: tickColor },
+                ticks: { color: tickColor }
+              },
+              y: { ticks: { color: tickColor } }
+            }
+          }
+        });
+      }
+    }
+
+    // —— Protest events by trigger topic
+    if (protestTriggerData && protestTriggerData.length > 0) {
+      var el = document.getElementById("protestTriggerChart");
+      if (el) {
+        var labels = protestTriggerData.map(function(d) { return (d.topic || "—").trim(); });
+        var values = protestTriggerData.map(function(d) { return d.cnt; });
+        charts.protestTrigger = new Chart(el, {
+          type: "bar",
+          data: { labels: labels, datasets: [{ label: "Number of events", data: values, backgroundColor: barColor }] },
+          options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                beginAtZero: true,
+                title: { display: true, text: "Number of events", color: tickColor },
+                ticks: { color: tickColor }
+              },
+              y: { ticks: { color: tickColor } }
+            }
+          }
+        });
+      }
+    }
+  });
+})();
+</script>
+<script>
+(function() {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.approval-protests-tab[data-pane]'));
+  var panes = Array.prototype.slice.call(document.querySelectorAll('.approval-protests-pane[data-pane]'));
+  if (!tabs.length || !panes.length) return;
+
+  function getPaneFromHash() {
+    var h = (window.location.hash || '').replace(/^#/, '');
+    if (h === 'elections' || h === 'approval' || h === 'protests') return h;
+    return null;
+  }
+
+  function activatePane(paneName) {
+    panes.forEach(function(p) {
+      var active = p.getAttribute('data-pane') === paneName;
+      p.classList.toggle('active', active);
+    });
+    tabs.forEach(function(btn) {
+      var active = btn.getAttribute('data-pane') === paneName;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    renderActiveFilters(paneName);
+    resizeCharts(paneName);
+  }
+
+  function resizeCharts(paneName) {
+    var c = window.__approvalProtestsCharts || {};
+    var t;
+    if (paneName === 'approval') {
+      t = c.approvalTimeseries || c.approvalLatest;
+      if (c.approvalTimeseries && c.approvalTimeseries.resize) c.approvalTimeseries.resize();
+      if (c.approvalLatest && c.approvalLatest.resize) c.approvalLatest.resize();
+    } else if (paneName === 'protests') {
+      if (c.protestCountry && c.protestCountry.resize) c.protestCountry.resize();
+      if (c.protestTrigger && c.protestTrigger.resize) c.protestTrigger.resize();
+    } else {
+      // Elections has no charts to resize
+    }
+  }
+
+  function normalize(s) { return String(s || '').trim(); }
+
+  function buildChips(params, prefix) {
+    var chips = [];
+    Object.keys(params).forEach(function(k) {
+      var v = params[k];
+      if (!v) return;
+      if (k.indexOf(prefix) !== 0) return;
+      if (k.endsWith('_page') || k.endsWith('_per_page') || k.endsWith('_sort')) return;
+      var key = k.replace(prefix, '');
+      key = key.replace(/_/g, ' ');
+      key = key.charAt(0).toUpperCase() + key.slice(1);
+      chips.push({ key: key, value: v });
+    });
+    return chips.slice(0, 10);
+  }
+
+  function renderActiveFilters(paneName) {
+    var el = document.getElementById('approval-protests-active-filters');
+    if (!el) return;
+    var qs = new URLSearchParams(window.location.search || '');
+    var params = {};
+    qs.forEach(function(v, k) {
+      params[k] = normalize(v);
+    });
+
+    var prefix = paneName === 'elections' ? 'election_' : (paneName === 'approval' ? 'approval_' : 'protest_');
+    var chips = buildChips(params, prefix);
+    if (!chips.length) {
+      el.innerHTML = '<span class="muted">No active filters.</span>';
+      return;
+    }
+    el.innerHTML = chips.map(function(c) {
+      return '<span class="approval-protests-chip approval-protests-chip-secondary" title="' + c.value.replace(/"/g, '&quot;') + '">' + c.key + ': ' + c.value + '</span>';
+    }).join(' ');
+  }
+
+  // Initial tab
+  var initial = getPaneFromHash();
+  if (!initial) initial = 'elections';
+  activatePane(initial);
+
+  tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var pane = btn.getAttribute('data-pane') || 'elections';
+      window.location.hash = pane;
+      activatePane(pane);
+    });
+  });
+
+  // Row click -> inspector preview
+  var inspector = document.getElementById('approval-protests-inspector');
+  var closeBtn = document.getElementById('approval-protests-inspector-close');
+  var kindEl = document.getElementById('approval-protests-inspector-kind');
+  var nameEl = document.getElementById('approval-protests-inspector-name');
+  var metaEl = document.getElementById('approval-protests-inspector-meta');
+  var descEl = document.getElementById('approval-protests-inspector-desc');
+  var openLink = document.getElementById('approval-protests-inspector-open');
+  var editLink = document.getElementById('approval-protests-inspector-edit');
+
+  function setHidden(a, hidden) {
+    if (!a) return;
+    a.hidden = !!hidden;
+  }
+
+  function renderInspector(item) {
+    if (!item) return;
+    var kind = item.kind || 'record';
+    kindEl.textContent = kind === 'election' ? 'Election' : (kind === 'approval' ? 'Approval' : (kind === 'protest' ? 'Protest' : 'Record'));
+    nameEl.textContent = item.country_name || item.country_code || '—';
+
+    metaEl.textContent = '';
+    descEl.textContent = '';
+
+    if (kind === 'election') {
+      metaEl.textContent = (item.election_type ? item.election_type : '—') + ' · ' + (item.date_planned ? item.date_planned : '—') + ' · ' + (item.status ? item.status : '—');
+      descEl.textContent = item.notes ? item.notes : '—';
+      setHidden(editLink, !item.edit_url);
+      if (editLink && item.edit_url) editLink.href = item.edit_url;
+      setHidden(openLink, !item.detail_url);
+      if (openLink && item.detail_url) openLink.href = item.detail_url;
+    } else if (kind === 'approval') {
+      metaEl.textContent = (item.subject ? item.subject : '—') + ' · ' + (item.approval_pct != null ? Math.round(item.approval_pct) + '%' : '—') + ' · ' + (item.poll_date ? item.poll_date : '—');
+      descEl.textContent = (item.source ? ('Source: ' + item.source) : '—');
+      setHidden(openLink, true);
+      setHidden(editLink, !item.edit_url);
+      if (editLink && item.edit_url) editLink.href = item.edit_url;
+    } else if (kind === 'protest') {
+      metaEl.textContent = (item.event_date ? item.event_date : '—') + ' · ' + (item.trigger_topic ? item.trigger_topic : '—') + ' · ' + (item.location ? item.location : '—');
+      descEl.textContent = item.summary ? item.summary : '—';
+      setHidden(openLink, true);
+      setHidden(editLink, !item.edit_url);
+      if (editLink && item.edit_url) editLink.href = item.edit_url;
+    }
+
+    if (inspector) inspector.classList.add('open');
+  }
+
+  function clearInspector() {
+    if (kindEl) kindEl.textContent = '—';
+    if (nameEl) nameEl.textContent = '—';
+    if (metaEl) metaEl.textContent = '';
+    if (descEl) descEl.textContent = '';
+    setHidden(openLink, true);
+    setHidden(editLink, true);
+    if (inspector) inspector.classList.remove('open');
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      clearInspector();
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var row = e.target && e.target.closest && e.target.closest('tr.approval-protests-row[data-item]');
+    if (!row) return;
+    if (e.target && e.target.closest && e.target.closest('a')) return; // allow normal links
+    e.preventDefault();
+    var raw = row.getAttribute('data-item') || '';
+    var item = null;
+    try { item = JSON.parse(raw); } catch (err) {}
+    renderInspector(item);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') clearInspector();
+  });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Coverage of this story — Geopolitical News{% endblock %}
+
+{% block content %}
+  <section class="cluster-detail">
+    <header>
+      <a href="{{ url_for('main.insights') }}" class="back-link">← Insights</a>
+      <h1>{{ cluster_label or 'Coverage of this story' }}</h1>
+      <p class="cluster-meta">{{ articles|length }} article(s) from {{ framing|length }} source(s)</p>
+    </header>
+
+    {% if cluster_implications and cluster_implications.synthesis %}
+    <section class="cluster-implications synthesis-summary">
+      <h2>What this cluster means</h2>
+      <div class="synthesis-prose">{{ cluster_implications.synthesis }}</div>
+      <p class="cluster-implications-meta">
+        GEPI: {{ cluster_implications.gepi or 'N/A' }}
+        {% if cluster_implications.avg_impact %} · Avg impact: {{ cluster_implications.avg_impact }}{% endif %}
+        {% if cluster_implications.topics %} · Topics: {{ cluster_implications.topics[:5]|join(', ') }}{% if cluster_implications.topics|length > 5 %}…{% endif %}{% endif %}
+      </p>
+    </section>
+    {% endif %}
+
+    {% if framing %}
+    <section class="framing-section">
+      <h2>How outlets framed this</h2>
+      {% for group in framing %}
+      <div class="framing-source">
+        <h3>{{ group.source }}</h3>
+        <ul class="framing-list">
+          {% for a in group.articles %}
+          <li>
+            <a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a>
+            {% if a.why_it_matters %}<span class="framing-line">— {{ (a.why_it_matters | why_matters_only)[:80] }}{% if (a.why_it_matters | why_matters_only)|length > 80 %}…{% endif %}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <h2>All articles</h2>
+    <ul class="article-list">
+      {% for a in articles %}
+      <li class="article-card">
+        {% if a.image_url %}
+        <div class="article-card-media">
+          <a href="{{ a.url }}" target="_blank" rel="noopener" class="article-image-link"><img src="{{ a.image_url }}" alt="" class="article-thumb" loading="lazy"></a>
+        </div>
+        {% endif %}
+        {% if a.video_url and not a.image_url %}
+        <div class="article-card-media article-video-wrap">
+          <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        {% endif %}
+        <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+        <div class="article-meta">
+          <span class="source">{{ a.source_name }}</span>
+          {% if a.published_utc %}
+          <span class="date">{{ a.published_utc[:10] }}</span>
+          {% endif %}
+        </div>
+        {% if a.summary %}
+        <p class="article-summary">{{ a.summary }}</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

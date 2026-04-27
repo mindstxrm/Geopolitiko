@@ -1,0 +1,38 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Risk traces — {{ country_code }} — Analyst Desk{% endblock %}
+{% block body %}
+<p><a href="{{ url_for('analyst_desk.index') }}">← Inbox</a></p>
+<div class="panel">
+  <h2>Risk traces: {{ country_code }}</h2>
+  <p class="muted">Top normalized events contributing to each risk dimension (latest snapshot).</p>
+</div>
+
+{% for blk in trace_blocks %}
+<div class="panel">
+  <h3 style="margin-top:0;">{{ blk.label }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Event ID</th>
+        <th>Event</th>
+        <th>Contribution</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in blk.rows %}
+      <tr>
+        <td>{{ r.event_id }}</td>
+        <td class="muted">
+          {{ r.event_title or (r.event_type or '—') }}
+        </td>
+        <td>{{ "%.3f"|format(r.contribution or 0) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="muted">No trace entries.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endfor %}
+{% endblock %}
+

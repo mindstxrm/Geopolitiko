@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Channel settings — {{ channel.name }}{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}">{{ channel.name }}</a> <span class="breadcrumb-sep">›</span> Settings
+  </nav>
+  <h1 class="page-title">Channel settings</h1>
+  <p class="page-intro">Edit name, description, webhook, and visibility. Admin only.</p>
+
+  <form method="post" action="{{ url_for('main.messaging_channel_settings', slug=channel.slug) }}" class="auth-form channel-settings-form">
+    <div class="form-group">
+      <label for="name">Channel name</label>
+      <input type="text" id="name" name="name" value="{{ channel.name or '' }}" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3">{{ channel.description or '' }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="webhook_url">Webhook URL (optional)</label>
+      <input type="url" id="webhook_url" name="webhook_url" value="{{ channel.webhook_url or '' }}" placeholder="https://...">
+    </div>
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" name="archived" value="1" {{ 'checked' if channel.archived else '' }}> Archived (hidden from directory)</label>
+    </div>
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" name="featured" value="1" {{ 'checked' if channel.featured else '' }}> Featured (show in Discover)</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save settings</button>
+    <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

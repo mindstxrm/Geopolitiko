@@ -1,0 +1,64 @@
+{# Include on any page to add "Forward to chat" with pre-filled attachment. Pass: forward_type, forward_id (optional), forward_extra (optional, e.g. country code), forward_label #}
+<button type="button" class="btn btn-secondary forward-to-chat-btn" id="forward-to-chat-btn" data-type="{{ forward_type|e }}" data-id="{{ forward_id|default('', true)|string|e }}" data-extra="{{ forward_extra|default('', true)|e }}" data-label="{{ forward_label|default('', true)|e }}">Forward to chat</button>
+
+<div class="forward-to-chat-modal" id="forward-to-chat-modal" role="dialog" aria-labelledby="forward-to-chat-title" aria-modal="true" hidden>
+  <div class="forward-to-chat-dialog">
+    <h3 id="forward-to-chat-title">Forward to channel</h3>
+    <p class="forward-to-chat-hint">Share &ldquo;{{ forward_label|e }}&rdquo; in a channel.</p>
+    <form method="post" action="{{ url_for('main.messaging_forward') }}" id="forward-to-chat-form">
+      <input type="hidden" name="attachment_type" value="{{ forward_type|e }}">
+      <input type="hidden" name="attachment_id" value="{{ forward_id|default('', true)|string|e }}">
+      <input type="hidden" name="attachment_country_code" value="{{ forward_extra|default('', true)|e }}">
+      <div class="forward-to-chat-field">
+        <label for="forward-channel-select">Channel</label>
+        <select name="channel_id" id="forward-channel-select" required>
+          <option value="">— Select channel —</option>
+        </select>
+      </div>
+      <div class="forward-to-chat-field">
+        <label for="forward-content">Message (optional)</label>
+        <textarea name="content" id="forward-content" rows="2" placeholder="Add a note…" maxlength="10000"></textarea>
+      </div>
+      <div class="forward-to-chat-actions">
+        <button type="submit" class="btn btn-primary">Send to channel</button>
+        <button type="button" class="btn btn-secondary forward-to-chat-cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function() {
+  var btn = document.getElementById('forward-to-chat-btn');
+  var modal = document.getElementById('forward-to-chat-modal');
+  var form = document.getElementById('forward-to-chat-form');
+  var select = document.getElementById('forward-channel-select');
+  if (!btn || !modal || !form || !select) return;
+  btn.addEventListener('click', function() {
+    modal.removeAttribute('hidden');
+    modal.classList.add('is-open');
+    if (select.options.length <= 1) {
+      select.innerHTML = '<option value="">Loading…</option>';
+      fetch('/api/messaging/channels').then(function(r) { return r.json(); }).then(function(data) {
+        select.innerHTML = '<option value="">— Select channel —</option>';
+        (data.channels || []).forEach(function(c) {
+          var opt = document.createElement('option');
+          opt.value = c.id;
+          opt.textContent = c.name || c.slug;
+          select.appendChild(opt);
+        });
+      }).catch(function() { select.innerHTML = '<option value="">— Select channel —</option>'; });
+    }
+  });
+  modal.querySelector('.forward-to-chat-cancel') && modal.querySelector('.forward-to-chat-cancel').addEventListener('click', function() {
+    modal.setAttribute('hidden', '');
+    modal.classList.remove('is-open');
+  });
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) { modal.setAttribute('hidden', ''); modal.classList.remove('is-open'); }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) { modal.setAttribute('hidden', ''); modal.classList.remove('is-open'); }
+  });
+})();
+</script>

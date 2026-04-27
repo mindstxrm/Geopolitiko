@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ alert.name }} — Watchlist — Geopolitical News{% endblock %}
+
+{% block content %}
+  <section class="alert-header chat-draggable" data-chat-drag="1" data-chat-type="alert" data-chat-id="{{ alert.id }}" data-chat-extra="" data-chat-label="{{ alert.name }}">
+    <a href="{{ url_for('main.alerts_list') }}" class="back-link">← Watchlists</a>
+    <div class="alert-title-row">
+      <h1 class="page-title">{{ alert.name }}</h1>
+      {% if current_user.is_authenticated %}
+      {% set forward_type = 'alert' %}
+      {% set forward_id = alert.id %}
+      {% set forward_extra = '' %}
+      {% set forward_label = alert.name %}
+      {% include 'messaging/forward_to_chat.html' %}
+      {% endif %}
+      {% if current_user.is_authenticated %}
+      <a href="{{ url_for('main.alert_edit', alert_id=alert.id) }}" class="btn btn-secondary">Edit</a>
+      <form method="post" action="{{ url_for('main.alert_delete', alert_id=alert.id) }}" class="delete-form" onsubmit="return confirm('Remove this watchlist?');">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      {% endif %}
+    </div>
+    <p class="page-intro">
+      Min impact: {{ 'Any' if alert.min_impact_score == 0 else alert.min_impact_score }}{% if alert.topics_list %} · Topics:
+      {% for t in alert.topics_list %}<span class="topic-tag">{{ t }}</span>{% if not loop.last %} {% endif %}{% endfor %}
+      {% endif %}
+    </p>
+    <div class="time-window time-window-inline">
+      <span class="time-window-label">Matches in:</span>
+      <a href="{{ url_for('main.alert_detail', alert_id=alert.id, days=1) }}" class="time-window-chip {{ 'active' if days == 1 else '' }}">24h</a>
+      <a href="{{ url_for('main.alert_detail', alert_id=alert.id, days=7) }}" class="time-window-chip {{ 'active' if days == 7 else '' }}">7d</a>
+      <a href="{{ url_for('main.alert_detail', alert_id=alert.id, days=30) }}" class="time-window-chip {{ 'active' if days == 30 else '' }}">30d</a>
+    </div>
+  </section>
+
+  <section class="articles">
+    {% if not matches %}
+      <p class="empty-state">No matches in the last {{ days }} day(s). Try: <strong>30d</strong> window above; <strong>Min impact: Any</strong> (edit alert on Analysis); or add topics (e.g. Russia-Ukraine, NATO). If you have no articles in the app yet, run the scraper and jobs first.</p>
+    {% else %}
+      <ul class="article-list">
+        {% for a in matches %}
+        <li class="article-card">
+          {% if a.image_url %}
+          <div class="article-card-media">
+            <a href="{{ a.url }}" target="_blank" rel="noopener" class="article-image-link"><img src="{{ a.image_url }}" alt="" class="article-thumb" loading="lazy"></a>
+          </div>
+          {% endif %}
+          {% if a.video_url and not a.image_url %}
+          <div class="article-card-media article-video-wrap">
+            <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          {% endif %}
+          <div class="article-card-header">
+            <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+            {% if a.impact_score is not none and a.impact_score > 0 %}
+            <span class="impact-pill impact-{% if (a.impact_score or 0) >= 7 %}3{% elif (a.impact_score or 0) >= 4 %}2{% else %}1{% endif %}">{% if (a.impact_score or 0) >= 7 %}High{% elif (a.impact_score or 0) >= 4 %}Med{% else %}Low{% endif %}</span>
+            {% endif %}
+          </div>
+          <div class="article-meta">
+            <span class="source">{{ a.source_name }}</span>
+            {% if a.published_utc %}
+            <span class="date">{{ a.published_utc[:10] }}</span>
+            {% endif %}
+          </div>
+          {% if a.summary %}
+          <p class="article-summary">{{ a.summary }}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+{% endblock %}
+

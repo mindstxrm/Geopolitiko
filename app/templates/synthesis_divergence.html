@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Signal Divergence — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.synthesis_hub') }}" class="back-link">← Synthesis</a>
+      <h1>Cross-Signal Divergence</h1>
+      <p class="synthesis-meta">Detected mismatches between models that suggest follow-up</p>
+    </header>
+
+    {% if divergences %}
+    <section class="divergence-list">
+      <ul>
+        {% for d in divergences %}
+        <li class="divergence-item">
+          <span class="divergence-type">{{ d.type }}</span>
+          <h3>{{ d.title }}</h3>
+          <p>{{ d.detail }}</p>
+          <p class="divergence-suggestion"><strong>Follow-up:</strong> {{ d.suggestion }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% else %}
+    <p class="empty-state">No significant divergences detected. Signals are broadly aligned.</p>
+    {% endif %}
+
+    <p class="synthesis-links"><a href="{{ url_for('main.risk_dashboard') }}">Risk dashboard</a> · <a href="{{ url_for('main.help_page', _anchor='synthesis') }}">Synthesis</a></p>
+  </article>
+{% endblock %}

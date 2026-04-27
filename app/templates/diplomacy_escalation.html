@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Escalation clause monitor — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Escalation clause monitor</h1>
+  <p class="page-intro">Treaties flagged as containing escalation, retaliation, or reciprocal-measure clauses. Use “Scan for escalation” on a treaty detail page to run AI detection.</p>
+
+  <form method="get" class="filter-form">
+    <label for="type">Treaty type</label>
+    <select name="type" id="type" onchange="this.form.submit()">
+      <option value="">All</option>
+      {% for tt in treaty_types %}
+      <option value="{{ tt }}" {{ 'selected' if treaty_type == tt else '' }}>{{ tt.replace('_', ' ') }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+  {% if diplomacy_escalation_export_url %}
+  <p><a href="{{ diplomacy_escalation_export_url }}">Export CSV</a></p>
+  {% endif %}
+
+  {% if not treaties %}
+  <p class="empty-state">No treaties with escalation clauses flagged. Add treaties with full text and run “Scan for escalation clause” on the treaty detail page.</p>
+  {% else %}
+  <ul class="treaty-list">
+    {% for t in treaties %}
+    <li class="treaty-item">
+      <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}"><strong>{{ t.name }}</strong></a>
+      <span class="treaty-type">{{ t.treaty_type }}</span>
+      {{ t.party_a }}{% if t.party_b %} – {{ t.party_b }}{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p><a href="{{ url_for('main.diplomacy_dashboard') }}">← Diplomacy</a></p>
+{% endblock %}

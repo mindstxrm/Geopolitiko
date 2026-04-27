@@ -1,0 +1,379 @@
+{% extends "base.html" %}
+{% block title %}Briefing builder — Geopolitical News{% endblock %}
+{% block content %}
+  <a href="#briefing-form" class="skip-link">Skip to form</a>
+  <div class="briefing-workspace">
+    <header class="briefing-command-strip no-print">
+      <div class="briefing-command-top">
+        <div class="briefing-command-title-wrap">
+          <p class="briefing-back"><a href="{{ url_for('main.reports_hub') }}">← Reports</a></p>
+          <h1 class="page-title briefing-page-title">Briefing builder</h1>
+        </div>
+        <details class="briefing-command-about">
+          <summary>About</summary>
+          <p>Select articles, add title and intro, then export as PDF (Print -> Save as PDF) or DOCX. Up to 50 articles.</p>
+        </details>
+        <div class="briefing-command-actions">
+          <button type="button" class="briefing-drawer-open-btn" id="briefing-left-open" aria-expanded="false" aria-controls="briefing-left-panel">Sources</button>
+          <button type="button" class="briefing-drawer-open-btn" id="briefing-right-open" aria-expanded="false" aria-controls="briefing-right-panel">Save & recent</button>
+          <button type="button" id="briefing-copy-share-link" class="btn btn-secondary">Copy share link</button>
+          <button type="submit" form="briefing-form" name="action" value="preview">Preview &amp; export PDF</button>
+          <button type="submit" form="briefing-form" formaction="{{ url_for('main.export_briefing_docx') }}" formmethod="post">Download DOCX</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="briefing-drawer-backdrop" id="briefing-drawer-backdrop" hidden aria-hidden="true"></div>
+
+    <div class="briefing-builder-layout">
+      <aside class="briefing-left-panel" id="briefing-left-panel" aria-label="Load and templates">
+        <button type="button" class="briefing-drawer-close-btn" id="briefing-left-close" aria-label="Close sources panel">×</button>
+        <section class="briefing-sidebar-section">
+          <h2>Templates</h2>
+          <p id="title-templates" class="briefing-templates">
+            <span class="briefing-templates-label">Quick set:</span>
+            <button type="button" class="briefing-template-btn" data-title="Daily briefing" data-intro="Key developments from the last 24 hours.">Daily</button>
+            <button type="button" class="briefing-template-btn" data-title="Weekly summary" data-intro="Summary of the past week's key developments.">Weekly</button>
+            <button type="button" class="briefing-template-btn" data-title="Executive summary" data-intro="Executive-level summary of selected intelligence.">Executive</button>
+          </p>
+        </section>
+
+        <section class="briefing-sidebar-section">
+          <details open>
+            <summary>Load source IDs</summary>
+            <p class="briefing-load-links">
+              <span class="briefing-load-label">From feed:</span>
+              <a href="{{ url_for('main.export_briefing', from_feed='1', days=1, impact='high') }}">Last 24h high impact</a>
+              <a href="{{ url_for('main.export_briefing', from_feed='1', days=7) }}">Last 7 days</a>
+              <a href="{{ url_for('main.export_briefing', from_feed='1', days=30) }}">Last 30 days</a>
+            </p>
+            {% if saved_views %}
+            <p class="briefing-load-links">
+              <span class="briefing-load-label">From saved view:</span>
+              {% for v in saved_views %}
+              <a href="{{ url_for('main.export_briefing', from_view=v.id) }}">{{ v.name }}</a>
+              {% endfor %}
+            </p>
+            {% endif %}
+            {% if watchlists or alerts %}
+            <p class="briefing-load-links">
+              <span class="briefing-load-label">From watchlist:</span>
+              {% for w in watchlists or [] %}
+              <a href="{{ url_for('main.export_briefing', from_watchlist=w.id) }}">{{ w.name }}</a>
+              {% endfor %}
+              {% for a in alerts or [] %}
+              <a href="{{ url_for('main.export_briefing', from_alert=a.id) }}">{{ a.name }}</a>
+              {% endfor %}
+            </p>
+            {% endif %}
+          </details>
+        </section>
+
+        <section class="briefing-sidebar-section">
+          <details>
+            <summary>Saved briefings</summary>
+            {% if saved_briefings %}
+            <ul class="briefing-saved-list">
+              {% for b in saved_briefings %}
+              <li>
+                <a href="{{ url_for('main.export_briefing_load', briefing_id=b.id) }}">{{ b.name }}</a>
+                <span class="briefing-saved-meta">({{ b.article_ids|length }} articles)</span>
+                {% if b.sensitivity_tier %}<span class="briefing-saved-badge">{{ b.sensitivity_tier }}</span>{% endif %}
+                {% if b.legal_review_required %}<span class="briefing-saved-badge briefing-saved-legal">Legal review</span>{% endif %}
+                <a href="{{ url_for('main.export_briefing_edit', briefing_id=b.id) }}">Edit</a>
+                <a href="{{ url_for('main.export_briefing_duplicate', briefing_id=b.id) }}">Duplicate</a>
+                <form action="{{ url_for('main.export_briefing_delete', briefing_id=b.id) }}" method="post" class="briefing-delete-form">
+                  <button type="submit" class="briefing-delete-btn" aria-label="Delete {{ b.name }}">Delete</button>
+                </form>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="briefing-empty-state">No saved briefings yet.</p>
+            {% endif %}
+          </details>
+        </section>
+      </aside>
+
+      <main class="briefing-main-canvas">
+        <form method="post" action="{{ url_for('main.export_briefing') }}" class="briefing-form" id="briefing-form">
+          <div class="briefing-form-grid">
+            <p class="briefing-field briefing-field-wide">
+              <label for="title">Briefing title</label>
+              <input type="text" id="title" name="title" value="{{ title or 'Daily briefing' }}" aria-describedby="title-templates">
+            </p>
+            <p class="briefing-field briefing-field-wide">
+              <label for="intro">Intro (optional)</label>
+              <textarea name="intro" id="intro" rows="2" placeholder="e.g. Key developments from the last 24 hours.">{{ intro or '' }}</textarea>
+            </p>
+            <p class="briefing-field">
+              <label for="report_date">Report date (optional)</label>
+              <input type="date" name="report_date" id="report_date" value="" aria-description="Shown on PDF; leave blank for today.">
+            </p>
+            <p class="briefing-field">
+              <label for="format">Format</label>
+              <select name="format" id="format">
+                <option value="summary_link" selected>Summary + link</option>
+                <option value="minimal">Minimal (title + source + link)</option>
+                <option value="summary_only">Summary only</option>
+                <option value="executive">Executive (date + impact + summary + link)</option>
+                <option value="with_takeaways">Summary + key takeaways</option>
+                <option value="full">Full (all fields)</option>
+              </select>
+            </p>
+            <p class="briefing-field">
+              <label for="grouping">Group articles by</label>
+              <select name="grouping" id="grouping">
+                <option value="none">None (list order)</option>
+                <option value="event_type">Event type</option>
+                <option value="topic">Topic</option>
+                <option value="date">Date</option>
+              </select>
+            </p>
+            <p class="briefing-field">
+              <label for="sort_by">Sort by</label>
+              <select name="sort_by" id="sort_by">
+                <option value="order">List order</option>
+                <option value="impact">Impact (high first)</option>
+              </select>
+            </p>
+          </div>
+
+          <fieldset class="briefing-options-inline">
+            <legend class="sr-only">Cover options</legend>
+            <label for="cover_page"><input type="checkbox" name="cover_page" id="cover_page" value="1"> Add cover page</label>
+            <label for="cover_line"><input type="checkbox" name="cover_line" id="cover_line" value="1"> Add cover line (Confidential / As of date)</label>
+          </fieldset>
+
+          <div class="briefing-form-grid briefing-policy-export-row">
+            <p class="briefing-field">
+              <label for="sensitivity_tier">Sensitivity (PDF &amp; DOCX)</label>
+              <select name="sensitivity_tier" id="sensitivity_tier">
+                <option value="public" {{ 'selected' if briefing_sensitivity_default == 'public' else '' }}>Public / unclassified label</option>
+                <option value="internal" {{ 'selected' if briefing_sensitivity_default == 'internal' else '' }}>Internal use</option>
+                <option value="restricted" {{ 'selected' if briefing_sensitivity_default == 'restricted' else '' }}>Restricted</option>
+              </select>
+            </p>
+            <p class="briefing-field briefing-field-checkbox">
+              <label for="legal_review_required"><input type="checkbox" name="legal_review_required" id="legal_review_required" value="1" {{ 'checked' if briefing_legal_default else '' }}> Legal review required before external use</label>
+            </p>
+          </div>
+
+          <p class="briefing-ids-copy">Add article IDs below (one per line or comma-separated). Max 50. Get IDs from the <a href="{{ url_for('main.index') }}">feed</a> or article URL (e.g. /article/42 -> ID 42).</p>
+          <p class="briefing-field briefing-field-wide">
+            <label for="ids">Article IDs</label>
+            <textarea name="article_ids" id="ids" rows="8" placeholder="e.g. 1, 2, 3" aria-describedby="ids-hint ids-count">{{ article_ids_prefill or '' }}</textarea>
+            <span id="ids-hint" class="briefing-hint">Up to 50 articles. Order is preserved in the report.</span>
+            <span id="ids-count" class="briefing-ids-count" aria-live="polite">0 unique IDs (max 50)</span>
+          </p>
+
+          <p class="briefing-form-actions">
+            <button type="submit" name="action" value="preview">Preview &amp; export PDF</button>
+            <button type="submit" formaction="{{ url_for('main.export_briefing_docx') }}" formmethod="post">Download DOCX</button>
+          </p>
+        </form>
+      </main>
+
+      <aside class="briefing-right-panel" id="briefing-right-panel" aria-label="Save and recent articles">
+        <button type="button" class="briefing-drawer-close-btn" id="briefing-right-close" aria-label="Close save and recent panel">×</button>
+        <div class="briefing-inspector-tabs" role="tablist" aria-label="Briefing side panels">
+          <button type="button" class="briefing-inspector-tab is-active" data-briefing-tab="save" aria-selected="true">Save</button>
+          <button type="button" class="briefing-inspector-tab" data-briefing-tab="recent" aria-selected="false">Recent IDs</button>
+        </div>
+        <section class="briefing-inspector-panel is-active" data-briefing-panel="save">
+          <section class="briefing-sidebar-section">
+            {% if edit_briefing_id and edit_briefing %}
+            <h2>Update briefing</h2>
+            <form method="post" action="{{ url_for('main.export_briefing_update', briefing_id=edit_briefing_id) }}" class="briefing-save-form briefing-update-form">
+              <input type="hidden" name="title" id="save_title" value="">
+              <input type="hidden" name="intro" id="save_intro" value="">
+              <input type="hidden" name="article_ids" id="save_article_ids" value="">
+              <input type="hidden" name="sensitivity_tier" id="save_sensitivity_tier" value="">
+              <input type="hidden" name="legal_review_required" id="save_legal_review" value="">
+              <label for="save_name">Name</label>
+              <input type="text" name="name" id="save_name" value="{{ edit_briefing.name }}" required>
+              <button type="submit">Update</button>
+            </form>
+            <p><a href="{{ url_for('main.export_briefing') }}">Cancel edit</a></p>
+            {% else %}
+            <h2>Save current briefing</h2>
+            <form method="post" action="{{ url_for('main.export_briefing_save') }}" class="briefing-save-form">
+              <input type="hidden" name="title" id="save_title" value="">
+              <input type="hidden" name="intro" id="save_intro" value="">
+              <input type="hidden" name="article_ids" id="save_article_ids" value="">
+              <label for="save_name">Name</label>
+              <input type="text" name="name" id="save_name" placeholder="e.g. Weekly board pack" required>
+              <button type="submit">Save</button>
+            </form>
+            {% endif %}
+          </section>
+        </section>
+        <section class="briefing-inspector-panel" data-briefing-panel="recent" hidden>
+          <section class="briefing-sidebar-section">
+            <h2>Recent articles</h2>
+            {% if recent_articles %}
+            <p class="briefing-sidebar-hint">Click Add to append the article ID to your list.</p>
+            <ul class="briefing-recent-list">
+              {% for a in recent_articles %}
+              <li>
+                <span class="briefing-recent-title" title="{{ a.title }}">{{ (a.title or 'Untitled')[:50] }}{% if (a.title or '')|length > 50 %}…{% endif %}</span>
+                <span class="briefing-recent-id">ID {{ a.id }}</span>
+                <button type="button" class="briefing-add-id-btn" data-id="{{ a.id }}" aria-label="Add article {{ a.id }} to list">Add</button>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="briefing-empty-state">No recent articles. Run the scraper or load from feed.</p>
+            {% endif %}
+          </section>
+          <p class="briefing-tip">Tip: open an article's <a href="{{ url_for('main.index') }}">Notes</a> page to see its ID in the URL (e.g. /article/42 -> ID 42).</p>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var form = document.getElementById('briefing-form');
+    var titleInput = document.getElementById('title');
+    var introInput = document.getElementById('intro');
+    var idsInput = document.getElementById('ids');
+    var idsCountEl = document.getElementById('ids-count');
+    var basePath = '{{ url_for("main.export_briefing") }}';
+    function updateIdsCount() {
+      if (!idsCountEl || !idsInput) return;
+      var raw = idsInput.value ? idsInput.value.trim() : '';
+      var parts = raw ? raw.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean) : [];
+      var seen = {};
+      var unique = [];
+      for (var i = 0; i < parts.length; i++) {
+        if (/^\d+$/.test(parts[i]) && !seen[parts[i]]) { seen[parts[i]] = true; unique.push(parts[i]); }
+      }
+      if (unique.length > 50) unique = unique.slice(0, 50);
+      idsCountEl.textContent = unique.length + ' unique IDs (max 50)';
+    }
+    if (idsInput) {
+      idsInput.addEventListener('input', updateIdsCount);
+      idsInput.addEventListener('change', updateIdsCount);
+      updateIdsCount();
+    }
+    var copyShareBtn = document.getElementById('briefing-copy-share-link');
+    if (copyShareBtn && titleInput && introInput && idsInput) {
+      copyShareBtn.addEventListener('click', function () {
+        var title = (titleInput.value || '').trim() || 'Daily briefing';
+        var intro = (introInput.value || '').trim();
+        var raw = (idsInput.value || '').trim();
+        var parts = raw ? raw.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean) : [];
+        var seen = {};
+        var ids = [];
+        for (var i = 0; i < parts.length && ids.length < 50; i++) {
+          if (/^\d+$/.test(parts[i]) && !seen[parts[i]]) { seen[parts[i]] = true; ids.push(parts[i]); }
+        }
+        var url = (window.location.origin || '') + basePath + '?title=' + encodeURIComponent(title);
+        if (intro) url += '&intro=' + encodeURIComponent(intro);
+        if (ids.length) url += '&article_ids=' + encodeURIComponent(ids.join(','));
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () { copyShareBtn.textContent = 'Copied'; setTimeout(function () { copyShareBtn.textContent = 'Copy share link'; }, 2000); });
+        } else {
+          var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          copyShareBtn.textContent = 'Copied'; setTimeout(function () { copyShareBtn.textContent = 'Copy share link'; }, 2000);
+        }
+      });
+    }
+    document.querySelectorAll('.briefing-template-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        titleInput.value = btn.getAttribute('data-title') || '';
+        introInput.value = btn.getAttribute('data-intro') || '';
+      });
+    });
+    document.querySelectorAll('.briefing-add-id-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-id');
+        var cur = idsInput.value.trim();
+        var parts = cur ? cur.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean) : [];
+        if (parts.indexOf(id) !== -1) return;
+        parts.push(id);
+        if (parts.length > 50) parts = parts.slice(-50);
+        idsInput.value = parts.join(', ');
+        updateIdsCount();
+      });
+    });
+    var sensSelect = document.getElementById('sensitivity_tier');
+    var legalCb = document.getElementById('legal_review_required');
+    document.querySelectorAll('.briefing-save-form, .briefing-update-form').forEach(function (f) {
+      f.addEventListener('submit', function () {
+        var st = document.getElementById('save_title');
+        var si = document.getElementById('save_intro');
+        var sa = document.getElementById('save_article_ids');
+        if (st) st.value = titleInput.value;
+        if (si) si.value = introInput.value;
+        if (sa) sa.value = idsInput.value;
+        var sv = f.querySelector('[id^="save_sensitivity_tier"]');
+        if (sv && sensSelect) sv.value = sensSelect.value;
+        var lr = f.querySelector('[id^="save_legal_review"]');
+        if (lr && legalCb) lr.value = legalCb.checked ? '1' : '';
+      });
+    });
+    var dateInput = document.getElementById('report_date');
+    if (dateInput && !dateInput.value) {
+      var today = new Date().toISOString().slice(0, 10);
+      dateInput.value = today;
+    }
+
+    var tabBtns = document.querySelectorAll('.briefing-inspector-tab');
+    var panels = document.querySelectorAll('.briefing-inspector-panel');
+    function activateTab(id) {
+      tabBtns.forEach(function (btn) {
+        var on = btn.getAttribute('data-briefing-tab') === id;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panels.forEach(function (panel) {
+        var on = panel.getAttribute('data-briefing-panel') === id;
+        panel.classList.toggle('is-active', on);
+        panel.hidden = !on;
+      });
+    }
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () { activateTab(btn.getAttribute('data-briefing-tab')); });
+    });
+
+    var leftPanel = document.getElementById('briefing-left-panel');
+    var rightPanel = document.getElementById('briefing-right-panel');
+    var leftOpen = document.getElementById('briefing-left-open');
+    var rightOpen = document.getElementById('briefing-right-open');
+    var leftClose = document.getElementById('briefing-left-close');
+    var rightClose = document.getElementById('briefing-right-close');
+    var backdrop = document.getElementById('briefing-drawer-backdrop');
+    function closeDrawers() {
+      if (leftPanel) leftPanel.classList.remove('open');
+      if (rightPanel) rightPanel.classList.remove('open');
+      if (leftOpen) leftOpen.setAttribute('aria-expanded', 'false');
+      if (rightOpen) rightOpen.setAttribute('aria-expanded', 'false');
+      if (backdrop) { backdrop.hidden = true; backdrop.setAttribute('aria-hidden', 'true'); }
+      document.body.classList.remove('briefing-drawer-active');
+    }
+    function openDrawer(which) {
+      closeDrawers();
+      if (which === 'left' && leftPanel) {
+        leftPanel.classList.add('open');
+        if (leftOpen) leftOpen.setAttribute('aria-expanded', 'true');
+      }
+      if (which === 'right' && rightPanel) {
+        rightPanel.classList.add('open');
+        if (rightOpen) rightOpen.setAttribute('aria-expanded', 'true');
+      }
+      if (backdrop) { backdrop.hidden = false; backdrop.setAttribute('aria-hidden', 'false'); }
+      document.body.classList.add('briefing-drawer-active');
+    }
+    if (leftOpen) leftOpen.addEventListener('click', function () { openDrawer('left'); });
+    if (rightOpen) rightOpen.addEventListener('click', function () { openDrawer('right'); });
+    if (leftClose) leftClose.addEventListener('click', closeDrawers);
+    if (rightClose) rightClose.addEventListener('click', closeDrawers);
+    if (backdrop) backdrop.addEventListener('click', closeDrawers);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('briefing-drawer-active')) closeDrawers();
+    });
+  })();
+  </script>
+{% endblock %}

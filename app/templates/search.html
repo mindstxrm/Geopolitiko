@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="search-results-header">
+    <h1>Search</h1>
+    <form method="get" action="{{ url_for('main.search') }}" class="search-form-inline">
+      <input type="search" name="q" value="{{ query }}" placeholder="Search across platform…" class="search-input">
+      <button type="submit">Search</button>
+    </form>
+    {% if query %}
+    <p class="results-count">
+      Results for “{{ query }}” —
+      {% set total_sections = (countries|length > 0) + (scenarios|length > 0) + (treaties|length > 0) + (sanctions|length > 0) + (articles|length > 0) %}
+      {% if total_sections == 0 %}no matches{% endif %}
+      {% if countries %}Countries ({{ countries|length }}){% endif %}
+      {% if scenarios %}{% if countries %} · {% endif %}Scenarios ({{ scenarios|length }}){% endif %}
+      {% if treaties %}{% if countries or scenarios %} · {% endif %}Treaties ({{ treaties|length }}){% endif %}
+      {% if sanctions %}{% if countries or scenarios or treaties %} · {% endif %}Sanctions ({{ sanctions|length }}){% endif %}
+      {% if articles %}{% if countries or scenarios or treaties or sanctions %} · {% endif %}Articles ({{ articles|length }}){% endif %}
+    </p>
+    {% endif %}
+  </section>
+
+  {% if not query %}
+  <p class="empty-state">Type above to search across countries, scenarios, treaties, sanctions, and articles.</p>
+  {% endif %}
+
+  {% set has_results = (countries and countries|length) or (scenarios and scenarios|length) or (treaties and treaties|length) or (sanctions and sanctions|length) or (articles and articles|length) %}
+
+  {% if query and not has_results %}
+  <p class="empty-state">No matches across countries, scenarios, treaties, sanctions, or articles. Try a broader term.</p>
+  {% endif %}
+
+  {% if has_results %}
+  <section class="search-results-grid">
+    {% if countries %}
+    <section class="search-section">
+      <h2>Countries</h2>
+      <ul class="search-list">
+        {% for c in countries %}
+        <li>
+          <a href="{{ url_for('main.integration_country', country_code=c.code3) }}">{{ c.name }}</a>
+          <span class="search-meta">{{ c.code3 }} · {{ c.region }}</span>
+          <span class="search-links">
+            <a href="{{ url_for('main.country_dashboard', country_code=c.code3) }}">Country dashboard</a>
+            · <a href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ c.code3, t2='/supply-chain', t3='/risk', t4='/integration') }}">Open in Workspace</a>
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if scenarios %}
+    <section class="search-section">
+      <h2>Scenarios</h2>
+      <ul class="search-list">
+        {% for s in scenarios %}
+        <li>
+          <a href="{{ url_for('main.scenario_detail', scenario_id=s.id) }}">{{ s.name }}</a>
+          {% if s.region or s.horizon_year %}
+          <span class="search-meta">
+            {% if s.region %}{{ s.region }}{% endif %}{% if s.region and s.horizon_year %} · {% endif %}{% if s.horizon_year %}Horizon {{ s.horizon_year }}{% endif %}
+          </span>
+          {% endif %}
+          {% if s.description %}
+          <p class="search-snippet">{{ s.description[:140] }}{% if s.description|length > 140 %}…{% endif %}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if treaties %}
+    <section class="search-section">
+      <h2>Treaties</h2>
+      <ul class="search-list">
+        {% for t in treaties %}
+        <li>
+          <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}">{{ t.name }}</a>
+          <span class="search-meta">
+            {{ t.treaty_type or 'Treaty' }}{% if t.signed_date %} · {{ t.signed_date[:10] }}{% endif %}
+          </span>
+          {% if t.summary %}
+          <p class="search-snippet">{{ t.summary[:140] }}{% if t.summary|length > 140 %}…{% endif %}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="search-section-footer"><a href="{{ url_for('main.diplomacy_treaties', search=query) }}">Open in treaties database</a></p>
+    </section>
+    {% endif %}
+
+    {% if sanctions %}
+    <section class="search-section">
+      <h2>Sanctions</h2>
+      <ul class="search-list">
+        {% for s in sanctions %}
+        <li>
+          <span class="search-title">{{ s.imposing_country }} → {{ s.target_country }}</span>
+          <span class="search-meta">
+            {{ s.measure_type or 'Measure' }}{% if s.start_date %} · {{ s.start_date[:10] }}{% endif %}
+          </span>
+          {% if s.description %}
+          <p class="search-snippet">{{ s.description[:140] }}{% if s.description|length > 140 %}…{% endif %}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="search-section-footer"><a href="{{ url_for('main.diplomacy_sanctions', search=query) }}">Open sanctions registry</a></p>
+    </section>
+    {% endif %}
+
+    <section class="search-section search-section-articles">
+      <h2>Articles</h2>
+      {% if not articles %}
+        <p class="empty-state">No articles match. Try a different query or <a href="{{ url_for('main.index') }}">browse all</a>.</p>
+      {% else %}
+        <ul class="article-list">
+          {% for a in articles %}
+          <li class="article-card">
+            {% if a.image_url %}
+            <div class="article-card-media">
+              <a href="{{ a.url }}" target="_blank" rel="noopener" class="article-image-link"><img src="{{ a.image_url }}" alt="" class="article-thumb" loading="lazy"></a>
+            </div>
+            {% endif %}
+            {% if a.video_url and not a.image_url %}
+            <div class="article-card-media article-video-wrap">
+              <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {% endif %}
+            <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+            <div class="article-meta">
+              <span class="source">{{ a.source_name }}</span>
+              {% if a.published_utc %}
+              <span class="date">{{ a.published_utc[:10] }}</span>
+              {% endif %}
+            </div>
+            {% if a.summary %}
+            <p class="article-summary">{{ a.summary }}</p>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  </section>
+  {% endif %}
+{% endblock %}

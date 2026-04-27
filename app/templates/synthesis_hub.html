@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Synthesis — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <a href="#synthesis-main" class="skip-link">Skip to where synthesis lives</a>
+  <h1 class="page-title">Higher-Order Synthesis</h1>
+  <p class="page-intro">Synthesis is integrated across the platform. Find it in the pages where you work—no need to visit a separate synthesis hub.</p>
+
+  <section id="synthesis-main" class="synthesis-hub-overview">
+    <h2>Where synthesis appears</h2>
+    <ul class="synthesis-locations">
+      <li><strong><a href="{{ url_for('main.situation_room') }}">Situation Room</a></strong> — Escalation trajectory (trend + narrative), signal divergences, system state briefing link</li>
+      <li><strong><a href="{{ url_for('main.country_dashboard', country_code='USA') }}">Country Dashboard</a></strong> — Operating Picture tab (LLM situation summary + bullets), Executive One-Pager (drivers, implications)</li>
+      <li><strong><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></strong> — Escalation trajectory embedded</li>
+      <li><strong><a href="{{ url_for('main.insights') }}">Insights</a></strong> — Thematic briefings (US–China, Russia–Ukraine, Middle East when you select a theme), signal divergences</li>
+    </ul>
+
+    <h2>Full-page views (for printing or deep dive)</h2>
+    <ul class="synthesis-full-pages">
+      <li><a href="{{ url_for('main.synthesis_meta_briefing') }}">Meta-briefing</a> — Weekly system state</li>
+      <li><a href="{{ url_for('main.synthesis_trajectory') }}">Escalation trajectory</a> — Full time series + narrative</li>
+      <li><a href="{{ url_for('main.synthesis_divergences') }}">Cross-signal divergence</a> — All detected mismatches</li>
+      <li><a href="{{ url_for('main.synthesis_executive') }}">Executive one-pager</a> — Per country or region (with selector)</li>
+      <li>Thematic: <a href="{{ url_for('main.synthesis_thematic', topic='US-China') }}">US–China</a> · <a href="{{ url_for('main.synthesis_thematic', topic='Russia-Ukraine') }}">Russia–Ukraine</a> · <a href="{{ url_for('main.synthesis_thematic', topic='Middle East') }}">Middle East</a></li>
+      <li>Country operating picture: <a href="{{ url_for('main.integration_dashboard') }}">go to Countries & Regions</a>, then open any country — first tab is Operating Picture</li>
+    </ul>
+  </section>
+
+  <p class="synthesis-meta muted">Synthesis requires <code>OPENAI_API_KEY</code> for LLM summaries. Without it, only raw data is shown.</p>
+{% endblock %}

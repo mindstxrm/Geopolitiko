@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Scenario Engine — Compare runs{% endblock %}
+{% block content %}
+<div class="scenario-engine-compare">
+  <h1 class="page-title">Compare two runs</h1>
+  <p class="page-intro"><a href="{{ url_for('main.scenario_engine') }}">← Scenario Engine</a> · <a href="{{ url_for('main.scenario_engine_history') }}">History</a></p>
+
+  <form method="get" class="compare-form">
+    <label for="run_a">Run A</label>
+    <select name="run_a" id="run_a">
+      <option value="">— Select —</option>
+      {% for r in recent_runs %}
+      <option value="{{ r.id }}" {{ 'selected' if run_a_id == r.id else '' }}>{{ r.name or r.event_label }} ({{ (r.run_at or r.created_at or '')[:10] }})</option>
+      {% endfor %}
+    </select>
+    <label for="run_b">Run B</label>
+    <select name="run_b" id="run_b">
+      <option value="">— Select —</option>
+      {% for r in recent_runs %}
+      <option value="{{ r.id }}" {{ 'selected' if run_b_id == r.id else '' }}>{{ r.name or r.event_label }} ({{ (r.run_at or r.created_at or '')[:10] }})</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Compare</button>
+  </form>
+
+  {% if run_a or run_b %}
+  <div class="compare-grid" role="region" aria-label="Side-by-side comparison">
+    <div class="compare-column">
+      <h2>Run A{% if run_a %} · {{ run_a.event_label or run_a.event_type }}{% endif %}</h2>
+      {% if run_a %}
+      <p class="compare-meta">{{ (run_a.run_at or '')[:19].replace('T', ' ') }} UTC · {{ run_a.region or '—' }} · {{ run_a.country or '—' }}</p>
+      <h3>Agents</h3>
+      <ul class="compare-agents">
+        <li><strong>Economic:</strong> {{ run_a.agents.get('economic_policy', '—') }}</li>
+        <li><strong>Political:</strong> {{ run_a.agents.get('political', '—') }}</li>
+        <li><strong>Military:</strong> {{ run_a.agents.get('military', '—') }}</li>
+        <li><strong>Diplomatic:</strong> {{ run_a.agents.get('diplomatic', '—') }}</li>
+        <li><strong>Private sector:</strong> {{ run_a.agents.get('private_sector', '—') }}</li>
+      </ul>
+      <h3>Paths</h3>
+      <ul class="compare-paths">
+        <li>Contained: {{ run_a.paths.get('contained', 0) }}% — {{ run_a.path_descriptions.get('contained', '—') }}</li>
+        <li>Regional escalation: {{ run_a.paths.get('regional_escalation', 0) }}% — {{ run_a.path_descriptions.get('regional_escalation', '—') }}</li>
+        <li>Systemic crisis: {{ run_a.paths.get('systemic_crisis', 0) }}% — {{ run_a.path_descriptions.get('systemic_crisis', '—') }}</li>
+      </ul>
+      <p><a href="{{ url_for('main.scenario_engine', run_id=run_a_id) }}">View run</a> · <a href="{{ url_for('main.scenario_engine_export_all', run_id=run_a_id) }}">Export all</a></p>
+      {% else %}
+      <p>Select Run A above.</p>
+      {% endif %}
+    </div>
+    <div class="compare-column">
+      <h2>Run B{% if run_b %} · {{ run_b.event_label or run_b.event_type }}{% endif %}</h2>
+      {% if run_b %}
+      <p class="compare-meta">{{ (run_b.run_at or '')[:19].replace('T', ' ') }} UTC · {{ run_b.region or '—' }} · {{ run_b.country or '—' }}</p>
+      <h3>Agents</h3>
+      <ul class="compare-agents">
+        <li><strong>Economic:</strong> {{ run_b.agents.get('economic_policy', '—') }}</li>
+        <li><strong>Political:</strong> {{ run_b.agents.get('political', '—') }}</li>
+        <li><strong>Military:</strong> {{ run_b.agents.get('military', '—') }}</li>
+        <li><strong>Diplomatic:</strong> {{ run_b.agents.get('diplomatic', '—') }}</li>
+        <li><strong>Private sector:</strong> {{ run_b.agents.get('private_sector', '—') }}</li>
+      </ul>
+      <h3>Paths</h3>
+      <ul class="compare-paths">
+        <li>Contained: {{ run_b.paths.get('contained', 0) }}% — {{ run_b.path_descriptions.get('contained', '—') }}</li>
+        <li>Regional escalation: {{ run_b.paths.get('regional_escalation', 0) }}% — {{ run_b.path_descriptions.get('regional_escalation', '—') }}</li>
+        <li>Systemic crisis: {{ run_b.paths.get('systemic_crisis', 0) }}% — {{ run_b.path_descriptions.get('systemic_crisis', '—') }}</li>
+      </ul>
+      <p><a href="{{ url_for('main.scenario_engine', run_id=run_b_id) }}">View run</a> · <a href="{{ url_for('main.scenario_engine_export_all', run_id=run_b_id) }}">Export all</a></p>
+      {% else %}
+      <p>Select Run B above.</p>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <p class="empty-state">Select Run A and Run B above, then click Compare.</p>
+  {% endif %}
+</div>
+{% endblock %}

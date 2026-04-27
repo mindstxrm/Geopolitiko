@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ digest.title }} — Geopolitical News{% endblock %}
+
+{% block content %}
+  <article class="digest-detail">
+    <header class="chat-draggable" data-chat-drag="1" data-chat-type="digest" data-chat-id="{{ digest.id }}" data-chat-extra="" data-chat-label="{{ digest.title or ('Digest #' ~ digest.id) }}">
+      <a href="{{ url_for('main.insights') }}" class="back-link">← Insights</a>
+      <h1>{{ digest.title }}</h1>
+      <p class="digest-meta">{{ digest.digest_type }} — {{ digest.created_at[:10] }} · <a href="{{ url_for('main.export_digest_pdf', digest_id=digest.id) }}">Export PDF</a></p>
+      {% if current_user.is_authenticated %}
+      {% set forward_type = 'digest' %}
+      {% set forward_id = digest.id %}
+      {% set forward_extra = '' %}
+      {% set forward_label = digest.title or ('Digest #' ~ digest.id) %}
+      {% include 'messaging/forward_to_chat.html' %}
+      {% endif %}
+    </header>
+    <div class="terminal-decision-bar" data-cite-ref="GN-DIG-{{ digest.id }}" data-cite-title="{{ (digest.title or 'Digest')|e }}" data-cite-url="{{ request.url }}" data-cite-org="Geopolitical Terminal">
+      <span class="terminal-cite-ref">GN-DIG-{{ digest.id }}</span>
+      <button type="button" class="btn btn-secondary btn-sm gt-copy-citation">Copy citation</button>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_digest_pdf', digest_id=digest.id) }}">Export PDF</a>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_briefing') }}">Briefing builder</a>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.reports_hub') }}">Reports</a>
+      {% if current_user.is_authenticated %}<a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace_tasks') }}">Tasks</a>{% endif %}
+    </div>
+    {% with entity_type='digest', entity_ref=(digest.id | string) %}
+    {% include "_policy_context_block.html" %}
+    {% endwith %}
+    <div class="digest-content">
+      {% if digest['items'] %}
+        <ul class="digest-items">
+          {% for item in digest['items'] %}
+          <li class="digest-item">
+            <strong>{{ item.title }}</strong>
+            {% if item.url %}
+            <a href="{{ item.url }}" target="_blank" rel="noopener" class="digest-item-link">Read →</a>
+            {% endif %}
+            {% if item.analysis %}
+            <p class="digest-item-analysis">{{ item.analysis }}</p>
+            {% endif %}
+            {% if item.source %}
+            <span class="digest-item-source">{{ item.source }}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <pre class="digest-raw">{{ digest.content }}</pre>
+      {% endif %}
+    </div>
+  </article>
+{% endblock %}

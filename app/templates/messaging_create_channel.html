@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Create channel — Intelligence Messaging{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span>
+    Create channel
+  </nav>
+  <h1 class="page-title">Create channel</h1>
+  <p class="page-intro">Create a country desk, thematic channel, or rapid briefing thread. You will be the admin. Invite-only by default.</p>
+
+  <form method="post" action="{{ url_for('main.messaging_create_channel_route') }}" class="auth-form messaging-create-form">
+    <label for="name">Channel name</label>
+    <input type="text" id="name" name="name" required placeholder="e.g. China desk">
+    <label for="slug">Slug (URL-friendly, lowercase)</label>
+    <input type="text" id="slug" name="slug" required placeholder="e.g. china-desk">
+    <label for="channel_type">Type</label>
+    <select id="channel_type" name="channel_type">
+      {% for ct in channel_types %}
+      <option value="{{ ct }}">{{ channel_type_label(ct) }}</option>
+      {% endfor %}
+    </select>
+    <p class="form-hint">Types: Country desk (regional focus), Thematic (topic-based), Rapid briefing (threads).</p>
+    <label for="description">Description (optional)</label>
+    <textarea id="description" name="description" rows="2" placeholder="Brief description of the channel"></textarea>
+    <label for="webhook_url">Webhook URL (optional; POST when new message)</label>
+    <input type="url" id="webhook_url" name="webhook_url" placeholder="https://...">
+    <label class="checkbox-label">
+      <input type="checkbox" name="invite_only" value="1" checked> Invite-only (recommended)
+    </label>
+    <button type="submit" class="btn btn-primary">Create channel</button>
+  </form>
+  <p><a href="{{ url_for('main.messaging_hub') }}">Back to Messaging</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Legislative / Policy Tracker — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Legislative / Policy Tracker</h1>
+  <p class="page-intro">Early signal layer: sanction law proposals, defense spending bills, trade bill amendments, export control updates. Filter by jurisdiction or bill type.</p>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.diplomacy_dashboard') }}">Diplomacy</a> <span class="breadcrumb-sep">›</span>
+    Legislative / Policy Tracker
+  </nav>
+
+  <form method="get" class="indicator-filter-form">
+    <div class="filter-row">
+      <label for="jurisdiction">Jurisdiction</label>
+      <select name="jurisdiction" id="jurisdiction" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="US" {{ 'selected' if jurisdiction == 'US' else '' }}>United States</option>
+        <option value="EU" {{ 'selected' if jurisdiction == 'EU' else '' }}>European Union</option>
+        <option value="UK" {{ 'selected' if jurisdiction == 'UK' else '' }}>United Kingdom</option>
+        <option value="China" {{ 'selected' if jurisdiction == 'China' else '' }}>China</option>
+        <option value="Japan" {{ 'selected' if jurisdiction == 'Japan' else '' }}>Japan</option>
+        <option value="Other" {{ 'selected' if jurisdiction == 'Other' else '' }}>Other</option>
+      </select>
+      <label for="bill_type">Bill type</label>
+      <select name="bill_type" id="bill_type" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="sanctions" {{ 'selected' if bill_type == 'sanctions' else '' }}>Sanctions</option>
+        <option value="defense" {{ 'selected' if bill_type == 'defense' else '' }}>Defense spending</option>
+        <option value="trade" {{ 'selected' if bill_type == 'trade' else '' }}>Trade</option>
+        <option value="export_control" {{ 'selected' if bill_type == 'export_control' else '' }}>Export control</option>
+        <option value="other" {{ 'selected' if bill_type == 'other' else '' }}>Other</option>
+      </select>
+      <button type="submit">Filter</button>
+    </div>
+  </form>
+
+  {% if bills %}
+  <div class="indicator-table-wrap">
+    <table class="indicator-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Introduced</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bills %}
+        <tr>
+          <td>{{ b.jurisdiction or '—' }}</td>
+          <td><span class="bill-type-pill">{{ (b.bill_type or '—')|replace('_', ' ') }}</span></td>
+          <td>
+            {% if b.source_url %}<a href="{{ b.source_url }}" target="_blank" rel="noopener">{{ (b.title or '—')[:80] }}{% if (b.title or '')|length > 80 %}…{% endif %}</a>{% else %}{{ (b.title or '—')[:80] }}{% if (b.title or '')|length > 80 %}…{% endif %}{% endif %}
+          </td>
+          <td>{{ b.status or '—' }}</td>
+          <td>{{ (b.introduced_date or '')[:10] if b.introduced_date else '—' }}</td>
+          <td class="summary-cell">{{ (b.summary or '—')[:120] }}{% if (b.summary or '')|length > 120 %}…{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state-box">
+    <p><strong>No legislative / policy items yet.</strong></p>
+    <p>Data sources: Congress.gov, EU legislation, national parliaments. Import via <code>legislative_policy_tracker</code> table. See <a href="{{ url_for('main.help_page') }}#indicators">Indicator roadmap</a>.</p>
+  </div>
+  {% endif %}
+
+  <p class="page-meta"><a href="{{ url_for('main.diplomacy_dashboard') }}#legislative">← Back to Diplomacy</a></p>
+{% endblock %}

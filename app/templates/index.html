@@ -1,0 +1,617 @@
+{% extends "base.html" %}
+
+{% block title %}Intelligence Feed — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <a href="#articles-list" class="skip-link">Skip to article list</a>
+  {% set w = window or '7d' %}
+  <header class="intelligence-feed-header">
+    <h1 class="page-title">Intelligence Feed</h1>
+    <p class="page-intro">Not raw news. Structured intelligence: filter by country and risk category, confidence score, signal vs noise ranking.</p>
+    {% if last_scrape_time %}
+    <p class="feed-meta">Last feed refresh: {{ (last_scrape_time or '')[:19].replace('T', ' ') }} UTC</p>
+    {% endif %}
+    <div class="feed-header-actions">
+      {% if country_filter or risk_category_filter or request.args.get('source') or request.args.get('topic') or topic_filter_list or country_filter_list or risk_category_filter_list or domain_filter or impact_filter or search_query or watchlist_id %}
+      <a href="{{ url_for('main.index', window='7d') }}" class="feed-clear-link">Clear filters</a>
+      {% endif %}
+      <details class="feed-score-help">
+        <summary aria-label="What do C and S mean?">Scores</summary>
+        <p class="feed-score-help-text">C = confidence (0–100). S = signal vs noise (higher = more signal).</p>
+      </details>
+      <button type="button" class="feed-copy-link-btn" data-feed-url="{{ request.url }}">Copy link to this view</button>
+      <a href="{{ url_for('main.feed_rss', **feed_query) }}" class="feed-rss-link">RSS</a>
+      <a href="{{ url_for('main.feed_export_csv', **feed_query) }}">Export CSV</a>
+    </div>
+  </header>
+
+  {% if today_count is not none and yesterday_count is not none %}
+  <p class="feed-trending-hint">Today: <strong>{{ today_count }}</strong> stories{% if yesterday_count is not none %} (yesterday: {{ yesterday_count }}){% endif %}</p>
+  {% endif %}
+  {% if daily_counts_sparkline and daily_sparkline_max %}
+  <div class="feed-sparkline" aria-hidden="true" title="Last 7 days">
+    {% for d in daily_counts_sparkline %}
+    <span class="feed-sparkline-bar" style="height: {{ (d.count / daily_sparkline_max * 24)|int }}px" title="{{ d.day }}: {{ d.count }}"></span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if search_query %}
+  <p class="feed-search-chip">Search: <strong>{{ search_query }}</strong> <a href="{{ url_for('main.index', **feed_query_no_search) }}" class="feed-remove-search">Clear search</a></p>
+  {% endif %}
+  <div class="intelligence-feed-command-strip" role="toolbar" aria-label="Feed controls">
+    <div class="feed-command-strip-top">
+      <div class="time-window time-window-inline" aria-label="Time window">
+        <span class="time-window-label">Time:</span>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='1d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '1d' else '' }}">24h</a>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='3d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '3d' else '' }}">3d</a>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='7d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '7d' else '' }}">7d</a>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='30d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '30d' else '' }}">30d</a>
+      </div>
+
+      <div class="sort-toggle" aria-label="Ranking sort">
+        <span class="sort-label">Rank by:</span>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='date', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'date' else '' }}">Date</a>
+        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='signal', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'signal' else '' }}">Signal vs noise</a>
+      </div>
+
+      <div class="layout-toggle" aria-label="Layout density">
+        <span class="sort-label">Layout:</span>
+        <a href="{{ url_for('main.index', **feed_query_layout_card) }}" class="sort-chip {{ 'active' if layout == 'card' else '' }}">Card</a>
+        <a href="{{ url_for('main.index', **feed_query_layout_compact) }}" class="sort-chip {{ 'active' if layout == 'compact' else '' }}">Compact</a>
+        <a href="{{ url_for('main.index', **feed_query_layout_grid) }}" class="sort-chip {{ 'active' if layout == 'grid' else '' }}">Grid</a>
+      </div>
+
+      <div class="feed-command-strip-actions">
+        <button type="button" class="feed-filters-toggle-btn" id="feed-filters-toggle-btn" aria-controls="feed-filters-panel" aria-expanded="false">Filters</button>
+        <button type="button" class="feed-sidebar-open-btn" id="feed-sidebar-open-btn" aria-controls="feed-sidebar-panel" aria-expanded="false">Sidebar</button>
+      </div>
+    </div>
+
+    <div class="feed-active-filter-chips" aria-label="Active filters">
+      {% if country_filter %}<span class="feed-active-filter-chip">Country: {{ country_filter }}</span>{% endif %}
+      {% if risk_category_filter %}<span class="feed-active-filter-chip">Risk: {{ risk_category_filter }}</span>{% endif %}
+      {% if request.args.get('source') %}<span class="feed-active-filter-chip">Source: {{ request.args.get('source') }}</span>{% endif %}
+      {% if request.args.get('topic') %}<span class="feed-active-filter-chip">Topic: {{ request.args.get('topic') }}</span>{% endif %}
+      {% if domain_filter %}<span class="feed-active-filter-chip">Domain: {{ domain_filter }}</span>{% endif %}
+      {% if impact_filter %}<span class="feed-active-filter-chip">Impact: {{ impact_filter }}</span>{% endif %}
+      {% if search_query %}<span class="feed-active-filter-chip">Search: "{{ search_query }}"</span>{% endif %}
+      {% if watchlist_id %}<span class="feed-active-filter-chip">Watchlist: {{ watchlist_id }}</span>{% endif %}
+    </div>
+  </div>
+
+  <section class="filters feed-filters-panel" id="feed-filters-panel">
+    <form method="get" class="filter-form" id="filter-form">
+      <input type="hidden" name="window" value="{{ w }}">
+      <input type="hidden" name="page" value="1">
+      <input type="hidden" name="per_page" value="{{ per_page or 25 }}">
+      {% if search_query %}<input type="hidden" name="q" value="{{ search_query }}">{% endif %}
+      {% if impact_filter %}<input type="hidden" name="impact" value="{{ impact_filter }}">{% endif %}
+      {% if domain_filter %}<input type="hidden" name="domain" value="{{ domain_filter }}">{% endif %}
+      {% if sort %}<input type="hidden" name="sort" value="{{ sort }}">{% endif %}
+      <label for="country">Country</label>
+      <select name="country" id="country" onchange="this.form.submit()">
+        <option value="">All countries</option>
+        {% for val, label in (country_options or []) %}
+        <option value="{{ val }}" {{ 'selected' if country_filter == val else '' }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+      <label for="risk_category">Risk category</label>
+      <select name="risk_category" id="risk_category" onchange="this.form.submit()">
+        <option value="">All risk categories</option>
+        {% for et in (event_types or []) %}
+        <option value="{{ et }}" {{ 'selected' if risk_category_filter == et else '' }}>{{ et }}</option>
+        {% endfor %}
+      </select>
+      <details class="feed-advanced-filters">
+        <summary>More filters</summary>
+        <div class="feed-advanced-grid">
+          {% if watchlists %}
+          <div class="feed-advanced-group">
+            <label for="watchlist_id">Watchlist</label>
+            <select name="watchlist_id" id="watchlist_id" onchange="this.form.submit()">
+              <option value="">All</option>
+              {% for wl in watchlists %}
+              <option value="{{ wl.id }}" {{ 'selected' if watchlist_id and watchlist_id|string == wl.id|string else '' }}>{{ wl.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+          <div class="feed-advanced-group">
+            <label for="source">Source</label>
+            <select name="source" id="source" onchange="this.form.submit()">
+              <option value="">All sources</option>
+              {% for s in sources %}
+              <option value="{{ s.source_name }}" {{ 'selected' if request.args.get('source') == s.source_name else '' }}>
+                {{ s.source_name }} ({{ s.count }})
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="feed-advanced-group">
+            <label for="topic">Topic</label>
+            <select name="topic" id="topic" onchange="this.form.submit()">
+              <option value="">All topics</option>
+              {% for t in topics %}
+              <option value="{{ t[0] }}" {{ 'selected' if request.args.get('topic') == t[0] else '' }}>
+                {{ t[0] }} ({{ t[1] }})
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </details>
+    </form>
+  </section>
+
+  <div class="intelligence-feed-workspace-grid layout-columns">
+    <section class="articles-column" id="articles-list">
+      {% if total_count is not none and total_count > 0 %}
+      <p class="feed-result-count">Showing {{ showing_start }}–{{ showing_end }} of {{ total_count }}{% if total_count >= 500 %} (refine filters or search for more){% endif %}</p>
+      {% endif %}
+      {% if not articles %}
+        <div class="empty-state empty-state-feed">
+          <p><strong>No articles in this view.</strong></p>
+          {% if total_articles_in_db and total_articles_in_db > 0 %}
+          <p>You have <strong>{{ total_articles_in_db }}</strong> article{{ 's' if total_articles_in_db != 1 else '' }} in the database. None match the current time window or filters.</p>
+          <p>Try <a href="{{ url_for('main.index', window='30d', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}">30-day time window</a>, <a href="{{ url_for('main.index', window='3d', **feed_query_no_show_hidden) }}">3-day window</a>, or clear <strong>Country</strong> and <strong>Risk category</strong> above.</p>
+          {% if search_query %}<p><a href="{{ url_for('main.index', **feed_query_no_search) }}">Clear search</a> to see all articles in the current filters.</p>{% endif %}
+          <p>Or browse <a href="{{ url_for('main.insights') }}">Insights &amp; clusters</a> for story clusters.</p>
+          {% else %}
+          <p>Run these from the <strong>project root</strong> (<code>GeopoliticalNews</code>):</p>
+          <ol>
+            <li><code>python scrape.py</code> — fetches articles into <code>data/news.db</code></li>
+            <li><code>python run_jobs.py --all</code> — topics, impact, analysis</li>
+          </ol>
+          <p>Then refresh this page. If scrape prints "Total: 0 articles", check your network or try again later (feeds can be temporarily empty).</p>
+          {% endif %}
+        </div>
+      {% else %}
+        <ul class="article-list layout-{{ layout }}" role="list" aria-label="Article list">
+          {% for a in articles %}
+          <li class="article-card" data-article-id="{{ a.id }}" role="listitem">
+            {% if feed_last_visit and a.published_utc and (a.published_utc[:19] > feed_last_visit[:19]) %}
+            <span class="article-badge-new" aria-label="New since last visit">New</span>
+            {% endif %}
+            {% if a.cluster_id and cluster_count_by_id.get(a.cluster_id) %}
+            <a href="{{ url_for('main.cluster_detail', cluster_id=a.cluster_id) }}" class="article-related-link">Related ({{ cluster_count_by_id.get(a.cluster_id) }})</a>
+            {% endif %}
+            {% if a.image_url and layout != 'compact' %}
+            <div class="article-card-media">
+              <a href="{{ a.url }}" target="_blank" rel="noopener" class="article-image-link">
+                <img src="{{ a.image_url }}" alt="" class="article-thumb" loading="lazy">
+              </a>
+            </div>
+            {% endif %}
+            {% if a.video_url and not a.image_url and layout != 'compact' %}
+            <div class="article-card-media article-video-wrap">
+              <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {% endif %}
+            <div class="article-card-header">
+              <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+              <span class="card-badges">
+                {% if a.id in feed_seen_ids %}<span class="article-badge-seen" title="Marked seen">Seen</span>{% endif %}
+                <span class="confidence-score-pill" title="Confidence 0–100">C{{ a.confidence_score|default(0) }}</span>
+                {% if sort == 'signal' %}<span class="signal-score-pill" title="Signal vs noise">S{{ a.signal_score|default(0) }}</span>{% endif %}
+                {% if a.urgency %}<span class="urgency-pill urgency-{{ a.urgency }}">{{ a.urgency }}</span>{% endif %}
+                {% if a.impact_score is not none and a.impact_score > 0 %}
+                <span class="impact-pill impact-{% if (a.impact_score or 0) >= 7 %}3{% elif (a.impact_score or 0) >= 4 %}2{% else %}1{% endif %}">
+                  {% if (a.impact_score or 0) >= 7 %}High{% elif (a.impact_score or 0) >= 4 %}Med{% else %}Low{% endif %}
+                </span>
+                {% endif %}
+                {% if a.event_type %}<span class="event-type-pill">{{ a.event_type }}</span>{% endif %}
+              </span>
+            </div>
+            <div class="article-meta">
+              <span class="source">{{ a.source_name }}</span>
+              {% if a.published_utc %}
+              <span class="date">{{ a.published_utc[:10] }}</span>
+              {% endif %}
+              {% if a.key_takeaways or a.why_it_matters %}<span class="confidence-badge" title="Analysis present">AI</span>{% endif %}
+              {% if a.topics_list %}
+              <span class="topics-inline">
+                {% for t in a.topics_list[:3] %}
+                <a href="{{ url_for('main.index', topic=t, window=w, source=request.args.get('source'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}" class="topic-tag">{{ t }}</a>
+                {% endfor %}
+              </span>
+              {% endif %}
+            </div>
+            {% if a.key_takeaways %}
+            <div class="article-analysis key-takeaways">
+              <strong>Key takeaways</strong>
+              <div class="takeaways-text">{{ a.key_takeaways }}</div>
+            </div>
+            {% endif %}
+            {% if a.why_it_matters %}{% set why_clean = a.why_it_matters | why_matters_only %}
+            {% if why_clean %}
+            <p class="article-why">Why it matters: {{ why_clean }}</p>
+            {% endif %}{% endif %}
+            {% if a.summary and not a.key_takeaways %}
+            <p class="article-summary">{{ a.summary }}</p>
+            {% endif %}
+            {% if a.video_url and a.image_url %}
+            <div class="article-video-inline">
+              <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed-inline" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {% endif %}
+            <div class="article-implications-inline" id="impl-{{ a.id }}" data-article-id="{{ a.id }}" role="region" aria-label="Implications" style="display:none;"></div>
+            <div class="article-actions">
+              <button type="button" class="link-implications" data-article-id="{{ a.id }}" data-article-url="{{ a.url }}" aria-expanded="false" aria-controls="feed-inspector-body">Implications</button>
+              <a href="https://web.archive.org/web/2/{{ a.url }}" target="_blank" rel="noopener" class="link-archive">Archive</a>
+              <a href="{{ url_for('main.article_detail', article_id=a.id) }}" class="link-notes">Notes</a>
+              <form action="{{ url_for('main.feed_mark_seen', article_id=a.id) }}" method="post" class="article-action-form">
+                <button type="submit" class="link-seen">{% if a.id in feed_seen_ids %}Unseen{% else %}Mark seen{% endif %}</button>
+              </form>
+              <button type="button" class="link-share" data-article-url="{{ a.url }}" title="Copy link">Share</button>
+              {% if watchlists and (a.topics_list or a.entities_list) %}
+              {% set first_topic = (a.topics_list or a.entities_list or [])[0] if (a.topics_list or a.entities_list) else '' %}
+              <div class="article-add-watchlist">
+                <form method="post" class="article-action-form add-topic-form" data-add-topic="{{ first_topic }}">
+                  <input type="hidden" name="topic" value="{{ first_topic }}">
+                  <select class="add-topic-watchlist-select" aria-label="Add topic to watchlist" required>
+                    <option value="">Add to watchlist…</option>
+                    {% for wl in watchlists %}
+                    <option value="{{ url_for('main.watchlist_add_topic_route', watchlist_id=wl.id) }}">{{ wl.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <button type="submit" class="link-add-watchlist">Add</button>
+                </form>
+              </div>
+              {% endif %}
+              <form action="{{ url_for('main.feed_hide_article', article_id=a.id) }}" method="post" class="article-hide-form">
+                <button type="submit" class="link-hide">Hide</button>
+              </form>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      {% if total_pages and total_pages > 1 %}
+      <nav class="feed-pagination" aria-label="Feed pagination">
+        {% if feed_query_prev %}<a href="{{ url_for('main.index', **feed_query_prev) }}">← Prev</a>{% endif %}
+        <span class="feed-page-info">Page {{ page }} of {{ total_pages }}</span>
+        {% if feed_query_next %}<a href="{{ url_for('main.index', **feed_query_next) }}">Next →</a>{% endif %}
+      </nav>
+      {% endif %}
+      {% if feed_hidden_count and feed_hidden_count > 0 %}
+      <p class="feed-hidden-actions">
+        {% if show_hidden %}<a href="{{ url_for('main.index', **feed_query_no_show_hidden) }}">Hide hidden again</a>{% else %}<a href="{{ url_for('main.index', show_hidden='1', **feed_query) }}">Show {{ feed_hidden_count }} hidden</a>{% endif %}
+        <form action="{{ url_for('main.feed_unhide_all') }}" method="post" style="display:inline;">
+          <button type="submit">Unhide all</button>
+        </form>
+      </p>
+      {% endif %}
+      {% endif %}
+    </section>
+
+    <aside class="sidebar-column intelligence-feed-sidebar-panel" id="feed-sidebar-panel">
+      <button type="button" class="feed-sidebar-close-btn" id="feed-sidebar-close-btn" aria-label="Close sidebar">×</button>
+
+      <section class="sidebar-panel intelligence-feed-inspector" aria-label="Selected article context">
+        <h3>Article context</h3>
+        <div id="feed-inspector-empty" class="intelligence-feed-inspector-empty">Click <strong>Implications</strong> on an article.</div>
+        <div id="feed-inspector-body" class="intelligence-feed-inspector-body" style="display:none;"></div>
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>Impact overview ({{ '24h' if w == '1d' else ('3d' if w == '3d' else ('30d' if w == '30d' else '7d')) }})</h3>
+        {% if impact_summary.total %}
+        <ul class="metric-list metric-list-links">
+          <li><a href="{{ url_for('main.index', window=w, source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">Total stories</span> <span class="metric-value">{{ impact_summary.total }}</span></a></li>
+          <li><a href="{{ url_for('main.index', window=w, impact='high', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">High impact</span> <span class="metric-value metric-high">{{ impact_summary.high }}</span></a></li>
+          <li><a href="{{ url_for('main.index', window=w, impact='med', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">Medium</span> <span class="metric-value metric-med">{{ impact_summary.medium }}</span></a></li>
+          <li><a href="{{ url_for('main.index', window=w, impact='low', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">Low</span> <span class="metric-value metric-low">{{ impact_summary.low }}</span></a></li>
+        </ul>
+        {% else %}
+        <p class="sidebar-empty">Run <code>python run_jobs.py --topics --impact</code> to populate impact data.</p>
+        {% endif %}
+      </section>
+
+      <section class="sidebar-panel" id="macro-indicators-panel">
+        <h3>Macro indicators</h3>
+        <p class="sidebar-empty" id="macro-indicators-loading">Loading…</p>
+        <ul class="metric-list" id="macro-indicators-list" style="display:none;"></ul>
+        <p class="sidebar-empty" id="macro-indicators-updated" style="display:none; margin: 8px 0 0;"></p>
+      </section>
+
+      {% if topic_counts_sidebar %}
+      <section class="sidebar-panel">
+        <h3>Top topics</h3>
+        <ul class="chip-list chip-list-links">
+          {% for t, cnt in topic_counts_sidebar %}
+          <li><a href="{{ url_for('main.index', topic=t, window=w, source=request.args.get('source'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}" class="chip-link"><span class="chip">{{ t }}</span> <span class="count">({{ cnt }})</span></a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+      {% if event_type_counts %}
+      <section class="sidebar-panel">
+        <h3>Risk categories</h3>
+        <ul class="chip-list chip-list-links">
+          {% for et, cnt in event_type_counts %}
+          <li><a href="{{ url_for('main.index', risk_category=et, window=w, source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, sort=sort) }}" class="chip-link"><span class="chip">{{ et }}</span> <span class="count">({{ cnt }})</span></a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+      {% if clusters %}
+      <section class="sidebar-panel">
+        <h3>Story clusters</h3>
+        <ul class="chip-list chip-list-links">
+          {% for c in clusters %}
+          <li><a href="{{ url_for('main.cluster_detail', cluster_id=c.cluster_id) }}" class="chip-link"><span class="chip">{{ c.label[:40] }}{% if c.label|length > 40 %}…{% endif %}</span> <span class="count">({{ c.count }})</span></a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+      <section class="sidebar-panel">
+        <h3>Your watchlists</h3>
+        <form action="{{ url_for('main.watchlist_create') }}" method="post" class="watchlist-create-form">
+          <input type="text" name="name" placeholder="New watchlist name" required aria-label="Watchlist name" class="watchlist-create-name">
+          <input type="text" name="topic" placeholder="Optional first topic" aria-label="Optional topic" class="watchlist-create-topic">
+          <button type="submit">Add</button>
+        </form>
+        {% if alerts or watchlists %}
+        <ul class="sidebar-list sidebar-list-watchlists">
+          {% for a in (alerts or []) %}
+          <li class="sidebar-list-item-actions">
+            <a href="{{ url_for('main.alert_detail', alert_id=a.id) }}">{{ a.name }}{% if alert_count_by_id.get(a.id) %} <span class="alert-badge">({{ alert_count_by_id.get(a.id) }} in 24h)</span>{% endif %}</a>
+            {% if current_user.is_authenticated %}
+            <span class="sidebar-item-actions">
+              <a href="{{ url_for('main.alert_edit', alert_id=a.id) }}">Edit</a>
+              <form method="post" action="{{ url_for('main.alert_delete', alert_id=a.id) }}" class="sidebar-delete-form" onsubmit="return confirm('Remove this watchlist?');">
+                <button type="submit">Delete</button>
+              </form>
+            </span>
+            {% endif %}
+          </li>
+          {% endfor %}
+          {% for wl in (watchlists or []) %}
+          <li class="sidebar-list-item-actions">
+            <a href="{{ url_for('main.index', watchlist_id=wl.id, window=w) }}">{{ wl.name }}</a>
+            <span class="sidebar-item-actions">
+              <a href="{{ url_for('main.watchlist_edit', watchlist_id=wl.id) }}">Edit</a>
+              <form method="post" action="{{ url_for('main.watchlist_delete', watchlist_id=wl.id) }}" class="sidebar-delete-form" onsubmit="return confirm('Remove this watchlist?');">
+                <button type="submit">Delete</button>
+              </form>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="sidebar-watchlist-manage"><a href="{{ url_for('main.alerts_list') }}">Manage watchlists</a></p>
+        {% else %}
+        <p class="sidebar-empty">Create one above or <a href="{{ url_for('main.alerts_list') }}">manage watchlists</a>.</p>
+        {% endif %}
+      </section>
+      <section class="sidebar-panel">
+        <h3>Key domains</h3>
+        {% if domain_counts %}
+        <ul class="chip-list chip-list-links">
+          {% for domain, count in domain_counts %}
+          <li><a href="{{ url_for('main.index', domain=domain, window=w, source=request.args.get('source'), topic=request.args.get('topic'), impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}" class="chip-link"><span class="chip">{{ domain }}</span> <span class="count">({{ count }})</span></a></li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="sidebar-empty">Domains appear after impact scoring.</p>
+        {% endif %}
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>Save view</h3>
+        <form id="save-view-form" action="{{ url_for('main.save_view', **request.args) }}" method="post" class="save-view-form">
+          <input type="text" name="name" placeholder="View name" required class="save-view-name">
+          <button type="submit">Save</button>
+        </form>
+        {% if saved_views %}
+        <ul class="sidebar-list">
+          {% for v in saved_views %}
+          <li><a href="{{ url_for('main.load_saved_view', view_id=v.id) }}">{{ v.name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+      <section class="sidebar-panel next-steps">
+        <h3>Next steps</h3>
+        <ul>
+          <li><a href="{{ url_for('main.workspace', layout='4', t1='/index', t2='/risk', t3='/integration', t4=url_for('main.scenario_engine')) }}">Workspace</a> — view Feed with Risk, Country, Scenario Engine</li>
+          <li><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> — country and regional risk scores</li>
+          <li><a href="{{ url_for('main.export_briefing') }}">Briefing</a> — generate a briefing</li>
+          <li><a href="{{ url_for('main.alerts_list') }}">Watchlists</a> — manage saved topic/country watchlists</li>
+          <li><a href="#save-view-form">Save view</a> — save this filter set above</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+  <div class="feed-sidebar-backdrop" id="feed-sidebar-backdrop" aria-hidden="true"></div>
+  <script>
+  (function () {
+    var btn = document.querySelector('.feed-copy-link-btn');
+    if (btn) btn.addEventListener('click', function () {
+      var url = btn.getAttribute('data-feed-url') || window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy link to this view'; }, 2000); });
+      } else {
+        var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy link to this view'; }, 2000);
+      }
+    });
+    var loadView = document.getElementById('feed-load-view');
+    if (loadView) loadView.addEventListener('change', function () {
+      var v = this.value;
+      if (v) { window.location = v; }
+    });
+    document.querySelectorAll('.link-share').forEach(function (shareBtn) {
+      shareBtn.addEventListener('click', function () {
+        var url = this.getAttribute('data-article-url') || '';
+        if (url && navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () { shareBtn.textContent = 'Copied'; setTimeout(function () { shareBtn.textContent = 'Share'; }, 1500); });
+        }
+      });
+    });
+    var inspectorEmpty = document.getElementById('feed-inspector-empty');
+    var inspectorBody = document.getElementById('feed-inspector-body');
+
+    document.querySelectorAll('.link-implications').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = this.getAttribute('data-article-id');
+        var articleUrl = this.getAttribute('data-article-url') || '';
+
+        if (!inspectorBody || !inspectorEmpty) return;
+
+        var sameArticle = inspectorBody.dataset.articleId === String(id);
+        var isVisible = inspectorBody.style.display !== 'none';
+        if (sameArticle && isVisible) {
+          inspectorBody.style.display = 'none';
+          inspectorBody.innerHTML = '';
+          inspectorEmpty.style.display = 'block';
+          inspectorBody.dataset.articleId = '';
+          return;
+        }
+
+        inspectorEmpty.style.display = 'none';
+        inspectorBody.dataset.articleId = String(id);
+        inspectorBody.style.display = 'block';
+        inspectorBody.innerHTML = '<div class="article-implications-inline"><span class="implications-loading">Loading…</span></div>';
+
+        fetch('/api/articles/' + id + '/implications')
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            var html = '';
+            if (data.country_scores && data.country_scores.length) {
+              html += '<div class="impl-countries-inline">';
+              data.country_scores.forEach(function (c) {
+                html += '<span class="impl-country-chip"><a href="/country/' + c.code + '">' + c.name + '</a>';
+                var pills = [];
+                if (c.cdei != null) pills.push('CDEI ' + c.cdei.toFixed(1));
+                if (c.sfi != null) pills.push('SFI ' + c.sfi.toFixed(1));
+                if (c.fragility != null) pills.push('Frag ' + c.fragility + '%');
+                if (pills.length) html += ' <span class="impl-pills">' + pills.join(' ') + '</span>';
+                html += '</span>';
+              });
+              html += '</div>';
+            }
+            if (data.implications && data.implications.length) {
+              html += '<ul class="impl-bullets-inline">';
+              data.implications.forEach(function (i) { html += '<li>' + i + '</li>'; });
+              html += '</ul>';
+            }
+            if (data.gepi) {
+              html += '<p class="impl-global-note"><strong>GEPI</strong> ' + data.gepi.score.toFixed(2) + ' (global, same for all) · <a href="/help#institutional-models">Models guide</a></p>';
+            }
+
+            var header = '';
+            if (articleUrl) {
+              header = '<p class="impl-global-note" style="border-top: none; padding-top: 0; margin: 0 0 0.5rem 0;"><strong>Source:</strong> <a href="' + articleUrl + '" target="_blank" rel="noopener">Open</a></p>';
+            }
+
+            inspectorBody.innerHTML = '<div class="article-implications-inline">' + header + (html || '<p class="muted">No country-specific context.</p>') + '</div>';
+          })
+          .catch(function () {
+            inspectorBody.innerHTML = '<div class="article-implications-inline"><p class="muted">Could not load implications.</p></div>';
+          });
+      });
+    });
+
+    var filtersToggle = document.getElementById('feed-filters-toggle-btn');
+    var filtersPanel = document.getElementById('feed-filters-panel');
+    if (filtersToggle && filtersPanel) {
+      filtersToggle.addEventListener('click', function () {
+        var open = filtersPanel.classList.contains('open');
+        if (open) filtersPanel.classList.remove('open');
+        else filtersPanel.classList.add('open');
+        filtersToggle.setAttribute('aria-expanded', String(!open));
+      });
+    }
+
+    var sidebarOpen = document.getElementById('feed-sidebar-open-btn');
+    var sidebarClose = document.getElementById('feed-sidebar-close-btn');
+    var sidebarPanel = document.getElementById('feed-sidebar-panel');
+    var sidebarBackdrop = document.getElementById('feed-sidebar-backdrop');
+    function setSidebarOpen(isOpen) {
+      if (!sidebarPanel) return;
+      sidebarPanel.classList.toggle('open', !!isOpen);
+      if (sidebarBackdrop) sidebarBackdrop.setAttribute('aria-hidden', String(!isOpen));
+      if (sidebarOpen) sidebarOpen.setAttribute('aria-expanded', String(!!isOpen));
+    }
+    if (sidebarOpen) sidebarOpen.addEventListener('click', function () { setSidebarOpen(true); });
+    if (sidebarClose) sidebarClose.addEventListener('click', function () { setSidebarOpen(false); });
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', function () { setSidebarOpen(false); });
+    document.querySelectorAll('.add-topic-form').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        var sel = form.querySelector('.add-topic-watchlist-select');
+        var actionUrl = sel && sel.options[sel.selectedIndex] && sel.options[sel.selectedIndex].value;
+        if (!actionUrl) { e.preventDefault(); return false; }
+        form.action = actionUrl;
+      });
+    });
+    var cards = document.querySelectorAll('.article-card');
+    var searchInput = document.getElementById('feed-q');
+
+    function initMacroIndicators() {
+      var panel = document.getElementById('macro-indicators-panel');
+      var loading = document.getElementById('macro-indicators-loading');
+      var list = document.getElementById('macro-indicators-list');
+      var updated = document.getElementById('macro-indicators-updated');
+      if (!panel || !loading || !list || !updated) return;
+
+      function fmtValue(v, unitSuffix) {
+        if (v == null || v === '') return '—';
+        var num = Number(v);
+        if (!isFinite(num)) return String(v);
+        var s = Math.abs(num) >= 10 ? num.toFixed(1) : num.toFixed(2);
+        s = s.replace(/\.0+$/, '').replace(/(\.\d*[1-9])0+$/, '$1');
+        return s + (unitSuffix || '');
+      }
+
+      fetch('/api/macro/indicators', { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var rows = (data && data.indicators) || [];
+          if (!rows.length) throw new Error('empty');
+          list.innerHTML = '';
+          rows.forEach(function (it) {
+            var li = document.createElement('li');
+            var label = document.createElement('span');
+            label.className = 'metric-label';
+            label.textContent = (it.label || 'Indicator') + (it.as_of ? (' (' + it.as_of + ')') : '');
+            var value = document.createElement('span');
+            value.className = 'metric-value';
+            value.textContent = fmtValue(it.value, it.unit ? (' ' + it.unit) : '');
+            if (it.source) value.title = 'Source: ' + it.source;
+            li.appendChild(label);
+            li.appendChild(value);
+            list.appendChild(li);
+          });
+          loading.style.display = 'none';
+          list.style.display = 'block';
+          updated.textContent = data.updated_at ? ('Updated: ' + String(data.updated_at).replace('T', ' ').replace('Z', ' UTC')) : '';
+          updated.style.display = updated.textContent ? 'block' : 'none';
+        })
+        .catch(function () {
+          loading.textContent = 'Macro indicators unavailable.';
+        });
+    }
+
+    initMacroIndicators();
+    document.addEventListener('keydown', function (e) {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT')) return;
+      if (e.key === '/' && searchInput) { e.preventDefault(); searchInput.focus(); return; }
+      if (e.key === 'j' || e.key === 'k') {
+        var current = document.querySelector('.article-card.focus-within') || document.querySelector('.article-card');
+        if (!current) return;
+        var idx = Array.prototype.indexOf.call(cards, current);
+        if (e.key === 'j' && idx < cards.length - 1) { cards[idx + 1].scrollIntoView({ behavior: 'smooth' }); cards[idx + 1].querySelector('a') && cards[idx + 1].querySelector('a').focus(); }
+        if (e.key === 'k' && idx > 0) { cards[idx - 1].scrollIntoView({ behavior: 'smooth' }); cards[idx - 1].querySelector('a') && cards[idx - 1].querySelector('a').focus(); }
+        e.preventDefault();
+      }
+      if (e.key === 'o') {
+        var cur = document.querySelector('.article-card.focus-within');
+        if (cur) {
+          var link = cur.querySelector('.article-title a');
+          if (link) { e.preventDefault(); window.open(link.href); }
+        }
+      }
+    });
+  })();
+  </script>
+{% endblock %}

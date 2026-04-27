@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Supply Chain & Trade Flow — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Strategic Supply Chain & Trade Flow Intelligence</h1>
+  <p class="page-intro">Trade exposure by sector, critical minerals and semiconductor chokepoints, LNG & oil shipping routes, and military-strategic chokepoints (Malacca, Hormuz, Bab el-Mandeb). Run instant scenario impact when a chokepoint closes.</p>
+
+  <section class="supply-chain-cta">
+    <a href="{{ url_for('main.supply_chain_scenario') }}" class="scenario-cta-link">
+      If Strait of Hormuz closes → What’s impact on Japan, Korea, India?
+    </a>
+    <p class="scenario-cta-desc">Instant scenario tree. Pick any chokepoint and countries.</p>
+  </section>
+
+  <section class="risk-section">
+    <h2>Military-strategic chokepoints</h2>
+    <p class="risk-meta">Oil, LNG, containers, semiconductors, critical minerals flows through key straits.</p>
+    {% if not chokepoints %}
+    <p class="empty-state">No chokepoint data. Run app with DB init to seed.</p>
+    {% else %}
+    <ul class="chokepoint-list">
+      {% for cp in chokepoints %}
+      <li class="chokepoint-card">
+        <h3><a href="{{ url_for('main.supply_chain_chokepoint_detail', chokepoint_id=cp.id) }}">{{ cp.name }}</a></h3>
+        <p class="chokepoint-region">{{ cp.region }}</p>
+        <p class="chokepoint-commodities">Commodities: {{ cp.commodities or '—' }}</p>
+        {% if cp.description %}
+        <p class="chokepoint-desc">{{ cp.description[:200] }}{% if cp.description|length > 200 %}…{% endif %}</p>
+        {% endif %}
+        <p>
+          <a href="{{ url_for('main.supply_chain_scenario') }}?chokepoint={{ cp.id }}">Run scenario: if closed → impact</a>
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>Capabilities</h2>
+    <ul class="capability-list">
+      <li><strong>Trade exposure by sector</strong> — View flows per chokepoint (oil, LNG, containers, semiconductors, critical minerals).</li>
+      <li><strong>Critical minerals flows</strong> — Tracked via chokepoint flows (e.g. Malacca for Indonesian/Malaysian minerals).</li>
+      <li><strong>Semiconductor chokepoints</strong> — Malacca and related routes for chip supply chain.</li>
+      <li><strong>LNG & oil shipping routes</strong> — Hormuz, Malacca, Bab el-Mandeb coverage.</li>
+      <li><strong>Port congestion data</strong> — Placeholder for future integration (e.g. AIS / port APIs).</li>
+      <li><strong>Instant scenario tree</strong> — “If [chokepoint] closes → impact on [countries]” with sector-level breakdown.</li>
+    </ul>
+  </section>
+
+  <p><a href="{{ url_for('main.supply_chain_scenario') }}" class="back-link">→ Run chokepoint scenario</a></p>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Add treaty — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Add treaty / agreement</h1>
+
+  <form method="post" class="diplomacy-form">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required placeholder="e.g. US-Japan Security Treaty">
+    <label for="treaty_type">Type</label>
+    <select id="treaty_type" name="treaty_type">
+      {% for tt in treaty_types %}
+      <option value="{{ tt }}">{{ tt.replace('_', ' ') }}</option>
+      {% endfor %}
+    </select>
+    <label for="party_a">Party A *</label>
+    <input type="text" id="party_a" name="party_a" required placeholder="e.g. United States">
+    <label for="party_b">Party B</label>
+    <input type="text" id="party_b" name="party_b" placeholder="e.g. Japan">
+    <label for="signed_date">Signed date</label>
+    <input type="text" id="signed_date" name="signed_date" placeholder="YYYY-MM-DD">
+    <label for="summary">Summary</label>
+    <textarea id="summary" name="summary" rows="3" placeholder="Brief summary"></textarea>
+    <label for="document_url">Agreement document (PDF / DOCX link)</label>
+    <input type="url" id="document_url" name="document_url" placeholder="https://… to the treaty PDF or document">
+    <label for="full_text">Full text</label>
+    <textarea id="full_text" name="full_text" rows="12" placeholder="Paste the full treaty text so it appears on the agreement page and works with clause comparator / escalation scan"></textarea>
+    <label><input type="checkbox" name="has_escalation_clause" value="1"> Has escalation / retaliation clause</label>
+    <label for="source_url">Source / reference URL</label>
+    <input type="url" id="source_url" name="source_url" placeholder="https://…">
+    <button type="submit">Save treaty</button>
+  </form>
+  <p><a href="{{ url_for('main.diplomacy_treaties') }}">← Treaties</a></p>
+{% endblock %}

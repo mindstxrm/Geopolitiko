@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }} — Export</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --b-banner: #0f172a;
+      --b-header: #1e293b;
+      --b-accent: #059669;
+      --b-accent-light: #d1fae5;
+      --b-ink: #1e293b;
+      --b-muted: #64748b;
+      --b-border: #e2e8f0;
+      --b-surface: #f8fafc;
+      --b-cream: #fafaf9;
+      --b-gold: #b45309;
+      --b-high: #b91c1c;
+      --b-med: #b45309;
+      --b-low: #15803d;
+    }
+    * { box-sizing: border-box; }
+    .no-print { margin-bottom: 1rem; }
+    body.export-page {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--b-ink);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: var(--b-cream);
+    }
+
+    /* Top sensitivity banner */
+    .briefing-banner {
+      background: var(--b-banner);
+      color: #94a3b8;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 1.5rem;
+      text-align: center;
+    }
+    .briefing-banner:empty { display: none; }
+
+    /* Main header block */
+    .briefing-header-block {
+      background: var(--b-header);
+      color: #fff;
+      padding: 1.25rem 1.5rem 1.5rem;
+      margin: 0;
+    }
+    .briefing-header-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .briefing-logo {
+      height: 36px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+    }
+    .briefing-logo-wrap {
+      display: flex;
+      align-items: center;
+    }
+    .briefing-logo-wrap .briefing-logo { filter: brightness(0) invert(1); }
+    .briefing-logo-fallback {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .briefing-header-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+    .briefing-header h1 {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0 0 0.4rem 0;
+      line-height: 1.3;
+    }
+    .briefing-header-sub {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .briefing-header-sub span { color: #94a3b8; }
+
+    /* Content area */
+    .briefing-page-content {
+      padding: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .briefing-intro {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--b-ink);
+    }
+
+    /* Two-column layout */
+    .briefing-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 700px) {
+      .briefing-two-col { grid-template-columns: 1fr; }
+    }
+
+    /* Strategic synthesis / Executive summary box */
+    .briefing-synthesis-box {
+      background: var(--b-surface);
+      border-left: 4px solid var(--b-accent);
+      padding: 1rem 1.25rem;
+      border-radius: 0 6px 6px 0;
+    }
+    .briefing-synthesis-box h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--b-muted);
+      margin: 0 0 0.5rem 0;
+    }
+    .briefing-synthesis-box .briefing-synthesis-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Key developments / Metrics box */
+    .briefing-metrics-box {
+      background: var(--b-header);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+    }
+    .briefing-metrics-box h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin: 0 0 0.75rem 0;
+    }
+    .briefing-metrics-box .briefing-metrics-list {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    /* TOC */
+    .briefing-toc {
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--b-surface);
+      border-radius: 6px;
+      border: 1px solid var(--b-border);
+    }
+    .briefing-toc h2 { font-size: 0.8rem; margin: 0 0 0.5rem 0; color: var(--b-muted); }
+    .briefing-toc ol { margin: 0; padding-left: 1.25rem; font-size: 0.85rem; }
+
+    /* Section dividers */
+    .briefing-section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--b-muted);
+      margin: 1.5rem 0 0.75rem 0;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--b-border);
+    }
+    .briefing-group-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--b-header);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--b-accent);
+    }
+
+    /* Article cards - Key developments style */
+    .briefing-article-card {
+      background: #fff;
+      border: 1px solid var(--b-border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .briefing-article-card.high-impact {
+      border-left: 4px solid var(--b-high);
+      background: linear-gradient(to right, #fef2f2 0%, #fff 8%);
+    }
+    .briefing-article-card.med-impact {
+      border-left: 4px solid var(--b-med);
+      background: linear-gradient(to right, #fffbeb 0%, #fff 8%);
+    }
+    .briefing-article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.03em;
+      color: var(--b-muted);
+      margin-bottom: 0.5rem;
+    }
+    .briefing-impact-badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.68rem;
+    }
+    .briefing-impact-badge.high { background: #fef2f2; color: var(--b-high); }
+    .briefing-impact-badge.med { background: #fffbeb; color: var(--b-med); }
+    .briefing-impact-badge.low { background: #f0fdf4; color: var(--b-low); }
+    .briefing-article-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.35;
+    }
+    .briefing-article-body {
+      font-size: 0.875rem;
+      margin: 0;
+      color: var(--b-ink);
+    }
+    .briefing-article-body a {
+      color: var(--b-accent);
+      text-decoration: underline;
+    }
+
+    /* Cover page */
+    .briefing-cover {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: var(--b-header);
+    }
+    .briefing-cover .briefing-logo-wrap {
+      margin-bottom: 1.5rem;
+    }
+    .briefing-cover .briefing-logo {
+      height: 48px;
+      filter: brightness(0) invert(1);
+    }
+    .briefing-cover h1 {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      max-width: 600px;
+    }
+    .briefing-cover-meta {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+    .briefing-cover-notice {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 2rem;
+    }
+
+    /* Footer */
+    .briefing-footer {
+      margin-top: 2rem;
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--b-border);
+      font-size: 0.7rem;
+      color: var(--b-muted);
+      text-align: center;
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      body.export-page { background: #fff; padding: 0; }
+      @page { margin: 1.2cm; }
+      .briefing-article-card, .briefing-group { break-inside: avoid; page-break-inside: avoid; }
+      .briefing-header-block, .briefing-section-title { page-break-after: avoid; }
+      .briefing-cover { page-break-after: always; min-height: 0; padding: 2rem 0; }
+      .briefing-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 0.4rem 1rem; background: var(--b-cream); }
+    .briefing-footer-disclaimer { font-size: 0.6rem; color: var(--b-muted); margin-top: 0.25rem; line-height: 1.35; max-width: 100%; }
+    .briefing-sensitivity-strip { font-size: 0.65rem; text-align: center; padding: 0.35rem 1rem; font-weight: 700; letter-spacing: 0.06em; }
+    .briefing-sensitivity-restricted { background: #7f1d1d; color: #fecaca; }
+    .briefing-sensitivity-internal { background: #1e3a5f; color: #bfdbfe; }
+    .briefing-sensitivity-public { background: #14532d; color: #bbf7d0; }
+    .briefing-legal-review-banner { background: #fef3c7; color: #92400e; text-align: center; padding: 0.4rem 1rem; font-size: 0.75rem; border-bottom: 1px solid #f59e0b; }
+      .briefing-page-content { padding-bottom: 2.5rem; }
+      .briefing-logo { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .briefing-banner, .briefing-header-block, .briefing-metrics-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body class="export-page">
+  {% set st = sensitivity_tier|default('internal') %}
+  {% if st == 'restricted' %}
+  <div class="briefing-sensitivity-strip briefing-sensitivity-restricted" role="note">RESTRICTED — distribution limited</div>
+  {% elif st == 'internal' %}
+  <div class="briefing-sensitivity-strip briefing-sensitivity-internal" role="note">INTERNAL USE — Geopolitical Terminal</div>
+  {% elif st == 'public' %}
+  <div class="briefing-sensitivity-strip briefing-sensitivity-public" role="note">PUBLIC / UNCLASSIFIED — still verify sources</div>
+  {% endif %}
+  {% if legal_review_required|default(false) %}
+  <div class="briefing-legal-review-banner" role="alert"><strong>Legal review required</strong> before external distribution.</div>
+  {% endif %}
+  <div class="no-print">
+    <p><a href="{{ url_for('main.export_briefing') }}">← Back to builder</a> · <button onclick="window.print()">Print / Save as PDF</button></p>
+    {% if invalid_ids %}
+    <p class="briefing-invalid-ids">Some IDs were not found ({{ invalid_ids|length }}): {{ invalid_ids[:10]|join(', ') }}{% if invalid_ids|length > 10 %}…{% endif %}. Report includes {{ valid_count }} article(s).</p>
+    <button type="button" id="briefing-copy-valid-ids">Copy valid IDs</button>
+    {% endif %}
+  </div>
+  <script>document.title = {{ title|tojson }} + " — Export";</script>
+
+  {% if cover_page %}
+  <div class="briefing-cover">
+    <div class="briefing-logo-wrap">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Geopolitical Terminal" class="briefing-logo" onerror="this.style.display='none'; var s=this.nextElementSibling; if(s) s.style.display='block';">
+      <span class="briefing-logo-fallback" style="display:none;font-size:1.25rem;">Geopolitical Terminal</span>
+    </div>
+    <h1>{{ title }}</h1>
+    <p class="briefing-cover-meta">Report date: {{ report_date }} · Generated {{ generated_at }}</p>
+    {% if cover_line == '1' %}<p style="font-size:0.75rem;color:#94a3b8;">Confidential · For internal use</p>{% endif %}
+    <p class="briefing-cover-notice">Generated by Geopolitical Terminal</p>
+  </div>
+  {% endif %}
+
+  {% if cover_line and not cover_page %}
+  <div class="briefing-banner">{% if cover_line == '1' %}Confidential · For internal use · As of {{ report_date }}{% else %}{{ cover_line }}{% endif %}</div>
+  {% endif %}
+
+  <header class="briefing-header-block">
+    <div class="briefing-header-top">
+      <div class="briefing-logo-wrap">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="" class="briefing-logo" onerror="this.style.display='none'; var s=this.nextElementSibling; if(s) s.style.display='block';">
+        <span class="briefing-logo-fallback" style="display:none;">Geopolitical Terminal</span>
+      </div>
+      <span class="briefing-header-tag">Intelligence Briefing</span>
+    </div>
+    <div class="briefing-header">
+      <h1>{{ title }}</h1>
+      <div class="briefing-header-sub">
+        <span>Daily Brief</span>
+        <span>|</span>
+        <span>{{ report_date }}</span>
+        <span>·</span>
+        <span>{{ generated_at }}</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="briefing-page-content">
+    {% if intro %}<p class="briefing-intro">{{ intro }}</p>{% endif %}
+
+    {% if articles %}
+    <div class="briefing-two-col">
+      <section class="briefing-synthesis-box">
+        <h2>Strategic synthesis</h2>
+        <div class="briefing-synthesis-title">Executive summary</div>
+        {% if executive_summary %}
+        <p style="margin:0;font-size:0.875rem;">{{ executive_summary }}</p>
+        {% else %}
+        <p style="margin:0;font-size:0.875rem;">This briefing covers {{ valid_count }} article(s) from selected sources. Review the key developments and articles below for detailed analysis.</p>
+        {% endif %}
+      </section>
+      <section class="briefing-metrics-box">
+        <h2>Key developments</h2>
+        <div class="briefing-metrics-list">
+          <div><strong>{{ valid_count }}</strong> article(s)</div>
+          {% if date_range and date_range[0] and date_range[1] %}
+          <div>Date range: {{ date_range[0] }} — {{ date_range[1] }}</div>
+          {% endif %}
+          {% if event_counts %}
+          <div>By event: {% for et, n in event_counts.items() %}{{ n }} {{ et }}{% if not loop.last %} · {% endif %}{% endfor %}</div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+
+    {% if grouped and grouped|length > 1 and grouped[0][0] and valid_count >= 8 %}
+    <nav class="briefing-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        {% for group_label, group_articles in grouped %}
+        {% if group_label %}
+        <li>{{ group_label }} ({{ group_articles|length }})</li>
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </nav>
+    {% endif %}
+
+    <h2 class="briefing-section-title">Articles & analysis</h2>
+
+    {% for group_label, group_articles in grouped %}
+    <section class="briefing-group">
+      {% if group_label %}
+      <h3 class="briefing-group-title">{{ group_label }}</h3>
+      {% endif %}
+      <ol class="briefing-article-list" style="list-style:none;padding:0;margin:0;">
+        {% for a in group_articles %}
+        {% set imp = a.impact_score %}
+        {% set imp_class = 'high-impact' if imp and imp >= 7 else ('med-impact' if imp and imp >= 4 else '') %}
+        {% set imp_tier = 'high' if imp and imp >= 7 else ('med' if imp and imp >= 4 else 'low') %}
+        {% set imp_label = imp|string + '/10' if imp is not none else '—' %}
+        <li class="briefing-article-item">
+          <article class="briefing-article-card {{ imp_class }}">
+            <div class="briefing-article-meta">
+              <span class="briefing-impact-badge {{ imp_tier }}">Impact {{ imp_label }}</span>
+              <span>{{ a.source_name }}</span>
+              <span>{{ (a.published_utc or a.scraped_at or '')[:10] }}</span>
+              {% if a.event_type %}<span>{{ a.event_type }}</span>{% endif %}
+              {% if a.topics %}<span>{{ (a.topics or '')[:50] }}{% if (a.topics or '')|length > 50 %}…{% endif %}</span>{% endif %}
+            </div>
+            <h4 class="briefing-article-title">{{ a.title }}</h4>
+            <div class="briefing-article-body">
+              {% if format_type == 'minimal' %}
+              <a href="{{ a.url }}">Read article</a>
+              {% elif format_type == 'summary_only' %}
+              {{ (a.summary or '')[:300] }}{% if (a.summary or '')|length > 300 %}…{% endif %}
+              {% elif format_type == 'executive' %}
+              {{ (a.summary or '')[:200] }}{% if (a.summary or '')|length > 200 %}…{% endif %} <a href="{{ a.url }}">Link</a>
+              {% elif format_type == 'with_takeaways' %}
+              {{ (a.summary or '')[:150] }}{% if (a.summary or '')|length > 150 %}…{% endif %}
+              {% if a.key_takeaways %}<br><em>Key takeaways:</em> {{ (a.key_takeaways or '')[:350] }}{% if (a.key_takeaways or '')|length > 350 %}…{% endif %}{% endif %}
+              <a href="{{ a.url }}">Link</a>
+              {% elif format_type == 'full' %}
+              {{ (a.summary or '')[:250] }}{% if (a.summary or '')|length > 250 %}…{% endif %}
+              {% if a.why_it_matters %}<br><em>Why it matters:</em> {{ (a.why_it_matters or '')[:250] }}{% if (a.why_it_matters or '')|length > 250 %}…{% endif %}{% endif %}
+              {% if a.key_takeaways %}<br><em>Key takeaways:</em> {{ (a.key_takeaways or '')[:250] }}{% if (a.key_takeaways or '')|length > 250 %}…{% endif %}{% endif %}
+              <a href="{{ a.url }}">Link</a>
+              {% else %}
+              {{ (a.summary or '')[:200] }}{% if (a.summary or '')|length > 200 %}…{% endif %} <a href="{{ a.url }}">Link</a>
+              {% endif %}
+            </div>
+          </article>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endfor %}
+    {% else %}
+    <p class="briefing-no-articles">No valid articles in this briefing.</p>
+    {% endif %}
+
+    <footer class="briefing-footer">
+      <div class="briefing-footer-line">Geopolitical Terminal · {{ report_date }} · {{ generated_at }}</div>
+      <div class="briefing-footer-disclaimer">Research support only — not legal or investment advice. Verify against primary sources. Model-assisted content may contain errors.</div>
+    </footer>
+  </div>
+
+  <script>
+  (function () {
+    var btn = document.getElementById('briefing-copy-valid-ids');
+    if (btn) {
+      var validIds = [{% for a in articles %}{{ a.id }}{% if not loop.last %}, {% endif %}{% endfor %}];
+      btn.addEventListener('click', function () {
+        var text = validIds.join(', ');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy valid IDs'; }, 2000); });
+        } else {
+          var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy valid IDs'; }, 2000);
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

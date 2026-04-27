@@ -1,0 +1,445 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Inbox — Analyst Desk{% endblock %}
+{% block body %}
+{% if analyst_desk_auth_required == false %}
+<p class="muted" style="margin-top:0;">No <code>ANALYST_DESK_ADMIN_PASSWORD</code> set — desk is open (set a password for production).</p>
+{% endif %}
+{% if analyst_desk_heuristic_only %}
+<p class="muted" style="margin-top:0;"><strong>Heuristic-only mode</strong> — <code>ANALYST_DESK_HEURISTIC_ONLY=1</code>. Agents use article roll-ups only; no API key or LLM.</p>
+{% elif not openai_set %}
+<p class="muted">Set <code>OPENAI_API_KEY</code> for LLM narrative drafts; without it, runs still build structured roll-ups from your articles.</p>
+{% endif %}
+<p class="muted">
+  Quick nav:
+  <a href="{{ url_for('analyst_desk.operations') }}">Operations</a> ·
+  <a href="{{ url_for('analyst_desk.approvals') }}">Approvals</a> ·
+  <a href="{{ url_for('analyst_desk.intel_feed') }}">Intel Feed</a> ·
+  <a href="{{ url_for('analyst_desk.extraction_qc') }}">Extraction QA</a>
+</p>
+
+<details class="panel" open>
+  <summary><h2>Delivery settings</h2></summary>
+  <p class="muted">
+    Webhook:
+    {% if delivery.webhook_configured %}
+      configured (<code>{{ delivery.webhook_preview }}</code>)
+    {% else %}
+      not configured
+    {% endif %}
+    · Email:
+    {% if delivery.email_configured %}
+      configured ({{ delivery.email_recipients | join(', ') }})
+    {% else %}
+      not configured
+    {% endif %}
+  </p>
+  <form method="post" action="{{ url_for('analyst_desk.delivery_test') }}">
+    <button type="submit" class="btn secondary">Send test alert</button>
+  </form>
+</details>
+
+<details class="panel" open>
+  <summary><h2>Pipeline controls</h2></summary>
+  <p class="muted">
+    Ingest → enrich → <strong>quantitative extraction</strong> → events → alerts → briefs → synthesis/risk/scenarios.
+    For 24/7 operation run <code>python run_analyst_desk_worker.py</code> on a server (see file header).
+  </p>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_run_all') }}">
+      <button type="submit" class="btn">Run full pipeline (1→10)</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_ingest') }}">
+      <button type="submit" class="btn secondary">1) Ingest recent documents</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_enrich') }}">
+      <button type="submit" class="btn secondary">2) Enrich documents</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_metrics') }}">
+      <button type="submit" class="btn secondary">2b) Extract quantitative signals</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_events') }}">
+      <button type="submit" class="btn secondary">3) Build events + scores</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_verify') }}">
+      <button type="submit" class="btn secondary">3b) Verify contradictions</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_alerts') }}">
+      <button type="submit" class="btn secondary">4) Materialize alerts</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_brief') }}">
+      <button type="submit" class="btn secondary">5) Generate daily brief</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_topics') }}">
+      <button type="submit" class="btn secondary">6) Topic synthesis</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_regional') }}">
+      <button type="submit" class="btn secondary">7) Regional synthesis</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_country_risk') }}">
+      <button type="submit" class="btn secondary">8) Country risk snapshots</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_movers') }}">
+      <button type="submit" class="btn secondary">9) Watchlist movers</button>
+    </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_scenarios') }}">
+      <button type="submit" class="btn secondary">10) Generate scenarios</button>
+    </form>
+  </div>
+  <p class="muted" style="margin-top:0.75rem;">
+    <strong>LLM metric extraction:</strong>
+    {% if metric_llm_enabled %}
+      <code>ANALYST_DESK_METRIC_LLM=1</code> is on — structured JSON schema via OpenAI (falls back to regex if the call fails). Tune <code>ANALYST_DESK_METRIC_LLM_MAX_DOCS</code> / <code>ANALYST_DESK_METRIC_LLM_MERGE_HEURISTIC</code>.
+    {% else %}
+      Off (regex only). Set <code>ANALYST_DESK_METRIC_LLM=1</code> + <code>OPENAI_API_KEY</code> for richer numbers; use <code>ANALYST_DESK_HEURISTIC_ONLY=1</code> to force no LLM anywhere.
+    {% endif %}
+  </p>
+  <p class="muted" style="margin-top:0.5rem;">
+    <strong>Celery + Redis:</strong>
+    {% if celery_available %}
+      Broker (preview): <code>{{ celery_broker_preview }}</code>.
+      {% if celery_beat_seconds > 0 %}Beat default schedule: every <strong>{{ celery_beat_seconds }}s</strong> (<code>ANALYST_DESK_CELERY_BEAT_SECONDS</code>).{% else %}No in-app beat schedule (<code>ANALYST_DESK_CELERY_BEAT_SECONDS=0</code>); run Beat yourself or trigger tasks manually.{% endif %}
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+        <form method="post" action="{{ url_for('analyst_desk.pipeline_celery_full') }}">
+          <button type="submit" class="btn secondary">Queue full pipeline (Celery)</button>
+        </form>
+        <form method="post" action="{{ url_for('analyst_desk.pipeline_celery_metrics') }}">
+          <button type="submit" class="btn secondary">Queue metrics only → desk_metrics</button>
+        </form>
+      </div>
+    {% else %}
+      Install <code>celery[redis]</code> and <code>redis</code>, start Redis, then run workers (see <code>docs/analyst_desk_celery.md</code>).
+    {% endif %}
+  </p>
+</details>
+
+<details class="panel">
+  <summary><h2>Regional analysts</h2></summary>
+  <p class="muted">Fixed multi-region agent registry. Each desk agent monitors its ISO3 scope and emits run/task records.</p>
+  <form method="post" action="{{ url_for('analyst_desk.run_daily_all') }}" style="margin-bottom: 0.9rem;">
+    <button type="submit" class="btn">Run daily for all agents</button>
+  </form>
+  {% for aid, a in agents.items() %}
+  <div style="margin-bottom: 1rem;">
+    <strong>{{ a.label }}</strong> <span class="muted">({{ aid }})</span><br>
+    <span class="muted">{{ a.countries | join(', ') }}</span>
+    <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+      <form method="post" action="{{ url_for('analyst_desk.run_daily') }}" style="display:inline;">
+        <input type="hidden" name="agent_id" value="{{ aid }}">
+        <button type="submit" class="btn">Run daily volume</button>
+      </form>
+      <form method="post" action="{{ url_for('analyst_desk.run_weekly') }}" style="display:inline; display:flex; flex-wrap:wrap; gap:0.35rem; align-items:center;">
+        <input type="hidden" name="agent_id" value="{{ aid }}">
+        <label class="muted">Weekly country</label>
+        <select name="country" style="background:#0d1117;color:var(--text);border:1px solid #2a3545;border-radius:6px;padding:0.35rem;">
+          {% for c in a.countries %}
+          <option value="{{ c }}">{{ c }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn secondary">Run weekly</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</details>
+
+<details class="panel">
+  <summary><h2>Daily briefings</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Summary</th>
+        <th>Generated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in recent_briefings %}
+      <tr>
+        <td><a href="{{ url_for('analyst_desk.briefing_detail', bid=b.id) }}">{{ b.id }}</a></td>
+        <td>{{ b.briefing_type }}</td>
+        <td>{{ b.title }}</td>
+        <td class="muted">{{ (b.summary or '')[:100] }}{% if b.summary and b.summary|length > 100 %}…{% endif %}</td>
+        <td class="muted">{{ b.generated_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">No briefings yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Regional risk snapshots</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>Region</th>
+        <th>Risk</th>
+        <th>Top driver</th>
+        <th>Summary</th>
+        <th>Snapshot</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in recent_regional_risk %}
+      <tr>
+        <td>{{ r.region }}</td>
+        <td>{{ "%.1f"|format(r.overall_risk or 0) }}</td>
+        <td>{{ r.top_risk_driver or '—' }}</td>
+        <td class="muted">{{ (r.summary or '')[:90] }}{% if r.summary and r.summary|length > 90 %}…{% endif %}</td>
+        <td class="muted">{{ r.snapshot_date }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">No regional snapshots yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Country risk snapshots</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Overall</th>
+        <th>Watch</th>
+        <th>Conflict</th>
+        <th>Sanctions</th>
+        <th>Snapshot</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in recent_country_risk %}
+      <tr>
+        <td>{{ c.country_code }}</td>
+        <td>{{ "%.1f"|format(c.overall_risk or 0) }}</td>
+        <td>{{ c.watch_level }}</td>
+        <td>{{ "%.1f"|format(c.conflict_risk or 0) }}</td>
+        <td>{{ "%.1f"|format(c.sanctions_risk or 0) }}</td>
+        <td class="muted">{{ c.snapshot_date }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No country snapshots yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Watchlist movers</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Direction</th>
+        <th>Delta</th>
+        <th>Prev → Curr</th>
+        <th>Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for w in recent_watchlist_movers %}
+      <tr>
+        <td><a href="{{ url_for('analyst_desk.risk_traces_detail', country_code=w.country_code) }}">{{ w.country_code }}</a></td>
+        <td>{{ w.direction }}</td>
+        <td>{{ "%.1f"|format(w.delta or 0) }}</td>
+        <td>{{ "%.1f"|format(w.previous_overall_risk or 0) }} → {{ "%.1f"|format(w.current_overall_risk or 0) }}</td>
+        <td class="muted">{{ w.reason or '—' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">No movers yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Recent scenarios</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Scope</th>
+        <th>Type</th>
+        <th>Prob</th>
+        <th>Triggers</th>
+        <th>Generated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sc in recent_scenarios %}
+      <tr>
+        <td><a href="{{ url_for('analyst_desk.scenario_detail', sid=sc.id) }}">{{ sc.id }}</a></td>
+        <td>{{ sc.scope_id }}</td>
+        <td>{{ sc.scenario_type }}</td>
+        <td>{{ "%.2f"|format(sc.probability_estimate or 0) }}</td>
+        <td class="muted">{{ (sc.trigger_conditions | join('; '))[:60] }}{% if sc.trigger_conditions and (sc.trigger_conditions | join('; '))|length > 60 %}…{% endif %}</td>
+        <td class="muted">{{ sc.generated_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No scenarios yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Pending queue messages</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Entity</th>
+        <th>Priority</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in pending_messages %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.message_type }}</td>
+        <td>{{ m.entity_type }} {{ m.entity_id }}</td>
+        <td>{{ m.priority }}</td>
+        <td class="muted">{{ m.created_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">No pending messages.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Recent normalized events</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Country</th>
+        <th>Importance</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in recent_events %}
+      <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.event_title }}</td>
+        <td>{{ e.event_type }}</td>
+        <td>{{ e.primary_country_code or '—' }}</td>
+        <td>{{ "%.1f"|format(e.importance_score or 0) }}</td>
+        <td class="muted">{{ e.event_last_updated_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No normalized events yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Recent alerts</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Severity</th>
+        <th>Channel</th>
+        <th>Headline</th>
+        <th>Country</th>
+        <th>Status</th>
+        <th>Error</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in recent_alerts %}
+      <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.severity }}</td>
+        <td>{{ a.channel or 'auto' }}</td>
+        <td>{{ a.headline }}</td>
+        <td>{{ a.country_code or '—' }}</td>
+        <td>{{ a.delivery_status }}</td>
+        <td class="muted">{{ (a.error_message or '')[:80] }}{% if a.error_message and a.error_message|length > 80 %}…{% endif %}</td>
+        <td class="muted">{{ a.created_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="muted">No alerts yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Agent task runs</h2></summary>
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Agent</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Started</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in recent_tasks %}
+      <tr>
+        <td class="muted">{{ t.task_id }}</td>
+        <td>{{ t.agent_id }}</td>
+        <td>{{ t.task_type }}</td>
+        <td>{{ t.status }}</td>
+        <td class="muted">{{ t.started_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">No task history yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<details class="panel">
+  <summary><h2>Proposals</h2></summary>
+  <p class="muted">
+    Filter:
+    <a href="{{ url_for('analyst_desk.index') }}">All</a> ·
+    <a href="{{ url_for('analyst_desk.index', status='pending') }}">Pending</a> ·
+    <a href="{{ url_for('analyst_desk.index', status='approved') }}">Approved</a> ·
+    <a href="{{ url_for('analyst_desk.index', status='rejected') }}">Rejected</a>
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Agent</th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in proposals %}
+      <tr>
+        <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td>
+        <td>{{ p.agent_id }}</td>
+        <td>{{ p.run_type }}</td>
+        <td>{{ p.title or '—' }}</td>
+        <td>{{ p.status }}</td>
+        <td class="muted">{{ p.created_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No proposals yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+{% endblock %}

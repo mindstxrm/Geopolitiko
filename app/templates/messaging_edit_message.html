@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Edit message — {{ channel.name }}{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}">{{ channel.name }}</a> <span class="breadcrumb-sep">›</span>
+    Edit message
+  </nav>
+  <h1 class="page-title">Edit message</h1>
+  <form method="post" action="{{ url_for('main.messaging_edit', channel_id=channel.id, message_id=message.id) }}" class="auth-form">
+    <label for="content">Message</label>
+    <textarea id="content" name="content" rows="5" maxlength="10000" required>{{ message.content or '' }}</textarea>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('main.messaging_channel', slug=channel.slug) }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

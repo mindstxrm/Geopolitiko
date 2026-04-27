@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Add protest event — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Add protest event</h1>
+  <p class="page-intro"><a href="{{ url_for('main.approval_protests') }}">← Approval & protests</a></p>
+
+  <form method="post" class="diplomacy-form" action="{{ url_for('main.protest_add') }}">
+    <label for="country_code">Country code *</label>
+    <input type="text" id="country_code" name="country_code" required maxlength="10" placeholder="e.g. USA" list="country_codes">
+    <datalist id="country_codes">{% for c in (countries or []) %}<option value="{{ c.country_code }}">{{ c.country_name }}</option>{% endfor %}</datalist>
+    <label for="country_name">Country name *</label>
+    <input type="text" id="country_name" name="country_name" required placeholder="e.g. United States" list="country_names">
+    <datalist id="country_names">{% for c in (countries or []) %}<option value="{{ c.country_name }}">{{ c.country_code }}</option>{% endfor %}</datalist>
+    <label for="event_date">Event date *</label>
+    <input type="date" id="event_date" name="event_date" required placeholder="YYYY-MM-DD">
+    <label for="summary">Summary</label>
+    <textarea id="summary" name="summary" rows="3" placeholder="Brief description of the protest"></textarea>
+    <label for="estimated_size">Estimated size</label>
+    <input type="text" id="estimated_size" name="estimated_size" placeholder="e.g. 10,000">
+    <label for="trigger_topic">Trigger topic</label>
+    {% if trigger_topics %}
+    <select id="trigger_topic" name="trigger_topic">
+      <option value="">—</option>
+      {% for t in trigger_topics %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+    </select>
+    {% else %}
+    <input type="text" id="trigger_topic" name="trigger_topic" placeholder="e.g. Economic, Political">
+    {% endif %}
+    <label for="location">Location / city</label>
+    <input type="text" id="location" name="location" placeholder="e.g. Capital city">
+    <label for="severity">Severity / outcome</label>
+    <input type="text" id="severity" name="severity" placeholder="e.g. Dispersed, Arrests">
+    <label for="source_url">Source URL</label>
+    <input type="url" id="source_url" name="source_url" placeholder="https://…">
+    <button type="submit">Add</button>
+  </form>
+{% endblock %}

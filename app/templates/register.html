@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Register — Geopolitical Terminal{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Register
+  </nav>
+  <h1 class="page-title">Create an account</h1>
+  <p class="page-intro">All fields are required. A welcome email will be sent to your address after registration.</p>
+  <form method="post" action="{{ url_for('main.register') }}" class="auth-form">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required autocomplete="email" value="{{ request.form.get('email', '') }}">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required autocomplete="username" value="{{ request.form.get('username', '') }}">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" required autocomplete="name" value="{{ request.form.get('name', '') }}">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" required placeholder="e.g. Analyst, Director" value="{{ request.form.get('title', '') }}">
+    <label for="organization">Organization</label>
+    <input type="text" id="organization" name="organization" required placeholder="e.g. Acme Corp" value="{{ request.form.get('organization', '') }}">
+    <label for="password">Password (min 8 characters)</label>
+    <input type="password" id="password" name="password" required autocomplete="new-password" minlength="8">
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  <p class="auth-footer">Already have an account? <a href="{{ url_for('main.login') }}">Log in</a></p>
+</div>
+{% endblock %}

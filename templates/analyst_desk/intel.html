@@ -1,0 +1,55 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Intel Feed — Analyst Desk{% endblock %}
+{% block body %}
+<div class="panel">
+  <h2>Intel Feed</h2>
+  <p class="muted">Approved and published outputs that are flowing to the Geopolitical Terminal.</p>
+</div>
+
+<div class="panel">
+  <h2>Published proposals</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Agent</th><th>Type</th><th>Title</th><th>Published</th><th>Open</th></tr></thead>
+    <tbody>
+      {% for p in published %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.agent_id }}</td>
+        <td>{{ p.run_type }}</td>
+        <td>{{ p.title or '—' }}</td>
+        <td class="muted">{{ p.published_to_terminal_at or '—' }}</td>
+        <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">view</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No published proposals yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Recent briefings / scenarios</h2>
+  <div style="display:grid;grid-template-columns:1fr;gap:1rem;">
+    <table>
+      <thead><tr><th colspan="4">Briefings</th></tr><tr><th>ID</th><th>Type</th><th>Title</th><th>Generated</th></tr></thead>
+      <tbody>
+      {% for b in recent_briefings %}
+        <tr><td><a href="{{ url_for('analyst_desk.briefing_detail', bid=b.id) }}">{{ b.id }}</a></td><td>{{ b.briefing_type }}</td><td>{{ b.title }}</td><td class="muted">{{ b.generated_at }}</td></tr>
+      {% else %}
+        <tr><td colspan="4" class="muted">No briefings yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th colspan="4">Scenarios</th></tr><tr><th>ID</th><th>Scope</th><th>Type</th><th>Generated</th></tr></thead>
+      <tbody>
+      {% for s in recent_scenarios %}
+        <tr><td><a href="{{ url_for('analyst_desk.scenario_detail', sid=s.id) }}">{{ s.id }}</a></td><td>{{ s.scope_id }}</td><td>{{ s.scenario_type }}</td><td class="muted">{{ s.generated_at }}</td></tr>
+      {% else %}
+        <tr><td colspan="4" class="muted">No scenarios yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

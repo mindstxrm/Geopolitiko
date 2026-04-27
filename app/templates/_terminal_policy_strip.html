@@ -1,0 +1,27 @@
+{# Global think-tank / policy context: as-of, freshness, limitations, quick actions #}
+{% if not terminal_embed %}
+<div class="terminal-policy-strip" role="region" aria-label="Page context and data limitations">
+  <div class="terminal-policy-strip-row">
+    <div class="terminal-policy-strip-main">
+      <span class="terminal-policy-asof"><span class="terminal-policy-k">As of</span> {{ policy_now_utc }}</span>
+      {% if last_scrape_time %}
+      <span class="terminal-policy-feed" title="Last intelligence feed ingestion">
+        Feed ingested <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time>
+      </span>
+      {% endif %}
+      <span class="terminal-policy-badge" title="Outputs are research aids; verify with primary sources">Internal research · Not legal advice</span>
+    </div>
+    <div class="terminal-policy-strip-actions">
+      <button type="button" class="btn btn-secondary btn-sm terminal-policy-action-btn" id="gt-copy-page-url" title="Copy URL including filters">Copy page link</button>
+      <button type="button" class="btn btn-secondary btn-sm terminal-policy-action-btn" id="gt-toggle-brief-mode" aria-pressed="false" title="Larger type, less chrome for reading">Brief mode</button>
+    </div>
+  </div>
+  <details class="terminal-policy-method">
+    <summary>Method &amp; data limits</summary>
+    <div class="terminal-policy-method-body">
+      <p><strong>Sources:</strong> Public RSS, web articles, and curated datasets. <strong>Scores &amp; synthesis</strong> may use statistical models or LLMs where configured—they are indicative, not forecasts of official policy.</p>
+      <p><strong>Use:</strong> Cite with page URL and “as of” date. For ministerial or legal use, corroborate with primary documents and your own counsel.</p>
+    </div>
+  </details>
+</div>
+{% endif %}

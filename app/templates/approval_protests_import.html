@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Bulk import — Approval & protests{% endblock %}
+{% block content %}
+  <h1 class="page-title">Bulk import approval or protests</h1>
+  <p class="page-intro"><a href="{{ url_for('main.approval_protests') }}">← Approval & protests</a></p>
+  <p>Upload a CSV with columns matching the export format. Duplicate approval rows (same country, subject, poll date) are skipped.</p>
+  <form method="post" enctype="multipart/form-data" class="diplomacy-form">
+    <label for="type">Import type</label>
+    <select id="type" name="type">
+      <option value="approval">Approval ratings</option>
+      <option value="protests">Protests</option>
+    </select>
+    <label for="file">CSV file</label>
+    <input type="file" id="file" name="file" accept=".csv" required>
+    <button type="submit">Import</button>
+  </form>
+{% endblock %}

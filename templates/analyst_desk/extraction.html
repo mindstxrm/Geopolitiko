@@ -1,0 +1,47 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Extraction QA — Analyst Desk{% endblock %}
+{% block body %}
+<div class="panel">
+  <h2>Extraction QA</h2>
+  <p class="muted">Review quantitative signals extracted from documents. Use country filter for analyst validation.</p>
+  <form method="get" style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+    <label class="muted">Country ISO3</label>
+    <input type="text" name="country" value="{{ country_filter or '' }}" style="width:120px;background:#0d1117;color:var(--text);border:1px solid #2a3545;border-radius:6px;padding:0.35rem;">
+    <button class="btn secondary" type="submit">Filter</button>
+    <a class="btn secondary" href="{{ url_for('analyst_desk.extraction_qc') }}">Clear</a>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Recent extracted metrics</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Country</th><th>Kind</th><th>Label</th><th>Value</th><th>Conf</th><th>Snippet</th><th>Extracted</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in metrics %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.country_code or '—' }}</td>
+        <td>{{ m.metric_kind }}</td>
+        <td>{{ m.label or '—' }}</td>
+        <td>
+          {% if m.value_numeric is not none %}
+            {{ m.value_numeric }} {{ m.unit or '' }}
+          {% else %}
+            {{ m.value_text or '—' }}
+          {% endif %}
+        </td>
+        <td>{{ '%.2f'|format(m.confidence or 0) }}</td>
+        <td class="muted">{{ (m.snippet or '')[:140] }}{% if m.snippet and m.snippet|length > 140 %}…{% endif %}</td>
+        <td class="muted">{{ m.extracted_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="muted">No extracted metrics found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

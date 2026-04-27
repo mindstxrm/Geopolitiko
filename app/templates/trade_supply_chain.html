@@ -1,0 +1,619 @@
+{% extends "base.html" %}
+{% block title %}Trade & Supply Chain — Geopolitical Terminal{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+{% endblock %}
+
+{% block content %}
+<div class="trade-supply-chain">
+  <header class="trade-supply-header">
+    <h1 class="page-title">Trade & Supply Chain</h1>
+    <p class="page-intro">Maritime routes, chokepoints, LNG, semiconductors, rare earth. Click a chokepoint for exposure, naval density, and scenario impact.</p>
+    <div class="trade-tabs" role="tablist" aria-label="Trade page sections">
+      <button type="button" class="trade-tab active" role="tab" aria-selected="true" data-pane="map">Map</button>
+      <button type="button" class="trade-tab" role="tab" aria-selected="false" data-pane="news">News</button>
+      <button type="button" class="trade-tab" role="tab" aria-selected="false" data-pane="airspace">Air space</button>
+      <button type="button" class="trade-tab" role="tab" aria-selected="false" data-pane="layers">Data layers</button>
+    </div>
+  </header>
+
+  <div class="trade-workspace">
+    <div class="trade-pane trade-pane-map active" data-pane="map" id="trade-pane-map">
+  <div class="trade-supply-layout">
+    <section id="trade-map-section" class="trade-map-section" aria-label="Global trade flow map">
+      <div class="trade-map-overlay-toolbar" aria-label="Map filters">
+        <div class="trade-flow-toolbar">
+          <div class="trade-flow-filters" role="group" aria-label="Route type">
+            <span class="filter-label">Show:</span>
+            <button type="button" class="filter-chip active" data-filter="all">All</button>
+            <button type="button" class="filter-chip" data-filter="maritime">Maritime</button>
+            <button type="button" class="filter-chip" data-filter="lng">LNG</button>
+            <button type="button" class="filter-chip" data-filter="semiconductors">Semiconductors</button>
+            <button type="button" class="filter-chip" data-filter="rare_earth">Rare earth</button>
+          </div>
+          <div class="trade-region-filter">
+            <label for="trade-region">Region</label>
+            <select id="trade-region" class="trade-select" aria-label="Filter chokepoints by region">
+              <option value="">All regions</option>
+              <option value="Middle East">Middle East</option>
+              <option value="Southeast Asia">Southeast Asia</option>
+              <option value="Horn of Africa / Yemen">Horn of Africa / Yemen</option>
+              <option value="East Asia">East Asia</option>
+              <option value="Latin America">Latin America</option>
+              <option value="Europe">Europe</option>
+            </select>
+          </div>
+          <button type="button" id="trade-zoom-to-chokepoint" class="trade-btn" style="display:{{ 'inline-block' if selected else 'none' }};">Zoom to chokepoint</button>
+        </div>
+      </div>
+      <div id="trade-flow-map" class="trade-flow-map" style="height: 100%; min-height: 0;" role="img" aria-label="World map with trade chokepoint markers"></div>
+      <p id="trade-region-empty" class="trade-region-empty" style="display:none;">No chokepoints in this region. <a href="#" id="trade-clear-region">Show all</a></p>
+      <p class="trade-map-meta">Click a chokepoint for exposure, insurance simulation, and naval density.</p>
+    </section>
+
+    <aside class="trade-side-panel" aria-label="Chokepoint detail">
+      <button type="button" id="trade-side-panel-close" class="trade-side-panel-close" aria-label="Close chokepoint details">×</button>
+      <div id="trade-panel-inner" class="side-panel-content" aria-live="polite" aria-atomic="true">
+        {% if selected %}
+        <h2 class="side-panel-title">{{ selected.name }}</h2>
+        <p class="side-panel-meta">{{ selected.region or '—' }} · {{ selected.commodities or '—' }}</p>
+        {% if selected.risk_score is not none %}
+        <p class="trade-criticality">Criticality score: <strong>{{ selected.risk_score | int }}</strong>/100</p>
+        {% endif %}
+        {% if selected.description %}
+        <p class="side-panel-desc">{{ selected.description }}</p>
+        {% endif %}
+        {% if selected.alternative_routes %}
+        <p class="trade-alternatives"><strong>Alternatives:</strong> {{ selected.alternative_routes }}</p>
+        {% endif %}
+        <div class="side-panel-metric">
+          <span class="metric-label">% global trade passing through</span>
+          <span class="metric-value">{{ pct_global_trade if pct_global_trade is not none else '—' }}{% if pct_global_trade is not none %}%{% endif %}</span>
+        </div>
+        <p id="trade-panel-summary" class="trade-panel-summary">{{ flow_countries }} countries, {{ flow_sectors }} sectors.</p>
+        <details class="trade-accordion" id="trade-accordion-impact">
+          <summary>Route impact & exposures</summary>
+          <div class="trade-panel-toggles">
+            <label class="trade-check-label"><input type="checkbox" id="trade-sort-by-impact" class="trade-check"> Sort by impact</label>
+            <label class="trade-check-label"><input type="checkbox" id="trade-view-by-sector" class="trade-check"> By sector</label>
+          </div>
+          <div id="trade-exposure-chart" class="trade-exposure-chart" aria-hidden="true"></div>
+          <h3 class="side-panel-subtitle">Countries most exposed</h3>
+          <ul id="trade-exposure-list" class="exposure-list">
+            {% for f in flows[:15] %}
+            <li>
+              <a href="{{ url_for('main.country_dashboard', country_code=f.country_code) }}">{{ f.country_name }}</a>
+              <span class="exposure-pct">{{ "%.0f"|format(f.exposure_pct or 0) }}%</span>
+              <span class="exposure-sector">{{ f.sector or '—' }}</span>
+              <span class="impact-pill impact-{{ (f.impact_if_closed or '')|lower }}">{{ f.impact_if_closed or '—' }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          <p><a id="trade-full-flows-link" href="{{ url_for('main.supply_chain_chokepoint_detail', chokepoint_id=selected.id) }}">Full flows table</a></p>
+        </details>
+
+        <details class="trade-accordion" id="trade-accordion-simulation">
+          <summary>Insurance & naval density</summary>
+          <div class="side-panel-metric">
+            <span class="metric-label">Insurance premium spike (simulation)</span>
+            <span class="metric-value">+{{ insurance_spike if insurance_spike is not none else '—' }}{% if insurance_spike is not none %}%{% endif %}</span>
+            <span class="trade-tooltip-wrap" title="Base + exposure factor if chokepoint closed. Illustrative only." aria-label="Illustrative: base + exposure factor if chokepoint closed.">ⓘ</span>
+          </div>
+          <p class="metric-note">Illustrative: base + exposure factor if chokepoint closed.</p>
+          <h3 class="side-panel-subtitle">Military naval density</h3>
+          <p class="metric-value">{{ naval_count }} deployment(s) in region</p>
+          <ul class="naval-list">
+            {% for n in naval_deployments[:10] %}
+            <li>{{ n.country_name or '—' }} — {{ n.vessel_description or '—' }} ({{ (n.as_of_date or '')[:10] }})</li>
+            {% endfor %}
+          </ul>
+          {% if not naval_deployments %}
+          <p class="empty-state">No naval deployment data for this region.</p>
+          {% endif %}
+        </details>
+        <p><a id="trade-scenario-link" href="{{ url_for('main.supply_chain_scenario') }}?chokepoint={{ selected.id }}">Run scenario: if closed → impact</a></p>
+        {% else %}
+        <p class="empty-state">Select a chokepoint on the map or below.</p>
+        {% endif %}
+      </div>
+
+      <details class="trade-accordion" id="trade-accordion-chokepoints">
+        <summary>Chokepoints</summary>
+        <div class="trade-panel-divider"></div>
+        <ul class="chokepoint-pick-list" role="listbox" aria-label="Chokepoints">
+          {% for cp in chokepoints %}
+          <li><a href="#" class="chokepoint-link {{ 'active' if selected and selected.id == cp.id else '' }}" data-slug="{{ cp.slug }}" data-id="{{ cp.id }}" role="option" tabindex="0">{{ cp.name }}</a></li>
+          {% endfor %}
+        </ul>
+        <p class="trade-panel-meta"><a href="{{ sanctions_check_url }}">Check supply chain against sanctions</a></p>
+      </details>
+    </aside>
+  </div>
+    </div>
+
+    <div class="trade-pane trade-pane-scroll" data-pane="news" id="trade-pane-news">
+      <section id="trade-news-impact" class="trade-news-impact trade-section-card">
+        <h2 class="trade-section-title">News impact</h2>
+        <p class="trade-section-desc">Articles on maritime, chokepoints, supply chains. <a href="{{ url_for('main.index') }}?type=keyword&q=supply+chain+trade">View in Feed</a></p>
+        {% if trade_supply_chain_articles %}
+        <ul class="trade-article-list">
+          {% for a in trade_supply_chain_articles[:10] %}
+          <li class="trade-article-item">
+            <div class="trade-article-main">
+              <a href="{{ a.url }}" target="_blank" rel="noopener" class="trade-article-link">{{ a.title }}</a>
+              <span class="trade-article-meta">{{ a.source_name or '—' }}{% if a.published_utc %} · {{ (a.published_utc or '')[:10] }}{% endif %}</span>
+            </div>
+            <div class="trade-article-actions">
+              {% if a.impact_score is not none and a.impact_score > 0 %}
+              <span class="impact-pill impact-{% if (a.impact_score or 0) >= 7 %}3{% elif (a.impact_score or 0) >= 4 %}2{% else %}1{% endif %}">
+                {% if (a.impact_score or 0) >= 7 %}High{% elif (a.impact_score or 0) >= 4 %}Med{% else %}Low{% endif %}
+              </span>
+              {% endif %}
+              <a href="{{ url_for('main.article_detail', article_id=a.id) }}" class="trade-article-detail">Detail</a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No trade/supply-chain articles in the last 14 days. Run impact scoring or add more sources.</p>
+        {% endif %}
+      </section>
+
+      
+    </div>
+
+    <div class="trade-pane trade-pane-scroll" data-pane="airspace" id="trade-pane-airspace">
+      <section id="trade-airspace-section" class="trade-airspace-section trade-section-card">
+        <h2 class="trade-section-title">Air space</h2>
+        <p class="trade-section-desc">No-fly zones, flight restrictions, aviation corridors.</p>
+        {% if airspace_restrictions %}
+        <div class="trade-airspace-grid">
+          {% for z in airspace_restrictions %}
+          <div class="trade-airspace-card">
+            <h4>{{ z.region }}</h4>
+            <span class="trade-airspace-status status-{{ (z.status or 'advisory')|lower }}">{{ z.status or 'advisory' }}</span>
+            <p>{{ z.description }}</p>
+            <span class="trade-airspace-source">{{ z.source or '—' }}{% if z.updated_at %} · {{ z.updated_at }}{% endif %}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-state">Airspace data requires feed. Structure: region, status (restricted/advisory), description. See <a href="{{ url_for('main.help_page') }}#indicators">Indicator guide</a>.</p>
+        {% endif %}
+      </section>
+    </div>
+
+    <div class="trade-pane trade-pane-scroll" data-pane="layers" id="trade-pane-layers">
+      <section id="trade-indicator-sections" class="trade-indicator-sections">
+    <details class="trade-indicator-section">
+      <summary><h2>Energy & commodity exposure</h2></summary>
+      {% if energy_commodity_summary %}
+      <p class="risk-meta">Oil production, gas exports, LNG, rare earths, grain. Per-country on <a href="{{ url_for('main.integration_dashboard') }}">Countries &amp; Regions</a> → country → Economic.</p>
+      <ul class="trade-indicator-list">
+        {% for e in energy_commodity_summary %}
+        <li><a href="{{ url_for('main.country_dashboard', country_code=e.country_code) }}">{{ e.country_name or e.country_code }}</a> — Oil {{ "%.0f"|format(e.oil_production_bpd or 0) }} bpd, Gas {{ "%.1f"|format(e.gas_exports_bcm or 0) }} bcm, LNG {{ "%.1f"|format(e.lng_capacity_mtpa or 0) }} mtpa{% if e.rare_earth_production_share %}, Rare earth {{ "%.1f"|format(e.rare_earth_production_share) }}%{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">Energy/commodity data requires feed. See <a href="{{ url_for('main.help_page') }}#indicators">Indicator guide</a>.</p>
+      {% endif %}
+    </details>
+
+    <details class="trade-indicator-section">
+      <summary><h2>Technology & semiconductor</h2></summary>
+      {% if tech_semiconductor_summary %}
+      <p class="risk-meta">Chip exports, tech companies, manufacturing capacity.</p>
+      <ul class="trade-indicator-list">
+        {% for t in tech_semiconductor_summary %}
+        <li><a href="{{ url_for('main.country_dashboard', country_code=t.country_code) }}">{{ t.country_name or t.country_code }}</a> — Chip exports {{ "%.0f"|format(t.chip_exports_usd_millions or 0) }} M USD{% if t.critical_tech_companies %}, {{ (t.critical_tech_companies or '')[:50] }}{% if (t.critical_tech_companies or '')|length > 50 %}…{% endif %}{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">Semiconductor/tech data requires feed.</p>
+      {% endif %}
+    </details>
+
+    <details class="trade-indicator-section">
+      <summary><h2>Geospatial infrastructure</h2></summary>
+      {% if geospatial_summary %}
+      <p class="risk-meta">Ports, cables, pipelines, logistics hubs.</p>
+      <ul class="trade-indicator-list">
+        {% for g in geospatial_summary %}
+        <li>{{ g.infra_type or '—' }}: {{ g.name or '—' }}{% if g.country_code %} ({{ g.country_code }}){% endif %}{% if g.region %} — {{ g.region }}{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">Geospatial data requires feed. Chokepoints above.</p>
+      {% endif %}
+    </details>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var chokepoints = {{ chokepoints | tojson }};
+  var flowsByChokepoint = {{ flows_by_chokepoint | tojson }};
+  var navalByRegion = {{ naval_by_region | tojson }};
+  var scenarioUrl = {{ scenario_url | tojson }};
+  var chokepointDetailBase = {{ chokepoint_detail_base | tojson }};
+  var countryBase = {{ country_base | tojson }};
+  var sanctionsCheckUrl = {{ sanctions_check_url | tojson }};
+  var coordsFallback = {{ coords_fallback | tojson if coords_fallback is defined else '{}' }};
+
+  var mapEl = document.getElementById('trade-flow-map');
+  if (!mapEl) return;
+
+  var selectedId = {{ selected.id | tojson if selected else 'null' }};
+  var selectedSlug = {{ selected.slug | tojson if selected else 'null' }};
+  var currentFilter = 'all';
+  var currentRegion = '';
+  var sortByImpact = false;
+  var viewBySector = false;
+  var map = null;
+  window.__tradeMap = null;
+  var sidePanelEl = document.querySelector('.trade-side-panel');
+  function setSidePanelDrawerOpen(open) {
+    if (!sidePanelEl) return;
+    var isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+    if (!isMobile) {
+      sidePanelEl.classList.remove('drawer-open');
+      return;
+    }
+    sidePanelEl.classList.toggle('drawer-open', !!open);
+  }
+  var markers = [];
+
+  var sidePanelCloseBtn = document.getElementById('trade-side-panel-close');
+  if (sidePanelCloseBtn) {
+    sidePanelCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      setSidePanelDrawerOpen(false);
+    });
+  }
+
+  // On mobile, start with the drawer opened only when a chokepoint is pre-selected.
+  setSidePanelDrawerOpen(!!selectedId);
+
+  function commodityMatch(cp, filter) {
+    var c = (cp.commodities || '').toLowerCase();
+    if (filter === 'all') return true;
+    if (filter === 'maritime') return true;
+    if (filter === 'lng') return c.indexOf('lng') !== -1 || c.indexOf('oil') !== -1;
+    if (filter === 'semiconductors') return c.indexOf('semiconductor') !== -1;
+    if (filter === 'rare_earth') return c.indexOf('critical_mineral') !== -1 || c.indexOf('rare') !== -1;
+    return true;
+  }
+  function sectorMatch(sector, filter) {
+    var s = (sector || '').toLowerCase();
+    if (filter === 'all') return true;
+    if (filter === 'maritime') return true;
+    if (filter === 'lng') return s.indexOf('lng') !== -1 || s.indexOf('oil') !== -1;
+    if (filter === 'semiconductors') return s.indexOf('semiconductor') !== -1;
+    if (filter === 'rare_earth') return s.indexOf('critical_mineral') !== -1 || s.indexOf('rare') !== -1;
+    return true;
+  }
+
+  function getFilteredFlows(flows, filter) {
+    if (!flows) return [];
+    if (filter === 'all') return flows;
+    return flows.filter(function(f) { return sectorMatch(f.sector, filter); });
+  }
+
+  function impactOrder(imp) { imp = (imp || '').toLowerCase(); return imp === 'high' ? 3 : imp === 'medium' ? 2 : 1; }
+  function sortFlows(flows, byImpact) {
+    var list = (flows || []).slice();
+    if (byImpact) {
+      list.sort(function(a, b) {
+        var o = impactOrder(b.impact_if_closed) - impactOrder(a.impact_if_closed);
+        return o !== 0 ? o : -(float(a.exposure_pct) || 0) + (float(b.exposure_pct) || 0);
+      });
+    } else {
+      list.sort(function(a, b) { return -(float(a.exposure_pct) || 0) + (float(b.exposure_pct) || 0); });
+    }
+    return list;
+  }
+  function float(x) { return parseFloat(x, 10); }
+
+  function updateUrl(slug) {
+    if (typeof history.replaceState === 'undefined') return;
+    var q = slug ? '?chokepoint=' + encodeURIComponent(slug) : window.location.pathname;
+    history.replaceState(null, '', window.location.pathname + (slug ? '?chokepoint=' + encodeURIComponent(slug) : ''));
+  }
+
+  function renderPanel(cp) {
+    if (!cp) {
+      document.getElementById('trade-panel-inner').innerHTML = '<p class="empty-state">Select a chokepoint on the map or below.</p>';
+      setSidePanelDrawerOpen(false);
+      return;
+    }
+    var flows = getFilteredFlows(flowsByChokepoint[String(cp.id)] || [], currentFilter);
+    flows = sortFlows(flows, sortByImpact);
+    var naval = navalByRegion[cp.region || ''] || [];
+    var pct = cp.pct_global_trade != null ? cp.pct_global_trade + '%' : '—';
+    var exposureSum = flows.reduce(function(s, f) { return s + (float(f.exposure_pct) || 0); }, 0);
+    var insuranceSpike = flows.length ? Math.min(80, Math.round((15 + exposureSum / 100) * 10) / 10) : '—';
+    var countrySet = {};
+    var sectorSet = {};
+    flows.forEach(function(f) { countrySet[f.country_code] = true; sectorSet[f.sector || ''] = true; });
+    var summary = Object.keys(countrySet).length + ' countries, ' + Object.keys(sectorSet).length + ' sectors.';
+
+    var detailUrl = chokepointDetailBase + cp.id;
+    var scenarioLink = scenarioUrl + '?chokepoint=' + cp.id;
+
+    var html = '<h2 class="side-panel-title">' + (cp.name || '') + '</h2>';
+    html += '<p class="side-panel-meta">' + (cp.region || '—') + ' · ' + (cp.commodities || '—') + '</p>';
+    if (cp.risk_score != null) html += '<p class="trade-criticality">Criticality score: <strong>' + Math.round(cp.risk_score) + '</strong>/100</p>';
+    if (cp.description) html += '<p class="side-panel-desc">' + cp.description + '</p>';
+    if (cp.alternative_routes) html += '<p class="trade-alternatives"><strong>Alternatives:</strong> ' + cp.alternative_routes + '</p>';
+    html += '<div class="side-panel-metric"><span class="metric-label">% global trade passing through</span><span class="metric-value">' + pct + '</span></div>';
+    html += '<p id="trade-panel-summary" class="trade-panel-summary">' + summary + '</p>';
+    html += '<details class="trade-accordion" id="trade-accordion-impact"><summary>Route impact & exposures</summary>';
+    html += '<div class="trade-panel-toggles"><label class="trade-check-label"><input type="checkbox" id="trade-sort-by-impact" class="trade-check" ' + (sortByImpact ? 'checked' : '') + '> Sort by impact</label> ';
+    html += '<label class="trade-check-label"><input type="checkbox" id="trade-view-by-sector" class="trade-check" ' + (viewBySector ? 'checked' : '') + '> By sector</label></div>';
+    html += '<div id="trade-exposure-chart" class="trade-exposure-chart"></div>';
+    html += '<h3 class="side-panel-subtitle">Countries most exposed</h3>';
+
+    if (viewBySector) {
+      var bySector = {};
+      flows.forEach(function(f) {
+        var sec = f.sector || 'Other';
+        if (!bySector[sec]) bySector[sec] = [];
+        bySector[sec].push(f);
+      });
+      Object.keys(bySector).sort().forEach(function(sec) {
+        var list = bySector[sec];
+        var total = list.reduce(function(s, f) { return s + (float(f.exposure_pct) || 0); }, 0);
+        html += '<p class="sector-group-name"><strong>' + sec + '</strong> (total ' + Math.round(total) + '%)</p><ul class="exposure-list">';
+        list.slice(0, 10).forEach(function(f) {
+          html += '<li><a href="' + countryBase + f.country_code + '">' + (f.country_name || f.country_code) + '</a> <span class="exposure-pct">' + Math.round(float(f.exposure_pct) || 0) + '%</span> <span class="impact-pill impact-' + (f.impact_if_closed || '').toLowerCase() + '">' + (f.impact_if_closed || '—') + '</span></li>';
+        });
+        html += '</ul>';
+      });
+    } else {
+      html += '<ul id="trade-exposure-list" class="exposure-list">';
+      flows.slice(0, 15).forEach(function(f) {
+        html += '<li><a href="' + countryBase + f.country_code + '">' + (f.country_name || f.country_code) + '</a> <span class="exposure-pct">' + Math.round(float(f.exposure_pct) || 0) + '%</span> <span class="exposure-sector">' + (f.sector || '—') + '</span> <span class="impact-pill impact-' + (f.impact_if_closed || '').toLowerCase() + '">' + (f.impact_if_closed || '—') + '</span></li>';
+      });
+      html += '</ul>';
+    }
+
+    html += '<p><a id="trade-full-flows-link" href="' + detailUrl + '">Full flows table</a></p>';
+    html += '</details>';
+
+    html += '<details class="trade-accordion" id="trade-accordion-simulation"><summary>Insurance & naval density</summary>';
+    html += '<div class="side-panel-metric"><span class="metric-label">Insurance premium spike (simulation)</span><span class="metric-value">+' + insuranceSpike + (insuranceSpike !== '—' ? '%' : '') + '</span></div>';
+    html += '<p class="metric-note">Illustrative: base + exposure factor if chokepoint closed.</p>';
+    html += '<h3 class="side-panel-subtitle">Military naval density</h3><p class="metric-value">' + naval.length + ' deployment(s) in region</p>';
+    if (naval.length) {
+      html += '<ul class="naval-list">';
+      naval.slice(0, 10).forEach(function(n) { html += '<li>' + (n.country_name || '—') + ' — ' + (n.vessel_description || '—') + ' (' + (n.as_of_date || '').slice(0, 10) + ')</li>'; });
+      html += '</ul>';
+    } else html += '<p class="empty-state">No naval deployment data for this region.</p>';
+    html += '</details>';
+    var topCodes = (flowsByChokepoint[String(cp.id)] || []).slice(0, 8).map(function(f) { return f.country_code; }).filter(Boolean);
+    scenarioLink += topCodes.length ? '&countries=' + topCodes.join(',') : '';
+    html += '<p><a id="trade-scenario-link" href="' + scenarioLink + '">Run scenario: if closed → impact</a></p>';
+
+    document.getElementById('trade-panel-inner').innerHTML = html;
+
+    var chartEl = document.getElementById('trade-exposure-chart');
+    if (chartEl && flows.length) {
+      var top10 = flows.slice(0, 10);
+      var maxExp = Math.max.apply(null, top10.map(function(f) { return float(f.exposure_pct) || 0; })) || 1;
+      chartEl.style.display = 'block';
+      chartEl.setAttribute('aria-hidden', 'false');
+      chartEl.innerHTML = top10.map(function(f) {
+        var pct = float(f.exposure_pct) || 0;
+        var w = Math.max(5, (pct / maxExp) * 100);
+        return '<div class="trade-chart-bar"><span class="trade-chart-label">' + (f.country_name || f.country_code) + '</span><span class="trade-chart-track"><span class="trade-chart-fill" style="width:' + w + '%"></span></span><span class="trade-chart-pct">' + Math.round(pct) + '%</span></div>';
+      }).join('');
+    } else if (chartEl) { chartEl.style.display = 'none'; chartEl.innerHTML = ''; }
+
+    document.getElementById('trade-zoom-to-chokepoint').style.display = selectedId ? 'inline-block' : 'none';
+
+    var sortCb = document.getElementById('trade-sort-by-impact');
+    var sectorCb = document.getElementById('trade-view-by-sector');
+    if (sortCb) sortCb.addEventListener('change', function() { sortByImpact = this.checked; renderPanel(chokepoints.find(function(c) { return c.id == selectedId; })); });
+    if (sectorCb) sectorCb.addEventListener('change', function() { viewBySector = this.checked; renderPanel(chokepoints.find(function(c) { return c.id == selectedId; })); });
+  }
+
+  function selectChokepoint(cp) {
+    if (!cp) return;
+    selectedId = cp.id;
+    selectedSlug = (cp.slug || '').trim().toLowerCase();
+    updateUrl(selectedSlug);
+    document.querySelectorAll('.chokepoint-link').forEach(function(a) {
+      a.classList.toggle('active', parseInt(a.getAttribute('data-id'), 10) == cp.id);
+    });
+    renderPanel(cp);
+    setSidePanelDrawerOpen(true);
+  }
+
+  // Attach chokepoint list clicks immediately (do not wait for Leaflet), so selection always works
+  function onChokepointLinkClick(e) {
+    var a = e.target && (e.target.classList && e.target.classList.contains('chokepoint-link') ? e.target : (e.target.closest && e.target.closest('.chokepoint-link')));
+    if (!a) return;
+    e.preventDefault();
+    var id = parseInt(a.getAttribute('data-id'), 10);
+    var cp = chokepoints.find(function(c) { return c.id == id; });
+    if (!cp && (a.getAttribute('data-slug') || '').trim()) {
+      var slug = (a.getAttribute('data-slug') || '').trim().toLowerCase();
+      cp = chokepoints.find(function(c) { return ((c.slug || '').trim().toLowerCase()) === slug; });
+    }
+    if (cp) selectChokepoint(cp);
+  }
+  var listContainer = document.querySelector('.chokepoint-pick-list') || document.querySelector('.trade-side-panel');
+  if (listContainer) {
+    listContainer.addEventListener('click', onChokepointLinkClick);
+    listContainer.addEventListener('keydown', function(e) {
+      var a = e.target && (e.target.classList && e.target.classList.contains('chokepoint-link') ? e.target : (e.target.closest && e.target.closest('.chokepoint-link')));
+      if (a && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); a.click(); }
+    });
+  }
+
+  function runMap() {
+    if (typeof L === 'undefined') {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      s.crossOrigin = 'anonymous';
+      s.onload = runMap;
+      document.head.appendChild(s);
+      return;
+    }
+    // If no explicit height is set, fall back to min-height.
+    if (mapEl && (!mapEl.style.height || !mapEl.style.height.trim())) {
+      mapEl.style.height = mapEl.style.minHeight || '400px';
+    }
+    map = L.map('trade-flow-map', { zoomControl: true }).setView([20, 60], 2);
+    window.__tradeMap = map;
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png', { attribution: '&copy; CARTO', maxZoom: 19 }).addTo(map);
+
+    function applyUrlParams() {
+      var params = {};
+      (window.location.search || '').replace(/^\?/, '').split('&').forEach(function(p) {
+        var parts = p.split('=');
+        if (parts[0] && parts.length >= 2) params[decodeURIComponent(parts[0])] = decodeURIComponent(parts.slice(1).join('='));
+      });
+      if (params.region) { currentRegion = params.region; var sel = document.getElementById('trade-region'); if (sel) sel.value = currentRegion; }
+      if (params.chokepoint) {
+        selectedSlug = (params.chokepoint || '').trim().toLowerCase();
+        var cp = (chokepoints || []).find(function(c) { return ((c.slug || '').trim().toLowerCase()) === selectedSlug; });
+        if (cp) selectedId = cp.id;
+      }
+    }
+    applyUrlParams();
+    setSidePanelDrawerOpen(!!selectedId);
+    var regionSelect = document.getElementById('trade-region');
+    if (regionSelect) regionSelect.addEventListener('change', function() { currentRegion = this.value || ''; updateUrl(selectedSlug); updateMarkerVisibility(); });
+    var clearRegionBtn = document.getElementById('trade-clear-region');
+    if (clearRegionBtn) clearRegionBtn.addEventListener('click', function(e) { e.preventDefault(); currentRegion = ''; if (regionSelect) regionSelect.value = ''; updateUrl(selectedSlug); updateMarkerVisibility(); });
+
+    function updateMarkerVisibility() {
+      var visible = [];
+      markers.forEach(function(m) {
+        var show = commodityMatch(m._cp, currentFilter) && (!currentRegion || (m._cp.region || '') === currentRegion);
+        if (show) { m.addTo(map); visible.push(m); } else if (map.hasLayer(m)) map.removeLayer(m);
+      });
+      var emptyRegionEl = document.getElementById('trade-region-empty');
+      if (emptyRegionEl) emptyRegionEl.style.display = (currentRegion && visible.length === 0) ? 'block' : 'none';
+      if (markers.length && visible.length) map.fitBounds(L.latLngBounds(visible.map(function(m) { return m.getLatLng(); })), { padding: [30, 30], maxZoom: 10 });
+    }
+
+    markers = [];
+    (chokepoints || []).forEach(function(cp) {
+      var slug = (cp.slug || '').trim().toLowerCase();
+      if (!slug) return;
+      var lat = cp.lat, lon = cp.lon;
+      if ((lat == null || lon == null) && coordsFallback && coordsFallback[slug]) {
+        var pair = coordsFallback[slug];
+        lat = pair[0]; lon = pair[1];
+      }
+      if (lat == null || lon == null) return;
+      if (isNaN(parseFloat(lat)) || isNaN(parseFloat(lon))) return;
+      lat = parseFloat(lat); lon = parseFloat(lon);
+      var m = L.marker([lat, lon]).addTo(map).bindTooltip(cp.name || slug, { permanent: false });
+      m._slug = slug;
+      m._cp = cp;
+      m.on('click', function() {
+        selectChokepoint(cp);
+      });
+      markers.push(m);
+    });
+    updateMarkerVisibility();
+
+    var filterChips = document.querySelectorAll('.trade-flow-filters .filter-chip');
+    filterChips.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        filterChips.forEach(function(b) { b.classList.toggle('active', b === btn); });
+        updateUrl(selectedSlug);
+        updateMarkerVisibility();
+        if (selectedId) {
+          var cp = chokepoints.find(function(c) { return c.id == selectedId; });
+          if (cp) renderPanel(cp);
+        }
+      });
+    });
+
+    if (markers.length) {
+      map.fitBounds(L.latLngBounds(markers.map(function(m) { return m.getLatLng(); })), { padding: [30, 30], maxZoom: 10 });
+    }
+
+    document.getElementById('trade-zoom-to-chokepoint').addEventListener('click', function() {
+      if (!selectedId || !map) return;
+      var m = markers.find(function(x) { return x._cp.id == selectedId; });
+      if (m) map.setView(m.getLatLng(), 6);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        selectedId = null;
+        selectedSlug = null;
+        updateUrl('');
+        document.querySelectorAll('.chokepoint-link').forEach(function(a) { a.classList.remove('active'); });
+        document.getElementById('trade-panel-inner').innerHTML = '<p class="empty-state">Select a chokepoint on the map or below.</p>';
+        setSidePanelDrawerOpen(false);
+        document.getElementById('trade-zoom-to-chokepoint').style.display = 'none';
+      }
+    });
+
+    setTimeout(function() { if (map && map.invalidateSize) map.invalidateSize(); }, 150);
+  }
+  runMap();
+})();
+</script>
+<script>
+(function() {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.trade-tab[data-pane]'));
+  var panes = Array.prototype.slice.call(document.querySelectorAll('.trade-pane[data-pane]'));
+  if (!tabs.length || !panes.length) return;
+
+  function activate(paneName, opts) {
+    opts = opts || {};
+    tabs.forEach(function(btn) {
+      var active = btn.getAttribute('data-pane') === paneName;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    panes.forEach(function(p) {
+      var active = p.getAttribute('data-pane') === paneName;
+      p.classList.toggle('active', active);
+    });
+
+    if (paneName === 'map' && (opts.invalidateMap !== false)) {
+      setTimeout(function() {
+        var m = window.__tradeMap;
+        if (m && m.invalidateSize) m.invalidateSize();
+      }, 150);
+    }
+  }
+
+  function paneFromHash() {
+    var h = (window.location.hash || '').replace(/^#/, '');
+    if (h === 'news' || h === 'airspace' || h === 'layers' || h === 'map') return h;
+    if (h.indexOf('trade-pane-') === 0) return h.replace('trade-pane-', '');
+    return null;
+  }
+
+  var saved = null;
+  try { saved = window.localStorage.getItem('tradeActivePane'); } catch (e) {}
+  var initial = paneFromHash() || saved || 'map';
+  activate(initial, { invalidateMap: true });
+
+  tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var paneName = btn.getAttribute('data-pane') || 'map';
+      try { window.localStorage.setItem('tradeActivePane', paneName); } catch (e) {}
+      window.location.hash = paneName;
+      activate(paneName, { invalidateMap: paneName === 'map' });
+    });
+  });
+})();
+</script>
+{% endblock %}

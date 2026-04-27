@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title[:60] }} — Geopolitical News{% endblock %}
+{% block content %}
+  <article class="article-detail">
+    <header class="chat-draggable" data-chat-drag="1" data-chat-type="article" data-chat-id="{{ article.id }}" data-chat-extra="" data-chat-label="Article #{{ article.id }}">
+      <a href="{{ url_for('main.index') }}" class="back-link">← News</a>
+      <h1 class="article-title"><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h1>
+      <div class="article-meta">
+        <span class="source">{{ article.source_name }}</span>
+        {% if article.published_utc %}<span class="date">{{ article.published_utc[:10] }}</span>{% endif %}
+        {% if article.urgency %}<span class="urgency-pill urgency-{{ article.urgency }}">{{ article.urgency }}</span>{% endif %}
+        {% if article.event_type %}<span class="event-type-pill">{{ article.event_type }}</span>{% endif %}
+        {% if article.scraped_at %}<span class="article-ingested muted" title="When this item was last ingested">Ingested {{ article.scraped_at[:10] }}</span>{% endif %}
+      </div>
+    </header>
+    <div class="terminal-decision-bar" data-cite-ref="GN-ART-{{ article.id }}" data-cite-title="{{ (article.title or '')|e }}" data-cite-url="{{ request.url }}" data-cite-org="Geopolitical Terminal">
+      <span class="terminal-cite-ref" title="Stable internal reference">GN-ART-{{ article.id }}</span>
+      <button type="button" class="btn btn-secondary btn-sm gt-copy-citation">Copy citation</button>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_briefing', article_ids=article.id) }}">Briefing builder</a>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.saved_views_list') }}">Saved views</a>
+      <a class="btn btn-secondary btn-sm" href="{{ url_for('main.reports_hub') }}">Reports</a>
+      {% if current_user.is_authenticated %}<a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace_tasks') }}">Tasks</a>{% endif %}
+    </div>
+    {% with entity_type='article', entity_ref=(article.id | string) %}
+    {% include "_policy_context_block.html" %}
+    {% endwith %}
+    {% if article.image_url %}
+    <div class="article-detail-media">
+      <a href="{{ article.url }}" target="_blank" rel="noopener"><img src="{{ article.image_url }}" alt="" class="article-lead-image" loading="lazy"></a>
+    </div>
+    {% endif %}
+    {% if article.video_url %}
+    <div class="article-detail-video">
+      <iframe src="{{ article.video_url }}" title="Video" class="article-video-embed-detail" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    {% endif %}
+    {% if article.summary %}<p class="article-summary">{{ article.summary }}</p>{% endif %}
+    {% if article.key_takeaways %}
+    <div class="article-analysis key-takeaways">
+      <strong>Key takeaways</strong>
+      <div class="takeaways-text">{{ article.key_takeaways }}</div>
+    </div>
+    {% endif %}
+    {% if article.why_it_matters %}
+    <p class="article-why">Why it matters: {{ article.why_it_matters | why_matters_only }}</p>
+    {% endif %}
+
+    {% if implications and (implications.implications or implications.gepi or implications.country_scores) %}
+    <section class="article-implications">
+      <h2>Institutional context <a href="{{ url_for('main.help_page') }}#institutional-models" class="impl-help-link" title="Understand GEPI, CDEI, SFI, Fragility">?</a></h2>
+      {% if implications.country_scores %}
+      <div class="implications-countries-grid">
+        {% for c in implications.country_scores %}
+        <div class="implications-country-card">
+          <a href="{{ url_for('main.country_dashboard', country_code=c.code) }}" class="country-name">{{ c.name }}</a>
+          <div class="country-scores">
+            {% if c.cdei is defined and c.cdei is not none %}<span class="score-pill" title="Chokepoint exposure">CDEI {{ "%.1f"|format(c.cdei) }}</span>{% endif %}
+            {% if c.sfi is defined and c.sfi is not none %}<span class="score-pill" title="Sanctions friction">SFI {{ "%.1f"|format(c.sfi) }}</span>{% endif %}
+            {% if c.fragility is defined and c.fragility is not none %}<span class="score-pill" title="Fragility">Frag {{ c.fragility }}%</span>{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if implications.implications %}
+      <ul class="implications-bullets">
+        {% for imp in implications.implications %}
+        <li>{{ imp }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if implications.gepi %}
+      <p class="implications-global-note">
+        <strong>Global context:</strong> GEPI (escalation pressure) today: <span class="score-value">{{ "%.2f"|format(implications.gepi.score) }}</span>
+        <span class="muted">— same for all articles; updated daily.</span>
+        <a href="{{ url_for('main.risk_dashboard') }}">Risk dashboard</a> · <a href="{{ url_for('main.help_page') }}#institutional-models">Models guide</a>
+      </p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    <p><a href="{{ article.url }}" target="_blank" rel="noopener">Read original</a> · <a href="https://web.archive.org/web/2/{{ article.url }}" target="_blank" rel="noopener">Archive</a></p>
+    {% if current_user.is_authenticated %}
+    {% set forward_type = 'article' %}
+    {% set forward_id = article.id %}
+    {% set forward_extra = '' %}
+    {% set forward_label = 'Article #' ~ article.id %}
+    {% include 'messaging/forward_to_chat.html' %}
+    {% endif %}
+
+    <section class="annotations-section">
+      <h2>Notes</h2>
+      <form action="{{ url_for('main.article_add_annotation', article_id=article.id) }}" method="post" class="annotation-form">
+        <textarea name="body" rows="2" placeholder="Add a note..." required></textarea>
+        <button type="submit">Add note</button>
+      </form>
+      {% if annotations %}
+      <ul class="annotations-list">
+        {% for ann in annotations %}
+        <li>
+          <p class="annotation-body">{{ ann.body }}</p>
+          <span class="annotation-meta">{{ ann.created_at[:16].replace('T', ' ') }}</span>
+          <form action="{{ url_for('main.annotation_delete', annotation_id=ann.id) }}" method="post" class="inline-form">
+            <button type="submit" class="btn-link danger">Delete</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="sidebar-empty">No notes yet.</p>
+      {% endif %}
+    </section>
+  </article>
+{% endblock %}

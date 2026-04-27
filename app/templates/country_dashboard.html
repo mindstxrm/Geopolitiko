@@ -1,0 +1,567 @@
+{% extends "base.html" %}
+{% block title %}{{ country.country_name }} — Country Dashboard — Geopolitical Terminal{% endblock %}
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('main.integration_dashboard') }}">Countries & Regions</a> <span class="breadcrumb-sep">›</span>
+  {{ country.country_name }}
+</nav>
+{% endblock %}
+{% block content %}
+<div class="country-dashboard">
+  <p class="back-link"><a href="{{ url_for('main.integration_dashboard') }}">← Countries & Regions</a> · <a href="{{ url_for('main.situation_room') }}">Situation Room</a> · <a href="{{ url_for('main.relationship_mapper') }}?focus={{ country.country_code }}">Compare in Relationship Mapper</a> · <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chain</a> · <a href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ country.country_code, t2='/supply-chain', t3='/risk', t4='/integration') }}">Open in Workspace</a></p>
+  {% if current_user.is_authenticated %}
+  {% set forward_type = 'country' %}
+  {% set forward_id = '' %}
+  {% set forward_extra = country.country_code %}
+  {% set forward_label = 'Country: ' ~ country.country_code %}
+  {% include 'messaging/forward_to_chat.html' %}
+  {% endif %}
+
+  <header class="country-dashboard-header chat-draggable" data-chat-drag="1" data-chat-type="country" data-chat-id="" data-chat-extra="{{ country.country_code }}" data-chat-label="Country: {{ country.country_code }}">
+    <h1 class="country-dashboard-title">{{ country.country_name }} <span class="country-code">({{ country.country_code }})</span></h1>
+    <p class="country-dashboard-meta">{{ country.region or '—' }} · Last updated {{ (country.updated_at or '')[:16].replace('T', ' ') }} UTC</p>
+    <div class="country-dashboard-scores">
+      <div class="dashboard-score-card">
+        <span class="dashboard-score-label">Risk composite</span>
+        <span class="dashboard-score-value score-{{ 'high' if (country.combined_systemic_risk_score or 0) >= 60 else ('med' if (country.combined_systemic_risk_score or 0) >= 40 else 'low') }}">{{ country.combined_systemic_risk_score or 0 }}</span>
+      </div>
+      <div class="dashboard-score-card">
+        <span class="dashboard-score-label">Economic fragility</span>
+        <span class="dashboard-score-value score-{{ 'high' if (country.economic_fragility_score or 0) >= 60 else ('med' if (country.economic_fragility_score or 0) >= 40 else 'low') }}">{{ country.economic_fragility_score or 0 }}</span>
+      </div>
+      <div class="dashboard-score-card">
+        <span class="dashboard-score-label">Escalation probability</span>
+        <span class="dashboard-score-value">{{ escalation_pct if escalation_pct is not none else '—' }}{% if escalation_pct is not none %}%{% endif %}</span>
+      </div>
+      {% if cdei_latest %}<div class="dashboard-score-card">
+        <span class="dashboard-score-label">CDEI (chokepoint exposure)</span>
+        <span class="dashboard-score-value">{{ "%.2f"|format(cdei_latest.cdei_total or 0) }}</span>
+      </div>{% endif %}
+      {% if sfi_latest %}<div class="dashboard-score-card">
+        <span class="dashboard-score-label">SFI (sanctions friction)</span>
+        <span class="dashboard-score-value">{{ "%.2f"|format(sfi_latest.sfi_score or 0) }}</span>
+      </div>{% endif %}
+      {% if fragility_latest %}<div class="dashboard-score-card">
+        <span class="dashboard-score-label">Fragility</span>
+        <span class="dashboard-score-value score-{{ 'high' if (fragility_latest.fragility_level or 0) >= 0.6 else ('med' if (fragility_latest.fragility_level or 0) >= 0.4 else 'low') }}">{{ "%.2f"|format((fragility_latest.fragility_level or 0) * 100) }}</span>
+      </div>{% endif %}
+    </div>
+  </header>
+
+  <div class="terminal-decision-bar" data-cite-ref="GN-CTY-{{ country.country_code }}" data-cite-title="{{ (country.country_name ~ ' — Country dashboard')|e }}" data-cite-url="{{ request.url }}" data-cite-org="Geopolitical Terminal">
+    <span class="terminal-cite-ref">GN-CTY-{{ country.country_code }}</span>
+    <button type="button" class="btn btn-secondary btn-sm gt-copy-citation">Copy citation</button>
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.country_briefing', country_code=country.country_code) }}">Country briefing</a>
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ country.country_code, t2='/supply-chain', t3='/risk', t4='/integration') }}">Workspace</a>
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_briefing') }}">Briefing builder</a>
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.saved_views_list') }}">Saved views</a>
+    {% if current_user.is_authenticated %}<a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace_tasks') }}">Tasks</a>{% endif %}
+  </div>
+
+  {% with entity_type='country', entity_ref=country.country_code %}
+  {% include "_policy_context_block.html" %}
+  {% endwith %}
+
+  <div class="country-tabs" role="tablist">
+    <button type="button" class="country-tab active" role="tab" aria-selected="true" data-tab="operating-picture">Operating Picture</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="stability">Political Stability</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="economic">Economic & Trade Exposure</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="security">Security & Military</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="treaties">Treaties & Diplomacy</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="history">History</button>
+    <button type="button" class="country-tab" role="tab" aria-selected="false" data-tab="scenario">Scenario Sensitivity</button>
+  </div>
+  <p class="contextual-help">Each tab shows indicators for this country. CDEI, SFI, Fragility scores: see <a href="{{ url_for('main.help_page') }}#institutional-models">Institutional models</a>. Use <strong>Open in Workspace</strong> above to compare with Risk, Supply Chain, or Feed in one view.</p>
+
+  <section id="tab-operating-picture" class="country-tab-panel active" role="tabpanel">
+    <h2 class="tab-panel-title">Operating Picture & Executive Summary</h2>
+    <div class="tab-grid">
+      <div class="tab-card tab-card-wide synthesis-embedded">
+        <h3>Situation Summary</h3>
+        {% if country_briefing and country_briefing.summary %}
+        <div class="synthesis-prose">{{ country_briefing.summary }}</div>
+        {% if country_briefing.fill_source == 'heuristic_articles' %}
+        <p class="muted" style="margin-top:0.75rem;font-size:0.9rem;">Filled from scores + feed (no LLM).{% if country_briefing.agent_desk %} Same regional scope as Analyst Desk: <strong>{{ country_briefing.agent_desk }}</strong>.{% endif %}</p>
+        {% endif %}
+        {% elif country_briefing and country_briefing.error %}
+        <p class="empty-state">{{ country_briefing.error }}</p>
+        {% else %}
+        <p class="empty-state">No operating picture available for this country.</p>
+        {% endif %}
+        {% if country_briefing and country_briefing.bullets %}
+        <h4>Key Points</h4>
+        <ul class="synthesis-bullets-list">
+          {% for b in country_briefing.bullets %}
+          <li>{{ b }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% if desk_terminal_intel %}
+      <div class="tab-card tab-card-wide">
+        <h3>Analyst Desk — approved for Terminal</h3>
+        <p class="muted" style="font-size:0.9rem;">Human-approved drafts from the separate Analyst Desk; quantitative signals extracted from recent news are attached when you approve.</p>
+        {% for item in desk_terminal_intel %}
+        <article class="desk-terminal-item" style="margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color, #2a3545);">
+          <p class="muted" style="margin:0 0 0.35rem 0;font-size:0.85rem;">
+            {{ item.run_type }} · {{ item.agent_id }} · published {{ (item.published_at or '')[:16].replace('T',' ') }} UTC
+            {% if item.title %} · <strong>{{ item.title }}</strong>{% endif %}
+          </p>
+          <div class="synthesis-prose" style="white-space:pre-wrap;">{{ item.body_markdown }}</div>
+          {% if item.metrics %}
+          <h4 style="margin-top:0.75rem;font-size:1rem;">Quantitative signals (from news)</h4>
+          <ul class="data-list" style="font-size:0.9rem;">
+            {% for m in item.metrics[:12] %}
+            <li>
+              <strong>{{ m.label or m.kind or 'Signal' }}</strong>
+              {% if m.value is not none %}: {{ m.value }}{% endif %}{% if m.unit %} {{ m.unit }}{% endif %}
+              {% if m.text and m.value is none %} — {{ m.text }}{% endif %}
+              {% if m.snippet %}<br><span class="muted">{{ m.snippet[:200] }}{% if m.snippet|length > 200 %}…{% endif %}</span>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if executive_one_pager and executive_one_pager.type == 'country' and (executive_one_pager.drivers or executive_one_pager.implications) %}
+      <div class="tab-card tab-card-wide synthesis-embedded">
+        <h3>Executive One-Pager</h3>
+        {% if executive_one_pager.heuristic_fill %}
+        <p class="muted" style="font-size:0.9rem;">Drivers and implications from indicators + news signals (no LLM).{% if executive_one_pager.agent_desk %} Desk scope: <strong>{{ executive_one_pager.agent_desk }}</strong>.{% endif %}</p>
+        {% endif %}
+        {% if executive_one_pager.drivers %}
+        <h4>Top Drivers</h4>
+        <ul>
+          {% for d in executive_one_pager.drivers[:5] %}
+          <li>{{ d }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if executive_one_pager.implications %}
+        <h4>Implications</h4>
+        <ul>
+          {% for i in executive_one_pager.implications[:5] %}
+          <li>{{ i }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if executive_one_pager.links %}
+        <p class="synthesis-links-inline">
+          {% for label, url in executive_one_pager.links.items() %}
+          <a href="{{ url }}">{{ label }}</a>{% if not loop.last %} · {% endif %}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if country_briefing and country_briefing.data %}
+      <div class="tab-card tab-card-wide">
+        <h3>Source Data</h3>
+        {% set scores = country_briefing.data.get('scores', {}) %}
+        <ul class="data-list">
+          <li>Combined risk: {{ scores.get('combined_risk') or '—' }} | GEPI: {{ scores.get('gepi') or '—' }} | CDEI: {{ scores.get('cdei') or '—' }} | SFI: {{ scores.get('sfi') or '—' }} | Fragility: {{ scores.get('fragility') or '—' }}</li>
+          <li>Sanctions: {{ country_briefing.data.get('sanctions_count', 0) }} · Treaties: {{ country_briefing.data.get('treaties_count', 0) }}</li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section id="tab-stability" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Political Stability</h2>
+    <div class="tab-grid">
+      <div class="tab-card">
+        <h3>Approval rating trend</h3>
+        {% if approval %}<ul class="data-list">{% for r in approval[:10] %}<li>{{ r.subject or '—' }}: {{ r.approval_pct or '—' }}% <span class="muted">({{ (r.poll_date or '')[:10] }})</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">No approval data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Protest frequency</h3>
+        {% if protests %}<ul class="data-list">{% for p in protests[:10] %}<li>{{ (p.event_date or '')[:10] }} — {{ p.summary or p.trigger_topic or '—' }}{% if p.estimated_size %} ({{ p.estimated_size }}){% endif %}</li>{% endfor %}</ul>{% else %}<p class="empty-state">No protest data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Election calendar</h3>
+        {% if elections %}<ul class="data-list">{% for e in elections[:10] %}<li>{{ e.election_type or '—' }}: {{ (e.date_planned or '')[:10] }} <span class="muted">{{ e.status or '' }}</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">No election data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Elite & institutional structure</h3>
+        {% if elite_institutional %}<ul class="data-list"><li>Governance: {{ elite_institutional.governance_model or '—' }}</li><li>CBI score: {{ elite_institutional.central_bank_independence_score or '—' }}</li><li>Party structure: {{ elite_institutional.party_structure or '—' }}</li><li>Major SOEs: {{ (elite_institutional.major_soes or '—')[:80] }}{% if elite_institutional.major_soes and elite_institutional.major_soes|length > 80 %}…{% endif %}</li>{% if elite_institutional.coup_attempts_history %}<li>Coup history: {{ elite_institutional.coup_attempts_history[:60] }}{% if elite_institutional.coup_attempts_history|length > 60 %}…{% endif %}</li>{% endif %}</ul>{% else %}<p class="empty-state">Governance model, key actors, SOEs, CBI, party structure.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Climate & resource vulnerability</h3>
+        {% if climate_vulnerability %}{% set cv = climate_vulnerability[0] %}<ul class="data-list"><li>Water stress: {{ "%.1f"|format(cv.water_stress_index or 0) }}</li><li>Food insecurity: {{ "%.1f"|format(cv.food_insecurity_index or 0) }}</li><li>Disaster freq: {{ cv.natural_disaster_frequency or '—' }}</li><li>Climate risk: {{ cv.climate_risk_score or '—' }}</li></ul>{% else %}<p class="empty-state">Water stress, food insecurity, disaster frequency, climate risk.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Youth unemployment</h3>
+        {% if youth_unemployment %}<ul class="data-list">{% for u in youth_unemployment[:8] %}<li>{{ u.rate_pct or '—' }}% <span class="muted">({{ (u.as_of_date or '')[:10] }})</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">No data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Food price volatility</h3>
+        {% if food_inflation %}<ul class="data-list">{% for f in food_inflation[:8] %}<li>{{ f.inflation_pct or '—' }}% <span class="risk-{{ (f.risk_level or '')|lower }}">{{ f.risk_level or '' }}</span> ({{ (f.as_of_date or '')[:10] }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No food inflation alerts.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Conflict & event datasets</h3>
+        {% if conflict_imports %}<ul class="data-list">{% for c in conflict_imports[:10] %}<li><span class="muted">[{{ c.source or '—' }}]</span> {{ (c.event_date or '')[:10] }} — {{ c.event_type or '—' }}{% if c.fatalities %} ({{ c.fatalities }} fatalities){% endif %}{% if c.summary %}: {{ (c.summary or '')[:60] }}{% if (c.summary or '')|length > 60 %}…{% endif %}{% endif %}</li>{% endfor %}</ul><p class="muted">ACLED, Uppsala UCDP, ICEWS. Overlay with fragility + escalation.</p>{% else %}<p class="empty-state">Conflict events (ACLED, UCDP, ICEWS) require data feed. Overlays with fragility + escalation probability.</p>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-economic" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Economic & Trade Exposure</h2>
+    <div class="tab-grid">
+      <div class="tab-card">
+        <h3>Chokepoint exposure</h3>
+        {% if chokepoint_exposure %}
+        <p>This country appears in trade flows through the following chokepoints. <a href="{{ url_for('main.supply_chain_dashboard') }}">View Trade & Supply Chain</a></p>
+        <ul class="chokepoint-exposure-list">
+          {% for f in chokepoint_exposure[:15] %}
+          <li>
+            <a href="{{ url_for('main.supply_chain_dashboard') }}?chokepoint={{ f.chokepoint_slug }}">{{ f.chokepoint_name }}</a>
+            — {{ f.sector or '—' }} {{ "%.0f"|format(f.exposure_pct or 0) }}% <span class="impact-pill impact-{{ (f.impact_if_closed or '')|lower }}">{{ f.impact_if_closed or '—' }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% if chokepoint_exposure | length > 15 %}
+        <p class="muted">{{ chokepoint_exposure | length - 15 }} more flow(s). <a href="{{ url_for('main.supply_chain_dashboard') }}">See all</a></p>
+        {% endif %}
+        {% else %}
+        <p class="empty-state">No chokepoint flow data for this country. <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chain</a></p>
+        {% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Export dependency / Trade flow</h3>
+        <p>Trade flow (% GDP): <strong>{{ "%.0f"|format(country.trade_flow_pct_gdp or 0) }}%</strong>.{% if trade_partners %} Top partners:{% endif %}</p>
+        {% if trade_partners %}<ul class="data-list">{% for t in trade_partners[:10] %}<li>{{ t.direction or '—' }}: {{ t.partner_country or '—' }}{% if t.share_pct %} {{ "%.0f"|format(t.share_pct) }}%{% endif %}{% if t.sector %} ({{ t.sector }}){% endif %}</li>{% endfor %}</ul>{% else %}<p class="empty-state">Top trade partners require data feed. See <a href="{{ url_for('main.help_page') }}#indicators">Indicator roadmap</a>.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Energy import ratio</h3>
+        <p>Energy import exposure: <strong>{{ "%.0f"|format(country.energy_import_exposure_pct or 0) }}%</strong>.</p>
+      </div>
+      <div class="tab-card">
+        <h3>FX reserves</h3>
+        <p>Reserve months (import cover): <strong>{{ "%.1f"|format(country.reserve_months_imports or 0) }}</strong> months.</p>
+      </div>
+      <div class="tab-card">
+        <h3>Debt distress</h3>
+        <p>Debt distress score: <strong>{{ country.debt_distress_score or 0 }}</strong> (0–100).</p>
+      </div>
+      <div class="tab-card">
+        <h3>Capital flight indicator</h3>
+        <p>Capital flight risk: <strong>{{ country.capital_flight_risk or 0 }}</strong> (0–100).</p>
+      </div>
+      <div class="tab-card">
+        <h3>FX vulnerability</h3>
+        <p>FX vulnerability score: <strong>{{ country.fx_vulnerability_score or 0 }}</strong> (0–100).</p>
+      </div>
+      <div class="tab-card">
+        <h3>Currency stress</h3>
+        {% if currency_stress %}<ul class="data-list">{% for c in currency_stress[:5] %}<li>{{ c.indicator_value or '—' }} — {{ c.stress_level or '—' }} ({{ (c.as_of_date or '')[:10] }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No currency stress data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Sovereign rating / Macro stress</h3>
+        {% if macroeconomic_stress %}{% set m = macroeconomic_stress[0] %}<ul class="data-list"><li>GDP growth (annual): {{ "%.1f"|format(m.gdp_growth_annual_pct or 0) }}%</li><li>Inflation: {{ "%.1f"|format(m.inflation_pct or 0) }}%</li><li>Debt/GDP: {{ "%.0f"|format(m.debt_to_gdp_pct or 0) }}%</li><li>Current account: {{ "%.1f"|format(m.current_account_pct_gdp or 0) }}%</li><li>Rating: {{ m.sovereign_rating or '—' }}{% if m.bond_spread_bps %} · spread {{ m.bond_spread_bps }} bps{% endif %}</li></ul><span class="muted">{{ (m.as_of_date or '')[:10] }}</span>{% else %}<p class="empty-state">Macro stress indicators (GDP growth, inflation, debt, rating) require World Bank/IMF feed.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Energy & commodity exposure</h3>
+        {% if energy_commodity %}{% set e = energy_commodity[0] %}<ul class="data-list"><li>Oil prod: {{ "%.0f"|format(e.oil_production_bpd or 0) }} bpd</li><li>Gas exports: {{ "%.1f"|format(e.gas_exports_bcm or 0) }} bcm</li><li>LNG: {{ "%.1f"|format(e.lng_capacity_mtpa or 0) }} mtpa</li><li>Rare earth share: {{ "%.1f"|format(e.rare_earth_production_share or 0) }}%</li><li>Grain exposure: {{ e.grain_export_import_exposure or '—' }}</li></ul>{% else %}<p class="empty-state">Energy/commodity data (oil, gas, LNG, rare earths) requires data feed. Energy import % in integration layer.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Capital flows & FDI</h3>
+        {% if capital_flows %}{% set cf = capital_flows[0] %}<ul class="data-list"><li>FDI inflow: {{ "%.0f"|format(cf.fdi_inflow_usd_millions or 0) }} M USD</li><li>FDI outflow: {{ "%.0f"|format(cf.fdi_outflow_usd_millions or 0) }} M USD</li><li>Portfolio flows: {{ "%.0f"|format(cf.portfolio_flows_usd_millions or 0) }} M</li><li>SWF: {{ "%.1f"|format(cf.sovereign_wealth_fund_usd_billions or 0) }} B USD</li></ul>{% else %}<p class="empty-state">FDI, portfolio flows, sovereign wealth funds require data feed.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Technology & semiconductor</h3>
+        {% if technology_semiconductor %}{% set ts = technology_semiconductor[0] %}<ul class="data-list"><li>Chip exports: {{ "%.0f"|format(ts.chip_exports_usd_millions or 0) }} M USD</li><li>Tech companies: {{ ts.critical_tech_companies or '—' }}</li><li>Manufacturing: {{ ts.advanced_manufacturing_capacity or '—' }}</li></ul>{% else %}<p class="empty-state">Semiconductor/chip exports and tech capacity require data feed.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Geospatial infrastructure</h3>
+        {% if geospatial %}<ul class="data-list">{% for g in geospatial[:8] %}<li>{{ g.infra_type or '—' }}: {{ g.name or '—' }}{% if g.region %} ({{ g.region }}){% endif %}</li>{% endfor %}</ul>{% else %}<p class="empty-state">Ports, cables, pipelines. Chokepoint exposure above; infrastructure layer requires feed.</p>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-security" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Security & Military</h2>
+    <div class="tab-grid">
+      <div class="tab-card">
+        <h3>Defense spending</h3>
+        {% if defense_spending %}<ul class="data-list">{% for d in defense_spending[:10] %}<li>{{ d.year or '—' }}: {{ d.spending_usd_billions or '—' }} B USD ({{ d.pct_gdp or '—' }}% GDP)</li>{% endfor %}</ul>{% else %}<p class="empty-state">No defense spending data (SIPRI).</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Military capability snapshot</h3>
+        {% if military_capability %}{% set mc = military_capability[0] %}<ul class="data-list"><li>Active troops: {{ "{:,}".format(mc.active_troops) if mc.active_troops is not none else '—' }}</li><li>Naval tonnage: {{ mc.naval_tonnage if mc.naval_tonnage is not none else '—' }}</li><li>Defense alliances: {{ mc.defense_alliances or '—' }}</li>{% if mc.source or mc.as_of_year %}<li class="muted">{% if mc.source %}Source: {{ mc.source }}{% endif %}{% if mc.as_of_year %} ({{ mc.as_of_year }}){% endif %}</li>{% endif %}</ul>{% else %}<p class="empty-state">Active troops, naval tonnage, defense alliances. Requires SIPRI / open-source feed.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Border incidents</h3>
+        {% if border_incidents %}<ul class="data-list">{% for b in border_incidents[:10] %}<li>{{ (b.incident_date or '')[:10] }} — {{ b.country_a_name or '' }} / {{ b.country_b_name or '' }}: {{ b.summary or '—' }} <span class="muted">{{ b.severity or '' }}</span></li>{% endfor %}</ul>{% else %}<p class="empty-state">No border incidents.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Military exercises (region)</h3>
+        {% if military_exercises %}<ul class="data-list">{% for m in military_exercises[:8] %}<li>{{ m.name or '—' }} {{ (m.start_date or '')[:10] }}–{{ (m.end_date or '')[:10] }} · {{ m.region or '—' }} · {{ m.participants or '—' }}</li>{% endfor %}</ul>{% else %}<p class="empty-state">No exercises in region.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Naval movement (region)</h3>
+        {% if naval_deployments %}<ul class="data-list">{% for n in naval_deployments[:10] %}<li>{{ n.country_name or '—' }} — {{ n.region or '—' }}: {{ n.vessel_description or '—' }} ({{ (n.as_of_date or '')[:10] }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No naval deployment data in region.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Arms trade (supplier)</h3>
+        {% if arms_trade_supplier %}<ul class="data-list">{% for a in arms_trade_supplier[:8] %}<li>{{ a.recipient_country or '—' }} — {{ a.weapon_type or '—' }} ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No arms exports data.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Arms trade (recipient)</h3>
+        {% if arms_trade_recipient %}<ul class="data-list">{% for a in arms_trade_recipient[:8] %}<li>{{ a.supplier_country or '—' }} — {{ a.weapon_type or '—' }} ({{ a.year or '—' }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No arms imports data.</p>{% endif %}
+      </div>
+      <div class="tab-card tab-card-wide">
+        <h3>Strategic alliances</h3>
+        <p>Treaties where {{ country.country_name }} is a party (see Treaties & Diplomacy tab). Defense pacts and alliances listed there.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-treaties" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Treaties & Diplomacy</h2>
+    <div class="tab-grid">
+      <div class="tab-card tab-card-wide">
+        <h3>Bilateral / Trade / Defense agreements</h3>
+        {% if treaties %}<ul class="data-list">{% for t in treaties %}<li><a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}">{{ t.name }}</a> — {{ t.treaty_type or '—' }} · {{ t.party_a or '—' }}{% if t.party_b %} / {{ t.party_b }}{% endif %} ({{ (t.signed_date or '')[:10] }})</li>{% endfor %}</ul><p><a href="{{ url_for('main.diplomacy_treaties') }}?party={{ country.country_name | urlencode }}">View all matching</a></p>{% else %}<p class="empty-state">No treaties found for this country.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Sanction regime exposure</h3>
+        {% if sanctions_target %}<ul class="data-list">{% for s in sanctions_target[:15] %}<li>{{ s.imposing_country or '—' }} → {{ s.target_country or '—' }}: {{ s.measure_type or s.description or '—' }} ({{ (s.start_date or '')[:10] }})</li>{% endfor %}</ul><p><a href="{{ url_for('main.diplomacy_sanctions') }}?target={{ country.country_name | urlencode }}">View all</a></p>{% else %}<p class="empty-state">No sanctions targeting this country.</p>{% endif %}
+      </div>
+      <div class="tab-card tab-card-wide">
+        <h3>UN voting alignment</h3>
+        {% if gpi_un_summary %}
+        <div class="un-alignment-panel">
+          {% set usa12_list = gpi_un_summary.alignment_to_usa | selectattr('window','equalto','12m') | list %}
+          {% set usa36_list = gpi_un_summary.alignment_to_usa | selectattr('window','equalto','36m') | list %}
+          {% set chn12_list = gpi_un_summary.alignment_to_china | selectattr('window','equalto','12m') | list %}
+          {% set chn36_list = gpi_un_summary.alignment_to_china | selectattr('window','equalto','36m') | list %}
+          {% set usa12 = usa12_list[0] if usa12_list else none %}
+          {% set usa36 = usa36_list[0] if usa36_list else none %}
+          {% set chn12 = chn12_list[0] if chn12_list else none %}
+          {% set chn36 = chn36_list[0] if chn36_list else none %}
+          <div class="un-alignment-row">
+            <span class="un-alignment-pole">vs USA</span>
+            <span>{{ "%.0f"|format(usa12.similarity_score) if usa12 else '—' }}% (12m)</span>
+            <span>{{ "%.0f"|format(usa36.similarity_score) if usa36 else '—' }}% (36m)</span>
+            {% if usa36 and usa36.delta_3y is not none %}<span class="un-drift">Δ {{ "%+.0f"|format(usa36.delta_3y) }} (3y)</span>{% endif %}
+          </div>
+          <div class="un-alignment-row">
+            <span class="un-alignment-pole">vs China</span>
+            <span>{{ "%.0f"|format(chn12.similarity_score) if chn12 else '—' }}% (12m)</span>
+            <span>{{ "%.0f"|format(chn36.similarity_score) if chn36 else '—' }}% (36m)</span>
+            {% if chn36 and chn36.delta_3y is not none %}<span class="un-drift">Δ {{ "%+.0f"|format(chn36.delta_3y) }} (3y)</span>{% endif %}
+          </div>
+          {% if gpi_un_summary.volatility %}
+          <p class="un-volatility">Volatility: {{ "%.1f"|format(gpi_un_summary.volatility.volatility_score or 0) }} — abstain {{ "%.0f"|format((gpi_un_summary.volatility.abstain_rate or 0) * 100) }}%</p>
+          {% endif %}
+          {% if gpi_un_summary.recent_shocks %}
+          <p><strong>Recent policy shifts</strong>: {% for s in gpi_un_summary.recent_shocks[:3] %}vs {{ s.reference }} Δ{{ "%+.0f"|format(s.delta or 0) }}{% if not loop.last %}; {% endif %}{% endfor %}</p>
+          {% endif %}
+          {% if gpi_un_summary.alignment_by_issue_usa %}
+          <p><strong>Issue alignment (vs USA)</strong>: {% for i in gpi_un_summary.alignment_by_issue_usa[:5] %}{{ i.issue_tag or '—' }} {{ "%.0f"|format(i.similarity_score or 0) }}%{% if not loop.last %} · {% endif %}{% endfor %}</p>
+          {% endif %}
+        </div>
+        <p><a href="{{ url_for('main.diplomacy_alignment') }}?country={{ country.country_code }}">UN voting & alignment</a></p>
+        {% elif voting_alignment %}
+        <p>Countries that vote most often with {{ country.country_name or country.country_code }}:</p><ul class="data-list">{% for v in voting_alignment[:15] %}<li>{% if v.country_a == country.country_code %}{{ v.country_b_name or v.country_b }}{% else %}{{ v.country_a_name or v.country_a }}{% endif %}: {{ v.alignment_score or 0 }}% alignment ({{ v.votes_agreed or 0 }}/{{ v.votes_total or 0 }} votes)</li>{% endfor %}</ul><p><a href="{{ url_for('main.diplomacy_alignment') }}?country={{ country.country_code }}">UN voting & alignment</a></p>
+        {% else %}
+        <p class="empty-state">No UN voting alignment data. Run <code>python run_jobs.py --un-votes-gpi</code> after syncing votes.</p>
+        {% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Recent UN votes</h3>
+        {% if un_votes %}<ul class="data-list">{% for v in un_votes[:15] %}<li>{{ v.resolution_id or '—' }}: <strong>{{ v.vote or '—' }}</strong> ({{ (v.vote_date or '')[:10] }})</li>{% endfor %}</ul>{% else %}<p class="empty-state">No UN votes recorded.</p>{% endif %}
+      </div>
+      <div class="tab-card">
+        <h3>Multilateral participation</h3>
+        {% if multilateral %}<ul class="data-list">{% for m in multilateral %}<li>{{ m.org_key or '—' }}: {{ m.membership_status or '—' }}{% if m.program_notes %} ({{ m.program_notes[:40] }}{% if m.program_notes|length > 40 %}…{% endif %}){% endif %}</li>{% endfor %}</ul>{% else %}<p class="empty-state">WTO, IMF, World Bank, NATO, AIIB, BRI membership.</p>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-history" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Country History</h2>
+    <div class="history-tab-content">
+      {% if wiki_history and wiki_history.extract %}
+      <div class="tab-card tab-card-wide history-narrative">
+        <h3>Background</h3>
+        <p class="history-extract">{{ wiki_history.extract }}</p>
+        {% if wiki_history.url %}<p class="muted"><a href="{{ wiki_history.url }}" target="_blank" rel="noopener">Source: Wikipedia — {{ wiki_history.title or 'History' }}</a></p>{% endif %}
+      </div>
+      {% elif wiki_history and wiki_history.error %}
+      <div class="tab-card"><p class="empty-state">Could not load country background: {{ wiki_history.error }}</p></div>
+      {% else %}
+      <div class="tab-card"><p class="empty-state">Country background (Wikipedia) not available.</p></div>
+      {% endif %}
+      <div class="tab-card tab-card-wide">
+        <h3>Indicator trends (last 90 days)</h3>
+        <div class="history-charts-row">
+          {% if fragility_history or cdei_history or sfi_history %}
+          <div class="history-chart-container">
+            <canvas id="history-indicators-chart" height="200"></canvas>
+          </div>
+          {% else %}
+          <p class="empty-state">No time-series data (fragility, CDEI, SFI) for charting. Run institutional model jobs to populate.</p>
+          {% endif %}
+        </div>
+      </div>
+      {% if macro_history %}
+      <div class="tab-card tab-card-wide">
+        <h3>Macro stress (inflation, debt/GDP)</h3>
+        <div class="history-chart-container">
+          <canvas id="history-macro-chart" height="180"></canvas>
+        </div>
+      </div>
+      {% endif %}
+      <div class="tab-card tab-card-wide">
+        <h3>Recent activity (articles, sanctions, protests, conflicts, elections)</h3>
+        {% if activity_timeline %}
+        <ul class="activity-timeline">
+          {% for item in activity_timeline %}
+          <li class="activity-item activity-{{ item.type }}">
+            <span class="activity-date">{{ item.date or '—' }}</span>
+            <span class="activity-type">{{ item.type }}</span>
+            <span class="activity-title">{{ item.title or '—' }}{% if item.summary %}: {{ (item.summary or '')[:80] }}{% if (item.summary or '')|length > 80 %}…{% endif %}{% endif %}</span>
+            {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener" class="activity-link">Read</a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No recent activity (articles, sanctions, protests, conflict events, elections) in the last 90 days.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-scenario" class="country-tab-panel" role="tabpanel" hidden>
+    <h2 class="tab-panel-title">Scenario Sensitivity — “What happens if…”</h2>
+    <p class="tab-intro">Adjust sliders to see estimated impact on {{ country.country_name }}. Outputs are illustrative (plug in full model for production).</p>
+    <div class="scenario-sensitivity">
+      <div class="scenario-sliders">
+        <div class="scenario-slider-group">
+          <label for="slider-oil">Oil price shock +30%</label>
+          <input type="range" id="slider-oil" min="0" max="100" value="0" class="scenario-slider">
+          <span class="scenario-slider-value" id="val-oil">0</span>%
+        </div>
+        <div class="scenario-slider-group">
+          <label for="slider-war">Regional war outbreak</label>
+          <input type="range" id="slider-war" min="0" max="100" value="0" class="scenario-slider">
+          <span class="scenario-slider-value" id="val-war">0</span>%
+        </div>
+        <div class="scenario-slider-group">
+          <label for="slider-export">US export restrictions</label>
+          <input type="range" id="slider-export" min="0" max="100" value="0" class="scenario-slider">
+          <span class="scenario-slider-value" id="val-export">0</span>%
+        </div>
+        <div class="scenario-slider-group">
+          <label for="slider-currency">Currency crisis</label>
+          <input type="range" id="slider-currency" min="0" max="100" value="0" class="scenario-slider">
+          <span class="scenario-slider-value" id="val-currency">0</span>%
+        </div>
+      </div>
+      <div class="scenario-outputs">
+        <h3>Outputs</h3>
+        <div class="scenario-output-card">
+          <span class="scenario-output-label">GDP impact %</span>
+          <span class="scenario-output-value" id="out-gdp">0</span>
+        </div>
+        <div class="scenario-output-card">
+          <span class="scenario-output-label">Political instability delta</span>
+          <span class="scenario-output-value" id="out-instability">0</span>
+        </div>
+        <div class="scenario-output-card">
+          <span class="scenario-output-label">Trade disruption probability</span>
+          <span class="scenario-output-value" id="out-trade">0%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="next-steps">
+    <h3>Next steps</h3>
+    <ul>
+      <li><a href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ country.country_code, t2='/supply-chain', t3='/risk', t4='/index') }}">Open in Workspace</a> — view this country with Risk, Supply Chain, and Feed</li>
+      <li><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> — regional risk scores and Forward Risk Index</li>
+      <li><a href="{{ url_for('main.export_briefing') }}">Briefing</a> — generate a briefing</li>
+      <li><a href="{{ url_for('main.alerts_list') }}">Create watchlist</a> — monitor this country or topic by impact</li>
+      <li><a href="{{ url_for('main.saved_views_list') }}">Saved views</a> — save and load filter presets</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function() {
+  var tabs = document.querySelectorAll('.country-tab');
+  var panels = document.querySelectorAll('.country-tab-panel');
+  tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = 'tab-' + btn.getAttribute('data-tab');
+      tabs.forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      panels.forEach(function(p) { p.classList.remove('active'); p.hidden = true; });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      var panel = document.getElementById(id);
+      if (panel) { panel.classList.add('active'); panel.hidden = false; }
+      if (btn.getAttribute('data-tab') === 'history' && typeof initHistoryCharts === 'function') initHistoryCharts();
+    });
+  });
+
+  var fragilityHistory = {{ (fragility_history or []) | tojson }};
+  var cdeiHistory = {{ (cdei_history or []) | tojson }};
+  var sfiHistory = {{ (sfi_history or []) | tojson }};
+  var macroHistory = {{ (macro_history or []) | tojson }};
+  var historyChartsInitialized = false;
+  function initHistoryCharts() {
+    if (historyChartsInitialized || typeof Chart === 'undefined') return;
+    historyChartsInitialized = true;
+    var byDate = {};
+    (fragilityHistory || []).forEach(function(r) { var d = (r.as_of_date || '').slice(0, 10); if (d) { byDate[d] = byDate[d] || {}; byDate[d].frag = (r.fragility_level || 0) * 100; } });
+    (cdeiHistory || []).forEach(function(r) { var d = (r.as_of_date || '').slice(0, 10); if (d) { byDate[d] = byDate[d] || {}; byDate[d].cdei = r.cdei_total; } });
+    (sfiHistory || []).forEach(function(r) { var d = (r.as_of_date || '').slice(0, 10); if (d) { byDate[d] = byDate[d] || {}; byDate[d].sfi = r.sfi_score; } });
+    var dates = Object.keys(byDate).sort(), labels = [], fragData = [], cdeiData = [], sfiData = [];
+    dates.forEach(function(d) { labels.push(d); fragData.push(byDate[d].frag != null ? byDate[d].frag : null); cdeiData.push(byDate[d].cdei != null ? byDate[d].cdei : null); sfiData.push(byDate[d].sfi != null ? byDate[d].sfi : null); });
+    var canvas = document.getElementById('history-indicators-chart');
+    if (canvas && (fragData.length || cdeiData.length || sfiData.length)) {
+      new Chart(canvas, { type: 'line', data: { labels: labels, datasets: [
+        { label: 'Fragility (0–100)', data: fragData, borderColor: '#dc2626', fill: false, tension: 0.2 },
+        { label: 'CDEI', data: cdeiData, borderColor: '#2563eb', fill: false, tension: 0.2 },
+        { label: 'SFI', data: sfiData, borderColor: '#059669', fill: false, tension: 0.2 }
+      ] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } } });
+    }
+    var macroLabels = [], inflData = [], debtData = [];
+    (macroHistory || []).forEach(function(r) { var d = (r.as_of_date || '').slice(0, 10); if (d) { macroLabels.push(d); inflData.push(r.inflation_pct != null ? r.inflation_pct : null); debtData.push(r.debt_to_gdp_pct != null ? r.debt_to_gdp_pct : null); } });
+    var macroCanvas = document.getElementById('history-macro-chart');
+    if (macroCanvas && macroLabels.length) {
+      new Chart(macroCanvas, { type: 'line', data: { labels: macroLabels, datasets: [
+        { label: 'Inflation %', data: inflData, borderColor: '#d97706', fill: false, tension: 0.2 },
+        { label: 'Debt/GDP %', data: debtData, borderColor: '#7c3aed', fill: false, tension: 0.2 }
+      ] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } } });
+    }
+  }
+
+  var oil = document.getElementById('slider-oil'), war = document.getElementById('slider-war'), exp = document.getElementById('slider-export'), curr = document.getElementById('slider-currency');
+  var valOil = document.getElementById('val-oil'), valWar = document.getElementById('val-war'), valExp = document.getElementById('val-export'), valCurr = document.getElementById('val-currency');
+  var outGdp = document.getElementById('out-gdp'), outInst = document.getElementById('out-instability'), outTrade = document.getElementById('out-trade');
+
+  function updateScenario() {
+    var o = parseInt(oil.value, 10) || 0, w = parseInt(war.value, 10) || 0, e = parseInt(exp.value, 10) || 0, c = parseInt(curr.value, 10) || 0;
+    valOil.textContent = o; valWar.textContent = w; valExp.textContent = e; valCurr.textContent = c;
+    var gdp = (o * 0.15 + w * 0.4 + e * 0.25 + c * 0.35).toFixed(1);
+    var inst = (o * 0.05 + w * 0.5 + e * 0.2 + c * 0.4).toFixed(1);
+    var trade = (o * 0.2 + w * 0.6 + e * 0.5 + c * 0.1).toFixed(0);
+    outGdp.textContent = (gdp > 0 ? '-' : '') + gdp + '%';
+    outInst.textContent = '+' + inst;
+    outTrade.textContent = Math.min(100, trade) + '%';
+  }
+  if (oil) { oil.addEventListener('input', updateScenario); }
+  if (war) { war.addEventListener('input', updateScenario); }
+  if (exp) { exp.addEventListener('input', updateScenario); }
+  if (curr) { curr.addEventListener('input', updateScenario); }
+  updateScenario();
+})();
+</script>
+{% endblock %}

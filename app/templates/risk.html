@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}Risk Engine — Geopolitical News{% endblock %}
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('main.index') }}">Intelligence</a> <span class="breadcrumb-sep">›</span> Risk Engine
+</nav>
+{% endblock %}
+{% block content %}
+  <h1 class="page-title chat-draggable" data-chat-drag="1" data-chat-type="risk" data-chat-id="0" data-chat-extra="" data-chat-label="Risk dashboard">Real-Time Geopolitical Risk Engine</h1>
+  <p class="page-intro">Live country-level risk scores, sector exposure, and the Dynamic Forward Risk Probability Index (geopolitical equivalent of VIX). <a href="{{ url_for('main.workspace', layout='4', t1='/risk', t2='/integration', t3='/supply-chain', t4='/scenarios/engine') }}">Open in Workspace</a></p>
+  {% if current_user.is_authenticated %}
+  {% set forward_type = 'risk' %}
+  {% set forward_id = 0 %}
+  {% set forward_extra = '' %}
+  {% set forward_label = 'Risk dashboard' %}
+  {% include 'messaging/forward_to_chat.html' %}
+  {% endif %}
+  <p class="contextual-help">Risk scores (0–100) are derived from recent article volume and impact. The Forward Risk Index shows modeled probabilities (coup, sanctions, trade disruption) by region. See <a href="{{ url_for('main.help_page') }}#glossary">Glossary</a> and <a href="{{ url_for('main.help_page') }}#institutional-models">Institutional models</a> for definitions.</p>
+
+  {% if gepi_latest %}
+  <section class="risk-section">
+    <h2>GEPI (Escalation Pressure Index)</h2>
+    <p class="risk-meta">Daily escalation pressure score (0–1) from 6 channels: military activity, sanctions, rhetoric, domestic unrest, diplomacy breakdown, supply chain. Method v{{ gepi_latest.model_version or '1.0' }}. <a href="{{ url_for('main.help_page') }}#institutional-models">Learn more</a></p>
+    <div class="risk-index-card">
+      <div class="gauge">
+        <span class="gauge-label">GEPI score</span>
+        <div class="gauge-bar"><span class="gauge-fill" style="width: {{ ((gepi_latest.gepi_score or 0) * 100)|round(1) }}%"></span></div>
+        <span class="gauge-value">{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</span>
+      </div>
+      <p class="risk-index-updated">As of {{ (gepi_latest.as_of_date or '')[:10] }} · Confidence {{ "%.0f"|format((gepi_latest.confidence_score or 0) * 100) }}% · <a href="{{ url_for('api.api_gpi_gepi') }}">API</a></p>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if trajectory_data %}
+  <section class="risk-section risk-trajectory-embedded">
+    <h2>Escalation trajectory</h2>
+    <p class="risk-meta">Trend: <strong>{{ trajectory_data.trend }}</strong> (last 30 days). {{ (trajectory_data.narrative or '')[:180] }}{% if (trajectory_data.narrative or '')|length > 180 %}…{% endif %}</p>
+    <p><a href="{{ url_for('main.synthesis_trajectory') }}">Full trajectory</a> · <a href="{{ url_for('main.situation_room') }}">Situation Room</a></p>
+  </section>
+  {% endif %}
+
+  <section class="risk-section">
+    <h2>Global risk heat map</h2>
+    <p class="risk-meta">Country/region risk scores (0–100) from recent article volume and impact. Run <code>python run_jobs.py --risk</code> to refresh.</p>
+    {% if not heat_map %}
+    <p class="empty-state">No risk data yet. Run <code>python run_jobs.py --risk</code> (or <code>--all</code>) to compute.</p>
+    {% else %}
+    <div class="risk-heat-table-wrap">
+      <table class="risk-heat-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Risk score</th>
+            <th>Energy</th>
+            <th>Tech</th>
+            <th>Maritime</th>
+            <th>Supply chain</th>
+            <th>Articles</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in heat_map %}
+          <tr>
+            <td><strong>{{ r.country_code }}</strong></td>
+            <td><span class="risk-score risk-score-{{ 'high' if r.risk_score >= 60 else ('med' if r.risk_score >= 35 else 'low') }}">{{ r.risk_score }}</span></td>
+            <td>{{ "%.0f"|format(r.sector_energy or 0) }}</td>
+            <td>{{ "%.0f"|format(r.sector_tech or 0) }}</td>
+            <td>{{ "%.0f"|format(r.sector_maritime or 0) }}</td>
+            <td>{{ "%.0f"|format(r.sector_supply_chain or 0) }}</td>
+            <td>{{ r.article_count or 0 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>Dynamic Forward Risk Probability Index</h2>
+    <p class="risk-meta">Modeled probabilities from recent signals (rule-based). Coup likelihood, sanctions probability, trade disruption.</p>
+    {% if not risk_index %}
+    <p class="empty-state">No index data. Run <code>python run_jobs.py --risk</code>.</p>
+    {% else %}
+    <ul class="risk-index-list">
+      {% for r in risk_index %}
+      <li class="risk-index-card">
+        <h3>{{ r.region_code }}</h3>
+        <div class="risk-index-gauges">
+          <div class="gauge">
+            <span class="gauge-label">Coup likelihood</span>
+            <div class="gauge-bar"><span class="gauge-fill" style="width: {{ r.coup_likelihood_pct or 0 }}%"></span></div>
+            <span class="gauge-value">{{ "%.1f"|format(r.coup_likelihood_pct or 0) }}%</span>
+          </div>
+          <div class="gauge">
+            <span class="gauge-label">Sanctions probability</span>
+            <div class="gauge-bar"><span class="gauge-fill gauge-fill-orange" style="width: {{ r.sanctions_probability_pct or 0 }}%"></span></div>
+            <span class="gauge-value">{{ "%.1f"|format(r.sanctions_probability_pct or 0) }}%</span>
+          </div>
+          <div class="gauge">
+            <span class="gauge-label">Trade disruption</span>
+            <div class="gauge-bar"><span class="gauge-fill gauge-fill-amber" style="width: {{ r.trade_disruption_pct or 0 }}%"></span></div>
+            <span class="gauge-value">{{ "%.1f"|format(r.trade_disruption_pct or 0) }}%</span>
+          </div>
+        </div>
+        <p class="risk-index-updated">Updated: {{ (r.updated_at or '')[:16] }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>Macroeconomic stress alerts</h2>
+    <p class="risk-meta">Countries with debt/GDP ≥80% or inflation ≥15%. See <a href="{{ url_for('main.integration_dashboard') }}">Countries &amp; Regions</a> for per-country detail.</p>
+    {% if macro_stress_alerts %}
+    <ul class="risk-indicator-list">
+      {% for m in macro_stress_alerts %}
+      <li><a href="{{ url_for('main.country_dashboard', country_code=m.country_code) }}">{{ m.country_name or m.country_code }}</a> — Debt {{ "%.0f"|format(m.debt_to_gdp_pct or 0) }}% · Inflation {{ "%.1f"|format(m.inflation_pct or 0) }}% · Rating {{ m.sovereign_rating or '—' }} ({{ (m.as_of_date or '')[:10] }})</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No macro stress alerts. Add via data imports.</p>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>Climate &amp; resource vulnerability</h2>
+    <p class="risk-meta">Water stress, food insecurity, climate risk. Overlay with fragility.</p>
+    {% if climate_vulnerability_summary %}
+    <ul class="risk-indicator-list">
+      {% for c in climate_vulnerability_summary %}
+      <li><a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}">{{ c.country_name or c.country_code }}</a> — Water {{ c.water_stress_index or '—' }} · Food {{ c.food_insecurity_index or '—' }} · Climate risk {{ c.climate_risk_score or '—' }} ({{ c.as_of_year or '—' }})</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No climate vulnerability data. Add via data imports.</p>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>API</h2>
+    <p class="risk-meta">GEPI, CDEI, SFI, Fragility: see <a href="{{ url_for('main.help_page') }}#institutional-models">Institutional models</a> for formulas.</p>
+    <ul class="risk-api-links">
+      <li><a href="{{ url_for('api.api_gpi_gepi') }}" target="_blank" rel="noopener">GET /api/gpi/gepi</a> — GEPI (escalation pressure)</li>
+      <li><a href="{{ url_for('api.api_gpi_cdei') }}" target="_blank" rel="noopener">GET /api/gpi/cdei</a> — CDEI (chokepoint exposure)</li>
+      <li><a href="{{ url_for('api.api_gpi_sfi') }}" target="_blank" rel="noopener">GET /api/gpi/sfi</a> — SFI (sanctions friction)</li>
+      <li><a href="{{ url_for('api.api_gpi_fragility') }}" target="_blank" rel="noopener">GET /api/gpi/fragility</a> — fragility scores</li>
+      <li><a href="{{ url_for('api.api_risk_heatmap') }}" target="_blank" rel="noopener">GET /api/risk/heatmap</a> — heat map data</li>
+      <li><a href="{{ url_for('api.api_risk_index') }}" target="_blank" rel="noopener">GET /api/risk/index</a> — Forward Risk Index (all regions)</li>
+      <li><a href="{{ url_for('api.api_risk_sectors') }}" target="_blank" rel="noopener">GET /api/risk/sectors</a> — sector exposure by country</li>
+    </ul>
+  </section>
+
+  <div class="next-steps">
+    <h3>Next steps</h3>
+    <ul>
+      <li><a href="{{ url_for('main.workspace', layout='4', t1='/risk', t2='/integration', t3='/supply-chain', t4='/index') }}">Workspace</a> — view Risk with Feed, Country, and Scenario Engine</li>
+      <li><a href="{{ url_for('main.index') }}">Intelligence Feed</a> — filter by country and risk category</li>
+      <li><a href="{{ url_for('main.export_briefing') }}">Briefing</a> — generate a briefing</li>
+      <li><a href="{{ url_for('main.alerts_list') }}">Watchlists</a> — monitor topics by impact</li>
+    </ul>
+  </div>
+{% endblock %}

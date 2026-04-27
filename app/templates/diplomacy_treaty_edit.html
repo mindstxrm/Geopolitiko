@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ treaty.name }} — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Edit agreement</h1>
+  <p><a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=treaty.id) }}" class="back-link">← {{ treaty.name }}</a></p>
+
+  <form method="post" class="diplomacy-form">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required value="{{ treaty.name }}" placeholder="e.g. US-Japan Security Treaty">
+    <label for="treaty_type">Type</label>
+    <select id="treaty_type" name="treaty_type">
+      {% for tt in treaty_types %}
+      <option value="{{ tt }}" {{ 'selected' if treaty.treaty_type == tt else '' }}>{{ tt.replace('_', ' ') }}</option>
+      {% endfor %}
+    </select>
+    <label for="party_a">Party A *</label>
+    <input type="text" id="party_a" name="party_a" required value="{{ treaty.party_a }}">
+    <label for="party_b">Party B</label>
+    <input type="text" id="party_b" name="party_b" value="{{ treaty.party_b or '' }}">
+    <label for="signed_date">Signed date</label>
+    <input type="text" id="signed_date" name="signed_date" value="{{ treaty.signed_date or '' }}" placeholder="YYYY-MM-DD">
+    <label for="summary">Summary</label>
+    <textarea id="summary" name="summary" rows="3">{{ treaty.summary or '' }}</textarea>
+    <label for="document_url">Agreement document (PDF / DOCX link)</label>
+    <input type="url" id="document_url" name="document_url" value="{{ treaty.document_url or '' }}" placeholder="https://… to the treaty PDF or document">
+    <label for="full_text">Full text</label>
+    <textarea id="full_text" name="full_text" rows="12" placeholder="Paste the full treaty text so it appears on the agreement page and works with clause comparator / escalation scan">{{ treaty.full_text or '' }}</textarea>
+    <label><input type="checkbox" name="has_escalation_clause" value="1" {{ 'checked' if treaty.has_escalation_clause else '' }}> Has escalation / retaliation clause</label>
+    <label for="source_url">Source / reference URL</label>
+    <input type="url" id="source_url" name="source_url" value="{{ treaty.source_url or '' }}" placeholder="https://… (e.g. dataset or reference page)">
+    <button type="submit">Save changes</button>
+  </form>
+  <p><a href="{{ url_for('main.diplomacy_treaties') }}">← Agreements</a></p>
+{% endblock %}

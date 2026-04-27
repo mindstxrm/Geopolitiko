@@ -1,0 +1,42 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}{{ p.title or ('Proposal #' ~ p.id) }} — Analyst Desk{% endblock %}
+{% block body %}
+<p><a href="{{ url_for('analyst_desk.index') }}">← Inbox</a></p>
+<div class="panel">
+  <h2>{{ p.title or ('Proposal #' ~ p.id) }}</h2>
+  <p class="muted">
+    Agent: <strong>{{ p.agent_id }}</strong> · {{ agents[p.agent_id].label if p.agent_id in agents else '' }}<br>
+    Type: {{ p.run_type }} · Status: <strong>{{ p.status }}</strong><br>
+    Created: {{ p.created_at }}
+    {% if p.published_to_terminal_at %} · <strong>Terminal</strong>: published {{ p.published_to_terminal_at }}{% endif %}
+    {% if p.focus_country %} · Focus: {{ p.focus_country }}{% endif %}
+  </p>
+  {% if p.source_context %}
+  <p class="muted">Grounding: {{ p.source_context.article_count }} articles (last {{ p.source_context.days }} days)</p>
+  {% endif %}
+</div>
+
+{% if p.status == 'pending' %}
+<div class="panel">
+  <h2>Review</h2>
+  <form method="post">
+    <label for="reviewed_body">Text (edit before approve)</label>
+    <textarea id="reviewed_body" name="reviewed_body">{{ display_body }}</textarea>
+    <label for="reviewer_note" style="display:block;margin-top:0.75rem;">Reviewer note (optional)</label>
+    <input type="text" id="reviewer_note" name="reviewer_note" style="width:100%;max-width:100%;" placeholder="Internal note">
+    <p style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <button type="submit" name="action" value="approve" class="btn ok">Approve</button>
+      <button type="submit" name="action" value="reject" class="btn danger">Reject</button>
+    </p>
+  </form>
+</div>
+{% else %}
+<div class="panel">
+  <h2>Final text</h2>
+  <pre style="white-space: pre-wrap; font-family: inherit; margin:0;">{{ p.reviewed_body or p.body }}</pre>
+  {% if p.reviewer_note %}
+  <p class="muted" style="margin-top:1rem;">Note: {{ p.reviewer_note }}</p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

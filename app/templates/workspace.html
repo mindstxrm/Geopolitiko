@@ -1,0 +1,559 @@
+{% extends "base.html" %}
+{% block title %}{% if workspace_name %}{{ workspace_name }} — {% endif %}Workspace — Geopolitical Terminal{% endblock %}
+{% block body_extra_class %} terminal-workspace-page{% endblock %}
+
+{% macro panel_embed_url(path) -%}
+{%- if path -%}
+{%- if 'embed=1' in path -%}
+{{- path -}}
+{%- elif '?' in path -%}
+{{- path -}}&embed=1
+{%- else -%}
+{{- path -}}?embed=1
+{%- endif -%}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro workspace_panel_page_select(panel_num, selected_path) %}
+<select class="workspace-panel-type" data-panel="{{ panel_num }}" aria-label="Panel {{ panel_num }} — choose page">
+  <option value="">— Choose a page or type a path —</option>
+  <optgroup label="Recent" class="workspace-recent-optgroup" id="workspace-recent-{{ panel_num }}"></optgroup>
+  {% for group_name, items in panel_groups %}
+  <optgroup label="{{ group_name }}">
+    {% for path, name in items %}
+    <option value="{{ path }}"{% if selected_path == path %} selected{% endif %}>{{ name }}</option>
+    {% endfor %}
+  </optgroup>
+  {% endfor %}
+</select>
+{% endmacro %}
+
+{% block content %}
+<div class="workspace workspace-layout-{{ layout }}" id="workspace-app">
+  <header class="workspace-toolbar">
+    <div class="workspace-toolbar-row">
+      <h1 class="page-title">{% if workspace_name %}{{ workspace_name }}{% else %}Workspace{% endif %}</h1>
+      <p class="workspace-intro-compact">Layouts <kbd>1</kbd>–<kbd>4</kbd> · <kbd>Ctrl+1</kbd>–<kbd>4</kbd> focus URL · <button type="button" class="workspace-help-btn" id="workspace-help-btn" aria-label="Open help and share">?</button></p>
+    </div>
+    <div class="workspace-controls">
+      <span class="workspace-label">Layout:</span>
+      <a href="{{ url_for('main.workspace', layout='1', t1=t1, t2=t2, t3=t3, t4=t4, name=workspace_name or '') }}" class="workspace-btn {{ 'active' if layout == '1' else '' }}" data-layout="1" aria-label="1 panel">1</a>
+      <a href="{{ url_for('main.workspace', layout='2', t1=t1, t2=t2, t3=t3, t4=t4, name=workspace_name or '') }}" class="workspace-btn {{ 'active' if layout == '2' else '' }}" data-layout="2" aria-label="2 panels">2</a>
+      <a href="{{ url_for('main.workspace', layout='3', t1=t1, t2=t2, t3=t3, t4=t4, name=workspace_name or '') }}" class="workspace-btn {{ 'active' if layout == '3' else '' }}" data-layout="3" aria-label="3 panels">3</a>
+      <a href="{{ url_for('main.workspace', layout='4', t1=t1, t2=t2, t3=t3, t4=t4, name=workspace_name or '') }}" class="workspace-btn {{ 'active' if layout == '4' else '' }}" data-layout="4" aria-label="4 panels">4</a>
+      <span class="workspace-sep">|</span>
+      <span class="workspace-label">Quick examples:</span>
+      {% for label, href in presets %}
+      <a href="{{ href }}" class="workspace-preset">{{ label }}</a>
+      {% endfor %}
+      <span class="workspace-sep">|</span>
+      <button type="button" class="workspace-export" id="workspace-copy-link" aria-label="Copy workspace link">Copy link</button>
+      <button type="button" class="workspace-export" id="workspace-refresh-all" aria-label="Refresh all panels">Refresh all</button>
+      <span class="workspace-sep">|</span>
+      <span class="workspace-label">Saved:</span>
+      <button type="button" class="workspace-btn" id="workspace-save-current" aria-label="Save current layout">Save</button>
+      <select class="workspace-saved-select" id="workspace-saved-select" aria-label="Load saved workspace">
+        <option value="">— Load saved —</option>
+      </select>
+      <button type="button" class="workspace-btn" id="workspace-delete-saved" aria-label="Delete selected saved workspace">Delete</button>
+      <button type="button" class="workspace-btn" id="workspace-rename-saved" aria-label="Rename selected saved workspace">Rename</button>
+      <span class="workspace-sep">|</span>
+      <a href="/api/articles" target="_blank" rel="noopener" class="workspace-export">API</a>
+      <a href="{{ url_for('main.export_workspace_excel', layout=layout, t1=t1, t2=t2, t3=t3, t4=t4, name=workspace_name or '') }}" class="workspace-export">Export to Excel</a>
+    </div>
+    <details class="workspace-details-advanced" id="workspace-help-details">
+      <summary>Share link &amp; how this works</summary>
+      <p class="workspace-intro">Each panel is <strong>your choice</strong>: use the dropdown (all major screens + countries) or type any path (e.g. <code>/risk</code>). Nothing is pre-filled until you pick or load an example. Panel iframes use <code>embed=1</code> for minimal chrome; fullscreen opens the full page. State lives in the URL — bookmark or share. Optional <code>name=</code> sets a title. <strong>Copy link</strong> copies the full URL.</p>
+      <p class="workspace-permalink-wrap">
+        <label for="workspace-permalink" class="sr-only">Current workspace URL</label>
+        <input type="text" id="workspace-permalink" class="workspace-permalink-input" readonly aria-label="Permalink" value="">
+      </p>
+    </details>
+  </header>
+
+  {% if layout != '1' %}
+  <nav class="workspace-mobile-tabs" id="workspace-mobile-tabs" role="tablist" aria-label="Workspace panels">
+    <button type="button" role="tab" class="workspace-mobile-tab" data-panel="1" id="workspace-mobile-tab-1" aria-selected="true">{{ panel_label_1 }}</button>
+    <button type="button" role="tab" class="workspace-mobile-tab" data-panel="2" id="workspace-mobile-tab-2" aria-selected="false">{{ panel_label_2 }}</button>
+    {% if layout == '3' or layout == '4' %}
+    <button type="button" role="tab" class="workspace-mobile-tab" data-panel="3" id="workspace-mobile-tab-3" aria-selected="false">{{ panel_label_3 }}</button>
+    {% endif %}
+    {% if layout == '4' %}
+    <button type="button" role="tab" class="workspace-mobile-tab" data-panel="4" id="workspace-mobile-tab-4" aria-selected="false">{{ panel_label_4 }}</button>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  <div id="workspace-grid" class="workspace-grid workspace-grid-{{ layout }} mobile-active-panel-1" data-layout="{{ layout }}" role="region" aria-label="Workspace panels">
+    <div class="workspace-tile" data-panel="1">
+      <div class="workspace-tile-header">
+        <span class="workspace-tile-label" id="workspace-label-1">{{ panel_label_1 }}</span>
+        <div class="workspace-tile-actions">
+          <button type="button" class="workspace-tile-btn workspace-tile-refresh" data-panel="1" aria-label="Refresh panel 1">↻</button>
+          <button type="button" class="workspace-tile-btn workspace-tile-fullscreen" data-panel="1" aria-label="Fullscreen panel 1">⛶</button>
+          <button type="button" class="workspace-tile-seturl-toggle" data-panel="1" aria-expanded="{{ 'false' if t1 else 'true' }}">{% if t1 %}Set URL ▼{% else %}Set URL ▲{% endif %}</button>
+          <div class="workspace-tile-seturl-wrap" id="workspace-seturl-wrap-1" {% if t1 %}hidden{% endif %}>
+            <div class="workspace-tile-seturl">
+              {{ workspace_panel_page_select('1', t1) }}
+              <form class="workspace-tile-form" data-panel="1" method="get" action="{{ url_for('main.workspace') }}">
+                <input type="hidden" name="layout" value="{{ layout }}">
+                <input type="hidden" name="t2" value="{{ t2 }}">
+                <input type="hidden" name="t3" value="{{ t3 }}">
+                <input type="hidden" name="t4" value="{{ t4 }}">
+                <input type="text" name="t1" value="{{ t1 }}" placeholder="/risk, /feed, /country/CN…" class="workspace-tile-input workspace-panel-input" id="workspace-input-1" aria-label="Panel 1 path">
+                <button type="submit" class="workspace-tile-go">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workspace-tile-body">
+        {% if t1 %}
+        <span class="workspace-loading" id="workspace-loading-1" aria-live="polite">Loading…</span>
+        <iframe src="{{ panel_embed_url(t1) }}" title="{{ panel_label_1 }}" class="workspace-iframe" id="workspace-iframe-1" data-panel="1"></iframe>
+        {% else %}
+        <div class="workspace-placeholder" data-panel="1">Choose a page from the picker or enter a path above.</div>
+        {% endif %}
+      </div>
+    </div>
+    {% if layout == '2' %}
+    <div class="workspace-splitter" id="workspace-splitter" aria-label="Resize panels"></div>
+    {% endif %}
+    {% if layout != '1' %}
+    <div class="workspace-tile" data-panel="2">
+      <div class="workspace-tile-header">
+        <span class="workspace-tile-label" id="workspace-label-2">{{ panel_label_2 }}</span>
+        <div class="workspace-tile-actions">
+          <button type="button" class="workspace-tile-btn workspace-tile-refresh" data-panel="2" aria-label="Refresh panel 2">↻</button>
+          <button type="button" class="workspace-tile-btn workspace-tile-fullscreen" data-panel="2" aria-label="Fullscreen panel 2">⛶</button>
+          <button type="button" class="workspace-tile-seturl-toggle" data-panel="2" aria-expanded="{{ 'false' if t2 else 'true' }}">{% if t2 %}Set URL ▼{% else %}Set URL ▲{% endif %}</button>
+          <div class="workspace-tile-seturl-wrap" id="workspace-seturl-wrap-2" {% if t2 %}hidden{% endif %}>
+            <div class="workspace-tile-seturl">
+              {{ workspace_panel_page_select('2', t2) }}
+              <form class="workspace-tile-form" data-panel="2" method="get" action="{{ url_for('main.workspace') }}">
+                <input type="hidden" name="layout" value="{{ layout }}">
+                <input type="hidden" name="t1" value="{{ t1 }}">
+                <input type="hidden" name="t3" value="{{ t3 }}">
+                <input type="hidden" name="t4" value="{{ t4 }}">
+                <input type="text" name="t2" value="{{ t2 }}" placeholder="/ or path" class="workspace-tile-input workspace-panel-input" id="workspace-input-2" aria-label="Panel 2 URL">
+                <button type="submit" class="workspace-tile-go">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workspace-tile-body">
+        {% if t2 %}
+        <span class="workspace-loading" id="workspace-loading-2" aria-live="polite">Loading…</span>
+        <iframe src="{{ panel_embed_url(t2) }}" title="{{ panel_label_2 }}" class="workspace-iframe" id="workspace-iframe-2" data-panel="2"></iframe>
+        {% else %}
+        <div class="workspace-placeholder" data-panel="2">Choose a page from the picker or enter a path above.</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% if layout == '3' %}
+    <div class="workspace-tile" data-panel="3">
+      <div class="workspace-tile-header">
+        <span class="workspace-tile-label" id="workspace-label-3">{{ panel_label_3 }}</span>
+        <div class="workspace-tile-actions">
+          <button type="button" class="workspace-tile-btn workspace-tile-refresh" data-panel="3" aria-label="Refresh panel 3">↻</button>
+          <button type="button" class="workspace-tile-btn workspace-tile-fullscreen" data-panel="3" aria-label="Fullscreen panel 3">⛶</button>
+          <button type="button" class="workspace-tile-seturl-toggle" data-panel="3" aria-expanded="{{ 'false' if t3 else 'true' }}">{% if t3 %}Set URL ▼{% else %}Set URL ▲{% endif %}</button>
+          <div class="workspace-tile-seturl-wrap" id="workspace-seturl-wrap-3" {% if t3 %}hidden{% endif %}>
+            <div class="workspace-tile-seturl">
+              {{ workspace_panel_page_select('3', t3) }}
+              <form class="workspace-tile-form" data-panel="3" method="get" action="{{ url_for('main.workspace') }}">
+                <input type="hidden" name="layout" value="{{ layout }}">
+                <input type="hidden" name="t1" value="{{ t1 }}">
+                <input type="hidden" name="t2" value="{{ t2 }}">
+                <input type="hidden" name="t4" value="{{ t4 }}">
+                <input type="text" name="t3" value="{{ t3 }}" placeholder="/risk, /feed, /country/CN…" class="workspace-tile-input workspace-panel-input" id="workspace-input-3" aria-label="Panel 3 path">
+                <button type="submit" class="workspace-tile-go">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workspace-tile-body">
+        {% if t3 %}
+        <span class="workspace-loading" id="workspace-loading-3" aria-live="polite">Loading…</span>
+        <iframe src="{{ panel_embed_url(t3) }}" title="{{ panel_label_3 }}" class="workspace-iframe" id="workspace-iframe-3" data-panel="3"></iframe>
+        {% else %}
+        <div class="workspace-placeholder" data-panel="3">Choose a page from the picker or enter a path above.</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% if layout == '4' %}
+    <div class="workspace-tile" data-panel="3">
+      <div class="workspace-tile-header">
+        <span class="workspace-tile-label" id="workspace-label-3">{{ panel_label_3 }}</span>
+        <div class="workspace-tile-actions">
+          <button type="button" class="workspace-tile-btn workspace-tile-refresh" data-panel="3" aria-label="Refresh panel 3">↻</button>
+          <button type="button" class="workspace-tile-btn workspace-tile-fullscreen" data-panel="3" aria-label="Fullscreen panel 3">⛶</button>
+          <button type="button" class="workspace-tile-seturl-toggle" data-panel="3" aria-expanded="{{ 'false' if t3 else 'true' }}">{% if t3 %}Set URL ▼{% else %}Set URL ▲{% endif %}</button>
+          <div class="workspace-tile-seturl-wrap" id="workspace-seturl-wrap-3" {% if t3 %}hidden{% endif %}>
+            <div class="workspace-tile-seturl">
+              {{ workspace_panel_page_select('3', t3) }}
+              <form class="workspace-tile-form" data-panel="3" method="get" action="{{ url_for('main.workspace') }}">
+                <input type="hidden" name="layout" value="{{ layout }}">
+                <input type="hidden" name="t1" value="{{ t1 }}">
+                <input type="hidden" name="t2" value="{{ t2 }}">
+                <input type="hidden" name="t4" value="{{ t4 }}">
+                <input type="text" name="t3" value="{{ t3 }}" placeholder="/risk, /feed, /country/CN…" class="workspace-tile-input workspace-panel-input" id="workspace-input-3" aria-label="Panel 3 path">
+                <button type="submit" class="workspace-tile-go">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workspace-tile-body">
+        {% if t3 %}
+        <span class="workspace-loading" id="workspace-loading-3" aria-live="polite">Loading…</span>
+        <iframe src="{{ panel_embed_url(t3) }}" title="{{ panel_label_3 }}" class="workspace-iframe" id="workspace-iframe-3" data-panel="3"></iframe>
+        {% else %}
+        <div class="workspace-placeholder" data-panel="3">Choose a page from the picker or enter a path above.</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="workspace-tile" data-panel="4">
+      <div class="workspace-tile-header">
+        <span class="workspace-tile-label" id="workspace-label-4">{{ panel_label_4 }}</span>
+        <div class="workspace-tile-actions">
+          <button type="button" class="workspace-tile-btn workspace-tile-refresh" data-panel="4" aria-label="Refresh panel 4">↻</button>
+          <button type="button" class="workspace-tile-btn workspace-tile-fullscreen" data-panel="4" aria-label="Fullscreen panel 4">⛶</button>
+          <button type="button" class="workspace-tile-seturl-toggle" data-panel="4" aria-expanded="{{ 'false' if t4 else 'true' }}">{% if t4 %}Set URL ▼{% else %}Set URL ▲{% endif %}</button>
+          <div class="workspace-tile-seturl-wrap" id="workspace-seturl-wrap-4" {% if t4 %}hidden{% endif %}>
+            <div class="workspace-tile-seturl">
+              {{ workspace_panel_page_select('4', t4) }}
+              <form class="workspace-tile-form" data-panel="4" method="get" action="{{ url_for('main.workspace') }}">
+                <input type="hidden" name="layout" value="{{ layout }}">
+                <input type="hidden" name="t1" value="{{ t1 }}">
+                <input type="hidden" name="t2" value="{{ t2 }}">
+                <input type="hidden" name="t3" value="{{ t3 }}">
+                <input type="text" name="t4" value="{{ t4 }}" placeholder="/risk, /feed, /country/CN…" class="workspace-tile-input workspace-panel-input" id="workspace-input-4" aria-label="Panel 4 path">
+                <button type="submit" class="workspace-tile-go">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workspace-tile-body">
+        {% if t4 %}
+        <span class="workspace-loading" id="workspace-loading-4" aria-live="polite">Loading…</span>
+        <iframe src="{{ panel_embed_url(t4) }}" title="{{ panel_label_4 }}" class="workspace-iframe" id="workspace-iframe-4" data-panel="4"></iframe>
+        {% else %}
+        <div class="workspace-placeholder" data-panel="4">Choose a page from the picker or enter a path above.</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div id="workspace-fullscreen-overlay" class="workspace-fullscreen-overlay" hidden aria-hidden="true">
+  <button type="button" class="workspace-fullscreen-close" id="workspace-fullscreen-close" aria-label="Close fullscreen">✕</button>
+  <iframe id="workspace-fullscreen-iframe" class="workspace-fullscreen-iframe" title="Fullscreen panel"></iframe>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'geopolitical-workspace-saved';
+  var RECENT_KEY = 'geopolitical-workspace-recent';
+  var RECENT_MAX = 5;
+  var layout = '{{ layout }}';
+  var t1 = '{{ t1 | e }}';
+  var t2 = '{{ t2 | e }}';
+  var t3 = '{{ t3 | e }}';
+  var t4 = '{{ t4 | e }}';
+  var workspaceName = '{{ workspace_name | e if workspace_name else '' }}';
+  var baseUrl = '{{ url_for("main.workspace") }}';
+  var MOBILE_MAX = 900;
+
+  function urlWithoutEmbed(src) {
+    if (!src) return src;
+    try {
+      var u = new URL(src, window.location.origin);
+      u.searchParams.delete('embed');
+      var q = u.searchParams.toString();
+      return u.pathname + (q ? '?' + q : '') + u.hash;
+    } catch (e) {
+      return src;
+    }
+  }
+
+  function currentUrl() {
+    var u = baseUrl + '?layout=' + encodeURIComponent(layout) + '&t1=' + encodeURIComponent(t1) + '&t2=' + encodeURIComponent(t2) + '&t3=' + encodeURIComponent(t3) + '&t4=' + encodeURIComponent(t4);
+    if (workspaceName) u += '&name=' + encodeURIComponent(workspaceName);
+    return u;
+  }
+
+  function loadSaved() {
+    try { var raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+  }
+  function saveSaved(obj) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+  function loadRecent() {
+    try { var raw = localStorage.getItem(RECENT_KEY); return raw ? JSON.parse(raw) : { 1: [], 2: [], 3: [], 4: [] }; } catch (e) { return { 1: [], 2: [], 3: [], 4: [] }; }
+  }
+  function saveRecent(obj) {
+    try { localStorage.setItem(RECENT_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+  function pushRecent(panel, url) {
+    if (!url || url.length < 2) return;
+    var recent = loadRecent();
+    var arr = recent[panel] || [];
+    arr = arr.filter(function (u) { return u !== url; });
+    arr.unshift(url);
+    recent[panel] = arr.slice(0, RECENT_MAX);
+    saveRecent(recent);
+  }
+
+  var permalinkInput = document.getElementById('workspace-permalink');
+  if (permalinkInput) permalinkInput.value = currentUrl();
+
+  var copyBtn = document.getElementById('workspace-copy-link');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    var url = currentUrl();
+    var btn = this;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { btn.textContent = 'Copied!'; setTimeout(function () { btn.textContent = 'Copy link'; }, 1500); });
+    } else {
+      var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = 'Copied!'; setTimeout(function () { btn.textContent = 'Copy link'; }, 1500);
+    }
+  });
+
+  document.getElementById('workspace-refresh-all').addEventListener('click', function () {
+    document.querySelectorAll('.workspace-iframe').forEach(function (iframe) {
+      if (iframe.src) iframe.src = iframe.src;
+    });
+  });
+
+  document.querySelectorAll('.workspace-tile-refresh').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = 'workspace-iframe-' + this.getAttribute('data-panel');
+      var iframe = document.getElementById(id);
+      if (iframe && iframe.src) { iframe.src = iframe.src; var loading = document.getElementById('workspace-loading-' + this.getAttribute('data-panel')); if (loading) loading.style.display = ''; }
+    });
+  });
+
+  var overlay = document.getElementById('workspace-fullscreen-overlay');
+  var fullscreenIframe = document.getElementById('workspace-fullscreen-iframe');
+  var lastFullscreenBtn = null;
+  document.getElementById('workspace-fullscreen-close').addEventListener('click', function () {
+    overlay.hidden = true;
+    overlay.setAttribute('aria-hidden', 'true');
+    if (lastFullscreenBtn) { lastFullscreenBtn.focus(); lastFullscreenBtn = null; }
+  });
+  document.querySelectorAll('.workspace-tile-fullscreen').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      lastFullscreenBtn = this;
+      var id = 'workspace-iframe-' + this.getAttribute('data-panel');
+      var iframe = document.getElementById(id);
+      if (iframe && iframe.src) {
+        fullscreenIframe.src = urlWithoutEmbed(iframe.src);
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  document.querySelectorAll('.workspace-panel-type').forEach(function (sel) {
+    sel.addEventListener('change', function () {
+      var panel = this.getAttribute('data-panel');
+      var path = this.value;
+      if (!path) return;
+      var tile = this.closest('.workspace-tile');
+      var form = tile ? tile.querySelector('.workspace-tile-form') : null;
+      if (form) {
+        var input = form.querySelector('input[name="t' + panel + '"]');
+        if (input) { input.value = path; form.submit(); }
+      }
+    });
+  });
+
+  document.querySelectorAll('.workspace-tile-form').forEach(function (form) {
+    form.addEventListener('submit', function () {
+      var panel = this.getAttribute('data-panel');
+      var input = this.querySelector('.workspace-tile-input');
+      if (panel && input && input.value) pushRecent(panel, input.value.trim());
+    });
+  });
+
+  var recent = loadRecent();
+  [1, 2, 3, 4].forEach(function (p) {
+    var og = document.getElementById('workspace-recent-' + p);
+    if (!og) return;
+    (recent[p] || []).forEach(function (url) {
+      var opt = document.createElement('option'); opt.value = url; opt.textContent = url.length > 45 ? url.slice(0, 42) + '…' : url; og.appendChild(opt);
+    });
+  });
+
+  document.querySelectorAll('.workspace-tile-seturl-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = this.getAttribute('data-panel');
+      var wrap = document.getElementById('workspace-seturl-wrap-' + panel);
+      if (!wrap) return;
+      var open = !wrap.hidden;
+      wrap.hidden = open;
+      this.setAttribute('aria-expanded', open ? 'false' : 'true');
+      this.textContent = open ? 'Set URL ▼' : 'Set URL ▲';
+    });
+  });
+
+  document.querySelectorAll('.workspace-iframe').forEach(function (iframe) {
+    var panel = iframe.getAttribute('data-panel');
+    var loading = document.getElementById('workspace-loading-' + panel);
+    if (loading) {
+      iframe.addEventListener('load', function () { loading.style.display = 'none'; });
+    }
+  });
+
+  document.getElementById('workspace-save-current').addEventListener('click', function () {
+    var name = prompt('Name this workspace');
+    if (!name || !name.trim()) return;
+    var saved = loadSaved();
+    saved[name.trim()] = { layout: layout, t1: t1, t2: t2, t3: t3, t4: t4 };
+    saveSaved(saved);
+    var opt = document.createElement('option'); opt.value = name.trim(); opt.textContent = name.trim(); document.getElementById('workspace-saved-select').appendChild(opt);
+  });
+
+  var savedSelect = document.getElementById('workspace-saved-select');
+  var saved = loadSaved();
+  function refreshSavedSelect() {
+    saved = loadSaved();
+    savedSelect.innerHTML = '<option value="">— Load saved —</option>';
+    Object.keys(saved).forEach(function (name) {
+      var opt = document.createElement('option'); opt.value = name; opt.textContent = name; savedSelect.appendChild(opt);
+    });
+  }
+  Object.keys(saved).forEach(function (name) {
+    var opt = document.createElement('option'); opt.value = name; opt.textContent = name; savedSelect.appendChild(opt);
+  });
+  savedSelect.addEventListener('change', function () {
+    var name = this.value;
+    if (!name || !saved[name]) return;
+    var u = baseUrl + '?layout=' + encodeURIComponent(saved[name].layout) + '&t1=' + encodeURIComponent(saved[name].t1 || '') + '&t2=' + encodeURIComponent(saved[name].t2 || '') + '&t3=' + encodeURIComponent(saved[name].t3 || '') + '&t4=' + encodeURIComponent(saved[name].t4 || '');
+    window.location.href = u;
+  });
+
+  document.getElementById('workspace-delete-saved').addEventListener('click', function () {
+    var name = savedSelect.value;
+    if (!name || !saved[name]) return;
+    if (!confirm('Delete saved workspace "' + name + '"?')) return;
+    delete saved[name];
+    saveSaved(saved);
+    refreshSavedSelect();
+  });
+  document.getElementById('workspace-rename-saved').addEventListener('click', function () {
+    var name = savedSelect.value;
+    if (!name || !saved[name]) return;
+    var newName = prompt('Rename to:', name);
+    if (!newName || !newName.trim() || newName.trim() === name) return;
+    saved[newName.trim()] = saved[name];
+    delete saved[name];
+    saveSaved(saved);
+    refreshSavedSelect();
+  });
+
+  var helpDetails = document.getElementById('workspace-help-details');
+  var helpBtn = document.getElementById('workspace-help-btn');
+  if (helpBtn && helpDetails) helpBtn.addEventListener('click', function () {
+    helpDetails.open = !helpDetails.open;
+    if (helpDetails.open) {
+      var pm = document.getElementById('workspace-permalink');
+      if (pm) { pm.focus(); pm.select(); }
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (overlay && !overlay.hidden) { overlay.hidden = true; overlay.setAttribute('aria-hidden', 'true'); if (lastFullscreenBtn) { lastFullscreenBtn.focus(); lastFullscreenBtn = null; } e.preventDefault(); return; }
+      if (helpDetails && helpDetails.open) { helpDetails.open = false; e.preventDefault(); return; }
+    }
+    if ((e.ctrlKey || e.metaKey) && ['1','2','3','4'].indexOf(e.key) !== -1) {
+      var inp = document.getElementById('workspace-input-' + e.key);
+      if (inp) { inp.focus(); inp.select(); e.preventDefault(); }
+      return;
+    }
+    if (e.ctrlKey || e.metaKey) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+    if (e.key === '1') { window.location.href = baseUrl + '?layout=1&t1=' + encodeURIComponent(t1) + '&t2=' + encodeURIComponent(t2) + '&t3=' + encodeURIComponent(t3) + '&t4=' + encodeURIComponent(t4) + (workspaceName ? '&name=' + encodeURIComponent(workspaceName) : ''); e.preventDefault(); }
+    if (e.key === '2') { window.location.href = baseUrl + '?layout=2&t1=' + encodeURIComponent(t1) + '&t2=' + encodeURIComponent(t2) + '&t3=' + encodeURIComponent(t3) + '&t4=' + encodeURIComponent(t4) + (workspaceName ? '&name=' + encodeURIComponent(workspaceName) : ''); e.preventDefault(); }
+    if (e.key === '3') { window.location.href = baseUrl + '?layout=3&t1=' + encodeURIComponent(t1) + '&t2=' + encodeURIComponent(t2) + '&t3=' + encodeURIComponent(t3) + '&t4=' + encodeURIComponent(t4) + (workspaceName ? '&name=' + encodeURIComponent(workspaceName) : ''); e.preventDefault(); }
+    if (e.key === '4') { window.location.href = baseUrl + '?layout=4&t1=' + encodeURIComponent(t1) + '&t2=' + encodeURIComponent(t2) + '&t3=' + encodeURIComponent(t3) + '&t4=' + encodeURIComponent(t4) + (workspaceName ? '&name=' + encodeURIComponent(workspaceName) : ''); e.preventDefault(); }
+  });
+
+  var splitter = document.getElementById('workspace-splitter');
+  if (splitter && layout === '2') {
+    var grid = splitter.parentElement;
+    var startX = 0, startCol1 = 50;
+    splitter.addEventListener('mousedown', function (e) {
+      e.preventDefault();
+      startX = e.clientX;
+      var cs = getComputedStyle(grid);
+      var cols = (cs.gridTemplateColumns || '').split(' ');
+      if (cols.length >= 3 && cols[0].endsWith('fr') && cols[2].endsWith('fr')) {
+        var v = parseFloat(cols[0]) || 1;
+        var total = v + (parseFloat(cols[2]) || 1);
+        startCol1 = (v / total) * 100;
+      } else startCol1 = 50;
+      function move(e) {
+        var rect = grid.getBoundingClientRect();
+        var pct = startCol1 + ((e.clientX - startX) / rect.width) * 100;
+        pct = Math.max(15, Math.min(85, pct));
+        var a = (pct / 100).toFixed(2);
+        var b = ((100 - pct) / 100).toFixed(2);
+        grid.style.gridTemplateColumns = a + 'fr 6px ' + b + 'fr';
+      }
+      function stop() {
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', stop);
+      }
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', stop);
+    });
+  }
+
+  var workspaceGrid = document.getElementById('workspace-grid');
+  var mobileTabs = document.getElementById('workspace-mobile-tabs');
+  function setMobilePanel(panel) {
+    if (!workspaceGrid || !panel) return;
+    for (var i = 1; i <= 4; i++) {
+      workspaceGrid.classList.remove('mobile-active-panel-' + i);
+    }
+    workspaceGrid.classList.add('mobile-active-panel-' + panel);
+    if (mobileTabs) {
+      mobileTabs.querySelectorAll('.workspace-mobile-tab').forEach(function (btn) {
+        var on = btn.getAttribute('data-panel') === String(panel);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    }
+  }
+  if (mobileTabs && workspaceGrid) {
+    mobileTabs.querySelectorAll('.workspace-mobile-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setMobilePanel(this.getAttribute('data-panel'));
+      });
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > MOBILE_MAX) {
+        for (var i = 1; i <= 4; i++) workspaceGrid.classList.remove('mobile-active-panel-' + i);
+        if (mobileTabs) {
+          mobileTabs.querySelectorAll('.workspace-mobile-tab').forEach(function (btn, idx) {
+            btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+          });
+        }
+      } else {
+        var active = mobileTabs.querySelector('.workspace-mobile-tab[aria-selected="true"]');
+        setMobilePanel(active ? active.getAttribute('data-panel') : '1');
+      }
+    });
+    if (window.innerWidth <= MOBILE_MAX) setMobilePanel('1');
+  }
+})();
+</script>
+{% endblock %}

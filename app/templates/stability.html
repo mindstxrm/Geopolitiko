@@ -1,0 +1,640 @@
+{% extends "base.html" %}
+{% block title %}Political Stability & Domestic Signals — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Political Stability & Domestic Signals</h1>
+  <p class="page-intro">Election calendars, approval ratings, protest frequency, currency stress, food inflation risk, youth unemployment radar, and geo-tagged social sentiment. Real-time domestic fragility monitoring.</p>
+
+  <div class="stability-workspace">
+    <div class="stability-top-strip">
+      {% if region %}
+      <p class="stability-regional-summary"><strong>{{ region }}:</strong> {{ fragility_count }} on fragility watchlist · {{ election_count }} elections · {{ approval_count }} approval polls · {{ protest_count }} protests in selection. <a href="{{ integration_dashboard_url }}">View by geopolitical fragility score →</a></p>
+      {% endif %}
+
+      <form method="get" class="filter-form stability-filters" aria-label="Filter stability data">
+        {% if regions %}
+        <label for="stability_region">Region</label>
+        <select name="region" id="stability_region">
+          <option value="">All regions</option>
+          {% for r in regions %}
+          <option value="{{ r }}" {{ 'selected' if region == r else '' }}>{{ r }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+        <label for="stability_date_from">From</label>
+        <input type="date" id="stability_date_from" name="date_from" value="{{ date_from or '' }}">
+        <label for="stability_date_to">To</label>
+        <input type="date" id="stability_date_to" name="date_to" value="{{ date_to or '' }}">
+        <details class="filter-more" id="stability-fragility-options">
+          <summary>Fragility options</summary>
+          <label for="stability_protest_days">Protest window (days)</label>
+          <input type="number" id="stability_protest_days" name="protest_days" value="{{ protest_days }}" min="1" max="365" style="width:4em;">
+          <label for="stability_low_approval">Low approval threshold (%)</label>
+          <input type="number" id="stability_low_approval" name="low_approval_threshold" value="{{ low_approval_threshold }}" min="1" max="99" style="width:3em;">
+        </details>
+        <button type="submit">Apply</button>
+        {% if region or date_from or date_to or protest_days != 90 or low_approval_threshold != 35 %}
+        <a href="{{ stability_dashboard_url }}" class="stability-clear-link">Clear</a>
+        {% endif %}
+        {% if last_30_from and last_30_to %}
+        · <a href="{{ stability_dashboard_url }}?date_from={{ last_30_from }}&date_to={{ last_30_to }}">Last 30 days</a>
+        {% endif %}
+      </form>
+
+      <div class="stability-active-filters" aria-label="Active filters">
+        {% if region %}<span class="stability-chip">Region: {{ region }}</span>{% endif %}
+        {% if date_from or date_to %}<span class="stability-chip">Dates: {{ date_from or '—' }} → {{ date_to or '—' }}</span>{% endif %}
+        {% if protest_days != 90 %}<span class="stability-chip">Protest window: {{ protest_days }}d</span>{% endif %}
+        {% if low_approval_threshold != 35 %}<span class="stability-chip">Low approval: &lt;{{ low_approval_threshold }}%</span>{% endif %}
+      </div>
+
+      <div class="stability-tabs" role="tablist" aria-label="Stability sections">
+        <button type="button" class="stability-tab active" data-pane="fragility" role="tab" aria-selected="true">Fragility</button>
+        <button type="button" class="stability-tab" data-pane="political-cycle" role="tab" aria-selected="false">Political cycle</button>
+        <button type="button" class="stability-tab" data-pane="economic-social" role="tab" aria-selected="false">Economic &amp; social</button>
+        <button type="button" class="stability-tab" data-pane="institutional" role="tab" aria-selected="false">Institutional &amp; climate</button>
+      </div>
+    </div>
+
+    <div class="stability-workspace-grid">
+      <main class="stability-main">
+        <div class="stability-pane active" data-pane="fragility">
+  <section class="risk-section stability-fragility" id="fragility">
+    <h2>Real-time domestic fragility monitoring</h2>
+    <p class="risk-meta">Countries with elevated signals: high/critical currency stress, food inflation alerts, recent protests (last {{ protest_days }} days), low approval ratings (&lt;{{ low_approval_threshold }}%, latest poll per country).</p>
+    {% if fragility.score_notes %}
+    <p class="stability-score-notes" title="How the risk score is calculated">{{ fragility.score_notes }}</p>
+    {% endif %}
+    <p class="stability-updated"><strong>Last updated:</strong> {{ fragility.updated_at[:19].replace('T', ' ') }} UTC{% if fragility.countries %} · <a href="{{ fragility_export_url }}">Export CSV</a>{% endif %} · <a href="{{ stability_export_full_url }}">Export full (XLSX)</a> · <a href="{{ stability_fragility_rss_url }}">RSS</a>{% if not region %} · <a href="{{ integration_dashboard_url }}">Model-based fragility (Countries &amp; Regions)</a>{% endif %}</p>
+    {% if fragility_added or fragility_removed %}
+    <p class="stability-whats-new">Since last run: {% if fragility_added %}{{ fragility_added|length }} added ({{ fragility_added|join(', ') }}){% endif %}{% if fragility_added and fragility_removed %} · {% endif %}{% if fragility_removed %}{{ fragility_removed|length }} removed ({{ fragility_removed|join(', ') }}){% endif %}</p>
+    {% endif %}
+    {% if not fragility.countries %}
+    <p class="empty-state">No high-risk signals in database. Add data via <a href="{{ approval_protests_url }}#approval">approval</a> / <a href="{{ approval_protests_url }}#protests">protests</a> or bulk import. <a href="{{ integration_dashboard_url }}">View model-based fragility (Countries &amp; Regions)</a>.</p>
+    {% else %}
+    {% if fragility.countries %}
+    <details class="stability-chart-card" open>
+      <summary>Fragility risk score by country</summary>
+      <div class="chart-wrap stability-fragility-chart" style="max-width:520px;height:220px;margin-bottom:12px;">
+        <canvas id="stabilityFragilityChart" aria-label="Fragility risk score by country"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    <div class="fragility-table-wrap">
+      <table class="fragility-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Risk score</th>
+            <th>Signals</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in fragility.countries %}
+          <tr class="stability-row" data-item='{{ {"kind":"fragility","country_code":c.country_code or "","country_name":c.country_name or c.country_code or "—","risk_score":c.risk_score or 0,"signals":c.signals or [],"country_dashboard_url":url_for("main.country_dashboard", country_code=c.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}"><strong>{{ c.country_name }}</strong></a> ({{ c.country_code }}) · <a href="{{ url_for('main.approval_protests', approval_country_code=c.country_code) }}#approval">Approval</a> · <a href="{{ url_for('main.approval_protests', protest_country_code=c.country_code) }}#protests">Protests</a></td>
+            <td><span class="fragility-score fragility-{{ 'high' if c.risk_score >= 4 else ('med' if c.risk_score >= 2 else 'low') }}">{{ c.risk_score }}</span></td>
+            <td>
+              {% for s in c.signals %}
+              <span class="signal-pill signal-{{ s.type }}">{{ s.type.replace('_', ' ') }}{% if s.level %} ({{ s.level }}){% endif %}{% if s.approval_pct is defined %} {{ s.approval_pct }}%{% endif %}</span>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+        </div>
+
+        <div class="stability-pane" data-pane="political-cycle">
+  <section class="risk-section" id="elections">
+    <h2>Election calendars</h2>
+    <p class="stability-summary">{{ election_count }} election(s) in selection. <a href="{{ upcoming_elections_url }}">Upcoming only →</a> · <a href="{{ approval_protests_url }}#elections">Full calendar, filters &amp; export →</a></p>
+    {% if not elections %}
+    <p class="empty-state">No election data. <a href="{{ approval_protests_url }}#elections">Add or view full calendar</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Type</th>
+            <th>Date planned</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in elections %}
+          <tr class="stability-row" data-item='{{ {"kind":"election","country_code":e.country_code or "","country_name":e.country_name or e.country_code or "—","election_type":e.election_type or "—","date_planned":((e.date_planned or "")[:10]),"status":e.status or "—","notes":e.notes or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=e.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=e.country_code) }}">{{ e.country_name }}</a> ({{ e.country_code }}){% set _dp = (e.date_planned or '')[:10] %}{% if _dp and _dp >= today and (e.status or '')|lower != 'completed' %} <span class="stability-badge-upcoming">Upcoming</span>{% endif %}</td>
+            <td>{{ e.election_type }}</td>
+            <td>{{ e.date_planned }}</td>
+            <td>{{ e.status or '—' }}</td>
+            <td>{{ e.notes or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p><a href="{{ approval_protests_url }}#elections">View full election calendar →</a></p>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="approval">
+    <h2>Approval ratings</h2>
+    <p class="stability-summary">{{ approval_count }} approval poll(s). Low approval (&lt;{{ low_approval_threshold }}%) may indicate elevated risk. <a href="{{ approval_protests_url }}#approval">Full list, charts &amp; export →</a></p>
+    {% if not approval %}
+    <p class="empty-state">No approval data. <a href="{{ approval_protests_url }}#approval">Add</a> or <a href="{{ approval_protests_url }}#approval">view full list</a> · <a href="{{ url_for('main.approval_protests_import') }}">Bulk import CSV</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Subject</th>
+            <th>Approval %</th>
+            <th>Poll date</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in approval %}
+          <tr class="stability-row" data-item='{{ {"kind":"approval","country_code":a.country_code or "","country_name":a.country_name or a.country_code or "—","subject":a.subject or "—","approval_pct":a.approval_pct or 0,"poll_date":((a.poll_date or "")[:10]),"source":a.source or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=a.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=a.country_code) }}">{{ a.country_name }}</a> ({{ a.country_code }})</td>
+            <td>{{ a.subject }}</td>
+            <td><span class="approval-pct {{ 'low' if (a.approval_pct or 0) < low_approval_threshold else '' }}">{{ "%.0f"|format(a.approval_pct or 0) }}%</span></td>
+            <td>{{ (a.poll_date or '—')[:10] }}</td>
+            <td>{{ a.source or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p><a href="{{ approval_protests_url }}#approval">View full approval ratings &amp; charts →</a></p>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="protests">
+    <h2>Protest frequency tracking</h2>
+    <p class="stability-summary">{{ protest_count }} protest event(s) in selection. <a href="{{ approval_protests_url }}#protests">Full list, charts &amp; export →</a></p>
+    {% if not protests %}
+    <p class="empty-state">No protest events. <a href="{{ approval_protests_url }}#protests">Add</a> or <a href="{{ approval_protests_url }}#protests">view full list</a> · <a href="{{ url_for('main.approval_protests_import') }}">Bulk import CSV</a>.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Date</th>
+            <th>Summary</th>
+            <th>Size</th>
+            <th>Trigger</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in protests %}
+          <tr class="stability-row" data-item='{{ {"kind":"protest","country_code":p.country_code or "","country_name":p.country_name or p.country_code or "—","event_date":((p.event_date or "")[:10]),"summary":p.summary or "—","estimated_size":p.estimated_size or "—","trigger_topic":p.trigger_topic or "—","location":p.location or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=p.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=p.country_code) }}">{{ p.country_name }}</a> ({{ p.country_code }})</td>
+            <td>{{ (p.event_date or '—')[:10] }}</td>
+            <td>{{ p.summary or '—' }}</td>
+            <td>{{ p.estimated_size or '—' }}</td>
+            <td>{{ p.trigger_topic or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p><a href="{{ approval_protests_url }}#protests">View full protest tracking →</a></p>
+    {% endif %}
+  </section>
+        </div>
+
+        <div class="stability-pane" data-pane="economic-social">
+  <section class="risk-section" id="currency">
+    <h2>Currency stress indicator</h2>
+    <p class="risk-meta">Indicator = spread/volatility index (higher = more stress). Level: low / medium / high / critical.</p>
+    {% if not currency_stress %}
+    <p class="empty-state">No currency stress data. Add via API or data imports.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Indicator (index)</th>
+            <th>Level</th>
+            <th>As of</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in currency_stress %}
+          <tr class="stability-row" data-item='{{ {"kind":"currency","country_code":c.country_code or "","country_name":c.country_name or c.country_code or "—","indicator_value":c.indicator_value or 0,"stress_level":c.stress_level or "—","as_of_date":((c.as_of_date or "")[:10]),"notes":c.notes or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=c.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}">{{ c.country_name }}</a> ({{ c.country_code }})</td>
+            <td>{{ "%.0f"|format(c.indicator_value or 0) }}</td>
+            <td><span class="stress-pill stress-{{ (c.stress_level or '')|lower }}">{{ c.stress_level or '—' }}</span></td>
+            <td>{{ (c.as_of_date or '—')[:10] }}</td>
+            <td>{{ c.notes or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="food">
+    <h2>Food inflation risk alerts</h2>
+    <p class="risk-meta">Inflation % = food CPI or food price index (year-on-year). Risk level: low / medium / high / critical.</p>
+    {% if not food_inflation %}
+    <p class="empty-state">No food inflation alerts. Add via API or data imports.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Inflation % (food)</th>
+            <th>Risk level</th>
+            <th>As of</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in food_inflation %}
+          <tr class="stability-row" data-item='{{ {"kind":"food","country_code":f.country_code or "","country_name":f.country_name or f.country_code or "—","inflation_pct":f.inflation_pct or 0,"risk_level":f.risk_level or "—","as_of_date":((f.as_of_date or "")[:10]),"notes":f.notes or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=f.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=f.country_code) }}">{{ f.country_name }}</a> ({{ f.country_code }})</td>
+            <td>{{ "%.0f"|format(f.inflation_pct or 0) }}%</td>
+            <td><span class="risk-pill risk-{{ (f.risk_level or '')|lower }}">{{ f.risk_level or '—' }}</span></td>
+            <td>{{ (f.as_of_date or '—')[:10] }}</td>
+            <td>{{ f.notes or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="youth">
+    <h2>Youth unemployment radar</h2>
+    <p class="risk-meta">Rate % = youth (e.g. 15–24) unemployment. Risk: high ≥25%, medium 15–24%, low &lt;15%.</p>
+    {% if not youth_unemployment %}
+    <p class="empty-state">No youth unemployment data. Add via API or data imports.</p>
+    {% else %}
+    {% if youth_unemployment %}
+    <details class="stability-chart-card" open>
+      <summary>Youth unemployment radar</summary>
+      <div class="chart-wrap" style="max-width:480px;height:200px;margin-bottom:12px;">
+        <canvas id="stabilityYouthChart" aria-label="Youth unemployment rate by country"></canvas>
+      </div>
+    </details>
+    {% endif %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Rate %</th>
+            <th>Risk</th>
+            <th>As of</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for y in youth_unemployment %}
+          <tr class="stability-row" data-item='{{ {"kind":"youth","country_code":y.country_code or "","country_name":y.country_name or y.country_code or "—","rate_pct":y.rate_pct or 0,"risk_label":("High" if (y.rate_pct or 0) >= 25 else ("Medium" if (y.rate_pct or 0) >= 15 else "Low")),"as_of_date":((y.as_of_date or "")[:10]),"source":y.source or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=y.country_code)} | tojson }}'>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=y.country_code) }}">{{ y.country_name }}</a> ({{ y.country_code }})</td>
+            <td>{{ "%.1f"|format(y.rate_pct or 0) }}%</td>
+            <td>{% set r = y.rate_pct or 0 %}<span class="risk-pill risk-{{ 'high' if r >= 25 else ('med' if r >= 15 else 'low') }}">{{ 'High' if r >= 25 else ('Medium' if r >= 15 else 'Low') }}</span></td>
+            <td>{{ (y.as_of_date or '—')[:10] }}</td>
+            <td>{{ y.source or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="sentiment">
+    <h2>Social media sentiment (geo-tagged)</h2>
+    <p class="risk-meta">Placeholder for geo-tagged social feeds. When connected, score range -1 (negative) to +1 (positive); sample and platform indicate source.</p>
+    {% if not social_sentiment %}
+    <p class="empty-state">No sentiment data. Placeholder for geo-tagged feeds. Add via API when connected.</p>
+    {% else %}
+    <div class="stability-table-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Score</th>
+            <th>Sample</th>
+            <th>Platform</th>
+            <th>As of</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in social_sentiment %}
+          <tr class="stability-row" data-item='{{ {"kind":"sentiment","country_code":s.country_code or "","country_name":s.country_name or s.country_code or "—","sentiment_score":s.sentiment_score or 0,"sample_size":s.sample_size or "—","platform":s.platform or "—","as_of_date":((s.as_of_date or "")[:10]),"country_dashboard_url":url_for("main.country_dashboard", country_code=s.country_code)} | tojson }}'>
+            <td>{{ s.country_name }} ({{ s.country_code }})</td>
+            <td><span class="sentiment-score {{ 'neg' if (s.sentiment_score or 0) < -0.2 else ('pos' if (s.sentiment_score or 0) > 0.2 else 'neutral') }}">{{ "%.2f"|format(s.sentiment_score or 0) }}</span></td>
+            <td>{{ s.sample_size or '—' }}</td>
+            <td>{{ s.platform or '—' }}</td>
+            <td>{{ (s.as_of_date or '—')[:10] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </section>
+        </div>
+
+        <div class="stability-pane" data-pane="institutional">
+  <section class="risk-section" id="elite">
+    <h2>Elite &amp; institutional snapshot</h2>
+    <p class="risk-meta">Governance model, major SOEs, central bank independence, party structure. Per-country detail on <a href="{{ url_for('main.integration_dashboard') }}">Countries &amp; Regions</a> → country.</p>
+    {% if elite_institutional_summary %}
+    <ul class="stability-indicator-list">
+      {% for e in elite_institutional_summary %}
+      <li class="stability-list-item stability-row" data-item='{{ {"kind":"elite","country_code":e.country_code or "","country_name":e.country_name or e.country_code or "—","governance_model":e.governance_model or "—","major_soes":e.major_soes or "","central_bank_independence_score":e.central_bank_independence_score if e.central_bank_independence_score is not none else null,"party_structure":e.party_structure or "" ,"country_dashboard_url":url_for("main.country_dashboard", country_code=e.country_code)} | tojson }}'>
+        <a href="{{ url_for('main.country_dashboard', country_code=e.country_code) }}">{{ e.country_name or e.country_code }}</a> — {{ e.governance_model or '—' }}{% if e.major_soes %} · SOEs: {{ (e.major_soes or '')[:50] }}{% if (e.major_soes or '')|length > 50 %}…{% endif %}{% endif %}{% if e.central_bank_independence_score is not none %} · CBI: {{ e.central_bank_independence_score }}{% endif %}{% if e.party_structure %} · {{ (e.party_structure or '')[:40] }}{% if (e.party_structure or '')|length > 40 %}…{% endif %}{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No elite/institutional data. Add via data imports.</p>
+    {% endif %}
+  </section>
+
+  <section class="risk-section" id="climate">
+    <h2>Climate &amp; resource vulnerability</h2>
+    <p class="risk-meta">Water stress, food insecurity, climate risk score. Also on <a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a>.</p>
+    {% if climate_vulnerability_summary %}
+    <ul class="stability-indicator-list">
+      {% for c in climate_vulnerability_summary %}
+      <li class="stability-list-item stability-row" data-item='{{ {"kind":"climate","country_code":c.country_code or "","country_name":c.country_name or c.country_code or "—","water_stress_index":c.water_stress_index or null,"food_insecurity_index":c.food_insecurity_index or null,"climate_risk_score":c.climate_risk_score or null,"as_of_year":c.as_of_year or "—","country_dashboard_url":url_for("main.country_dashboard", country_code=c.country_code)} | tojson }}'>
+        <a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}">{{ c.country_name or c.country_code }}</a> — Water {{ c.water_stress_index or '—' }} · Food insec {{ c.food_insecurity_index or '—' }} · Climate risk {{ c.climate_risk_score or '—' }} ({{ c.as_of_year or '—' }})
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No climate vulnerability data. Add via data imports.</p>
+    {% endif %}
+  </section>
+        </div>
+      </main>
+
+      <aside class="stability-inspector" id="stability-inspector" aria-label="Country preview inspector">
+        <div class="stability-inspector-head">
+          <div>
+            <div class="stability-inspector-title" id="stability-inspector-title">Inspector</div>
+            <div class="stability-inspector-sub" id="stability-inspector-sub">Click a row to preview.</div>
+          </div>
+          <button type="button" class="stability-inspector-close" id="stability-inspector-close" aria-label="Close inspector">×</button>
+        </div>
+        <div class="stability-inspector-body">
+          <div class="stability-inspector-card">
+            <div class="stability-inspector-card-title" id="stability-inspector-kind">—</div>
+            <div class="stability-inspector-name" id="stability-inspector-name">—</div>
+            <div class="stability-inspector-meta" id="stability-inspector-meta"></div>
+            <div class="stability-inspector-desc" id="stability-inspector-desc"></div>
+            <div class="stability-inspector-actions">
+              <a href="#" class="stability-chip stability-inspector-link" id="stability-inspector-open" hidden target="_blank" rel="noopener">Open country →</a>
+            </div>
+          </div>
+          <details class="stability-inspector-help" open>
+            <summary>Tips</summary>
+            <p class="muted">Tables are scrollable inside each tab. Click any row to preview the selected country here.</p>
+          </details>
+        </div>
+      </aside>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var isDark = document.body.classList.contains("terminal");
+  var barColor = isDark ? "rgba(96, 165, 250, 0.8)" : "rgba(37, 99, 235, 0.75)";
+  var tickColor = isDark ? "#94a3b8" : "#64748b";
+  var fragilityData = {{ fragility.countries|tojson|safe if fragility and fragility.countries else '[]' }};
+  var youthData = {{ youth_unemployment|tojson|safe if youth_unemployment else '[]' }};
+  var charts = window.__stabilityCharts = window.__stabilityCharts || {};
+
+  document.addEventListener("DOMContentLoaded", function() {
+    if (fragilityData && fragilityData.length > 0) {
+      var el = document.getElementById("stabilityFragilityChart");
+      if (el) {
+        var labels = fragilityData.map(function(d) { return (d.country_code || d.country_name || "").toString().slice(0, 10); });
+        var values = fragilityData.map(function(d) { return d.risk_score; });
+        charts.fragility = new Chart(el, {
+          type: "bar",
+          data: { labels: labels, datasets: [{ label: "Risk score", data: values, backgroundColor: barColor }] },
+          options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { beginAtZero: true, max: Math.max(10, (values.length ? Math.max.apply(null, values) : 0) + 1), title: { display: true, text: "Risk score", color: tickColor }, ticks: { color: tickColor } },
+              y: { ticks: { color: tickColor } }
+            }
+          }
+        });
+      }
+    }
+    if (youthData && youthData.length > 0) {
+      var el = document.getElementById("stabilityYouthChart");
+      if (el) {
+        var labels = youthData.map(function(d) { return (d.country_code || d.country_name || "").toString().slice(0, 8); });
+        var values = youthData.map(function(d) { return d.rate_pct; });
+        charts.youth = new Chart(el, {
+          type: "bar",
+          data: { labels: labels, datasets: [{ label: "Youth unemployment %", data: values, backgroundColor: barColor }] },
+          options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { beginAtZero: true, title: { display: true, text: "Rate %", color: tickColor }, ticks: { color: tickColor } },
+              y: { ticks: { color: tickColor } }
+            }
+          }
+        });
+      }
+    }
+
+    // —— Tabs: switch panes without scrolling
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".stability-tab[data-pane]"));
+    var panes = Array.prototype.slice.call(document.querySelectorAll(".stability-pane[data-pane]"));
+    function setActivePane(paneName) {
+      panes.forEach(function(p) {
+        var active = p.getAttribute("data-pane") === paneName;
+        p.classList.toggle("active", active);
+      });
+      tabs.forEach(function(btn) {
+        var active = btn.getAttribute("data-pane") === paneName;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      // Resize charts that may be inside hidden tabs
+      if (charts && charts.fragility && paneName === "fragility" && charts.fragility.resize) charts.fragility.resize();
+      if (charts && charts.youth && paneName === "economic-social" && charts.youth.resize) charts.youth.resize();
+    }
+
+    var allowed = ["fragility", "political-cycle", "economic-social", "institutional"];
+    var initial = ((window.location.hash || "").replace(/^#/, "") || "");
+    if (allowed.indexOf(initial) === -1) {
+      try {
+        var saved = window.localStorage && window.localStorage.getItem("stabilityActivePane");
+        if (saved && allowed.indexOf(saved) !== -1) initial = saved;
+      } catch (e) {}
+    }
+    if (allowed.indexOf(initial) === -1) initial = "fragility";
+
+    setActivePane(initial);
+
+    tabs.forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var paneName = btn.getAttribute("data-pane") || "fragility";
+        try { if (window.localStorage) window.localStorage.setItem("stabilityActivePane", paneName); } catch (e) {}
+        window.location.hash = paneName;
+        setActivePane(paneName);
+      });
+    });
+
+    // —— Inspector: row preview on click
+    var inspector = document.getElementById("stability-inspector");
+    var kindEl = document.getElementById("stability-inspector-kind");
+    var nameEl = document.getElementById("stability-inspector-name");
+    var metaEl = document.getElementById("stability-inspector-meta");
+    var descEl = document.getElementById("stability-inspector-desc");
+    var openLink = document.getElementById("stability-inspector-open");
+    var closeBtn = document.getElementById("stability-inspector-close");
+
+    function escapeHtml(s) {
+      return String(s || "").replace(/[&<>"']/g, function(ch) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+      });
+    }
+
+    function setHidden(a, hidden) {
+      if (!a) return;
+      if (typeof a.hidden !== "undefined") a.hidden = !!hidden;
+      else a.style.display = hidden ? "none" : "";
+    }
+
+    function clearInspector() {
+      if (kindEl) kindEl.textContent = "—";
+      if (nameEl) nameEl.textContent = "—";
+      if (metaEl) metaEl.textContent = "";
+      if (descEl) descEl.textContent = "";
+      setHidden(openLink, true);
+      if (inspector) inspector.classList.remove("open");
+    }
+
+    function renderInspector(item) {
+      if (!item) return;
+      var kind = item.kind || "record";
+      if (kindEl) {
+        // Keep this logic simple to avoid JS syntax issues blocking tab initialization.
+        var label = "Record";
+        if (kind === "fragility") label = "Fragility signals";
+        else if (kind === "election") label = "Election";
+        else if (kind === "approval") label = "Approval rating";
+        else if (kind === "protest") label = "Protest";
+        else if (kind === "currency") label = "Currency stress";
+        else if (kind === "food") label = "Food inflation risk";
+        else if (kind === "youth") label = "Youth unemployment";
+        else if (kind === "sentiment") label = "Social sentiment";
+        else if (kind === "elite") label = "Elite & institutional";
+        else if (kind === "climate") label = "Climate & resource vulnerability";
+        kindEl.textContent = label;
+      }
+      if (nameEl) nameEl.textContent = item.country_name || item.country_code || "—";
+
+      if (metaEl) metaEl.textContent = "";
+      if (descEl) descEl.textContent = "";
+
+      var meta = "";
+      var desc = "";
+
+      if (kind === "fragility") {
+        meta = "Risk score: " + (item.risk_score != null ? item.risk_score : "—");
+        var signals = item.signals || [];
+        desc = signals.length
+          ? signals.map(function(s) {
+              var t = s.type || "Signal";
+              var level = s.level ? " (" + s.level + ")" : "";
+              var ap = (s.approval_pct != null && s.approval_pct !== "") ? " · " + s.approval_pct + "%" : "";
+              return t + level + ap;
+            }).join("\n")
+          : "—";
+      } else if (kind === "election") {
+        meta = (item.election_type || "—") + " · " + (item.date_planned || "—") + " · " + (item.status || "—");
+        desc = item.notes || "—";
+      } else if (kind === "approval") {
+        meta = (item.subject || "—") + " · " + (item.approval_pct != null ? Math.round(item.approval_pct) + "%" : "—") + " · " + (item.poll_date || "—");
+        desc = item.source || "—";
+      } else if (kind === "protest") {
+        meta = (item.event_date || "—") + " · " + (item.trigger_topic || "—") + " · " + (item.location || "—");
+        desc = item.summary || "—";
+      } else if (kind === "currency") {
+        meta = "Indicator: " + (item.indicator_value != null ? item.indicator_value : "—") + " · " + (item.stress_level || "—") + " · " + (item.as_of_date || "—");
+        desc = item.notes || "—";
+      } else if (kind === "food") {
+        meta = "Inflation: " + (item.inflation_pct != null ? item.inflation_pct : "—") + "% · " + (item.risk_level || "—") + " · " + (item.as_of_date || "—");
+        desc = item.notes || "—";
+      } else if (kind === "youth") {
+        meta = "Rate: " + (item.rate_pct != null ? item.rate_pct : "—") + "% · " + (item.risk_label || "—") + " · " + (item.as_of_date || "—");
+        desc = item.source || "—";
+      } else if (kind === "sentiment") {
+        meta = "Score: " + (item.sentiment_score != null ? Number(item.sentiment_score).toFixed(2) : "—") + " · " + (item.sample_size || "—") + " · " + (item.platform || "—") + " · " + (item.as_of_date || "—");
+        desc = "—";
+      } else if (kind === "elite") {
+        meta = (item.governance_model || "—") + " · SOEs: " + (item.major_soes || "—") + " · CBI: " + (item.central_bank_independence_score != null ? item.central_bank_independence_score : "—");
+        desc = item.party_structure || "—";
+      } else if (kind === "climate") {
+        meta = "Water stress: " + (item.water_stress_index != null ? item.water_stress_index : "—") + " · Food insecurity: " + (item.food_insecurity_index != null ? item.food_insecurity_index : "—") + " · Climate risk: " + (item.climate_risk_score != null ? item.climate_risk_score : "—") + " (" + (item.as_of_year || "—") + ")";
+        desc = "—";
+      }
+
+      if (metaEl) metaEl.textContent = meta;
+      if (descEl) descEl.textContent = desc;
+
+      if (openLink && item.country_dashboard_url) {
+        openLink.href = item.country_dashboard_url;
+        setHidden(openLink, false);
+      } else {
+        setHidden(openLink, true);
+      }
+
+      if (inspector) inspector.classList.add("open");
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function() { clearInspector(); });
+    }
+
+    document.addEventListener("click", function(e) {
+      var t = e.target;
+      if (t && t.closest && t.closest("a")) return; // let normal navigation happen
+      var node = t && t.closest && t.closest("[data-item]");
+      if (!node) return;
+      var raw = node.getAttribute("data-item") || "";
+      if (!raw) return;
+      var item = null;
+      try { item = JSON.parse(raw); } catch (err) {}
+      renderInspector(item);
+    });
+
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") clearInspector();
+    });
+  });
+})();
+</script>
+{% endblock %}

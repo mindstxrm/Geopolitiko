@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Simulation result — {{ scenario.name }} — Geopolitical News{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('main.scenario_detail', scenario_id=scenario.id) }}" class="back-link">← {{ scenario.name }}</a></p>
+  <h1 class="page-title">Simulation result</h1>
+  <p class="scenario-meta">{{ scenario.name }} · Run {{ (run.run_at or run.created_at or '')[:19].replace('T', ' ') }} UTC</p>
+
+  <section class="risk-section">
+    <h2>Probability-weighted scenario</h2>
+    <div class="probability-summary">
+      {{ run.probability_summary or '—' }}
+    </div>
+  </section>
+
+  <section class="risk-section agent-cards">
+    <h2>Multi-agent responses</h2>
+    {% if run.agent_outputs %}
+    {% for agent_key, text in run.agent_outputs.items() %}
+    <div class="agent-card">
+      <h3 class="agent-name">{{ agent_key.replace('_', ' ').title() }} agent</h3>
+      <p class="agent-text">{{ text }}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="empty-state">No agent outputs in this run.</p>
+    {% endif %}
+  </section>
+
+  <p><a href="{{ url_for('main.scenario_detail', scenario_id=scenario.id) }}">Run again</a> · <a href="{{ url_for('main.scenarios_outlook') }}?scenario_id={{ scenario.id }}">10-year outlook</a> · <a href="{{ url_for('main.scenarios_list') }}">← Scenarios</a></p>
+{% endblock %}

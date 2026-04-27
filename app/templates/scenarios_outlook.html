@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}10-year risk outlook — Scenario Planning — Geopolitical News{% endblock %}
+{% block content %}
+  <a href="#outlook-report" class="skip-link">Skip to report</a>
+
+  <div class="outlook-workspace">
+    <header class="outlook-command-strip no-print">
+      <div class="outlook-command-row">
+        <div class="outlook-command-left">
+          <h1 class="outlook-page-title">10-year risk outlook</h1>
+          <details class="outlook-about">
+            <summary>About</summary>
+            <p>Probability-weighted, scenario-informed outlook. Select a scenario to tie the report to a library scenario run, or use global outlook. Horizon 5–30 years.</p>
+          </details>
+        </div>
+
+        <form method="get" class="outlook-form outlook-form-inline" id="outlook-options-form" aria-label="Outlook options">
+          <label for="scenario_id">Scenario</label>
+          <select id="scenario_id" name="scenario_id" onchange="this.form.submit()" aria-describedby="scenario-hint">
+            <option value="">— Global —</option>
+            {% for s in scenarios %}
+            <option value="{{ s.id }}" {{ 'selected' if outlook.scenario and outlook.scenario.id == s.id else '' }}>{{ s.name }} ({{ s.horizon_year or '—' }})</option>
+            {% endfor %}
+          </select>
+          <span id="scenario-hint" class="sr-only">Choose a scenario to tie the outlook to a specific run</span>
+          <label for="years">Horizon</label>
+          <input type="number" id="years" name="years" value="{{ outlook.horizon_years }}" min="5" max="30" onchange="this.form.submit()" aria-label="Horizon in years" class="outlook-years-input">
+          <button type="submit" class="btn btn-secondary outlook-form-submit">Regenerate</button>
+        </form>
+
+        <div class="outlook-command-actions outlook-command-actions-desktop">
+          <button type="button" class="outlook-print-btn" onclick="window.print()">Print / PDF</button>
+          <button type="button" class="outlook-copy-link-btn" data-outlook-url="{{ request.url }}">Copy link</button>
+          <button type="button" class="outlook-copy-md-btn">Copy markdown</button>
+          <a href="{{ download_md_url }}" class="btn btn-secondary">Download .md</a>
+        </div>
+      </div>
+
+      <details class="outlook-actions-drawer no-print">
+        <summary class="outlook-actions-drawer-summary">Share &amp; export</summary>
+        <div class="outlook-actions-drawer-body">
+          <button type="button" class="outlook-print-btn" onclick="window.print()">Print / Save as PDF</button>
+          <button type="button" class="outlook-copy-link-btn" data-outlook-url="{{ request.url }}">Copy link to this report</button>
+          <button type="button" class="outlook-copy-md-btn">Copy markdown</button>
+          <a href="{{ download_md_url }}" class="btn btn-secondary">Download as .md</a>
+        </div>
+      </details>
+    </header>
+
+    <textarea id="outlook-markdown-source" class="sr-only" readonly aria-hidden="true">{{ outlook.report_markdown }}</textarea>
+
+    <div class="outlook-main-layout{% if not outlook.report_toc %} outlook-main-layout-no-toc{% endif %}">
+      {% if outlook.report_toc %}
+      <details class="outlook-toc-mobile no-print">
+        <summary>Contents</summary>
+        <nav class="outlook-toc" aria-label="Report table of contents">
+          <ul>
+            {% for level, text, slug in outlook.report_toc %}
+            <li class="outlook-toc-level-{{ level }}"><a href="#{{ slug }}">{{ text }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </details>
+
+      <aside class="outlook-toc-sidebar no-print" aria-label="Report table of contents">
+        <nav class="outlook-toc outlook-toc-sticky">
+          <h2 class="outlook-toc-heading">Contents</h2>
+          <ul>
+            {% for level, text, slug in outlook.report_toc %}
+            <li class="outlook-toc-level-{{ level }}"><a href="#{{ slug }}">{{ text }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </aside>
+      {% endif %}
+
+      <div class="outlook-report-column">
+        <section id="outlook-report" class="risk-section outlook-report" aria-label="Outlook report content">
+          <p class="outlook-meta">Report: {{ outlook.start_year }}–{{ outlook.end_year }} · Generated {{ outlook.generated_at[:19].replace('T', ' ') }} UTC</p>
+          <div class="outlook-report-html">{{ outlook.report_html|safe }}</div>
+        </section>
+      </div>
+    </div>
+
+    <p class="outlook-footer-nav no-print">
+      <a href="{{ url_for('main.scenarios_list') }}">← Scenarios</a>
+      · <a href="{{ url_for('main.reports_hub') }}">Reports</a>
+      · <a href="{{ url_for('main.scenario_engine') }}">Scenario Engine</a>
+    </p>
+  </div>
+
+  <script>
+  (function () {
+    function bindCopyLink(btn) {
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var url = btn.getAttribute('data-outlook-url') || window.location.href;
+        var label = btn.textContent;
+        function flash() {
+          btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = label; }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(flash);
+        } else {
+          var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          flash();
+        }
+      });
+    }
+    document.querySelectorAll('.outlook-copy-link-btn').forEach(bindCopyLink);
+
+    var mdSource = document.getElementById('outlook-markdown-source');
+    document.querySelectorAll('.outlook-copy-md-btn').forEach(function (mdBtn) {
+      mdBtn.addEventListener('click', function () {
+        var text = (mdSource && mdSource.value) ? mdSource.value : '';
+        var label = mdBtn.textContent;
+        function flash() {
+          mdBtn.textContent = 'Copied';
+          setTimeout(function () { mdBtn.textContent = label; }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(flash);
+        } else {
+          var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          flash();
+        }
+      });
+    });
+  })();
+  </script>
+{% endblock %}

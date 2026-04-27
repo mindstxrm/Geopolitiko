@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Export all formats — Scenario Engine{% endblock %}
+{% block content %}
+<div class="scenario-engine-export-all">
+  <h1 class="page-title">Export all formats</h1>
+  <p class="page-intro">Run: {{ result.event_label or result.event_type }}{% if result.region or result.country %} ({{ result.region or '' }}{% if result.region and result.country %} · {% endif %}{{ result.country or '' }}){% endif %}. <a href="{{ url_for('main.scenario_engine') }}">← Scenario Engine</a></p>
+
+  <ul class="export-all-list">
+    <li><a href="{{ url_for('main.scenario_engine_export', format='policy_memo', run_id=run_id) }}">Policy memo (DOCX)</a></li>
+    <li><a href="{{ url_for('main.scenario_engine_export', format='risk_briefing', run_id=run_id) }}">Risk briefing (DOCX)</a></li>
+    <li><a href="{{ url_for('main.scenario_engine_export', format='investor_note', run_id=run_id) }}">Investor note (DOCX)</a></li>
+    <li><a href="{{ url_for('main.scenario_engine_export', format='exec_summary_ppt', run_id=run_id) }}">Executive summary (PPTX)</a></li>
+    <li><a href="{{ url_for('main.scenario_engine_summary', run_id=run_id) }}">Summary (print to PDF)</a></li>
+  </ul>
+  <p class="export-all-meta">Each link downloads one file. Use your browser’s “Save link as” or click to open.</p>
+</div>
+{% endblock %}

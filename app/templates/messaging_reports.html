@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Report inbox — Intelligence Messaging{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span> Report inbox
+  </nav>
+  <h1 class="page-title">Report inbox</h1>
+  <p class="page-intro">Reports in channels you admin. Dismiss or delete the reported message.</p>
+
+  {% if not reports %}
+  <p class="empty-state">No reports.</p>
+  {% else %}
+  <table class="audit-table reports-table">
+    <thead>
+      <tr>
+        <th>Channel</th>
+        <th>Reported by</th>
+        <th>Reason</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reports %}
+      <tr>
+        <td><a href="{{ url_for('main.messaging_channel', slug=r.channel_slug) }}">{{ r.channel_name }}</a></td>
+        <td>{{ r.reporter_display or r.reporter_username }}</td>
+        <td>{{ r.reason or '—' }}</td>
+        <td>{{ r.created_at[:19].replace('T', ' ') if r.created_at else '' }}</td>
+        <td>
+          <a href="{{ url_for('main.messaging_channel', slug=r.channel_slug) }}?message_id={{ r.message_id }}" class="btn-link">View message</a>
+          <form method="post" action="{{ url_for('main.messaging_report_resolve_route', report_id=r.id) }}" class="inline">
+            <button type="submit" class="btn-link">Dismiss</button>
+          </form>
+          <form method="post" action="{{ url_for('main.messaging_report_resolve_route', report_id=r.id) }}" class="inline" onsubmit="return confirm('Delete the reported message?');">
+            <input type="hidden" name="delete_message" value="1">
+            <button type="submit" class="btn-link danger">Delete message</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

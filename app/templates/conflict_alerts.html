@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Conflict alerts — Geopolitical News{% endblock %}
+{% block content %}
+<div class="conflict-alerts-page">
+  <h1 class="page-title">Conflict &amp; military alerts</h1>
+  <p class="page-intro">Get notified when new border incidents, military exercises, or satellite-detected movement are added. Optional: filter by region or country; optional webhook URL.</p>
+  <p><a href="{{ conflict_dashboard_url }}">← Back to Military &amp; Security</a></p>
+
+  <section class="risk-section">
+    <h2>Add alert rule</h2>
+    <form method="post" action="{{ url_for('main.conflict_alerts') }}" class="conflict-alert-form">
+      <input type="hidden" name="form_type" value="conflict_alert">
+      <div class="form-row">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="e.g. East Asia incidents">
+      </div>
+      <div class="form-row">
+        <label>Event types</label>
+        <label class="inline"><input type="checkbox" name="event_types" value="border_incident"> Border incidents</label>
+        <label class="inline"><input type="checkbox" name="event_types" value="military_exercise"> Military exercises</label>
+        <label class="inline"><input type="checkbox" name="event_types" value="military_movement"> Military movement</label>
+      </div>
+      <div class="form-row">
+        <label for="region">Region (optional)</label>
+        <input type="text" id="region" name="region" placeholder="e.g. East Asia">
+      </div>
+      <div class="form-row">
+        <label for="country_code">Country code (optional)</label>
+        <input type="text" id="country_code" name="country_code" placeholder="e.g. RUS">
+      </div>
+      <div class="form-row">
+        <label for="webhook_url">Webhook URL (optional)</label>
+        <input type="url" id="webhook_url" name="webhook_url" placeholder="https://...">
+      </div>
+      <button type="submit">Add alert rule</button>
+    </form>
+  </section>
+
+  <section class="risk-section">
+    <h2>Your conflict alert rules</h2>
+    {% if rules %}
+    <ul class="data-list">
+      {% for r in rules %}
+      <li>
+        <strong>{{ r.name }}</strong>
+        — Events: {{ r.event_types or 'all' }}
+        {% if r.region %} · Region: {{ r.region }}{% endif %}
+        {% if r.country_code %} · Country: {{ r.country_code }}{% endif %}
+        {% if r.webhook_url %} · Webhook set{% endif %}
+        <form method="post" action="{{ url_for('main.conflict_alert_delete', rule_id=r.id) }}" style="display:inline; margin-left:8px;">
+          <button type="submit" class="btn-link">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No conflict alert rules yet. Add one above.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

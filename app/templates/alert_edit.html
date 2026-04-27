@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ alert.name }} — Watchlist — Geopolitical News{% endblock %}
+
+{% block content %}
+  <section class="analysis-section">
+    <a href="{{ url_for('main.alert_detail', alert_id=alert.id) }}" class="back-link">← {{ alert.name }}</a>
+    <h1 class="page-title">Edit watchlist</h1>
+    <form method="post" class="inline-form" id="alert-edit-form">
+      <label>
+        Name
+        <input type="text" name="name" value="{{ alert.name }}" required>
+      </label>
+      <label>
+        Topics or countries (comma-separated; click below to add)
+        <input type="text" name="topics" id="alert-edit-topics-input" value="{{ (alert.topics_list or [])|join(', ') }}" placeholder="e.g. China, Russia, Ukraine, NATO">
+      </label>
+      <p class="alert-suggestions-label">Topics:</p>
+      <p class="alert-suggestions-row">
+        {% for s in (alert_topic_suggestions or []) %}
+        <button type="button" class="alert-suggestion-chip" data-topic="{{ s }}">{{ s }}</button>
+        {% endfor %}
+      </p>
+      <p class="alert-suggestions-label">Countries &amp; Regions:</p>
+      <div class="alert-suggestions-scroll">
+        {% for s in (alert_country_suggestions or [])[:50] %}
+        <button type="button" class="alert-suggestion-chip" data-topic="{{ s }}">{{ s }}</button>
+        {% endfor %}
+      </div>
+      <label>
+        Min impact (0–10)
+        <select name="min_impact_score">
+          <option value="0" {{ 'selected' if alert.min_impact_score == 0 else '' }}>Any</option>
+          <option value="2" {{ 'selected' if alert.min_impact_score == 2 else '' }}>Low+ (2+)</option>
+          <option value="5" {{ 'selected' if (alert.min_impact_score or 5) == 5 else '' }}>Med+ (5+)</option>
+          <option value="7" {{ 'selected' if alert.min_impact_score == 7 else '' }}>High only (7+)</option>
+        </select>
+      </label>
+      <label>
+        Webhook URL (optional)
+        <input type="url" name="webhook_url" value="{{ alert.webhook_url or '' }}" placeholder="https://...">
+      </label>
+      <div class="form-actions">
+        <button type="submit">Save</button>
+        <a href="{{ url_for('main.alert_detail', alert_id=alert.id) }}" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </section>
+  <script>
+    document.querySelectorAll("#alert-edit-form .alert-suggestion-chip").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var input = document.getElementById("alert-edit-topics-input");
+        if (!input) return;
+        var topic = (this.getAttribute("data-topic") || "").trim();
+        if (!topic) return;
+        var current = (input.value || "").trim();
+        var parts = current ? current.split(/\s*,\s*/).map(function (p) { return p.trim(); }).filter(Boolean) : [];
+        if (parts.indexOf(topic) !== -1) return;
+        parts.push(topic);
+        input.value = parts.join(", ");
+      });
+    });
+  </script>
+{% endblock %}

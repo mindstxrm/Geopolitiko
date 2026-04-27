@@ -1,0 +1,713 @@
+{% extends "base.html" %}
+{% block title %}Conflict & Military Escalation — Geopolitical News{% endblock %}
+{% block content %}
+<div class="conflict-watch-page">
+  <header class="conflict-top">
+    <div class="conflict-title-row">
+      <div>
+        <h1 class="page-title">Conflict & Military Escalation Monitor</h1>
+        <p class="page-intro conflict-subtitle">Defense spending, exercises, border incidents, satellite-detected movement, naval deployments, arms trade. Structured escalation model (incident → crisis → sanctions → conflict probability).</p>
+      </div>
+      <div class="conflict-title-actions">
+        <a class="conflict-chip" href="{{ scenario_engine_url }}">Scenario Engine</a>
+        <a class="conflict-chip" href="{{ relationship_mapper_url }}">Defense alignment</a>
+        <a class="conflict-chip" href="{{ conflict_alerts_url }}">Conflict alerts</a>
+        <a class="conflict-chip" href="{{ conflict_compare_url }}">Compare</a>
+      </div>
+    </div>
+
+    <form method="get" action="{{ url_for('main.conflict_dashboard') }}" class="conflict-filters conflict-filters-compact" id="conflict-filters-form">
+      <fieldset>
+        <legend class="sr-only">Filters</legend>
+
+        <div class="conflict-filter-strip">
+          <label for="incident_days">Window</label>
+          <select id="incident_days" name="incident_days">
+            <option value="90" {{ 'selected' if filters.incident_days == 90 else '' }}>90d</option>
+            <option value="180" {{ 'selected' if filters.incident_days == 180 else '' }}>180d</option>
+            <option value="365" {{ 'selected' if filters.incident_days == 365 else '' }}>365d</option>
+          </select>
+
+          <button type="submit" class="conflict-apply">Apply</button>
+          <a href="{{ url_for('main.conflict_dashboard') }}" class="conflict-clear-filters">Clear</a>
+
+          <details class="conflict-filters-drawer" id="conflict-filters-drawer">
+            <summary class="conflict-chip conflict-chip-secondary">Filters ▾</summary>
+            <div class="conflict-filters-body">
+              <div class="conflict-filter-row">
+                <label for="defense_country">Defense country</label>
+                <input type="text" id="defense_country" name="defense_country" value="{{ filters.defense_country or '' }}" placeholder="e.g. USA">
+                <label for="defense_year_from">Defense from</label>
+                <input type="number" id="defense_year_from" name="defense_year_from" value="{{ filters.defense_year_from or '' }}" placeholder="2020" min="1990" max="2030">
+                <label for="defense_year_to">Defense to</label>
+                <input type="number" id="defense_year_to" name="defense_year_to" value="{{ filters.defense_year_to or '' }}" placeholder="2026">
+                <label for="exercises_region">Exercises region</label>
+                <input type="text" id="exercises_region" name="exercises_region" value="{{ filters.exercises_region or '' }}" placeholder="e.g. East Asia">
+                <label for="exercises_date_from">Exercises from</label>
+                <input type="date" id="exercises_date_from" name="exercises_date_from" value="{{ filters.exercises_date_from or '' }}">
+                <label for="exercises_date_to">Exercises to</label>
+                <input type="date" id="exercises_date_to" name="exercises_date_to" value="{{ filters.exercises_date_to or '' }}">
+                <label for="exercises_search">Exercises search</label>
+                <input type="search" id="exercises_search" name="exercises_search" value="{{ filters.exercises_search or '' }}" placeholder="Name, participants…">
+              </div>
+
+              <div class="conflict-filter-row">
+                <label for="incidents_country">Incidents country</label>
+                <input type="text" id="incidents_country" name="incidents_country" value="{{ filters.incidents_country or '' }}" placeholder="e.g. RUS">
+                <label for="incidents_date_from">Incidents from</label>
+                <input type="date" id="incidents_date_from" name="incidents_date_from" value="{{ filters.incidents_date_from or '' }}">
+                <label for="incidents_date_to">Incidents to</label>
+                <input type="date" id="incidents_date_to" name="incidents_date_to" value="{{ filters.incidents_date_to or '' }}">
+                <label for="incidents_severity">Severity</label>
+                <select id="incidents_severity" name="incidents_severity">
+                  <option value="">All</option>
+                  <option value="Low" {{ 'selected' if filters.incidents_severity == 'Low' else '' }}>Low</option>
+                  <option value="Medium" {{ 'selected' if filters.incidents_severity == 'Medium' else '' }}>Medium</option>
+                  <option value="High" {{ 'selected' if filters.incidents_severity == 'High' else '' }}>High</option>
+                </select>
+                <label for="movement_country">Movement country</label>
+                <input type="text" id="movement_country" name="movement_country" value="{{ filters.movement_country or '' }}">
+                <label for="movement_region">Movement region</label>
+                <input type="text" id="movement_region" name="movement_region" value="{{ filters.movement_region or '' }}">
+                <label for="movement_type">Movement type</label>
+                <input type="text" id="movement_type" name="movement_type" value="{{ filters.movement_type or '' }}">
+                <label for="movement_date_from">Movement from</label>
+                <input type="date" id="movement_date_from" name="movement_date_from" value="{{ filters.movement_date_from or '' }}">
+                <label for="movement_date_to">Movement to</label>
+                <input type="date" id="movement_date_to" name="movement_date_to" value="{{ filters.movement_date_to or '' }}">
+              </div>
+
+              <div class="conflict-filter-row">
+                <label for="naval_region">Naval region</label>
+                <input type="text" id="naval_region" name="naval_region" value="{{ filters.naval_region or '' }}">
+                <label for="naval_country">Naval country</label>
+                <input type="text" id="naval_country" name="naval_country" value="{{ filters.naval_country or '' }}">
+                <label for="arms_supplier">Arms supplier</label>
+                <input type="text" id="arms_supplier" name="arms_supplier" value="{{ filters.arms_supplier or '' }}">
+                <label for="arms_recipient">Arms recipient</label>
+                <input type="text" id="arms_recipient" name="arms_recipient" value="{{ filters.arms_recipient or '' }}">
+                <label for="arms_year_from">Arms from</label>
+                <input type="number" id="arms_year_from" name="arms_year_from" value="{{ filters.arms_year_from or '' }}" min="1990" max="2030">
+                <label for="arms_year_to">Arms to</label>
+                <input type="number" id="arms_year_to" name="arms_year_to" value="{{ filters.arms_year_to or '' }}" min="1990" max="2030">
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <div class="conflict-active-filters" id="conflict-active-filters" aria-label="Active filters"></div>
+      </fieldset>
+    </form>
+  </header>
+
+  <div class="conflict-workspace">
+    <main class="conflict-main">
+      <div class="conflict-tabs" role="tablist" aria-label="Sections">
+        <button type="button" class="conflict-tab active" data-tab="overview" role="tab" aria-selected="true">Overview</button>
+        <button type="button" class="conflict-tab" data-tab="incidents" role="tab" aria-selected="false">Incidents</button>
+        <button type="button" class="conflict-tab" data-tab="exercises" role="tab" aria-selected="false">Exercises</button>
+        <button type="button" class="conflict-tab" data-tab="movement" role="tab" aria-selected="false">Movement</button>
+        <button type="button" class="conflict-tab" data-tab="naval" role="tab" aria-selected="false">Naval</button>
+        <button type="button" class="conflict-tab" data-tab="arms" role="tab" aria-selected="false">Arms</button>
+        <button type="button" class="conflict-tab" data-tab="defense" role="tab" aria-selected="false">Defense</button>
+      </div>
+
+      <section class="conflict-pane active" data-pane="overview" role="tabpanel">
+        <!-- Escalation + capability + conflict events stay on the overview pane -->
+
+  <section id="escalation" class="risk-section conflict-escalation">
+    <h2>Escalation tree</h2>
+    <p class="risk-meta">Tactical incident → Diplomatic crisis → Sanctions → Military conflict probability (rule-based model). Window: {{ filters.incident_days }} days. <a href="#incidents">See all tactical incidents</a> · <a href="{{ url_for('main.diplomacy_sanctions') }}">Sanctions watch</a></p>
+    <div class="escalation-flow">
+      {% for stage in escalation.stages %}
+      <div class="escalation-stage">
+        <span class="stage-label">{% if stage.label == 'Tactical incidents' %}<a href="#incidents">{{ stage.label }}</a>{% elif stage.label == 'Sanctions' %}<a href="{{ url_for('main.diplomacy_sanctions') }}">{{ stage.label }}</a>{% else %}{{ stage.label }}{% endif %}</span>
+        <span class="stage-count">{{ stage.count }}</span>
+        <p class="stage-desc">{{ stage.description }}</p>
+      </div>
+      <span class="escalation-arrow">→</span>
+      {% endfor %}
+      <div class="escalation-stage escalation-conflict conflict-{{ escalation.conflict_probability.level }}">
+        <span class="stage-label">{{ escalation.conflict_probability.label }}</span>
+        <span class="stage-prob">{{ escalation.conflict_probability.probability_pct }}%</span>
+        <span class="stage-level">{{ escalation.conflict_probability.level_label }}</span>
+        <p class="stage-desc">{{ escalation.conflict_probability.description }}</p>
+      </div>
+    </div>
+    <p class="escalation-summary"><strong>{{ escalation.summary }}</strong></p>
+    <details class="escalation-details">
+      <summary>Recent tactical incidents</summary>
+      {% if escalation.stages[0]['items'] %}
+      <ul class="incident-list">
+        {% for i in escalation.stages[0]['items'] %}
+        <li>{% set code_a = i.country_a_code or country_name_to_code.get(i.country_a_name) or country_name_to_code.get((i.country_a_name or '')|upper) %}{% set code_b = i.country_b_code or country_name_to_code.get(i.country_b_name) or country_name_to_code.get((i.country_b_name or '')|upper) %}{% if code_a %}<a href="{{ url_for('main.country_dashboard', country_code=code_a) }}">{{ i.country_a_name }}</a>{% else %}{{ i.country_a_name }}{% endif %}–{% if code_b %}<a href="{{ url_for('main.country_dashboard', country_code=code_b) }}">{{ i.country_b_name }}</a>{% else %}{{ i.country_b_name }}{% endif %} ({{ (i.incident_date or '')[:10] }}): {{ i.summary or '—' }} <span class="severity-pill">{{ i.severity or '—' }}</span></li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">No recent incidents in window.</p>
+      {% endif %}
+    </details>
+    {% if escalation_by_region %}
+    <details class="escalation-details">
+      <summary>By region</summary>
+      <ul class="incident-list">
+        {% for r in escalation_by_region %}
+        <li><strong>{{ r.region }}</strong>: {{ r.incident_count }} incidents, {{ r.sanctions_count }} sanctions → {{ r.level_label }} ({{ r.score }}%)</li>
+        {% endfor %}
+      </ul>
+    </details>
+    {% endif %}
+    <p class="stability-updated">Updated: {{ escalation.updated_at[:19].replace('T', ' ') }} UTC</p>
+  </section>
+
+  <section id="capability" class="risk-section">
+    <div class="conflict-section-head">
+      <h2>Military capability snapshot</h2>
+      <button type="button" class="conflict-mini-link" data-open-filters="defense_country">Edit filters</button>
+    </div>
+    <p class="risk-meta">Active troops, naval tonnage, defense alliances. Per-country on <a href="{{ url_for('main.integration_dashboard') }}">Countries &amp; Regions</a> → country → Security.</p>
+    {% if military_capability_summary %}
+    <ul class="conflict-indicator-list">
+      {% for m in military_capability_summary %}
+      <li><a href="{{ url_for('main.country_dashboard', country_code=m.country_code) }}">{{ m.country_name or m.country_code }}</a> — Troops {{ "{:,}".format(m.active_troops) if m.active_troops else '—' }}, Naval {{ m.naval_tonnage or '—' }}{% if m.defense_alliances %}, {{ (m.defense_alliances or '')[:40] }}{% if (m.defense_alliances or '')|length > 40 %}…{% endif %}{% endif %} ({{ m.as_of_year or '—' }})</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">Military capability data requires feed. See <a href="{{ url_for('main.help_page') }}#indicators">Indicator guide</a>.</p>
+    {% endif %}
+  </section>
+
+  <section id="conflict-events" class="risk-section">
+    <div class="conflict-section-head">
+      <h2>Conflict events (ACLED, UCDP, ICEWS)</h2>
+      <button type="button" class="conflict-mini-link" data-open-filters="incidents_country">Edit filters</button>
+    </div>
+    <p class="risk-meta">Protest and conflict events. Overlay with fragility + escalation.</p>
+    {% if conflict_event_imports %}
+    <ul class="conflict-indicator-list">
+      {% for c in conflict_event_imports[:20] %}
+      <li><span class="muted">[{{ c.source or '—' }}]</span> {{ (c.event_date or '')[:10] }} — {{ c.country_code or '—' }}: {{ c.event_type or '—' }}{% if c.fatalities %} ({{ c.fatalities }} fatalities){% endif %} — {{ (c.summary or '')[:60] }}{% if (c.summary or '')|length > 60 %}…{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% if conflict_event_imports|length > 20 %}<p class="muted">Showing 20 of {{ conflict_event_imports|length }}</p>{% endif %}
+    {% else %}
+    <p class="empty-state">Conflict event data (ACLED, UCDP, ICEWS) requires feed.</p>
+    {% endif %}
+  </section>
+
+      </section>
+
+      <section class="conflict-pane" data-pane="defense" role="tabpanel">
+  <section id="defense" class="risk-section">
+    <h2>Defense spending tracker</h2>
+    <p class="risk-meta">Use year filters above to compare across years (e.g. prior year vs current). Source: {{ section_sources.defense if section_sources else 'Seed/manual.' }}</p>
+    <p class="section-actions"><a href="{{ url_for('main.conflict_export', export_type='defense', **query_base) }}">Export CSV</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Country</th>
+            <th scope="col" aria-sort="none">Year</th>
+            <th scope="col" aria-sort="none">Spending (USD bn)</th>
+            <th scope="col" aria-sort="none">% GDP</th>
+            <th scope="col" aria-sort="none">vs prior year</th>
+            <th scope="col" aria-sort="none">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in defense_spending %}
+          <tr>
+            <td>{% set code = d.country_code or country_name_to_code.get(d.country_name) or country_name_to_code.get((d.country_name or '')|upper) %}{% if code %}<a href="{{ url_for('main.country_dashboard', country_code=code) }}">{{ d.country_name }}</a> ({{ d.country_code }}){% else %}{{ d.country_name }} ({{ d.country_code }}){% endif %}</td>
+            <td>{{ d.year }}</td>
+            <td>{{ "%.0f"|format(d.spending_usd_billions or 0) }}</td>
+            <td>{{ "%.1f"|format(d.pct_gdp or 0) }}%</td>
+            <td>{% if d.pct_change_yoy is not none %}{{ "%+.1f"|format(d.pct_change_yoy) }}%{% else %}—{% endif %}</td>
+            <td>{{ d.source or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not defense_spending %}
+    <p class="empty-state">No defense spending data.{% if filters.defense_country or filters.defense_year_from or filters.defense_year_to %} Try adjusting filters or clear filters.{% endif %}</p>
+    {% endif %}
+    {% if defense_total_pages > 1 %}
+    <nav class="pagination" aria-label="Defense spending pagination">
+      {% if pagination.defense.prev %}<a href="{{ pagination.defense.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_defense }} of {{ defense_total_pages }} ({{ defense_total }} total)</span>
+      {% if pagination.defense.next %}<a href="{{ pagination.defense.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+      <section class="conflict-pane" data-pane="exercises" role="tabpanel">
+  <section id="exercises" class="risk-section">
+    <h2>Military exercises alerts</h2>
+    <p class="risk-meta">Source: {{ section_sources.exercises if section_sources else 'Seed/manual.' }} <a href="{{ url_for('main.conflict_exercises_rss') }}">RSS</a> · <a href="{{ url_for('main.conflict_exercises_ics') }}">iCal</a></p>
+    <p class="section-actions"><a href="{{ url_for('main.conflict_export', export_type='exercises', **query_base) }}">Export CSV</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Name</th>
+            <th scope="col" aria-sort="none">Participants</th>
+            <th scope="col" aria-sort="none">Region</th>
+            <th scope="col" aria-sort="none">Start–End</th>
+            <th scope="col" aria-sort="none">Scale</th>
+            <th scope="col" aria-sort="none">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in military_exercises %}
+          <tr>
+            <td><strong>{{ e.name }}</strong></td>
+            <td>{{ e.participants }}</td>
+            <td>{{ e.region or '—' }}</td>
+            <td>{{ (e.start_date or '')[:10] }} – {{ (e.end_date or '')[:10] }}</td>
+            <td>{{ e.scale or '—' }}</td>
+            <td>{{ e.description or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not military_exercises %}
+    <p class="empty-state">No exercise data.{% if filters.exercises_region or filters.exercises_search or filters.exercises_date_from or filters.exercises_date_to %} Try adjusting filters or clear filters.{% endif %}</p>
+    {% endif %}
+    {% if exercises_total_pages > 1 %}
+    <nav class="pagination" aria-label="Military exercises pagination">
+      {% if pagination.exercises.prev %}<a href="{{ pagination.exercises.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_exercises }} of {{ exercises_total_pages }} ({{ exercises_total }} total)</span>
+      {% if pagination.exercises.next %}<a href="{{ pagination.exercises.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+      <section class="conflict-pane" data-pane="incidents" role="tabpanel">
+  <section id="incidents" class="risk-section">
+    <h2>Border incident logs</h2>
+    <p class="risk-meta">Source: {{ section_sources.incidents if section_sources else 'Seed/manual.' }}</p>
+    <p class="section-actions"><a href="{{ url_for('main.conflict_export', export_type='incidents', **query_base) }}">Export CSV</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Parties</th>
+            <th scope="col" aria-sort="none">Date</th>
+            <th scope="col" aria-sort="none">Summary</th>
+            <th scope="col" aria-sort="none">Severity</th>
+            <th scope="col" aria-sort="none">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in border_incidents %}
+          <tr>
+            <td>{% set code_a = b.country_a_code or country_name_to_code.get(b.country_a_name) or country_name_to_code.get((b.country_a_name or '')|upper) %}{% set code_b = b.country_b_code or country_name_to_code.get(b.country_b_name) or country_name_to_code.get((b.country_b_name or '')|upper) %}{% if code_a %}<a href="{{ url_for('main.country_dashboard', country_code=code_a) }}">{{ b.country_a_name }}</a> ({{ b.country_a_code }}){% else %}{{ b.country_a_name }} ({{ b.country_a_code }}){% endif %} – {% if code_b %}<a href="{{ url_for('main.country_dashboard', country_code=code_b) }}">{{ b.country_b_name }}</a> ({{ b.country_b_code }}){% else %}{{ b.country_b_name }} ({{ b.country_b_code }}){% endif %}</td>
+            <td>{{ (b.incident_date or '—')[:10] }}</td>
+            <td>{{ b.summary or '—' }}</td>
+            <td><span class="severity-pill">{{ b.severity or '—' }}</span></td>
+            <td>{{ b.status or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not border_incidents %}
+    <p class="empty-state">No border incidents.{% if filters.incidents_country or filters.incidents_severity or filters.incidents_date_from or filters.incidents_date_to %} Try adjusting filters or clear filters.{% endif %}</p>
+    {% endif %}
+    {% if incidents_total_pages > 1 %}
+    <nav class="pagination" aria-label="Border incidents pagination">
+      {% if pagination.incidents.prev %}<a href="{{ pagination.incidents.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_incidents }} of {{ incidents_total_pages }} ({{ incidents_total }} total)</span>
+      {% if pagination.incidents.next %}<a href="{{ pagination.incidents.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+      <section class="conflict-pane" data-pane="movement" role="tabpanel">
+  <section id="movement" class="risk-section">
+    <h2>Satellite-detected military movement</h2>
+    <p class="risk-meta">Source: {{ section_sources.movement if section_sources else 'Satellite/OSINT.' }}</p>
+    <p class="section-actions"><a href="{{ conflict_movement_map_url }}">Map view</a> · <a href="{{ url_for('main.conflict_export', export_type='movement', **query_base) }}">Export CSV</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Country</th>
+            <th scope="col" aria-sort="none">Region</th>
+            <th scope="col" aria-sort="none">Type</th>
+            <th scope="col" aria-sort="none">Summary</th>
+            <th scope="col" aria-sort="none">Observed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in military_movement %}
+          <tr>
+            <td>{% set code = m.country_code or country_name_to_code.get(m.country_name) or country_name_to_code.get((m.country_name or '')|upper) %}{% if code %}<a href="{{ url_for('main.country_dashboard', country_code=code) }}">{{ m.country_name }}</a> ({{ m.country_code }}){% else %}{{ m.country_name }} ({{ m.country_code }}){% endif %}</td>
+            <td>{{ m.region or '—' }}</td>
+            <td>{{ m.detection_type or '—' }}</td>
+            <td>{{ m.summary or '—' }}</td>
+            <td>{{ (m.observed_date or '—')[:10] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not military_movement %}
+    <p class="empty-state">No movement data.{% if filters.movement_country or filters.movement_region or filters.movement_type or filters.movement_date_from or filters.movement_date_to %} Try adjusting filters or clear filters.{% endif %}</p>
+    {% endif %}
+    {% if movement_total_pages > 1 %}
+    <nav class="pagination" aria-label="Military movement pagination">
+      {% if pagination.movement.prev %}<a href="{{ pagination.movement.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_movement }} of {{ movement_total_pages }} ({{ movement_total }} total)</span>
+      {% if pagination.movement.next %}<a href="{{ pagination.movement.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+      <section class="conflict-pane" data-pane="naval" role="tabpanel">
+  <section id="naval" class="risk-section">
+    <h2>Naval deployment heat map</h2>
+    <p class="risk-meta">Deployment count by region (heat). Source: {{ section_sources.naval if section_sources else 'Seed/manual.' }}</p>
+    <div class="naval-heat-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Deployments</th>
+            <th aria-hidden="true">Bar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set max_count = (naval_heat[0].deployment_count or 1) if naval_heat else 1 %}
+          {% for h in naval_heat %}
+          <tr>
+            <td>{{ h.region }}</td>
+            <td><span class="heat-count heat-{{ 'high' if h.deployment_count >= 3 else ('med' if h.deployment_count >= 2 else 'low') }}">{{ h.deployment_count }}</span></td>
+            <td><span class="naval-heat-bar" style="width: {{ (100 * (h.deployment_count / max_count))|int }}%;" title="{{ h.deployment_count }} deployments"></span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="naval-detail-intro">Recent deployments:</p>
+    <p class="section-actions"><a href="{{ url_for('main.conflict_export', export_type='naval', **query_base) }}">Export CSV</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Country</th>
+            <th scope="col" aria-sort="none">Region</th>
+            <th scope="col" aria-sort="none">Vessel / description</th>
+            <th scope="col" aria-sort="none">As of</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in naval_deployments %}
+          <tr>
+            <td>{% set code = n.country_code or country_name_to_code.get(n.country_name) or country_name_to_code.get((n.country_name or '')|upper) %}{% if code %}<a href="{{ url_for('main.country_dashboard', country_code=code) }}">{{ n.country_name }}</a> ({{ n.country_code }}){% else %}{{ n.country_name }} ({{ n.country_code }}){% endif %}</td>
+            <td>{{ n.region }}</td>
+            <td>{{ n.vessel_description or '—' }}</td>
+            <td>{{ (n.as_of_date or '—')[:10] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not naval_heat %}<p class="empty-state">No naval deployment data.{% if filters.naval_region or filters.naval_country %} Try adjusting filters or clear filters.{% endif %}</p>{% endif %}
+    {% if naval_total_pages > 1 %}
+    <nav class="pagination" aria-label="Naval deployments pagination">
+      {% if pagination.naval.prev %}<a href="{{ pagination.naval.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_naval }} of {{ naval_total_pages }} ({{ naval_total }} total)</span>
+      {% if pagination.naval.next %}<a href="{{ pagination.naval.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+      <section class="conflict-pane" data-pane="arms" role="tabpanel">
+  <section id="arms" class="risk-section">
+    <h2>Arms trade database</h2>
+    <p class="risk-meta">Source: {{ section_sources.arms if section_sources else 'SIPRI/UN Register.' }}</p>
+    {% if arms_chart_suppliers or arms_chart_recipients or arms_chart_years %}
+    <details class="conflict-charts">
+      <summary>Charts ▾</summary>
+      <div class="arms-charts">
+      {% if arms_chart_suppliers or arms_chart_recipients %}
+      <div class="arms-chart-row">
+        {% if arms_chart_suppliers %}
+        <div class="arms-chart-wrap"><canvas id="arms-chart-suppliers" width="300" height="180" aria-label="Top suppliers by value"></canvas></div>
+        {% endif %}
+        {% if arms_chart_recipients %}
+        <div class="arms-chart-wrap"><canvas id="arms-chart-recipients" width="300" height="180" aria-label="Top recipients by value"></canvas></div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if arms_chart_years %}
+      <div class="arms-chart-wrap"><canvas id="arms-chart-years" width="400" height="160" aria-label="Arms trade value by year"></canvas></div>
+      {% endif %}
+      </div>
+    </details>
+    {% endif %}
+    <p class="section-actions"><a href="{{ url_for('main.conflict_export', export_type='arms', **query_base) }}">Export CSV</a> · <a href="{{ url_for('main.conflict_export', export_type='all', **query_base) }}">Export all (ZIP)</a> · <a href="{{ url_for('main.conflict_export', export_type='excel', **query_base) }}">Export Excel</a></p>
+    <div class="conflict-table-canvas">
+      <table class="stability-table conflict-table sortable">
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="none">Supplier</th>
+            <th scope="col" aria-sort="none">Recipient</th>
+            <th scope="col" aria-sort="none">Weapon type</th>
+            <th scope="col" aria-sort="none">Value (USD m)</th>
+            <th scope="col" aria-sort="none">Year</th>
+            <th scope="col" aria-sort="none">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in arms_trade %}
+          <tr>
+            <td>{% set sup_code = country_name_to_code.get(a.supplier_country) or country_name_to_code.get((a.supplier_country or '')|upper) %}{% if sup_code %}<a href="{{ url_for('main.country_dashboard', country_code=sup_code) }}">{{ a.supplier_country }}</a>{% else %}{{ a.supplier_country }}{% endif %}</td>
+            <td>{% set rec_code = country_name_to_code.get(a.recipient_country) or country_name_to_code.get((a.recipient_country or '')|upper) %}{% if rec_code %}<a href="{{ url_for('main.country_dashboard', country_code=rec_code) }}">{{ a.recipient_country }}</a>{% else %}{{ a.recipient_country }}{% endif %}</td>
+            <td>{{ a.weapon_type or '—' }}</td>
+            <td>{{ "%.0f"|format(a.value_usd_millions or 0) }}</td>
+            <td>{{ a.year or '—' }}</td>
+            <td>{{ a.deal_status or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not arms_trade %}
+    <p class="empty-state">No arms trade data.{% if filters.arms_supplier or filters.arms_recipient or filters.arms_year_from or filters.arms_year_to %} Try adjusting filters or clear filters.{% endif %}</p>
+    {% endif %}
+    {% if arms_total_pages > 1 %}
+    <nav class="pagination" aria-label="Arms trade pagination">
+      {% if pagination.arms.prev %}<a href="{{ pagination.arms.prev }}">Previous</a>{% endif %}
+      <span>Page {{ filters.page_arms }} of {{ arms_total_pages }} ({{ arms_total }} total)</span>
+      {% if pagination.arms.next %}<a href="{{ pagination.arms.next }}">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+      </section>
+
+    </main>
+
+    <aside class="conflict-sidebar" aria-label="At a glance">
+      {% if conflict_summary %}
+      <div class="conflict-card">
+        <div class="conflict-card-title">Last 7 days</div>
+        <div class="conflict-kpis">
+          <div class="conflict-kpi"><div class="kpi-num">{{ conflict_summary.incidents_7d }}</div><div class="kpi-label">Incidents</div></div>
+          <div class="conflict-kpi"><div class="kpi-num">{{ conflict_summary.exercises_7d }}</div><div class="kpi-label">Exercises</div></div>
+          <div class="conflict-kpi"><div class="kpi-num">{{ conflict_summary.naval_count }}</div><div class="kpi-label">Naval</div></div>
+        </div>
+        {% if conflict_summary.last_updated %}
+        <div class="conflict-card-meta">Data: seed/manual · Updated <strong>{{ conflict_summary.last_updated }}</strong></div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if escalation and escalation.conflict_probability %}
+      <div class="conflict-card">
+        <div class="conflict-card-title">Conflict probability</div>
+        <div class="conflict-prob-line">
+          <span class="prob-pill prob-{{ escalation.conflict_probability.level }}">{{ escalation.conflict_probability.level_label }}</span>
+          <span class="prob-score">{{ escalation.conflict_probability.probability_pct }}%</span>
+        </div>
+        <div class="conflict-card-meta">{{ escalation.conflict_probability.description }}</div>
+      </div>
+      {% endif %}
+
+      {% if arms_summary and (arms_summary.top_suppliers or arms_summary.top_recipients) %}
+      <div class="conflict-card">
+        <div class="conflict-card-title">Arms (top)</div>
+        <div class="conflict-card-meta">
+          <strong>Suppliers</strong>:
+          {% for s in arms_summary.top_suppliers[:3] %}{{ s.supplier_country }}{% if not loop.last %}, {% endif %}{% endfor %}
+          {% if not arms_summary.top_suppliers %}—{% endif %}
+          <br>
+          <strong>Recipients</strong>:
+          {% for r in arms_summary.top_recipients[:3] %}{{ r.recipient_country }}{% if not loop.last %}, {% endif %}{% endfor %}
+          {% if not arms_summary.top_recipients %}—{% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if presets %}
+      <div class="conflict-card">
+        <div class="conflict-card-title">Presets</div>
+        <div class="conflict-preset-chips">
+          {% for label, params in presets %}
+          <a href="{{ url_for('main.conflict_dashboard', **params) }}" class="conflict-chip conflict-chip-secondary">{{ label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="conflict-card">
+        <div class="conflict-card-title">Exports</div>
+        <div class="conflict-sidebar-links">
+          <a href="{{ url_for('main.conflict_export', export_type='all', **query_base) }}">Export all (ZIP)</a>
+          <a href="{{ url_for('main.conflict_export', export_type='excel', **query_base) }}">Export Excel</a>
+          <a href="{{ url_for('main.conflict_export', export_type='incidents', **query_base) }}">Incidents CSV</a>
+          <a href="{{ url_for('main.conflict_export', export_type='movement', **query_base) }}">Movement CSV</a>
+          <a href="{{ url_for('main.conflict_export', export_type='arms', **query_base) }}">Arms CSV</a>
+        </div>
+      </div>
+
+      <div class="conflict-card">
+        <div class="conflict-card-title">Quick links</div>
+        <div class="conflict-sidebar-links">
+          <a href="{{ supply_chain_url }}">Chokepoints & naval context</a>
+          <a href="{{ alerts_url }}">Article alerts</a>
+          <a href="{{ url_for('main.diplomacy_sanctions') }}">Sanctions watch</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  // Tabs + filter drawer + active filter chips (persisted)
+  var STORAGE_KEY = 'conflictTab';
+  function activateTab(key) {
+    document.querySelectorAll('.conflict-tab').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.conflict-pane').forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-pane') === key);
+    });
+    try { localStorage.setItem(STORAGE_KEY, key); } catch (e) {}
+    // Scroll main to top for long panes
+    var main = document.querySelector('.conflict-main');
+    if (main) main.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+  var initial = null;
+  try { initial = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  if (initial && document.querySelector('.conflict-pane[data-pane="' + initial + '"]')) activateTab(initial);
+  document.querySelectorAll('.conflict-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() { activateTab(btn.getAttribute('data-tab')); });
+  });
+
+  function getLabelFor(el) {
+    if (!el || !el.id) return null;
+    var lab = document.querySelector('label[for="' + el.id + '"]');
+    return lab ? (lab.textContent || '').trim() : null;
+  }
+
+  function buildChips() {
+    var wrap = document.getElementById('conflict-active-filters');
+    var form = document.getElementById('conflict-filters-form');
+    if (!wrap || !form) return;
+    wrap.innerHTML = '';
+    var els = Array.from(form.querySelectorAll('input, select')).filter(function(el) {
+      if (!el.name) return false;
+      if (el.type === 'submit') return false;
+      if (el.id === 'incident_days') return false;
+      var v = (el.value || '').trim();
+      return v !== '';
+    });
+    if (!els.length) return;
+    els.slice(0, 12).forEach(function(el) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'conflict-filter-chip';
+      var label = getLabelFor(el) || el.name;
+      chip.textContent = label + ': ' + (el.tagName === 'SELECT' ? (el.options[el.selectedIndex] && el.options[el.selectedIndex].textContent) : el.value);
+      chip.addEventListener('click', function() {
+        var drawer = document.getElementById('conflict-filters-drawer');
+        if (drawer) drawer.open = true;
+        el.focus();
+      });
+      wrap.appendChild(chip);
+    });
+  }
+  buildChips();
+  var f = document.getElementById('conflict-filters-form');
+  if (f) f.addEventListener('change', buildChips);
+  if (f) f.addEventListener('input', function(e) {
+    if (!e || !e.target) return;
+    if (e.target.tagName === 'INPUT') buildChips();
+  });
+
+  document.querySelectorAll('[data-open-filters]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var drawer = document.getElementById('conflict-filters-drawer');
+      if (drawer) drawer.open = true;
+      var id = btn.getAttribute('data-open-filters');
+      if (id) {
+        var el = document.getElementById(id);
+        if (el) setTimeout(function() { el.focus(); }, 0);
+      }
+    });
+  });
+
+  document.querySelectorAll('.conflict-table.sortable thead th').forEach(function(th, idx) {
+    th.setAttribute('role', 'button');
+    th.setAttribute('tabindex', '0');
+    th.setAttribute('aria-sort', 'none');
+    th.addEventListener('click', function() { sortTable(th.closest('table'), idx, th); });
+    th.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sortTable(th.closest('table'), idx, th); } });
+  });
+  function sortTable(table, colIndex, thEl) {
+    var tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    var thead = table.querySelector('thead');
+    thead.querySelectorAll('th').forEach(function(h) { h.setAttribute('aria-sort', h === thEl ? (h.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending') : 'none'); });
+    var asc = thEl.getAttribute('aria-sort') === 'ascending';
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort(function(a, b) {
+      var ac = a.cells[colIndex], bc = b.cells[colIndex];
+      if (!ac || !bc) return 0;
+      var at = (ac.textContent || '').trim(), bt = (bc.textContent || '').trim();
+      var an = at.replace(/[^0-9.-]/g, '') || null, bn = bt.replace(/[^0-9.-]/g, '') || null;
+      var cmp = 0;
+      if (an != null && bn != null && !isNaN(parseFloat(an)) && !isNaN(parseFloat(bn))) cmp = parseFloat(an) - parseFloat(bn);
+      else cmp = at.localeCompare(bt, undefined, { numeric: true });
+      return asc ? cmp : -cmp;
+    });
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  }
+})();
+</script>
+{% if arms_chart_suppliers or arms_chart_recipients or arms_chart_years %}
+<script>
+(function() {
+  if (typeof Chart === 'undefined') return;
+  var suppliers = {{ (arms_chart_suppliers or []) | tojson }};
+  var recipients = {{ (arms_chart_recipients or []) | tojson }};
+  var years = {{ (arms_chart_years or []) | tojson }};
+  if (suppliers.length && document.getElementById('arms-chart-suppliers')) {
+    new Chart(document.getElementById('arms-chart-suppliers'), {
+      type: 'bar',
+      data: { labels: suppliers.map(function(s) { return s.supplier_country || ''; }), datasets: [{ label: 'Value (USD m)', data: suppliers.map(function(s) { return s.total || 0; }), backgroundColor: 'rgba(59, 130, 246, 0.6)' }] },
+      options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+    });
+  }
+  if (recipients.length && document.getElementById('arms-chart-recipients')) {
+    new Chart(document.getElementById('arms-chart-recipients'), {
+      type: 'bar',
+      data: { labels: recipients.map(function(r) { return r.recipient_country || ''; }), datasets: [{ label: 'Value (USD m)', data: recipients.map(function(r) { return r.total || 0; }), backgroundColor: 'rgba(34, 197, 94, 0.6)' }] },
+      options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+    });
+  }
+  if (years.length && document.getElementById('arms-chart-years')) {
+    years.sort(function(a, b) { return (a.year || 0) - (b.year || 0); });
+    new Chart(document.getElementById('arms-chart-years'), {
+      type: 'line',
+      data: { labels: years.map(function(y) { return y.year || ''; }), datasets: [{ label: 'Total value (USD m)', data: years.map(function(y) { return y.total || 0; }), borderColor: '#8b5cf6', fill: false }] },
+      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+  }
+})();
+</script>
+{% endif %}
+{% endblock %}

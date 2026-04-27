@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Edit approval rating — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Edit approval rating</h1>
+  <p class="page-intro"><a href="{{ url_for('main.approval_protests') }}">← Approval & protests</a></p>
+
+  <form method="post" class="diplomacy-form" action="{{ url_for('main.approval_edit', rating_id=rating.id) }}">
+    <label for="country_code">Country code *</label>
+    <input type="text" id="country_code" name="country_code" required maxlength="10" value="{{ rating.country_code or '' }}" list="country_codes">
+    <datalist id="country_codes">{% for c in (countries or []) %}<option value="{{ c.country_code }}">{{ c.country_name }}</option>{% endfor %}</datalist>
+    <label for="country_name">Country name *</label>
+    <input type="text" id="country_name" name="country_name" required value="{{ rating.country_name or '' }}" list="country_names">
+    <datalist id="country_names">{% for c in (countries or []) %}<option value="{{ c.country_name }}">{{ c.country_code }}</option>{% endfor %}</datalist>
+    <label for="subject">Subject *</label>
+    <input type="text" id="subject" name="subject" required value="{{ rating.subject or '' }}" placeholder="e.g. President">
+    <label for="approval_pct">Approval % *</label>
+    <input type="number" id="approval_pct" name="approval_pct" required min="0" max="100" step="0.1" value="{{ rating.approval_pct or '' }}">
+    <label for="poll_date">Poll date</label>
+    <input type="date" id="poll_date" name="poll_date" value="{{ (rating.poll_date or '')[:10] }}">
+    <label for="source">Source</label>
+    <input type="text" id="source" name="source" value="{{ rating.source or '' }}">
+    <label for="poll_url">Poll URL</label>
+    <input type="url" id="poll_url" name="poll_url" value="{{ rating.poll_url or '' }}">
+    <label for="sample_size">Sample size</label>
+    <input type="number" id="sample_size" name="sample_size" min="0" value="{{ rating.sample_size or '' }}">
+    <button type="submit">Save</button>
+  </form>
+  <form method="post" action="{{ url_for('main.approval_delete', rating_id=rating.id) }}" class="delete-form" onsubmit="return confirm('Delete this approval rating?');">
+    <button type="submit" class="btn-danger">Delete</button>
+  </form>
+{% endblock %}

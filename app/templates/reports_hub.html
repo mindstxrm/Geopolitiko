@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% block title %}Reports — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <a href="#reports-main" class="skip-link">Skip to report types</a>
+
+  <div class="reports-workspace">
+    <header class="reports-command-strip no-print">
+      <div class="reports-command-strip-top">
+        <h1 class="reports-title">Reports</h1>
+        <details class="reports-about">
+          <summary>About</summary>
+          <p>Build custom briefings, generate scenario outlooks, and export digests or scenario engine outputs.</p>
+        </details>
+        <div class="reports-command-actions">
+          <button type="button" class="reports-filters-toggle" id="reports-filters-toggle" aria-expanded="false" aria-controls="reports-sidebar">Categories</button>
+          <button type="button" class="btn btn-secondary reports-copy-hub-link" data-url="{{ request.url }}">Copy link</button>
+          <a href="{{ url_for('main.workspace', layout='4', t1=url_for('main.reports_hub'), t2=url_for('main.scenarios_outlook'), t3=url_for('main.scenario_engine'), t4='/risk') }}" class="btn btn-secondary">Open in Workspace</a>
+        </div>
+      </div>
+    </header>
+
+    {% if recent_briefings %}
+    <details class="reports-recent-wrap">
+      <summary>Recent briefings ({{ recent_briefings|length }})</summary>
+      <section class="reports-hub-recent" aria-label="Recent briefings">
+        <ul class="reports-hub-recent-list">
+          {% for b in recent_briefings %}
+          <li><a href="{{ url_for('main.export_briefing_load', briefing_id=b.id) }}">Open</a> — {{ b.name }} ({{ b.article_ids|length }} articles)</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </details>
+    {% endif %}
+
+    <div class="reports-sidebar-backdrop" id="reports-sidebar-backdrop" hidden aria-hidden="true"></div>
+
+    <section id="reports-main" class="reports-main-layout">
+      <aside class="reports-sidebar" id="reports-sidebar" aria-label="Report categories">
+        <button type="button" class="reports-sidebar-close" id="reports-sidebar-close" aria-label="Close categories">×</button>
+        <h2 class="reports-sidebar-title">Report categories</h2>
+        <div class="reports-category-list" role="tablist" aria-label="Report categories">
+          <button type="button" class="reports-category-btn is-active" data-category="all" role="tab" aria-selected="true">All</button>
+          <button type="button" class="reports-category-btn" data-category="build" role="tab" aria-selected="false">Build</button>
+          <button type="button" class="reports-category-btn" data-category="outlook" role="tab" aria-selected="false">Outlook</button>
+          <button type="button" class="reports-category-btn" data-category="digests" role="tab" aria-selected="false">Digests</button>
+          <button type="button" class="reports-category-btn" data-category="scenario" role="tab" aria-selected="false">Scenario exports</button>
+          <button type="button" class="reports-category-btn" data-category="synthesis" role="tab" aria-selected="false">Synthesis</button>
+        </div>
+      </aside>
+
+      <div class="reports-canvas">
+        <div class="reports-cards-grid">
+          <article class="reports-hub-card reports-action-card" data-category="build" data-title="Build custom briefing" data-badge="Export-ready" data-primary-label="Open briefing builder" data-primary-url="{{ url_for('main.export_briefing') }}" data-help="Open the builder, add article IDs (from feed or URL), set title and intro, then Preview and export PDF or DOCX. You can also load from feed, saved view, watchlist, or alert.">
+            <div class="reports-card-header">
+              <h2><a href="{{ url_for('main.export_briefing') }}">Build custom briefing</a></h2>
+              <span class="reports-card-badge">Export-ready</span>
+            </div>
+            <p>Select articles from the feed or paste article IDs, then export as PDF or DOCX.</p>
+            <details class="reports-hub-how"><summary>How to</summary><p>Open the builder, add article IDs (from feed or URL), set title and intro, then Preview and export PDF or DOCX. You can also load from feed, saved view, watchlist, or alert.</p></details>
+            <p class="reports-card-actions">
+              <a href="{{ url_for('main.export_briefing') }}" class="btn btn-primary">Open briefing builder</a>
+              <button type="button" class="btn-link reports-copy-card-link" data-url="{{ url_for('main.export_briefing') }}">Copy link</button>
+            </p>
+          </article>
+
+          <article class="reports-hub-card reports-action-card" data-category="outlook" data-title="10-year risk outlook" data-badge="Narrative" data-primary-label="Generate outlook" data-primary-url="{{ url_for('main.scenarios_outlook') }}" data-help="Choose an optional scenario and horizon, then view the report. Use Print / Save as PDF, copy report link, copy markdown, or download markdown.">
+            <div class="reports-card-header">
+              <h2><a href="{{ url_for('main.scenarios_outlook') }}">10-year risk outlook</a></h2>
+              <span class="reports-card-badge">Narrative</span>
+            </div>
+            <p>Probability-weighted, scenario-informed outlook with shareable export options.</p>
+            <details class="reports-hub-how"><summary>How to</summary><p>Choose an optional scenario and horizon, then view the report. Use Print / Save as PDF, copy report link, copy markdown, or download markdown.</p></details>
+            <p class="reports-card-actions">
+              <a href="{{ url_for('main.scenarios_outlook') }}" class="btn btn-primary">Generate outlook</a>
+              <button type="button" class="btn-link reports-copy-card-link" data-url="{{ url_for('main.scenarios_outlook') }}">Copy link</button>
+            </p>
+          </article>
+
+          <article class="reports-hub-card reports-action-card" data-category="digests" data-title="Digests" data-badge="Fast" data-primary-label="View digests" data-primary-url="{{ url_for('main.insights', _anchor='insights-digests') }}" data-help="Go to Insights, open a digest, then use Export PDF to save.">
+            <div class="reports-card-header">
+              <h2><a href="{{ url_for('main.insights') }}">Digests</a></h2>
+              <span class="reports-card-badge">Fast</span>
+            </div>
+            <p>Daily and weekly digests from Insights with one-click PDF export.</p>
+            <details class="reports-hub-how"><summary>How to</summary><p>Go to Insights, open a digest, then use Export PDF to save.</p></details>
+            <p class="reports-card-actions">
+              <a href="{{ url_for('main.insights') }}#insights-digests" class="btn btn-primary">View digests</a>
+              <button type="button" class="btn-link reports-copy-card-link" data-url="{{ url_for('main.insights', _anchor='insights-digests') }}">Copy link</button>
+            </p>
+          </article>
+
+          <article class="reports-hub-card reports-action-card" data-category="synthesis" data-title="Higher-order synthesis" data-badge="Deep analysis" data-primary-label="Open synthesis docs" data-primary-url="{{ url_for('main.help_page', _anchor='synthesis') }}" data-help="Review synthesis references and workflow docs, then access synthesis outputs from the hub.">
+            <div class="reports-card-header">
+              <h2><a href="{{ url_for('main.synthesis_hub') }}">Higher-order synthesis</a></h2>
+              <span class="reports-card-badge">Deep analysis</span>
+            </div>
+            <p>Country operating pictures, thematic briefings, and divergence detection from cross-signal synthesis.</p>
+            <p class="reports-card-actions">
+              <a href="{{ url_for('main.help_page', _anchor='synthesis') }}" class="btn btn-primary">Synthesis docs</a>
+              <button type="button" class="btn-link reports-copy-card-link" data-url="{{ url_for('main.help_page', _anchor='synthesis') }}">Copy link</button>
+            </p>
+          </article>
+
+          <article class="reports-hub-card reports-action-card" data-category="scenario" data-title="Scenario Engine exports" data-badge="Export-ready" data-primary-label="Open Scenario Engine" data-primary-url="{{ url_for('main.scenario_engine') }}" data-help="Run a scenario, then export policy memo, risk briefing, investor note, or executive summary.">
+            <div class="reports-card-header">
+              <h2><a href="{{ url_for('main.scenario_engine') }}">Scenario Engine exports</a></h2>
+              <span class="reports-card-badge">Export-ready</span>
+            </div>
+            <p>After running a scenario, export policy memo, risk briefing, investor note, or executive summary.</p>
+            <details class="reports-hub-how"><summary>How to</summary><p>Run a scenario from Scenario Engine, then use export options to download DOCX and other formats.</p></details>
+            <p class="reports-card-actions">
+              <a href="{{ url_for('main.scenario_engine') }}" class="btn btn-primary">Scenario Engine</a>
+              <button type="button" class="btn-link reports-copy-card-link" data-url="{{ url_for('main.scenario_engine') }}">Copy link</button>
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <aside class="reports-inspector" id="reports-inspector" aria-label="Selected report details">
+        <h3 class="reports-inspector-title">Selected report</h3>
+        <p class="reports-inspector-empty" id="reports-inspector-empty">Select a report card to view quick guidance and direct action.</p>
+        <div class="reports-inspector-content" id="reports-inspector-content" hidden>
+          <p class="reports-inspector-badge" id="reports-inspector-badge"></p>
+          <h4 class="reports-inspector-name" id="reports-inspector-name"></h4>
+          <p class="reports-inspector-help" id="reports-inspector-help"></p>
+          <p class="reports-inspector-actions">
+            <a href="#" class="btn btn-primary" id="reports-inspector-open">Open</a>
+            <button type="button" class="btn-link reports-copy-card-link" id="reports-inspector-copy" data-url="">Copy link</button>
+          </p>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+  (function () {
+    function copyUrl(btn, url) {
+      if (!url) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = btn.getAttribute('data-original') || 'Copy link'; }, 2000); });
+      } else {
+        var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = btn.getAttribute('data-original') || 'Copy link'; }, 2000);
+      }
+    }
+    document.querySelectorAll('.reports-copy-hub-link, .reports-copy-card-link').forEach(function (btn) {
+      btn.setAttribute('data-original', btn.textContent);
+      btn.addEventListener('click', function () { copyUrl(btn, btn.getAttribute('data-url') || window.location.href); });
+    });
+
+    var categoryBtns = document.querySelectorAll('.reports-category-btn[data-category]');
+    var cards = document.querySelectorAll('.reports-action-card[data-category]');
+    function applyCategory(category) {
+      categoryBtns.forEach(function (btn) {
+        var active = btn.getAttribute('data-category') === category;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      cards.forEach(function (card) {
+        var show = category === 'all' || card.getAttribute('data-category') === category;
+        card.hidden = !show;
+      });
+    }
+    categoryBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () { applyCategory(btn.getAttribute('data-category')); });
+    });
+
+    var inspectorEmpty = document.getElementById('reports-inspector-empty');
+    var inspectorContent = document.getElementById('reports-inspector-content');
+    var inspectorBadge = document.getElementById('reports-inspector-badge');
+    var inspectorName = document.getElementById('reports-inspector-name');
+    var inspectorHelp = document.getElementById('reports-inspector-help');
+    var inspectorOpen = document.getElementById('reports-inspector-open');
+    var inspectorCopy = document.getElementById('reports-inspector-copy');
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a, button, summary')) return;
+        if (inspectorEmpty) inspectorEmpty.hidden = true;
+        if (inspectorContent) inspectorContent.hidden = false;
+        if (inspectorBadge) inspectorBadge.textContent = card.getAttribute('data-badge') || '';
+        if (inspectorName) inspectorName.textContent = card.getAttribute('data-title') || '';
+        if (inspectorHelp) inspectorHelp.textContent = card.getAttribute('data-help') || '';
+        var openUrl = card.getAttribute('data-primary-url') || '#';
+        if (inspectorOpen) inspectorOpen.setAttribute('href', openUrl);
+        if (inspectorCopy) inspectorCopy.setAttribute('data-url', openUrl);
+      });
+    });
+
+    var sidebar = document.getElementById('reports-sidebar');
+    var sidebarOpen = document.getElementById('reports-filters-toggle');
+    var sidebarClose = document.getElementById('reports-sidebar-close');
+    var backdrop = document.getElementById('reports-sidebar-backdrop');
+    function openSidebar() {
+      if (!sidebar) return;
+      sidebar.classList.add('open');
+      if (backdrop) { backdrop.hidden = false; backdrop.setAttribute('aria-hidden', 'false'); }
+      if (sidebarOpen) sidebarOpen.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('reports-sidebar-active');
+    }
+    function closeSidebar() {
+      if (!sidebar) return;
+      sidebar.classList.remove('open');
+      if (backdrop) { backdrop.hidden = true; backdrop.setAttribute('aria-hidden', 'true'); }
+      if (sidebarOpen) sidebarOpen.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('reports-sidebar-active');
+    }
+    if (sidebarOpen) sidebarOpen.addEventListener('click', openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    if (backdrop) backdrop.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('reports-sidebar-active')) closeSidebar();
+    });
+  })();
+  </script>
+{% endblock %}

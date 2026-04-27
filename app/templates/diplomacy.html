@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% block title %}Diplomacy & Treaty Intelligence — Geopolitical News{% endblock %}
+{% block content %}
+  <div class="diplomacy-workspace">
+    <header class="diplomacy-top">
+      <div class="diplomacy-title-row">
+        <div>
+          <h1 class="page-title">Diplomacy & Treaty Intelligence</h1>
+          <p class="page-intro diplomacy-subtitle">Agreements, sanctions registry, UN voting alignment, and treaty tools.</p>
+        </div>
+        <div class="diplomacy-quick-actions" aria-label="Quick actions">
+          <a class="diplomacy-chip" href="{{ url_for('main.diplomacy_treaties') }}">Agreements</a>
+          <a class="diplomacy-chip" href="{{ sanctions_watch_url }}">Sanctions</a>
+          <a class="diplomacy-chip" href="{{ url_for('main.diplomacy_alignment') }}">UN voting</a>
+          <a class="diplomacy-chip" href="{{ relationship_mapper_url }}">Mapper</a>
+          <a class="diplomacy-chip diplomacy-chip-secondary" href="{{ conflict_dashboard_url }}">Conflict</a>
+        </div>
+      </div>
+
+      {% if diplomacy_summary %}
+      <div class="diplomacy-kpi-strip">
+        <div class="diplomacy-kpi">
+          <div class="kpi-num">{{ diplomacy_summary.treaty_count or 0 }}</div>
+          <div class="kpi-label">Treaties</div>
+        </div>
+        <div class="diplomacy-kpi">
+          <div class="kpi-num">{{ diplomacy_summary.sanctions_count or 0 }}</div>
+          <div class="kpi-label">Sanctions</div>
+        </div>
+        <div class="diplomacy-kpi">
+          <div class="kpi-num">{{ diplomacy_summary.escalation_count or 0 }}</div>
+          <div class="kpi-label">Escalation</div>
+        </div>
+        <div class="diplomacy-kpi diplomacy-kpi-wide">
+          <div class="kpi-label">Last updated</div>
+          <div class="kpi-meta">{% if diplomacy_summary.last_updated %}{{ diplomacy_summary.last_updated[:10] }}{% else %}—{% endif %}{% if diplomacy_treaties_rss_url %} · <a href="{{ diplomacy_treaties_rss_url }}">RSS</a>{% endif %}</div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="diplomacy-tabs" role="tablist" aria-label="Diplomacy sections">
+        <button type="button" class="diplomacy-tab active" data-tab="overview" role="tab" aria-selected="true">Overview</button>
+        <button type="button" class="diplomacy-tab" data-tab="agreements" role="tab" aria-selected="false">Agreements</button>
+        <button type="button" class="diplomacy-tab" data-tab="sanctions" role="tab" aria-selected="false">Sanctions</button>
+        <button type="button" class="diplomacy-tab" data-tab="un" role="tab" aria-selected="false">UN voting</button>
+        <button type="button" class="diplomacy-tab" data-tab="tools" role="tab" aria-selected="false">Tools</button>
+        <button type="button" class="diplomacy-tab" data-tab="legislative" role="tab" aria-selected="false">Legislative</button>
+      </div>
+    </header>
+
+    <div class="diplomacy-body">
+      <main class="diplomacy-main">
+        <section class="diplomacy-pane active" data-pane="overview" role="tabpanel">
+          {% if recent_treaties or recent_sanctions or un_resolutions or recent_un_votes %}
+          <div class="diplomacy-activity-grid">
+            <div class="diplomacy-mini-card">
+              <div class="mini-card-title">Recently added treaties</div>
+              {% if recent_treaties %}
+              <ul class="diplomacy-preview-list">
+                {% for t in recent_treaties[:5] %}
+                <li><a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}">{{ t.name }}</a> <span class="meta">({{ t.treaty_type }})</span></li>
+                {% endfor %}
+              </ul>
+              <div class="mini-card-cta"><a href="{{ url_for('main.diplomacy_treaties') }}">View all</a> · <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add</a></div>
+              {% else %}
+              <p class="sidebar-empty">No treaties yet. <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add one</a>.</p>
+              {% endif %}
+            </div>
+
+            <div class="diplomacy-mini-card">
+              <div class="mini-card-title">Recent sanctions</div>
+              {% if recent_sanctions %}
+              <ul class="diplomacy-preview-list">
+                {% for s in recent_sanctions[:6] %}
+                <li>{{ s.imposing_country }} → {{ s.target_country }}{% if s.measure_type %} <span class="meta">({{ s.measure_type }})</span>{% endif %}</li>
+                {% endfor %}
+              </ul>
+              <div class="mini-card-cta"><a href="{{ url_for('main.diplomacy_sanctions') }}">View all</a> · <a href="{{ url_for('main.diplomacy_sanctions_global') }}">Global list</a></div>
+              {% else %}
+              <p class="sidebar-empty">No sanctions recorded.</p>
+              {% endif %}
+            </div>
+
+            <div class="diplomacy-mini-card">
+              <div class="mini-card-title">UN voting</div>
+              {% if un_resolutions or recent_un_votes %}
+              <ul class="diplomacy-preview-list">
+                {% for r in un_resolutions[:5] %}
+                <li>{{ r.resolution_id }} <span class="meta">({{ (r.vote_date or '')[:10] }})</span></li>
+                {% endfor %}
+                {% if not un_resolutions and recent_un_votes %}
+                {% for v in recent_un_votes[:5] %}
+                <li>{{ v.resolution_id }} — {{ v.country_code }}: {{ v.vote or '—' }} <span class="meta">({{ (v.vote_date or '')[:10] }})</span></li>
+                {% endfor %}
+                {% endif %}
+              </ul>
+              <div class="mini-card-cta"><a href="{{ url_for('main.diplomacy_alignment') }}">Votes & alignment</a> · <a href="{{ url_for('main.diplomacy_alignment') }}#sync">Sync</a></div>
+              {% else %}
+              <p class="sidebar-empty">No UN vote data. <a href="{{ url_for('main.diplomacy_alignment') }}">Sync from UNIGE</a>.</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="diplomacy-main-grid">
+            <div class="diplomacy-card">
+              <h2><a href="{{ url_for('main.diplomacy_treaties') }}">Agreements database</a></h2>
+              <p>Bilateral agreements, defense pacts, trade agreements, investment treaties.</p>
+              {% if treaties %}
+              <ul class="diplomacy-preview-list">
+                {% for t in treaties[:5] %}
+                <li><a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}">{{ t.name }}</a> <span class="meta">({{ t.treaty_type }})</span></li>
+                {% endfor %}
+              </ul>
+              <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_treaties') }}">View all</a> · <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add treaty</a></p>
+              {% else %}
+              <p class="sidebar-empty">No treaties yet. <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add one</a>.</p>
+              {% endif %}
+            </div>
+
+            <div class="diplomacy-card">
+              <h2><a href="{{ url_for('main.diplomacy_sanctions') }}">Sanctions registry</a></h2>
+              <p>Who imposed sanctions on whom, measure type, dates.</p>
+              <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_sanctions') }}">View all</a> · <a href="{{ url_for('main.diplomacy_sanctions_global') }}">Global sanctions</a></p>
+            </div>
+
+            <div class="diplomacy-card">
+              <h2><a href="{{ url_for('main.diplomacy_alignment') }}">UN voting &amp; alignment</a></h2>
+              <p>UN General Assembly votes, resolutions, and which countries vote together.</p>
+              <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_alignment') }}">View</a> · <a href="{{ url_for('main.diplomacy_alignment') }}#sync">Sync</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="diplomacy-pane" data-pane="agreements" role="tabpanel">
+          <div class="diplomacy-focus-card">
+            <h2>Agreements</h2>
+            <p class="muted">Search and filter the full database.</p>
+            <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_treaties') }}">Open Agreements database →</a> · <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add treaty</a></p>
+          </div>
+        </section>
+
+        <section class="diplomacy-pane" data-pane="sanctions" role="tabpanel">
+          <div class="diplomacy-focus-card">
+            <h2>Sanctions</h2>
+            <p class="muted">Registry of imposing → target, measures, and dates.</p>
+            <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_sanctions') }}">Open Sanctions registry →</a> · <a href="{{ url_for('main.diplomacy_sanctions_global') }}">Global list</a></p>
+          </div>
+        </section>
+
+        <section class="diplomacy-pane" data-pane="un" role="tabpanel">
+          <div class="diplomacy-focus-card">
+            <h2>UN voting</h2>
+            <p class="muted">Votes, resolutions, and alignment pairs.</p>
+            <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_alignment') }}">Open UN voting & alignment →</a> · <a href="{{ url_for('main.diplomacy_alignment') }}#sync">Sync from UNIGE</a></p>
+          </div>
+        </section>
+
+        <section class="diplomacy-pane" data-pane="tools" role="tabpanel">
+          <div class="diplomacy-main-grid">
+            <div class="diplomacy-card">
+              <h2><a href="{{ url_for('main.diplomacy_compare') }}">Treaty clause comparator</a></h2>
+              <p>AI-powered comparison of dispute resolution, termination, escalation clauses.</p>
+              <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_compare') }}">Compare two treaties</a></p>
+            </div>
+            <div class="diplomacy-card">
+              <h2><a href="{{ url_for('main.diplomacy_escalation') }}">Escalation clause monitor</a></h2>
+              <p>Treaties with escalation or retaliation clauses.</p>
+              <p class="diplomacy-cta"><a href="{{ url_for('main.diplomacy_escalation') }}">View all</a></p>
+            </div>
+            <div class="diplomacy-card">
+              <h2><a href="{{ relationship_mapper_url }}">Relationship Mapper</a></h2>
+              <p>Alliance/defense alignment network (switch to military mode).</p>
+              <p class="diplomacy-cta"><a href="{{ relationship_mapper_url }}">Open mapper</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="diplomacy-pane" data-pane="legislative" role="tabpanel">
+          <div class="diplomacy-card">
+            <h2><a href="{{ diplomacy_legislative_url }}">Legislative / policy tracker</a></h2>
+            <p>Sanction bills, defense bills, trade amendments, export controls.</p>
+            {% if legislative_bills %}
+            <ul class="diplomacy-preview-list">
+              {% for b in legislative_bills[:8] %}
+              <li><strong>{{ b.jurisdiction or '—' }}</strong> {{ (b.title or '—')[:60] }}{% if (b.title or '')|length > 60 %}…{% endif %}</li>
+              {% endfor %}
+            </ul>
+            <p class="diplomacy-cta"><a href="{{ diplomacy_legislative_url }}">View all</a></p>
+            {% else %}
+            <p class="sidebar-empty"><a href="{{ diplomacy_legislative_url }}">Legislative tracker</a></p>
+            {% endif %}
+          </div>
+        </section>
+      </main>
+
+      <aside class="diplomacy-sidebar" aria-label="Sidebar">
+        {% if treaty_counts_by_type %}
+        <div class="diplomacy-side-card">
+          <div class="side-card-title">Treaty types</div>
+          <div class="diplomacy-type-list">
+            {% for ct in treaty_counts_by_type %}
+            <div class="type-row"><span class="type-name">{{ ct.treaty_type|replace('_', ' ') }}</span><span class="type-count">{{ ct.count }}</span></div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="diplomacy-side-card">
+          <div class="side-card-title">Links</div>
+          <div class="diplomacy-side-links">
+            <a href="{{ sanctions_watch_url }}">Sanctions registry</a>
+            <a href="{{ url_for('main.diplomacy_alignment') }}">UN voting & alignment</a>
+            <a href="{{ relationship_mapper_url }}">Relationship Mapper</a>
+            <a href="{{ conflict_dashboard_url }}">Conflict / risk</a>
+          </div>
+        </div>
+
+        <div class="diplomacy-side-card">
+          <div class="side-card-title">Help</div>
+          <details class="diplomacy-help">
+            <summary>How to use this dashboard</summary>
+            <p class="muted">Use tabs for quick context, then jump into the full Agreements/Sanctions/UN screens for deep filtering and export.</p>
+          </details>
+        </div>
+      </aside>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var STORAGE_KEY = 'diplomacyTab';
+  function activate(key) {
+    document.querySelectorAll('.diplomacy-tab').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.diplomacy-pane').forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-pane') === key);
+    });
+    try { localStorage.setItem(STORAGE_KEY, key); } catch (e) {}
+    if (typeof history.replaceState !== 'undefined') {
+      history.replaceState(null, '', '#' + key);
+    }
+  }
+
+  document.querySelectorAll('.diplomacy-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() { activate(btn.getAttribute('data-tab')); });
+  });
+
+  var hash = (window.location.hash || '').replace('#', '');
+  if (hash && document.querySelector('.diplomacy-pane[data-pane="' + hash + '"]')) activate(hash);
+  else {
+    var saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (saved && document.querySelector('.diplomacy-pane[data-pane="' + saved + '"]')) activate(saved);
+  }
+})();
+</script>
+{% endblock %}

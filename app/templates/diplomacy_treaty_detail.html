@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}{{ treaty.name }} — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('main.diplomacy_treaties') }}" class="back-link">← Agreements</a></p>
+  <h1 class="page-title">{{ treaty.name }}</h1>
+  <p class="treaty-meta">
+    <span class="treaty-type">{{ treaty.treaty_type }}</span>
+    · {{ treaty.party_a }}{% if treaty.party_b %} – {{ treaty.party_b }}{% endif %}
+    {% if treaty.signed_date %} · {{ treaty.signed_date[:10] }}{% endif %}
+    {% if treaty.has_escalation_clause %}<span class="escalation-flag">Escalation clause</span>{% endif %}
+  </p>
+  {% if treaty.summary %}
+  <p class="treaty-summary">{{ treaty.summary }}</p>
+  {% endif %}
+
+  {% if relationship_mapper_url %}
+  <p><a href="{{ relationship_mapper_url }}">Compare parties in Relationship Mapper</a></p>
+  {% endif %}
+
+  {% if wto_data and wto_data.provisions %}
+  <div class="treaty-provisions">
+    <h2>RTA provisions (WTO)</h2>
+    <ul class="provision-list">
+      {% for p in wto_data.provisions %}
+      <li>{{ p }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if clauses_list %}
+  <div class="treaty-clauses">
+    <h2>Key clauses</h2>
+    <ul class="clause-list">
+      {% for c in clauses_list %}
+      <li><strong>{{ c.type|default('Clause') }}</strong>: {{ c.summary|default('') }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if escalation_detail and escalation_detail.excerpts %}
+  <div class="treaty-escalation-excerpts">
+    <h2>Escalation clause excerpts</h2>
+    <p class="escalation-confidence">Confidence: {{ escalation_detail.confidence or '—' }}</p>
+    <ul>
+      {% for ex in escalation_detail.excerpts %}
+      <li class="escalation-excerpt">{{ ex }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if treaty.document_url or (wto_data and (wto_data.agreement_links or wto_data.annex_links)) %}
+  <div class="treaty-document">
+    <h2>Agreement documents</h2>
+    {% if treaty.document_url %}
+    <p>
+      <a href="{{ treaty.document_url }}" target="_blank" rel="noopener" class="treaty-doc-link">
+        {% if treaty.document_url|lower.endswith('.pdf') %}View / download agreement (PDF){% elif treaty.document_url|lower.endswith('.docx') or treaty.document_url|lower.endswith('.doc') %}Download agreement (Word){% else %}Open agreement document{% endif %}
+      </a>
+    </p>
+    {% endif %}
+    {% if wto_data and wto_data.agreement_links %}
+    <ul class="treaty-wto-links">
+      {% for link in wto_data.agreement_links %}
+      {% if not treaty.document_url or link.url != treaty.document_url %}
+      <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label or 'Agreement' }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if wto_data and wto_data.annex_links %}
+    <p class="treaty-annex-heading"><strong>Annexes</strong></p>
+    <ul class="treaty-wto-links">
+      {% for link in wto_data.annex_links %}
+      <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label or 'Annex' }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if wto_data and wto_data.wto_docs %}
+    <p class="treaty-annex-heading"><strong>WTO consideration documents</strong></p>
+    <ul class="treaty-wto-links">
+      {% for link in wto_data.wto_docs[:10] %}
+      <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label or 'WTO document' }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if wto_data and wto_data.detail_url %}
+    <p><a href="{{ wto_data.detail_url }}" target="_blank" rel="noopener" class="treaty-wto-detail">View full RTA card on WTO RTA Database →</a></p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="treaty-full-text">
+    <h2>Full text</h2>
+    {% if treaty.full_text %}
+    <pre class="treaty-text-pre">{{ treaty.full_text }}</pre>
+    {% elif treaty.document_url %}
+    <p class="treaty-text-empty">Full text is available in the agreement document above. <a href="{{ url_for('main.diplomacy_treaty_edit', treaty_id=treaty.id) }}">Add extracted text here</a> for search and clause comparison.</p>
+    {% else %}
+    <p class="treaty-text-empty">Full text not yet added. <a href="{{ url_for('main.diplomacy_treaty_edit', treaty_id=treaty.id) }}">Edit agreement</a> to add the document link (PDF/DOCX) and/or paste the full text.</p>
+    {% endif %}
+  </div>
+
+  {% if treaty.source_url and treaty.source_url != treaty.document_url %}
+  <p><a href="{{ treaty.source_url }}" target="_blank" rel="noopener">Source / reference</a></p>
+  {% endif %}
+  {% if related_treaties %}
+  <div class="related-treaties">
+    <h2>Related treaties</h2>
+    <p>Other agreements involving the same parties.</p>
+    <ul class="treaty-list">
+      {% for r in related_treaties %}
+      <li><a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=r.id) }}">{{ r.name }}</a>
+        <span class="meta">{{ r.treaty_type }}{% if r.signed_date %} · {{ r.signed_date[:10] }}{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <p>
+    <a href="{{ url_for('main.diplomacy_treaty_edit', treaty_id=treaty.id) }}">Edit agreement</a>
+    · <form method="post" action="{{ url_for('main.diplomacy_treaty_scan_escalation', treaty_id=treaty.id) }}" class="inline-form" style="display:inline;">
+      <button type="submit">Scan for escalation clause (AI)</button>
+    </form>
+    · <a href="{{ url_for('main.diplomacy_compare') }}?treaty_id_a={{ treaty.id }}">Use in clause comparator</a>
+    {% if relationship_mapper_url %} · <a href="{{ relationship_mapper_url }}">Relationship Mapper</a>{% endif %}
+  </p>
+{% endblock %}

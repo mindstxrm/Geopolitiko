@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Notifications — Intelligence Messaging{% endblock %}
+{% block body_extra_class %} terminal-messaging-page{% endblock %}
+{% block content %}
+<div class="messaging-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+    <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> <span class="breadcrumb-sep">›</span> Notifications
+  </nav>
+  <h1 class="page-title">Notifications</h1>
+  <p class="page-intro">@mentions and other activity.</p>
+
+  {% if not notifications %}
+  <p class="empty-state">No notifications.</p>
+  {% else %}
+  <ul class="notification-list">
+    {% for n in notifications %}
+    <li class="notification-item {{ 'unread' if not n.read_at else '' }}">
+      <a href="{{ url_for('main.messaging_channel', slug=n.channel_slug) }}?message_id={{ n.message_id }}">{{ n.channel_name }} — {{ n.kind }}</a>
+      <time class="notif-time">{{ n.created_at[:19].replace('T', ' ') if n.created_at else '' }}</time>
+      {% if not n.read_at %}
+      <form method="post" action="{{ url_for('main.messaging_notification_mark_read_route', nid=n.id) }}" class="inline notif-mark-read">
+        <button type="submit" class="btn-link">Mark read</button>
+      </form>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

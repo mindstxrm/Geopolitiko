@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Escalation Trajectory — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.synthesis_hub') }}" class="back-link">← Synthesis</a>
+      <h1>Escalation Trajectory</h1>
+      <p class="synthesis-meta">Last {{ data.days }} days · Trend: <strong>{{ data.trend }}</strong></p>
+      <form method="get" class="synthesis-days-form">
+        <label for="days">Days</label>
+        <select name="days" id="days" onchange="this.form.submit()">
+          <option value="7" {{ 'selected' if data.days == 7 else '' }}>7</option>
+          <option value="14" {{ 'selected' if data.days == 14 else '' }}>14</option>
+          <option value="30" {{ 'selected' if data.days == 30 else '' }}>30</option>
+          <option value="90" {{ 'selected' if data.days == 90 else '' }}>90</option>
+        </select>
+      </form>
+    </header>
+
+    <section class="synthesis-summary">
+      <h2>Trend Summary</h2>
+      <div class="synthesis-prose">{{ data.narrative }}</div>
+    </section>
+
+    <section class="trajectory-data">
+      <h2>Data</h2>
+      <ul>
+        <li>Composite recent avg (last 7): {{ "%.2f"|format(data.avg_recent) }}</li>
+        <li>Prior avg: {{ "%.2f"|format(data.avg_prior) }}</li>
+        <li>Forward Risk Index (current): {{ data.fri_composite }}</li>
+        <li>Max country risk: {{ data.max_risk }}</li>
+      </ul>
+      {% if data.gepi_series %}
+      <h3>GEPI series (last 14)</h3>
+      <ul class="trajectory-series">
+        {% for s in data.gepi_series[-14:] %}
+        <li>{{ s.date }}: {{ s.score }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.impact_series %}
+      <h3>Article impact by day (last 14)</h3>
+      <ul class="trajectory-series">
+        {% for s in data.impact_series[-14:] %}
+        <li>{{ s.date }}: avg {{ s.avg_impact }} ({{ s.count }} articles)</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+    <p class="synthesis-links"><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> · <a href="{{ url_for('main.help_page', _anchor='synthesis') }}">Synthesis</a></p>
+  </article>
+{% endblock %}

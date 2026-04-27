@@ -1,0 +1,25 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Scenario #{{ s.id }} — Analyst Desk{% endblock %}
+{% block body %}
+<p><a href="{{ url_for('analyst_desk.index') }}">← Inbox</a></p>
+<div class="panel">
+  <h2>{{ s.scope_type|title }} {{ s.scope_id }} — {{ s.scenario_type|title }}</h2>
+  <p class="muted">
+    Probability: {{ "%.2f"|format(s.probability_estimate or 0) }} · Generated: {{ s.generated_at }} · Agent: {{ s.generated_by_agent or '—' }}
+  </p>
+  {% if s.trigger_conditions %}
+  <h3 style="margin-top:1rem;">Trigger conditions</h3>
+  <ul>
+    {% for t in s.trigger_conditions %}
+    <li>{{ t }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
+<div class="panel">
+  <h2>Scenario text</h2>
+  <pre style="white-space: pre-wrap; font-family: inherit; margin: 0;">{{ s.scenario_text }}</pre>
+</div>
+{% endblock %}
+

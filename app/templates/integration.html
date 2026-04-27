@@ -1,0 +1,484 @@
+{% extends "base.html" %}
+{% block title %}Countries & Regions — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <div class="integration-header">
+    <h1 class="page-title">Countries & Regions</h1>
+    <p class="page-intro integration-subtitle">Country operating sheets: fragility, systemic risk, and macro exposure.</p>
+    <details class="integration-help">
+      <summary>What’s in this table?</summary>
+      <div class="integration-help-body">
+        <p>Trade flows, debt distress, capital flight, reserves, FX vulnerability, and energy import exposure. Use filters to narrow; click a row to preview, or open the full country sheet.</p>
+      </div>
+    </details>
+  </div>
+
+  {% if latest_updated %}
+  <p class="integration-freshness">Integration data as of <time datetime="{{ latest_updated }}">{{ (latest_updated or '')[:19].replace('T', ' ') }} UTC</time>.</p>
+  {% endif %}
+
+  <div class="integration-quick-links compact" aria-label="Quick links">
+    <a href="{{ url_for('main.relationship_mapper') }}">Mapper</a>
+    <a href="{{ url_for('main.situation_room') }}">Map</a>
+    <a href="{{ url_for('main.integration_dashboard', sort='combined_systemic_risk_score', order='desc', per_page=50) }}">Top risk</a>
+    <a href="{{ url_for('main.integration_dashboard', sort='geopolitical_fragility_score', order='desc', per_page=50) }}">Top fragility</a>
+    <button type="button" class="integration-copy-link" data-url="{{ request.url }}">Copy link</button>
+    <details class="integration-quick-more">
+      <summary>More</summary>
+      <div class="integration-quick-more-menu">
+        <a href="{{ url_for('main.diplomacy_alignment') }}">UN alignment</a>
+        <a href="{{ url_for('main.diplomacy_dashboard') }}">Diplomacy</a>
+      </div>
+    </details>
+  </div>
+
+  {% if top_regions_by_risk and not selected_region %}
+  <section class="integration-regional-summary">
+    <h2 class="sr-only">Regional summary</h2>
+    <p><strong>{{ total_count }}</strong> countries · Avg combined risk: <strong>{{ avg_risk }}</strong> · Risk: <strong>{{ risk_high }}</strong> high · <strong>{{ risk_med }}</strong> medium · <strong>{{ risk_low }}</strong> low</p>
+    <p class="integration-top-regions">Top regions by avg risk: {% for reg, score in top_regions_by_risk %}<a href="{{ url_for('main.integration_dashboard', region=reg, sort='combined_systemic_risk_score', order='desc') }}">{{ reg }} ({{ score }})</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  </section>
+  {% endif %}
+
+  {% if selected_region %}
+  <nav class="integration-breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.integration_dashboard', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all') }}">All regions</a>
+    <span aria-hidden="true">→</span>
+    <span>{{ selected_region }}</span>
+  </nav>
+  {% endif %}
+
+  {% if macro_stress_alerts or capital_flows_summary %}
+  <details class="integration-section integration-indicator-highlights">
+    <summary><h2>Indicator highlights</h2></summary>
+    <div class="integration-highlights-grid">
+      {% if macro_stress_alerts %}
+      <div class="integration-highlight-block">
+        <h3>Macro stress alerts</h3>
+        <p class="risk-meta">Debt/GDP ≥80% or inflation ≥15%. Click country for full sheet.</p>
+        <ul class="integration-indicator-list">
+          {% for m in macro_stress_alerts %}
+          <li><a href="{{ url_for('main.country_dashboard', country_code=m.country_code) }}">{{ m.country_name or m.country_code }}</a> — Debt {{ "%.0f"|format(m.debt_to_gdp_pct or 0) }}% · Inflation {{ "%.1f"|format(m.inflation_pct or 0) }}% ({{ (m.as_of_date or '')[:10] }})</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if capital_flows_summary %}
+      <div class="integration-highlight-block">
+        <h3>Capital flow highlights</h3>
+        <p class="risk-meta">FDI inflows/outflows, portfolio flows, sovereign wealth funds.</p>
+        <ul class="integration-indicator-list">
+          {% for c in capital_flows_summary %}
+          <li><a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}">{{ c.country_name or c.country_code }}</a> — FDI in {{ "%.0f"|format(c.fdi_inflow_usd_millions or 0) }}m · FDI out {{ "%.0f"|format(c.fdi_outflow_usd_millions or 0) }}m · SWF {{ c.sovereign_wealth_fund_usd_billions or '—' }}B ({{ c.as_of_year or '—' }})</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </details>
+  {% endif %}
+
+  <section class="integration-workspace" aria-label="Countries table workspace">
+    <div class="integration-filter-strip" role="region" aria-label="Filters">
+      <form method="get" class="integration-filter-form integration-filter-form-compact">
+        <div class="integration-filter-group">
+          <input type="search" name="q" id="q" value="{{ search_q or '' }}" placeholder="Search country (name or code)" list="integration-country-datalist" aria-label="Search by country name or code">
+          <datalist id="integration-country-datalist"></datalist>
+        </div>
+        <div class="integration-filter-group">
+          <select name="region" id="region" onchange="this.form.submit()" aria-label="Region">
+            <option value="">All regions</option>
+            <option value="East Asia" {{ 'selected' if selected_region == 'East Asia' else '' }}>East Asia</option>
+            <option value="South Asia" {{ 'selected' if selected_region == 'South Asia' else '' }}>South Asia</option>
+            <option value="Southeast Asia" {{ 'selected' if selected_region == 'Southeast Asia' else '' }}>Southeast Asia</option>
+            <option value="Central Asia" {{ 'selected' if selected_region == 'Central Asia' else '' }}>Central Asia</option>
+            <option value="Middle East" {{ 'selected' if selected_region == 'Middle East' else '' }}>Middle East</option>
+            <option value="Africa" {{ 'selected' if selected_region == 'Africa' else '' }}>Africa</option>
+            <option value="Caribbean" {{ 'selected' if selected_region == 'Caribbean' else '' }}>Caribbean</option>
+            <option value="Latin America" {{ 'selected' if selected_region == 'Latin America' else '' }}>Latin America</option>
+            <option value="Europe" {{ 'selected' if selected_region == 'Europe' else '' }}>Europe</option>
+            <option value="North America" {{ 'selected' if selected_region == 'North America' else '' }}>North America</option>
+            <option value="Oceania" {{ 'selected' if selected_region == 'Oceania' else '' }}>Oceania</option>
+          </select>
+        </div>
+        <div class="integration-filter-group">
+          <select name="risk" id="risk" onchange="this.form.submit()" aria-label="Risk filter">
+            <option value="all" {{ 'selected' if risk_filter == 'all' else '' }}>Risk: All</option>
+            <option value="high" {{ 'selected' if risk_filter == 'high' else '' }}>Risk: High (≥60)</option>
+            <option value="medium" {{ 'selected' if risk_filter == 'medium' else '' }}>Risk: Medium (40–59)</option>
+            <option value="med_high" {{ 'selected' if risk_filter == 'med_high' else '' }}>Risk: ≥40</option>
+          </select>
+        </div>
+        <div class="integration-filter-group">
+          <select name="per_page" id="per_page" onchange="this.form.submit()" aria-label="Rows per page">
+            <option value="50" {{ 'selected' if per_page == 50 else '' }}>Show 50</option>
+            <option value="100" {{ 'selected' if per_page == 100 else '' }}>Show 100</option>
+            <option value="200" {{ 'selected' if per_page == 200 else '' }}>Show 200</option>
+            <option value="all" {{ 'selected' if per_page == 0 else '' }}>Show All</option>
+          </select>
+        </div>
+        <input type="hidden" name="sort" value="{{ sort or '' }}">
+        <input type="hidden" name="order" value="{{ order or 'asc' }}">
+        <input type="hidden" name="cols" value="{{ 'extended' if show_extra_cols else '' }}">
+        <button type="submit" class="integration-filter-btn">Apply</button>
+        {% if has_active_filters %}
+        <a href="{{ url_for('main.integration_dashboard') }}" class="integration-clear-filters">Clear</a>
+        {% endif %}
+      </form>
+
+      {% if region_counts_ordered and not selected_region %}
+      <div class="integration-region-chips inline" role="navigation" aria-label="Region chips">
+        {% for reg, count in region_counts_ordered %}
+        <a href="{{ url_for('main.integration_dashboard', region=reg, sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all') }}" class="integration-chip">{{ reg }} ({{ count }})</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="integration-view-toggle" role="group" aria-label="View">
+        <a class="integration-view-pill {{ 'active' if not show_extra_cols else '' }}" href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', risk=risk_filter, per_page=per_page if per_page else 'all', cols='') }}">Compact</a>
+        <a class="integration-view-pill {{ 'active' if show_extra_cols else '' }}" href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', risk=risk_filter, per_page=per_page if per_page else 'all', cols='extended') }}">Extended</a>
+      </div>
+    </div>
+
+    {% if not countries %}
+    <div class="integration-empty-state">
+      <p class="empty-state">
+        {% if has_active_filters %}
+        No countries match the current filter. Active: {% if selected_region %}region={{ selected_region }}{% endif %}{% if search_q %} search="{{ search_q }}"{% endif %}{% if risk_filter != 'all' %} risk={{ risk_filter }}{% endif %}.
+        <a href="{{ url_for('main.integration_dashboard') }}">Reset all filters</a>
+        {% else %}
+        No country data. Seed integration layer (e.g. run jobs).
+        {% endif %}
+      </p>
+    </div>
+    {% else %}
+    <div class="integration-summary-bar">
+      <span><strong>{{ total_count }}</strong> countr{{ 'y' if total_count == 1 else 'ies' }}{% if selected_region %} in {{ selected_region }}{% endif %}</span>
+      <span class="integration-risk-dist">Risk: <strong>{{ risk_high }}</strong> high · <strong>{{ risk_med }}</strong> medium · <strong>{{ risk_low }}</strong> low</span>
+    </div>
+    <p class="integration-toolbar">
+      <a href="{{ url_for('main.integration_export', region=selected_region or '', sort=sort, order=order, q=search_q or '', risk=risk_filter) }}">Export CSV</a>
+      <a href="{{ url_for('main.integration_export_excel', region=selected_region or '', sort=sort, order=order, q=search_q or '', risk=risk_filter) }}">Export Excel</a>
+    </p>
+    <p class="integration-sort-hint">Click a column header to sort. Scores 0–100 (higher = more fragile).</p>
+    <div class="integration-layout">
+      <div class="integration-table-canvas" id="integration-table-canvas">
+        <div class="integration-table-wrap integration-table-sticky-wrap">
+      <table class="integration-table">
+        <thead>
+          <tr>
+            <th class="sortable" title="Country name and ISO3 code"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='country_name', order='desc' if sort == 'country_name' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Country{% if sort == 'country_name' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Geographic region"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='region', order='desc' if sort == 'region' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Region{% if sort == 'region' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Population estimate 2026"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='population_2026', order='desc' if sort == 'population_2026' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Population{% if sort == 'population_2026' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable col-optional" data-col="land_area"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='land_area_km2', order='desc' if sort == 'land_area_km2' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Land area{% if sort == 'land_area_km2' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable col-optional" data-col="density"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='density_per_km2', order='desc' if sort == 'density_per_km2' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Density{% if sort == 'density_per_km2' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="0–100, higher = more politically fragile"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='geopolitical_fragility_score', order='desc' if sort == 'geopolitical_fragility_score' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Geo fragility{% if sort == 'geopolitical_fragility_score' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="0–100, higher = more economically fragile"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='economic_fragility_score', order='desc' if sort == 'economic_fragility_score' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Econ fragility{% if sort == 'economic_fragility_score' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="0–100, combined geopolitical + economic risk"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='combined_systemic_risk_score', order='desc' if sort == 'combined_systemic_risk_score' and order == 'asc' else 'asc', q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Combined risk{% if sort == 'combined_systemic_risk_score' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            {% if show_extra_cols %}
+            <th class="sortable" title="Trade flow as % of GDP"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='trade_flow_pct_gdp', order='desc' if sort == 'trade_flow_pct_gdp' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Trade % GDP{% if sort == 'trade_flow_pct_gdp' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Reserve months of imports"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='reserve_months_imports', order='desc' if sort == 'reserve_months_imports' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Reserve mo.{% if sort == 'reserve_months_imports' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Debt distress score 0–100"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='debt_distress_score', order='desc' if sort == 'debt_distress_score' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Debt distress{% if sort == 'debt_distress_score' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Energy import exposure %"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='energy_import_exposure_pct', order='desc' if sort == 'energy_import_exposure_pct' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Energy %{% if sort == 'energy_import_exposure_pct' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="Capital flight risk 0–100"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='capital_flight_risk', order='desc' if sort == 'capital_flight_risk' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">Cap flight{% if sort == 'capital_flight_risk' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            <th class="sortable" title="FX vulnerability 0–100"><a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort='fx_vulnerability_score', order='desc' if sort == 'fx_vulnerability_score' and order == 'asc' else 'asc', q=search_q or '', cols='extended', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">FX vuln.{% if sort == 'fx_vulnerability_score' %} {{ '↓' if order == 'desc' else '↑' }}{% endif %}</a></th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in countries %}
+          <tr class="integration-row"
+              data-code="{{ c.country_code }}"
+              data-name="{{ c.country_name }}"
+              data-region="{{ c.region or '' }}"
+              data-geo="{{ c.geopolitical_fragility_score if c.geopolitical_fragility_score is not none else '' }}"
+              data-econ="{{ c.economic_fragility_score if c.economic_fragility_score is not none else '' }}"
+              data-risk="{{ c.combined_systemic_risk_score if c.combined_systemic_risk_score is not none else '' }}"
+              data-updated="{{ (c.updated_at or '')[:10] }}">
+            <td>
+              <a href="{{ url_for('main.country_dashboard', country_code=c.country_code) }}"><strong>{{ c.country_name }}</strong></a> ({{ c.country_code }})
+              {% if (code_to_blocs or {}).get(c.country_code) %}
+              <span class="integration-bloc-tags">{% for b in (code_to_blocs or {}).get(c.country_code, [])[:5] %}<span class="integration-bloc-tag" title="{{ b }}">{{ b }}</span>{% endfor %}</span>
+              {% endif %}
+              {% if c._updated_recently %} <span class="integration-updated-badge" title="Updated in last 7 days">Updated</span>{% endif %}
+            </td>
+            <td>{{ c.region or '—' }}</td>
+            <td>{% if c.population_2026 is not none %}{{ "{:,}".format(c.population_2026) }}{% else %}—{% endif %}</td>
+            <td class="col-optional" data-col="land_area">{% if c.land_area_km2 is not none %}{{ "{:,}".format(c.land_area_km2) }}{% else %}—{% endif %}</td>
+            <td class="col-optional" data-col="density">{% if c.density_per_km2 is not none %}{{ c.density_per_km2 }}{% else %}—{% endif %}</td>
+            <td>{% if c.geopolitical_fragility_score is not none %}<span class="score-pill score-{{ 'high' if c.geopolitical_fragility_score >= 60 else ('med' if c.geopolitical_fragility_score >= 40 else 'low') }}" title="Geopolitical fragility 0–100. High ≥60, medium 40–59, low &lt;40.">{{ c.geopolitical_fragility_score }}</span>{% else %}—{% endif %}</td>
+            <td>{% if c.economic_fragility_score is not none %}<span class="score-pill score-{{ 'high' if c.economic_fragility_score >= 60 else ('med' if c.economic_fragility_score >= 40 else 'low') }}" title="Economic fragility (debt, reserves, FX, energy). High ≥60, medium 40–59.">{{ c.economic_fragility_score }}</span>{% else %}—{% endif %}</td>
+            <td>{% if c.combined_systemic_risk_score is not none %}<span class="score-pill score-{{ 'high' if c.combined_systemic_risk_score >= 60 else ('med' if c.combined_systemic_risk_score >= 40 else 'low') }}" title="Combined geopolitical + economic. High ≥60, medium 40–59, low &lt;40.">{{ c.combined_systemic_risk_score }}</span>{% else %}—{% endif %}</td>
+            {% if show_extra_cols %}
+            <td>{% if c.trade_flow_pct_gdp is not none %}{{ "%.0f"|format(c.trade_flow_pct_gdp) }}%{% else %}—{% endif %}</td>
+            <td>{% if c.reserve_months_imports is not none %}{{ "%.1f"|format(c.reserve_months_imports) }}{% else %}—{% endif %}</td>
+            <td>{% if c.debt_distress_score is not none %}{{ "%.0f"|format(c.debt_distress_score) }}{% else %}—{% endif %}</td>
+            <td>{% if c.energy_import_exposure_pct is not none %}{{ "%.0f"|format(c.energy_import_exposure_pct) }}%{% else %}—{% endif %}</td>
+            <td>{% if c.capital_flight_risk is not none %}{{ c.capital_flight_risk }}{% else %}—{% endif %}</td>
+            <td>{% if c.fx_vulnerability_score is not none %}{{ c.fx_vulnerability_score }}{% else %}—{% endif %}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      </div>
+
+      <aside class="integration-preview" id="integration-preview" aria-label="Country preview" data-open="0">
+        <div class="integration-preview-header">
+          <div>
+            <div class="integration-preview-title" id="integration-preview-title">Select a country</div>
+            <div class="integration-preview-sub" id="integration-preview-sub">Click any row to preview key scores.</div>
+          </div>
+          <button type="button" class="integration-preview-close" id="integration-preview-close" aria-label="Close preview">×</button>
+        </div>
+        <div class="integration-preview-body" id="integration-preview-body">
+          <div class="integration-preview-metrics">
+            <div class="integration-preview-metric"><span>Geo fragility</span><strong id="integration-m-geo">—</strong></div>
+            <div class="integration-preview-metric"><span>Econ fragility</span><strong id="integration-m-econ">—</strong></div>
+            <div class="integration-preview-metric"><span>Combined risk</span><strong id="integration-m-risk">—</strong></div>
+          </div>
+          <div class="integration-preview-meta" id="integration-preview-meta"></div>
+          <div class="integration-preview-actions">
+            <a href="#" class="btn btn-primary" id="integration-preview-open">Open full country sheet →</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    {% if total_pages > 1 and per_page > 0 %}
+    <nav class="integration-pagination" aria-label="Pagination">
+      <span class="integration-pagination-info">Page {{ page }} of {{ total_pages }} ({{ (page - 1) * per_page + 1 }}–{{ [page * per_page, total_count]|min }} of {{ total_count }})</span>
+      <div class="integration-pagination-links">
+        {% if page > 1 %}
+        <a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=1) }}">First</a>
+        <a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=page - 1) }}">Previous</a>
+        {% endif %}
+        {% set _ns = namespace(prev_was_ellipsis=false) %}
+        {% for p in range(1, total_pages + 1) %}
+          {% if p == page %}
+          <span class="integration-pagination-current">{{ p }}</span>
+          {% set _ns.prev_was_ellipsis = false %}
+          {% elif p <= 2 or p >= total_pages - 1 or (p >= page - 2 and p <= page + 2) %}
+          <a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=p) }}">{{ p }}</a>
+          {% set _ns.prev_was_ellipsis = false %}
+          {% elif not _ns.prev_was_ellipsis %}
+          <span class="integration-pagination-ellipsis">…</span>
+          {% set _ns.prev_was_ellipsis = true %}
+          {% endif %}
+        {% endfor %}
+        {% if page < total_pages %}
+        <a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=page + 1) }}">Next</a>
+        <a href="{{ url_for('main.integration_dashboard', region=selected_region or '', sort=sort, order=order, q=search_q or '', cols='extended' if show_extra_cols else '', risk=risk_filter, per_page=per_page if per_page else 'all', page=total_pages) }}">Last</a>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+
+    <details class="integration-compare" open>
+      <summary><h3>Compare in workspace</h3></summary>
+      <form method="get" action="{{ url_for('main.workspace') }}" class="integration-compare-form">
+        <input type="hidden" name="layout" value="4">
+        <label for="compare-t1">Country A</label>
+        <select name="t1" id="compare-t1">
+          <option value="">— Select —</option>
+          {% for c in countries_all %}<option value="/country/{{ c.country_code }}">{{ c.country_name }} ({{ c.country_code }})</option>{% endfor %}
+        </select>
+        <label for="compare-t2">Country B</label>
+        <select name="t2" id="compare-t2">
+          <option value="">— Select —</option>
+          {% for c in countries_all %}<option value="/country/{{ c.country_code }}">{{ c.country_name }} ({{ c.country_code }})</option>{% endfor %}
+        </select>
+        <label for="compare-t3">Country C</label>
+        <select name="t3" id="compare-t3">
+          <option value="">— Select —</option>
+          {% for c in countries_all %}<option value="/country/{{ c.country_code }}">{{ c.country_name }} ({{ c.country_code }})</option>{% endfor %}
+        </select>
+        <label for="compare-t4">Country D</label>
+        <select name="t4" id="compare-t4">
+          <option value="">— Select —</option>
+          {% for c in countries_all %}<option value="/country/{{ c.country_code }}">{{ c.country_name }} ({{ c.country_code }})</option>{% endfor %}
+        </select>
+        <button type="submit">Open in Workspace</button>
+      </form>
+    </details>
+    {% endif %}
+  </section>
+
+  <details class="integration-section integration-blocs-section">
+    <summary><h2>Multilateral organizations &amp; blocs</h2></summary>
+    <p class="page-intro">Major groupings for UN voting alignment. Click a bloc for voting cohesion, or a country for its dashboard.</p>
+    <input type="text" id="integration-bloc-search" placeholder="Filter blocs…" class="integration-bloc-search">
+    {% if blocs_grouped %}
+    {% for group in blocs_grouped %}
+    <h3 class="integration-bloc-category">{{ group.category }}</h3>
+    <div class="integration-blocs-grid">
+      {% for b in group.blocs %}
+      <div class="integration-bloc-card" data-bloc-name="{{ b.name|lower }}" data-bloc-key="{{ b.key|lower }}">
+        <h4><a href="{{ url_for('main.diplomacy_alignment', bloc=b.key) }}">{{ b.name }}</a></h4>
+        <p class="integration-bloc-meta">{{ b.member_count }} member{{ 's' if b.member_count != 1 else '' }}{% if b.cohesion_pct is not none %} · Cohesion {{ b.cohesion_pct }}%{% endif %}</p>
+        <div class="integration-bloc-members" data-expanded="false">
+          {% for code, name in b.members[:10] %}
+          <a href="{{ url_for('main.country_dashboard', country_code=code) }}" class="integration-bloc-chip" title="{{ name }}">{{ name or code }}</a>
+          {% endfor %}
+          {% if b.members|length > 10 %}
+          <span class="integration-bloc-more" data-total="{{ b.members|length }}">+{{ b.members|length - 10 }} more</span>
+          <span class="integration-bloc-members-extra" style="display:none;">
+            {% for code, name in b.members[10:] %}
+            <a href="{{ url_for('main.country_dashboard', country_code=code) }}" class="integration-bloc-chip" title="{{ name }}">{{ name or code }}</a>
+            {% endfor %}
+          </span>
+          {% endif %}
+        </div>
+        {% if b.members|length > 10 %}
+        <button type="button" class="integration-bloc-expand">Show all</button>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="empty-state">Bloc data unavailable.</p>
+    {% endif %}
+  </details>
+
+  <p class="risk-meta">Indicators: trade flows (% GDP), debt distress, capital flight risk, reserve months, FX vulnerability, energy import exposure. Scores 0–100 (higher = more fragile / risk).</p>
+
+  <script>
+  (function() {
+    const API_BASE = "{{ request.url_root.rstrip('/') }}/api";
+    const colsExtended = {{ 'true' if show_extra_cols else 'false' }};
+    const colsKey = "integration_cols_extended";
+
+    function loadCountryAutocomplete() {
+      const list = document.getElementById("integration-country-datalist");
+      const inp = document.getElementById("q");
+      if (!list || !inp) return;
+      fetch(API_BASE + "/integration/countries")
+        .then(r => r.json())
+        .then(data => {
+          const countries = data.countries || [];
+          list.innerHTML = countries.slice(0, 150).map(c =>
+            `<option value="${(c.name || '').replace(/"/g, '&quot;')}">${(c.code || '')}</option>`
+          ).join("");
+        })
+        .catch(() => {});
+    }
+    loadCountryAutocomplete();
+
+    function persistCols(val) {
+      try { localStorage.setItem(colsKey, val ? "1" : "0"); } catch (e) {}
+    }
+    const stored = (function() { try { return localStorage.getItem(colsKey); } catch (e) { return null; } })();
+    const wantExtended = stored !== null ? stored === "1" : colsExtended;
+    if (wantExtended !== colsExtended) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("cols", wantExtended ? "extended" : "");
+      url.searchParams.delete("page");
+      window.location.href = url.toString();
+    }
+
+    // Persist when user clicks Compact/Extended pills
+    document.querySelectorAll(".integration-view-pill").forEach(a => {
+      a.addEventListener("click", function() {
+        const href = this.getAttribute("href") || "";
+        persistCols(href.includes("cols=extended"));
+      });
+    });
+
+    document.querySelector(".integration-copy-link")?.addEventListener("click", function() {
+      const url = this.getAttribute("data-url") || window.location.href;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(url).then(() => { this.textContent = "Copied"; setTimeout(() => { this.textContent = "Copy link"; }, 2000); });
+      } else {
+        const ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta);
+        this.textContent = "Copied"; setTimeout(() => { this.textContent = "Copy link"; }, 2000);
+      }
+    });
+
+    // Preview drawer: click a row to preview key scores without navigating away
+    const preview = document.getElementById("integration-preview");
+    const closeBtn = document.getElementById("integration-preview-close");
+    const titleEl = document.getElementById("integration-preview-title");
+    const subEl = document.getElementById("integration-preview-sub");
+    const mGeo = document.getElementById("integration-m-geo");
+    const mEcon = document.getElementById("integration-m-econ");
+    const mRisk = document.getElementById("integration-m-risk");
+    const metaEl = document.getElementById("integration-preview-meta");
+    const openLink = document.getElementById("integration-preview-open");
+
+    function openPreview(row) {
+      if (!row || !preview) return;
+      const code = row.getAttribute("data-code") || "";
+      const name = row.getAttribute("data-name") || code;
+      const region = row.getAttribute("data-region") || "—";
+      const geo = row.getAttribute("data-geo") || "—";
+      const econ = row.getAttribute("data-econ") || "—";
+      const risk = row.getAttribute("data-risk") || "—";
+      const updated = row.getAttribute("data-updated") || "";
+      if (titleEl) titleEl.textContent = `${name} (${code})`;
+      if (subEl) subEl.textContent = region;
+      if (mGeo) mGeo.textContent = geo || "—";
+      if (mEcon) mEcon.textContent = econ || "—";
+      if (mRisk) mRisk.textContent = risk || "—";
+      if (metaEl) metaEl.textContent = updated ? `Updated: ${updated}` : "";
+      if (openLink) openLink.setAttribute("href", `/country/${encodeURIComponent(code)}`);
+      preview.setAttribute("data-open", "1");
+      preview.classList.add("open");
+      document.querySelectorAll(".integration-row").forEach(r => r.classList.toggle("active", r === row));
+    }
+
+    document.querySelectorAll(".integration-row").forEach(row => {
+      row.addEventListener("click", function(e) {
+        if (e.target && e.target.closest && e.target.closest("a")) return;
+        openPreview(row);
+      });
+    });
+
+    function closePreview() {
+      if (!preview) return;
+      preview.setAttribute("data-open", "0");
+      preview.classList.remove("open");
+      document.querySelectorAll(".integration-row").forEach(r => r.classList.remove("active"));
+    }
+    if (closeBtn) closeBtn.addEventListener("click", closePreview);
+
+    document.getElementById("integration-bloc-search")?.addEventListener("input", function() {
+      const q = (this.value || "").toLowerCase().trim();
+      document.querySelectorAll(".integration-bloc-card").forEach(card => {
+        const name = (card.getAttribute("data-bloc-name") || "");
+        const key = (card.getAttribute("data-bloc-key") || "");
+        const match = !q || name.includes(q) || key.includes(q);
+        card.classList.toggle("integration-bloc-hidden", !match);
+      });
+      document.querySelectorAll(".integration-bloc-category").forEach(h => {
+        const grid = h.nextElementSibling;
+        if (!grid) return;
+        const anyVisible = Array.from(grid.querySelectorAll(".integration-bloc-card")).some(c => !c.classList.contains("integration-bloc-hidden"));
+        h.classList.toggle("integration-bloc-hidden", !anyVisible);
+      });
+    });
+
+    document.querySelectorAll(".integration-bloc-expand").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const card = this.closest(".integration-bloc-card");
+        const members = card?.querySelector(".integration-bloc-members");
+        const extra = card?.querySelector(".integration-bloc-members-extra");
+        const more = card?.querySelector(".integration-bloc-more");
+        if (!members || !extra) return;
+        const expanded = members.getAttribute("data-expanded") === "true";
+        if (expanded) {
+          extra.style.display = "none";
+          if (more) more.style.display = "";
+          this.textContent = "Show all";
+        } else {
+          extra.style.display = "";
+          if (more) more.style.display = "none";
+          this.textContent = "Show less";
+        }
+        members.setAttribute("data-expanded", (!expanded).toString());
+      });
+    });
+  })();
+  </script>
+{% endblock %}

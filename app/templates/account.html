@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Account — Geopolitical Terminal{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Account
+  </nav>
+  <h1 class="page-title">Account</h1>
+  <p>Logged in as <strong>{{ current_user.username }}</strong>.</p>
+
+  <section class="account-section">
+    <h2>Profile</h2>
+    <form method="post" action="{{ url_for('main.account') }}" class="auth-form">
+      <input type="hidden" name="action" value="update_profile">
+      <label for="account-name">Name</label>
+      <input type="text" id="account-name" name="name" value="{{ current_user.name or '' }}" placeholder="Your full name">
+      <label for="account-title">Title</label>
+      <input type="text" id="account-title" name="title" value="{{ current_user.title or '' }}" placeholder="e.g. Analyst, Director">
+      <label for="account-organization">Organization</label>
+      <input type="text" id="account-organization" name="organization" value="{{ current_user.organization or '' }}" placeholder="e.g. Acme Corp">
+      <button type="submit" class="btn btn-primary">Save profile</button>
+    </form>
+  </section>
+
+  <section class="account-section">
+    <h2>Policy &amp; export defaults</h2>
+    <p class="account-hint">Used when you open the <a href="{{ url_for('main.export_briefing') }}">briefing builder</a> (you can override per export).</p>
+    <form method="post" action="{{ url_for('main.account') }}" class="auth-form">
+      <input type="hidden" name="action" value="update_policy_prefs">
+      <label for="default_sensitivity_tier">Default sensitivity label</label>
+      <select id="default_sensitivity_tier" name="default_sensitivity_tier">
+        <option value="public" {{ 'selected' if (user_prefs.get('default_sensitivity_tier') or 'internal') == 'public' else '' }}>Public / unclassified</option>
+        <option value="internal" {{ 'selected' if (user_prefs.get('default_sensitivity_tier') or 'internal') == 'internal' else '' }}>Internal use</option>
+        <option value="restricted" {{ 'selected' if (user_prefs.get('default_sensitivity_tier') or 'internal') == 'restricted' else '' }}>Restricted</option>
+      </select>
+      <label class="checkbox-label"><input type="checkbox" name="default_legal_review" value="1" {{ 'checked' if user_prefs.get('default_legal_review') else '' }}> Default “legal review required” on new briefings</label>
+      <button type="submit" class="btn btn-primary">Save policy defaults</button>
+    </form>
+  </section>
+
+  <section class="account-section">
+    <h2>API key</h2>
+    <p>Use an API key to access the REST API (e.g. <code>GET /api/articles</code>) without a browser session. Send it in the header: <code>X-API-Key: your_key</code> or <code>Authorization: Bearer your_key</code>.</p>
+    {% if api_key_created %}
+    <div class="api-key-show" role="alert">
+      <p><strong>Your new API key (copy now — it won't be shown again):</strong></p>
+      <code class="api-key-value">{{ api_key_created }}</code>
+    </div>
+    {% endif %}
+    <form method="post" action="{{ url_for('main.account') }}" class="auth-form">
+      <input type="hidden" name="action" value="create_api_key">
+      <label for="key_name">Key name (optional)</label>
+      <input type="text" id="key_name" name="key_name" placeholder="e.g. My script">
+      <button type="submit" class="btn btn-primary">Create API key</button>
+    </form>
+  </section>
+
+  <p class="auth-footer"><a href="{{ url_for('main.logout') }}">Log out</a></p>
+</div>
+{% endblock %}

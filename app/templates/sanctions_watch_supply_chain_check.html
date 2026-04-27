@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Supply chain compliance check — Sanctions Watch — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Which of my supply chains violate new export rules?</h1>
+  <p class="page-intro">Paste company names or country names (one per line). We check against the sanctions registry and entity lists (OFAC, EU, US BIS, China). Matches are by name/country; always verify with official sources.</p>
+
+  <form method="post" class="scenario-form" id="supply-chain-check-form" enctype="multipart/form-data">
+    <div class="form-row">
+      <label for="entities">Entities to check (one per line)</label>
+      <textarea id="entities" name="entities" rows="12" placeholder="e.g.&#10;Huawei&#10;Russia&#10;Sberbank&#10;Micron&#10;Iran">{{ request.form.get('entities', '') }}</textarea>
+      <p class="form-hint">
+        <button type="button" id="load-sample-entities" class="btn-secondary">Load sample list</button>
+        <span class="hint-text">Paste your own list or use the sample to try the check.</span>
+      </p>
+    </div>
+    <div class="form-row">
+      <label for="entities_file">Or upload CSV (one entity per row; first column used)</label>
+      <input type="file" id="entities_file" name="entities_file" accept=".csv" class="file-input">
+    </div>
+    <button type="submit">Check against sanctions & entity lists</button>
+  </form>
+
+  {% if history %}
+  <section class="supply-chain-history" aria-label="Recent checks">
+    <h2>Recent checks</h2>
+    <ul class="history-list">
+      {% for h in history %}
+      <li>Checked {{ h.total }} entit{{ 'y' if h.total == 1 else 'ies' }} · {{ h.matches }} match{{ 'es' if h.matches != 1 else '' }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if result %}
+  <section class="risk-section supply-chain-result">
+    <h2>Results</h2>
+    <p class="risk-meta">Checked {{ result.total_checked }} entit{{ 'y' if result.total_checked == 1 else 'ies' }}. {{ result.matches|length }} match{{ 'es' if result.matches|length != 1 else '' }} found.</p>
+    {% if not result.matches %}
+    <div class="empty-state supply-chain-empty">
+      <p><strong>No matches in our database.</strong> None of the listed entities matched current sanctions or entity list entries in our data.</p>
+      <p class="empty-note">This does not guarantee compliance. Our data is a subset of OFAC, EU, US BIS, and China lists. Always verify with official sources (OFAC, EU Consolidated List, BIS Entity List, etc.) for your due diligence.</p>
+    </div>
+    {% else %}
+    <ul class="match-list">
+      {% for m in result.matches %}
+      <li class="match-item">
+        <span class="match-entity">{{ m.entity }}</span>
+        <span class="match-type match-{{ m.match_type }}">{{ m.match_type }}</span>
+        <p class="match-detail">{{ m.detail }}</p>
+        {% if m.source_url %}
+        <p class="match-source"><a href="{{ m.source_url }}" target="_blank" rel="noopener noreferrer">Official source ↗</a></p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <p><a href="{{ url_for('main.diplomacy_sanctions') }}" class="back-link">← Sanctions & export controls</a> · <a href="{{ url_for('main.alerts_list') }}">Get alerts when sanctions change</a></p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var sample = "Huawei\nRussia\nSberbank\nMicron\nIran\nGazprombank\nChina\nNorth Korea\nRosneft\nLockheed Martin";
+  var btn = document.getElementById('load-sample-entities');
+  var ta = document.getElementById('entities');
+  if (btn && ta) {
+    btn.addEventListener('click', function() {
+      ta.value = sample;
+      ta.focus();
+    });
+  }
+})();
+</script>
+{% endblock %}

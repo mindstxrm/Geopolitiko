@@ -1,0 +1,462 @@
+{% extends "base.html" %}
+{% block title %}Treaties — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <div class="agreements-workspace">
+    <header class="agreements-top">
+      <div class="agreements-title-row">
+        <div>
+          <h1 class="page-title">Agreements database</h1>
+          <p class="page-intro agreements-subtitle">Bilateral agreements, defense pacts, trade agreements, investment treaties. <a href="{{ url_for('main.help_page') }}#glossary" title="Glossary of terms">?</a></p>
+        </div>
+        <div class="agreements-actions-row" aria-label="Actions">
+          <a class="agreements-chip" href="{{ url_for('main.diplomacy_treaty_add') }}">+ Add treaty</a>
+          {% if diplomacy_treaties_export_url %}<a class="agreements-chip" href="{{ diplomacy_treaties_export_url }}">Export CSV</a>{% endif %}
+          {% if diplomacy_treaties_export_xlsx_url %}<a class="agreements-chip" href="{{ diplomacy_treaties_export_xlsx_url }}">Export Excel</a>{% endif %}
+          <a class="agreements-chip agreements-chip-secondary" href="{{ url_for('main.diplomacy_dashboard') }}">← Diplomacy</a>
+        </div>
+      </div>
+
+      <form method="get" class="filter-form treaties-filter-form agreements-filter-form" id="agreements-filter-form">
+        <fieldset>
+          <legend class="sr-only">Filters</legend>
+          <div class="agreements-filter-strip">
+            <label for="type">Type</label>
+            <select name="type" id="type">
+              <option value="">All</option>
+              {% for tt in treaty_types %}
+              <option value="{{ tt }}" {{ 'selected' if request.args.get('type') == tt else '' }}>{{ tt.replace('_', ' ') }}</option>
+              {% endfor %}
+            </select>
+
+            <label for="status">Status</label>
+            <select name="status" id="status">
+              <option value="">All</option>
+              <option value="In Force" {{ 'selected' if status == 'In Force' else '' }}>In Force</option>
+              <option value="Inactive" {{ 'selected' if status == 'Inactive' else '' }}>Inactive</option>
+              <option value="Early announcement-Under negotiation" {{ 'selected' if status == 'Early announcement-Under negotiation' else '' }}>Under negotiation</option>
+            </select>
+
+            <label for="party">Party</label>
+            <input type="text" name="party" id="party" value="{{ party or '' }}" placeholder="Country">
+
+            <label for="search">Search</label>
+            <input type="text" name="search" id="search" value="{{ search or '' }}" placeholder="Name or text">
+
+            <button type="submit" class="agreements-apply">Apply</button>
+
+            <details class="agreements-filters-drawer" id="agreements-filters-drawer">
+              <summary class="agreements-chip agreements-chip-secondary">Filters ▾</summary>
+              <div class="agreements-filters-body">
+                <div class="treaties-filter-row">
+                  {% if regions %}
+                  <div class="treaties-filter-group">
+                    <label for="region">Region</label>
+                    <select name="region" id="region">
+                      <option value="">All regions</option>
+                      {% for r in regions %}
+                      <option value="{{ r }}" {{ 'selected' if region == r else '' }}>{{ r[:40] }}{% if r|length > 40 %}…{% endif %}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  {% endif %}
+                  {% if coverages %}
+                  <div class="treaties-filter-group">
+                    <label for="coverage">Coverage</label>
+                    <select name="coverage" id="coverage">
+                      <option value="">All</option>
+                      {% for c in coverages %}
+                      <option value="{{ c }}" {{ 'selected' if coverage == c else '' }}>{{ c[:35] }}{% if c|length > 35 %}…{% endif %}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  {% endif %}
+                  <div class="treaties-filter-group">
+                    <label for="date_from">From</label>
+                    <input type="date" name="date_from" id="date_from" value="{{ date_from or '' }}">
+                  </div>
+                  <div class="treaties-filter-group">
+                    <label for="date_to">To</label>
+                    <input type="date" name="date_to" id="date_to" value="{{ date_to or '' }}">
+                  </div>
+                  <div class="treaties-filter-group">
+                    <label for="provision">Provision</label>
+                    <input type="text" name="provision" id="provision" value="{{ provision or '' }}" placeholder="e.g. Rules of Origin">
+                  </div>
+                </div>
+
+                <div class="treaties-filter-row">
+                  <div class="treaties-filter-group treaties-filter-checkboxes">
+                    <label class="filter-checkbox"><input type="checkbox" name="source_wto" value="1" {{ 'checked' if source_wto else '' }}> WTO only</label>
+                    <label class="filter-checkbox"><input type="checkbox" name="has_documents" value="1" {{ 'checked' if has_documents else '' }}> With docs</label>
+                  </div>
+                  <div class="treaties-filter-group">
+                    <label for="sort">Sort</label>
+                    <select name="sort" id="sort">
+                      <option value="" {{ 'selected' if not order_by else '' }}>Date (newest)</option>
+                      <option value="date_asc" {{ 'selected' if order_by == 'date_asc' else '' }}>Date (oldest)</option>
+                      <option value="name" {{ 'selected' if order_by == 'name' else '' }}>Name A–Z</option>
+                      <option value="name_desc" {{ 'selected' if order_by == 'name_desc' else '' }}>Name Z–A</option>
+                      <option value="type" {{ 'selected' if order_by == 'type' else '' }}>Type</option>
+                      <option value="created" {{ 'selected' if order_by == 'created' else '' }}>Recently added</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="agreements-toolbar-row">
+            <div class="agreements-view-pills" role="tablist" aria-label="View mode">
+              <button type="button" class="agreements-pill {{ 'active' if view_mode == 'table' else '' }}" data-view="table" role="tab" aria-selected="{{ 'true' if view_mode == 'table' else 'false' }}">Table</button>
+              <button type="button" class="agreements-pill {{ 'active' if view_mode == 'card' else '' }}" data-view="card" role="tab" aria-selected="{{ 'true' if view_mode == 'card' else 'false' }}">Cards</button>
+              <button type="button" class="agreements-pill {{ 'active' if view_mode == 'timeline' else '' }}" data-view="timeline" role="tab" aria-selected="{{ 'true' if view_mode == 'timeline' else 'false' }}">Timeline</button>
+              <input type="hidden" name="view" id="view" value="{{ view_mode }}">
+            </div>
+
+            <div class="agreements-density" role="group" aria-label="Table density">
+              <button type="button" class="agreements-pill agreements-pill-small active" data-density="compact">Compact</button>
+              <button type="button" class="agreements-pill agreements-pill-small" data-density="comfortable">Comfortable</button>
+            </div>
+
+            <div class="agreements-active-filters" id="agreements-active-filters" aria-label="Active filters"></div>
+          </div>
+        </fieldset>
+      </form>
+    </header>
+
+    <div class="agreements-body">
+      <main class="agreements-main">
+
+  {% if view_mode == 'timeline' and treaties_by_year %}
+  <div class="agreements-timeline-overview">
+    <h3>Agreements by year</h3>
+    <div class="timeline-bars">
+      {% set max_cnt = treaties_by_year[0].count if treaties_by_year else 1 %}
+      {% for ty in treaties_by_year %}
+      <a href="{{ ty.filter_url }}" class="timeline-bar-link" title="{{ ty.year }}: {{ ty.count }} agreements">
+        <span class="timeline-year">{{ ty.year }}</span>
+        <span class="timeline-bar" style="width: {{ (ty.count / max_cnt * 100)|int }}%"></span>
+        <span class="timeline-count">{{ ty.count }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if not treaties %}
+  <p class="empty-state">No treaties match. <a href="{{ url_for('main.diplomacy_treaty_add') }}">Add one</a>.</p>
+  {% else %}
+  {% if view_mode == 'timeline' %}
+  <div class="treaties-timeline-view">
+    {% set ns = namespace(last_year='') %}
+    {% for t in treaties %}
+      {% set t_year = t.signed_date[:4] if t.signed_date and t.signed_date|length >= 4 else 'No date' %}
+      {% if t_year != ns.last_year %}
+      <h3 class="timeline-year-heading">{{ t_year }}</h3>
+      {% set ns.last_year = t_year %}
+      {% endif %}
+    <div class="treaty-timeline-item" data-treaty='{{ {"id": t.id, "name": t.name, "treaty_type": t.treaty_type, "party_a": t.party_a, "party_b": t.party_b, "signed_date": (t.signed_date[:10] if t.signed_date else ""), "coverage": (t._parsed.coverage if t._parsed and t._parsed.coverage else ""), "status": (t._parsed.status if t._parsed and t._parsed.status else ""), "has_docs": (1 if t._has_docs else 0), "is_wto": (1 if t._is_wto else 0), "has_escalation": (1 if t.has_escalation_clause else 0), "detail_url": url_for('main.diplomacy_treaty_detail', treaty_id=t.id), "edit_url": url_for('main.diplomacy_treaty_edit', treaty_id=t.id) } | tojson }}'>
+      <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}" class="treaty-timeline-title js-treaty-open">{{ t.name }}</a>
+      <span class="treaty-timeline-meta">{{ t.treaty_type }} · {{ t.party_a }}{% if t.party_b %} – {{ t.party_b }}{% endif %}{% if t._parsed.coverage %} · {{ t._parsed.coverage }}{% endif %}</span>
+      {% if t._is_wto %}<span class="treaty-badge-inline treaty-badge-wto">WTO</span>{% endif %}
+      {% if t._has_docs %}<span class="treaty-badge-inline treaty-badge-doc" title="Has documents">📄</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% elif view_mode == 'card' %}
+  <div class="treaties-card-grid">
+    {% for t in treaties %}
+    <div class="treaty-card" data-treaty='{{ {"id": t.id, "name": t.name, "treaty_type": t.treaty_type, "party_a": t.party_a, "party_b": t.party_b, "signed_date": (t.signed_date[:10] if t.signed_date else ""), "coverage": (t._parsed.coverage if t._parsed and t._parsed.coverage else ""), "status": (t._parsed.status if t._parsed and t._parsed.status else ""), "has_docs": (1 if t._has_docs else 0), "is_wto": (1 if t._is_wto else 0), "has_escalation": (1 if t.has_escalation_clause else 0), "detail_url": url_for('main.diplomacy_treaty_detail', treaty_id=t.id), "edit_url": url_for('main.diplomacy_treaty_edit', treaty_id=t.id) } | tojson }}'>
+      <div class="treaty-card-header">
+        <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}" class="treaty-card-title js-treaty-open">{{ t.name }}</a>
+        <div class="treaty-card-badges">
+          {% if t._is_wto %}<span class="treaty-badge treaty-badge-wto" title="From WTO RTA Database">WTO</span>{% endif %}
+          {% if t._has_docs %}<span class="treaty-badge treaty-badge-doc" title="Has agreement text or documents">📄</span>{% endif %}
+          {% if t._parsed.status %}<span class="treaty-badge treaty-badge-status">{{ t._parsed.status[:20] }}</span>{% endif %}
+        </div>
+      </div>
+      <p class="treaty-card-meta">
+        {{ t.treaty_type }} · {{ t.party_a }}{% if t.party_b %} – {{ t.party_b }}{% endif %}
+        {% if t.signed_date %} · {{ t.signed_date[:10] }}{% endif %}
+        {% if t._parsed.coverage %} · {{ t._parsed.coverage }}{% endif %}
+      </p>
+      {% if t.has_escalation_clause %}<span class="escalation-flag">Escalation clause</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="agreements-table-canvas" id="agreements-table-canvas">
+  <table class="treaties-table" id="agreements-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Party A</th>
+        <th>Party B</th>
+        <th>Signed date</th>
+        <th>Coverage</th>
+        <th><span title="Has agreement PDF or document links">Docs</span></th>
+        <th><span title="Treaty includes escalation or retaliation clause">Escalation</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in treaties %}
+      <tr class="treaty-row" data-treaty='{{ {"id": t.id, "name": t.name, "treaty_type": t.treaty_type, "party_a": t.party_a, "party_b": t.party_b, "signed_date": (t.signed_date[:10] if t.signed_date else ""), "coverage": (t._parsed.coverage if t._parsed and t._parsed.coverage else ""), "status": (t._parsed.status if t._parsed and t._parsed.status else ""), "has_docs": (1 if t._has_docs else 0), "is_wto": (1 if t._is_wto else 0), "has_escalation": (1 if t.has_escalation_clause else 0), "detail_url": url_for('main.diplomacy_treaty_detail', treaty_id=t.id), "edit_url": url_for('main.diplomacy_treaty_edit', treaty_id=t.id) } | tojson }}'>
+        <td>
+          <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}" class="js-treaty-open">{{ t.name }}</a>
+          {% if t._is_wto %}<span class="treaty-badge-inline treaty-badge-wto" title="WTO RTA">WTO</span>{% endif %}
+        </td>
+        <td>{{ t.treaty_type }}</td>
+        <td>{% if t._parsed.status %}<span class="treaty-status">{{ t._parsed.status[:25] }}</span>{% else %}—{% endif %}</td>
+        <td>{% if country_name_to_code and t.party_a and country_name_to_code.get(t.party_a) %}<a href="{{ url_for('main.country_dashboard', country_code=country_name_to_code.get(t.party_a)) }}">{{ t.party_a }}</a>{% else %}{{ t.party_a }}{% endif %}</td>
+        <td>{% if country_name_to_code and t.party_b and country_name_to_code.get(t.party_b) %}<a href="{{ url_for('main.country_dashboard', country_code=country_name_to_code.get(t.party_b)) }}">{{ t.party_b }}</a>{% else %}{{ t.party_b or '—' }}{% endif %}</td>
+        <td>{{ t.signed_date[:10] if t.signed_date else '—' }}</td>
+        <td>{% if t._parsed.coverage %}{{ t._parsed.coverage[:20] }}{% else %}—{% endif %}</td>
+        <td>{% if t._has_docs %}<span class="treaty-doc-indicator" title="Has documents">✓</span>{% else %}—{% endif %}</td>
+        <td>{% if t.has_escalation_clause %}<span class="escalation-flag">Yes</span>{% else %}—{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+
+  {% if total_pages and total_pages > 1 %}
+  <nav class="pagination pagination-enhanced">
+    <span class="pagination-info">Page {{ page }} of {{ total_pages }} ({{ total }} total)</span>
+    <div class="pagination-links">
+      {% if query_prev %}<a href="{{ url_for('main.diplomacy_treaties', **query_prev) }}" class="pagination-prev">← Prev</a>{% endif %}
+      {% set start_page = [1, page - 2]|max %}
+      {% set end_page = [total_pages, page + 2]|min %}
+      {% for p in range(start_page, end_page + 1) %}
+        {% if p == page %}
+        <span class="pagination-current">{{ p }}</span>
+        {% else %}
+        {% set q = dict(query_base) %}
+        {% set _ = q.update({'page': p}) %}
+        <a href="{{ url_for('main.diplomacy_treaties', **q) }}">{{ p }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if query_next %}<a href="{{ url_for('main.diplomacy_treaties', **query_next) }}" class="pagination-next">Next →</a>{% endif %}
+    </div>
+  </nav>
+  {% endif %}
+  {% endif %}
+      </main>
+
+      <aside class="agreements-inspector" id="agreements-inspector" aria-label="Treaty preview">
+        <div class="agreements-inspector-head">
+          <div>
+            <div class="agreements-inspector-title" id="agreements-inspector-title">Preview</div>
+            <div class="agreements-inspector-sub" id="agreements-inspector-sub">Click a row/card to inspect</div>
+          </div>
+          <button type="button" class="agreements-inspector-close" id="agreements-inspector-close" aria-label="Close preview">×</button>
+        </div>
+        <div class="agreements-inspector-body">
+          {% if agreements_stats %}
+          <div class="agreements-inspector-card">
+            <div class="agreements-inspector-card-title">At a glance</div>
+            <div class="agreements-kpis">
+              <div class="agreements-kpi"><div class="kpi-num">{{ agreements_stats.total }}</div><div class="kpi-label">Total</div></div>
+              <div class="agreements-kpi"><div class="kpi-num">{{ agreements_stats.in_force }}</div><div class="kpi-label">In force</div></div>
+              <div class="agreements-kpi"><div class="kpi-num">{{ agreements_stats.with_documents }}</div><div class="kpi-label">With docs</div></div>
+              <div class="agreements-kpi"><div class="kpi-num">{{ agreements_stats.wto_count }}</div><div class="kpi-label">WTO</div></div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if presets %}
+          <div class="agreements-inspector-card">
+            <div class="agreements-inspector-card-title">Presets</div>
+            <div class="agreements-preset-chips">
+              {% for label, params in presets %}
+              <a href="{{ url_for('main.diplomacy_treaties', **params) }}" class="agreements-chip agreements-chip-secondary">{{ label }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="agreements-inspector-card">
+            <div class="agreements-inspector-card-title">Treaty</div>
+            <div class="agreements-preview-name" id="agreements-preview-name">—</div>
+            <div class="agreements-preview-badges" id="agreements-preview-badges"></div>
+            <div class="agreements-preview-meta" id="agreements-preview-meta"></div>
+            <div class="agreements-preview-actions">
+              <a href="#" class="agreements-chip" id="agreements-preview-open" hidden>Open →</a>
+              <a href="#" class="agreements-chip agreements-chip-secondary" id="agreements-preview-edit" hidden>Edit</a>
+              <button type="button" class="agreements-chip agreements-chip-secondary" id="agreements-preview-copy" hidden>Copy link</button>
+            </div>
+          </div>
+
+          <div class="agreements-inspector-card">
+            <div class="agreements-inspector-card-title">Exports</div>
+            <div class="agreements-inspector-links">
+              {% if diplomacy_treaties_export_url %}<a href="{{ diplomacy_treaties_export_url }}">Export CSV</a>{% endif %}
+              {% if diplomacy_treaties_export_xlsx_url %}<a href="{{ diplomacy_treaties_export_xlsx_url }}">Export Excel</a>{% endif %}
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  var form = document.getElementById('agreements-filter-form');
+  var drawer = document.getElementById('agreements-filters-drawer');
+  var chipsWrap = document.getElementById('agreements-active-filters');
+  var viewHidden = document.getElementById('view');
+
+  function setQueryParam(key, value) {
+    var u = new URL(window.location.href);
+    if (!value) u.searchParams.delete(key);
+    else u.searchParams.set(key, value);
+    u.searchParams.delete('page');
+    window.location.href = u.toString();
+  }
+
+  // View pills → update ?view=
+  document.querySelectorAll('.agreements-pill[data-view]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var v = btn.getAttribute('data-view');
+      if (viewHidden) viewHidden.value = v;
+      try { localStorage.setItem('agreementsView', v); } catch (e) {}
+      setQueryParam('view', v);
+    });
+  });
+
+  // Density toggle (table-only; local)
+  var canvas = document.getElementById('agreements-table-canvas');
+  document.querySelectorAll('.agreements-density .agreements-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.agreements-density .agreements-pill').forEach(function(b) { b.classList.toggle('active', b === btn); });
+      var d = btn.getAttribute('data-density') || 'compact';
+      if (canvas) canvas.setAttribute('data-density', d);
+      try { localStorage.setItem('agreementsDensity', d); } catch (e) {}
+    });
+  });
+  try {
+    var savedD = localStorage.getItem('agreementsDensity');
+    if (savedD && canvas) {
+      canvas.setAttribute('data-density', savedD);
+      document.querySelectorAll('.agreements-density .agreements-pill').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-density') === savedD); });
+    }
+  } catch (e) {}
+
+  function labelFor(el) {
+    if (!el || !el.id) return null;
+    var lab = document.querySelector('label[for="' + el.id + '"]');
+    return lab ? (lab.textContent || '').trim() : null;
+  }
+
+  function buildChips() {
+    if (!form || !chipsWrap) return;
+    chipsWrap.innerHTML = '';
+    var els = Array.from(form.querySelectorAll('input, select')).filter(function(el) {
+      if (!el.name) return false;
+      if (el.type === 'submit') return false;
+      if (el.name === 'view') return false;
+      var v = (el.value || '').trim();
+      if (el.type === 'checkbox') return el.checked;
+      return v !== '';
+    });
+    if (!els.length) return;
+    els.slice(0, 12).forEach(function(el) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'agreements-filter-chip';
+      var label = labelFor(el) || el.name;
+      var val = '';
+      if (el.type === 'checkbox') val = 'Yes';
+      else if (el.tagName === 'SELECT') val = (el.options[el.selectedIndex] && el.options[el.selectedIndex].textContent) || el.value;
+      else val = el.value;
+      chip.textContent = label + ': ' + val;
+      chip.addEventListener('click', function() {
+        if (drawer) drawer.open = true;
+        try { el.focus(); } catch (e) {}
+      });
+      chipsWrap.appendChild(chip);
+    });
+  }
+  buildChips();
+  if (form) form.addEventListener('change', buildChips);
+
+  // Inspector
+  var inspector = document.getElementById('agreements-inspector');
+  var closeBtn = document.getElementById('agreements-inspector-close');
+  if (closeBtn) closeBtn.addEventListener('click', function() { if (inspector) inspector.classList.remove('open'); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && inspector) inspector.classList.remove('open'); });
+
+  function renderTreaty(data) {
+    if (!data) return;
+    if (inspector) inspector.classList.add('open');
+    var title = document.getElementById('agreements-preview-name');
+    var badges = document.getElementById('agreements-preview-badges');
+    var meta = document.getElementById('agreements-preview-meta');
+    var openA = document.getElementById('agreements-preview-open');
+    var editA = document.getElementById('agreements-preview-edit');
+    var copyBtn = document.getElementById('agreements-preview-copy');
+    if (title) title.textContent = data.name || '—';
+    if (badges) {
+      var b = [];
+      if (data.is_wto) b.push('<span class="treaty-badge treaty-badge-wto">WTO</span>');
+      if (data.has_docs) b.push('<span class="treaty-badge treaty-badge-doc" title="Has documents">📄</span>');
+      if (data.status) b.push('<span class="treaty-badge treaty-badge-status">' + (data.status || '').slice(0, 24) + '</span>');
+      if (data.has_escalation) b.push('<span class="escalation-flag">Escalation</span>');
+      badges.innerHTML = b.join(' ');
+    }
+    if (meta) {
+      var line = [];
+      if (data.treaty_type) line.push(data.treaty_type);
+      var parties = [data.party_a, data.party_b].filter(Boolean).join(' – ');
+      if (parties) line.push(parties);
+      if (data.signed_date) line.push(data.signed_date);
+      if (data.coverage) line.push(data.coverage);
+      meta.textContent = line.join(' · ');
+    }
+    if (openA && data.detail_url) { openA.href = data.detail_url; openA.removeAttribute('hidden'); }
+    if (editA && data.edit_url) { editA.href = data.edit_url; editA.removeAttribute('hidden'); }
+    if (copyBtn && data.detail_url) {
+      copyBtn.removeAttribute('hidden');
+      copyBtn.onclick = function() {
+        try { navigator.clipboard.writeText(data.detail_url); } catch (e) {}
+      };
+    }
+  }
+
+  function bindTreatyClicks() {
+    document.querySelectorAll('[data-treaty]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Allow normal navigation when explicitly clicking non-preview links
+        if (e && e.target && (e.target.closest && e.target.closest('a') && !e.target.classList.contains('js-treaty-open'))) return;
+        if (e) e.preventDefault();
+        try {
+          var data = JSON.parse(el.getAttribute('data-treaty'));
+          renderTreaty(data);
+        } catch (err) {}
+      });
+    });
+    document.querySelectorAll('.js-treaty-open').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        var row = a.closest('[data-treaty]');
+        if (!row) return;
+        if (e) e.preventDefault();
+        try { renderTreaty(JSON.parse(row.getAttribute('data-treaty'))); } catch (err) {}
+      });
+    });
+  }
+  bindTreatyClicks();
+
+  // Auto-open first item on wide screens
+  try {
+    if (window.matchMedia && window.matchMedia('(min-width: 1100px)').matches) {
+      var first = document.querySelector('[data-treaty]');
+      if (first) renderTreaty(JSON.parse(first.getAttribute('data-treaty')));
+    }
+  } catch (e) {}
+})();
+</script>
+{% endblock %}

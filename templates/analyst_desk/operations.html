@@ -1,0 +1,124 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Operations — Analyst Desk{% endblock %}
+{% block body %}
+<div class="panel">
+  <h2>Operations Center</h2>
+  <p class="muted">Worker and queue health, recent runs, and retention controls.</p>
+  <p>
+    Proposal totals: <strong>{{ proposal_counts.total }}</strong>
+    · Pending <strong>{{ proposal_counts.pending }}</strong>
+    · Approved <strong>{{ proposal_counts.approved }}</strong>
+    · Rejected <strong>{{ proposal_counts.rejected }}</strong>
+  </p>
+  <p class="muted">
+    Celery available: <strong>{{ 'yes' if celery_available else 'no' }}</strong>.
+    Delivery webhook: <strong>{{ 'configured' if delivery.webhook_configured else 'not configured' }}</strong>.
+    Email: <strong>{{ 'configured' if delivery.email_configured else 'not configured' }}</strong>.
+  </p>
+</div>
+
+<div class="panel">
+  <h2>Retention / Cleanup</h2>
+  <p class="muted">Deletes old operational rows to keep SQLite compact: tasks (30d), processed/failed messages (14d), extracted metrics (30d).</p>
+  <form method="post" action="{{ url_for('analyst_desk.operations_prune') }}">
+    <button type="submit" class="btn secondary">Run prune now</button>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Stuck pending messages (&gt;60 min)</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Type</th><th>Entity</th><th>Priority</th><th>Created</th></tr></thead>
+    <tbody>
+    {% for m in stuck_messages %}
+      <tr>
+        <td>{{ m.id }}</td><td>{{ m.message_type }}</td><td>{{ m.entity_type }} {{ m.entity_id }}</td><td>{{ m.priority }}</td><td class="muted">{{ m.created_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="muted">No stuck messages.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Recent agent tasks</h2>
+  <table>
+    <thead><tr><th>Task</th><th>Agent</th><th>Status</th><th>Started</th><th>Error</th></tr></thead>
+    <tbody>
+    {% for t in recent_tasks %}
+      <tr>
+        <td class="muted">{{ t.task_type }}</td><td>{{ t.agent_id }}</td><td>{{ t.status }}</td><td class="muted">{{ t.started_at }}</td><td class="muted">{{ (t.error_message or '')[:90] }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="muted">No task history.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Recent alerts and events</h2>
+  <div style="display:grid;grid-template-columns:1fr;gap:1rem;">
+    <table>
+      <thead><tr><th colspan="5">Alerts</th></tr><tr><th>ID</th><th>Severity</th><th>Country</th><th>Status</th><th>Created</th></tr></thead>
+      <tbody>
+      {% for a in recent_alerts %}
+        <tr><td>{{ a.id }}</td><td>{{ a.severity }}</td><td>{{ a.country_code or '—' }}</td><td>{{ a.delivery_status }}</td><td class="muted">{{ a.created_at }}</td></tr>
+      {% else %}
+        <tr><td colspan="5" class="muted">No alerts yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th colspan="5">Events</th></tr><tr><th>ID</th><th>Title</th><th>Country</th><th>Importance</th><th>Updated</th></tr></thead>
+      <tbody>
+      {% for e in recent_events %}
+        <tr><td>{{ e.id }}</td><td>{{ (e.event_title or '')[:70] }}</td><td>{{ e.primary_country_code or '—' }}</td><td>{{ '%.1f'|format(e.importance_score or 0) }}</td><td class="muted">{{ e.event_last_updated_at }}</td></tr>
+      {% else %}
+        <tr><td colspan="5" class="muted">No events yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Verification checks</h2>
+  <table>
+    <thead><tr><th>Event</th><th>Status</th><th>Confidence</th><th>Reason</th><th>Checked</th></tr></thead>
+    <tbody>
+    {% for v in recent_verifications %}
+      <tr>
+        <td>{{ v.event_id }}</td>
+        <td>{{ v.check_status }}</td>
+        <td>{{ '%.2f'|format(v.confidence or 0) }}</td>
+        <td class="muted">{{ (v.reason or '')[:120] }}</td>
+        <td class="muted">{{ v.checked_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="muted">No verification checks yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Dead-letter task failures</h2>
+  <table>
+    <thead><tr><th>Task</th><th>Retries</th><th>Error</th><th>Created</th></tr></thead>
+    <tbody>
+    {% for d in dead_letters %}
+      <tr>
+        <td>{{ d.task_name }} <span class="muted">{{ d.task_id or '' }}</span></td>
+        <td>{{ d.retries }}</td>
+        <td class="muted">{{ (d.error_message or '')[:140] }}</td>
+        <td class="muted">{{ d.created_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="muted">No dead-letter tasks.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

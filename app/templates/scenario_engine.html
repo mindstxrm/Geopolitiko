@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+{% block title %}Scenario Engine — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+<div class="scenario-engine scenario-engine-page">
+  {% if result and result.agents %}
+  <p class="skip-link-wrap"><a href="#scenario-engine-results" class="skip-link">Skip to results</a></p>
+  <div aria-live="polite" aria-atomic="true" class="sr-only">Simulation complete.</div>
+  {% endif %}
+
+  <div class="engine-command-strip">
+    <div class="engine-command-strip-top">
+      <h1 class="engine-command-title">Scenario Engine</h1>
+      <details class="engine-help-details">
+        <summary class="engine-help-summary">About</summary>
+        <p class="engine-help-body">Define an event, run the multi-agent simulation, and view probability-weighted outcomes. Export policy memos, risk briefings, investor notes, and executive summaries.</p>
+      </details>
+      <div class="engine-command-actions">
+        <button type="button" class="engine-define-drawer-open" id="engine-define-drawer-open" aria-expanded="false" aria-controls="scenario-engine-form">Define scenario</button>
+        <button type="button" id="engine-copy-setup-link" class="btn btn-secondary engine-copy-strip">Copy setup link</button>
+        <button type="submit" form="scenario-engine-form" class="engine-run-btn engine-run-btn--strip" id="engine-run-btn" data-loading-text="Running simulation…">Run simulation</button>
+      </div>
+      <nav class="engine-command-nav" aria-label="Scenario engine links">
+        <a href="{{ url_for('main.scenarios_list') }}">Library</a>
+        <span class="engine-nav-sep" aria-hidden="true">·</span>
+        <a href="{{ url_for('main.scenario_engine_history') }}">History</a>
+        <span class="engine-nav-sep" aria-hidden="true">·</span>
+        {% if result and result.engine_run_id %}
+        <a href="{{ url_for('main.scenario_engine_compare', run_a=result.engine_run_id) }}">Compare</a>
+        {% else %}
+        <a href="{{ url_for('main.scenario_engine_compare') }}">Compare</a>
+        {% endif %}
+        <span class="engine-nav-sep" aria-hidden="true">·</span>
+        <a href="{{ url_for('main.workspace', layout='4', t1=url_for('main.scenario_engine'), t2='/risk', t3='/integration', t4='/index') }}">Workspace</a>
+        <details class="engine-related-details">
+          <summary class="engine-related-summary">More</summary>
+          <ul class="engine-related-list">
+            <li><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></li>
+            <li><a href="{{ url_for('main.export_briefing') }}">Briefing</a></li>
+            <li><a href="{{ url_for('main.alerts_list') }}">Watchlists</a></li>
+            <li><a href="{{ url_for('main.saved_views_list') }}">Saved views</a></li>
+            <li><a href="{{ url_for('main.scenarios_outlook') }}">10-year outlook</a></li>
+          </ul>
+        </details>
+      </nav>
+    </div>
+  </div>
+
+  {% if recent_runs %}
+  <details class="engine-recent-details">
+    <summary class="engine-recent-summary">Recent runs ({{ recent_runs|length }}) — expand to view</summary>
+    <section class="engine-recent-runs" aria-label="Recent runs">
+      <ul class="engine-recent-list">
+        {% for r in recent_runs %}
+        <li>
+          <span class="engine-recent-label">{{ r.name or r.event_label }} {% if r.region or r.country %}({{ r.region or '' }}{% if r.region and r.country %} · {% endif %}{{ r.country or '' }}){% endif %}</span>
+          <span class="engine-recent-meta">{{ (r.run_at or r.created_at or '')[:19].replace('T', ' ') }} UTC</span>
+          <a href="{{ url_for('main.scenario_engine', run_id=r.id) }}">View</a>
+          <a href="{{ url_for('main.scenario_engine', event_type=r.event_type, region=r.region or '', country=r.country or '') }}">Re-run</a>
+          <a href="{{ url_for('main.scenario_engine_export_all', run_id=r.id) }}">Export all</a>
+          <a href="{{ url_for('main.scenario_engine_compare', run_a=r.id) }}">Compare</a>
+          <form action="{{ url_for('main.scenario_engine_delete_run', run_id=r.id) }}" method="post" class="engine-delete-inline">
+            <button type="submit" class="engine-delete-btn" aria-label="Delete run">Delete</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="engine-recent-footer-link"><a href="{{ url_for('main.scenario_engine_history') }}">View all runs (history)</a></p>
+    </section>
+  </details>
+  {% endif %}
+
+  <div class="engine-define-backdrop" id="engine-define-backdrop" hidden aria-hidden="true"></div>
+
+  <div class="scenario-engine-workspace">
+    <div class="scenario-engine-layout">
+      <form method="post" action="{{ url_for('main.scenario_engine') }}" class="scenario-engine-left" id="scenario-engine-form" aria-label="Define event">
+        <h2 class="panel-title">Define event</h2>
+        <button type="button" class="engine-define-close" id="engine-define-close" aria-label="Close define panel">×</button>
+        <div class="event-type-list" role="group" aria-label="Event type">
+          {% for slug, label in event_types %}
+          <label class="event-type-card">
+            <input type="radio" name="event_type" value="{{ slug }}" {{ 'checked' if (result and result.event_type == slug) or (not result and prefill.event_type == slug) or (not result and not prefill.event_type and loop.first) else '' }}>
+            <span class="event-type-label">{{ label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        <div class="engine-options">
+          <p class="engine-quick-chips-label">Quick fill region/country:</p>
+          <div class="engine-quick-chips" role="group" aria-label="Quick region and country">
+            <button type="button" class="engine-chip" data-region="East Asia" data-country="Taiwan">Taiwan</button>
+            <button type="button" class="engine-chip" data-region="" data-country="Ukraine">Ukraine</button>
+            <button type="button" class="engine-chip" data-region="Middle East" data-country="">Gulf</button>
+            <button type="button" class="engine-chip" data-region="Southeast Asia" data-country="">ASEAN</button>
+            <button type="button" class="engine-chip" data-region="Europe" data-country="">EU</button>
+          </div>
+          <label class="engine-option">
+            <span class="engine-option-label">Region (optional)</span>
+            <input type="text" name="region" id="engine-region" class="engine-input" placeholder="e.g. East Asia" value="{{ (result.region if result else prefill.region) or '' }}">
+          </label>
+          <label class="engine-option">
+            <span class="engine-option-label">Country (optional)</span>
+            <input type="text" name="country" id="engine-country" class="engine-input" placeholder="e.g. Taiwan" value="{{ (result.country if result else prefill.country) or '' }}">
+          </label>
+          <label class="engine-option">
+            <span class="engine-option-label">Horizon year (optional)</span>
+            <input type="number" name="horizon_year" id="engine-horizon" class="engine-input" placeholder="e.g. 2028" min="2024" max="2040" value="{{ prefill.horizon_year or result.horizon_year or '' }}">
+          </label>
+          <label class="engine-option">
+            <span class="engine-option-label">Run name (optional)</span>
+            <input type="text" name="run_name" id="engine-run-name" class="engine-input" placeholder="e.g. Taiwan Q1 run" value="{{ result.run_name or '' }}">
+          </label>
+        </div>
+        <p class="engine-copy-link no-print engine-copy-left">
+          <button type="button" class="btn btn-secondary engine-copy-setup-secondary">Copy link to this setup</button>
+        </p>
+      </form>
+
+      <div class="scenario-engine-panels">
+      <section class="scenario-engine-middle scenario-engine-canvas" id="scenario-engine-results" aria-label="Multi-agent simulation">
+        <h2 class="panel-title">Multi-agent simulation</h2>
+        {% if result and result.agents %}
+        <div class="agent-cards">
+          <div class="agent-card">
+            <h3 class="agent-card-title">Economic agent</h3>
+            <p class="agent-card-text">{{ result.agents.get('economic_policy', '—') }}</p>
+          </div>
+          <div class="agent-card">
+            <h3 class="agent-card-title">Political agent</h3>
+            <p class="agent-card-text">{{ result.agents.get('political', '—') }}</p>
+          </div>
+          <div class="agent-card">
+            <h3 class="agent-card-title">Military agent</h3>
+            <p class="agent-card-text">{{ result.agents.get('military', '—') }}</p>
+          </div>
+          <div class="agent-card">
+            <h3 class="agent-card-title">Diplomatic agent</h3>
+            <p class="agent-card-text">{{ result.agents.get('diplomatic', '—') }}</p>
+          </div>
+          <div class="agent-card">
+            <h3 class="agent-card-title">Private sector response agent</h3>
+            <p class="agent-card-text">{{ result.agents.get('private_sector', '—') }}</p>
+          </div>
+        </div>
+        <p class="engine-meta">Run at {{ (result.run_at or '')[:19].replace('T', ' ') }} UTC · Event: {{ result.event_label or result.event_type }}{% if result.country or result.region %} · {{ result.country or '' }}{% if result.country and result.region %}, {% endif %}{{ result.region or '' }}{% endif %}{% if result.horizon_year %} · Horizon {{ result.horizon_year }}{% endif %}</p>
+        {% else %}
+        <p class="engine-placeholder">Select an event type and optional region/country, then click <strong>Run simulation</strong> to see multi-agent responses for this scenario.</p>
+        {% endif %}
+      </section>
+
+      <aside class="scenario-engine-right scenario-engine-inspector" aria-label="Outputs and export">
+        <div class="engine-inspector-tabs" role="tablist" aria-label="Output sections">
+          <button type="button" class="engine-inspector-tab is-active" role="tab" aria-selected="true" data-engine-tab="paths" id="engine-tab-btn-paths">Paths</button>
+          <button type="button" class="engine-inspector-tab" role="tab" aria-selected="false" data-engine-tab="export" id="engine-tab-btn-export">Export</button>
+          <button type="button" class="engine-inspector-tab" role="tab" aria-selected="false" data-engine-tab="save" id="engine-tab-btn-save">Save</button>
+        </div>
+        <div class="engine-inspector-panels">
+          <div class="engine-inspector-panel is-active" role="tabpanel" data-engine-panel="paths" id="engine-tab-panel-paths" aria-labelledby="engine-tab-btn-paths">
+            <p class="contextual-help contextual-help-compact">Three outcome paths: <strong>Contained</strong>, <strong>Regional escalation</strong>, <strong>Systemic crisis</strong>. See <a href="{{ url_for('main.help_page') }}#glossary">Glossary</a>.</p>
+            {% if result and result.paths %}
+            <div class="path-chart-wrap">
+              <canvas id="engine-path-chart" aria-label="Path probability distribution"></canvas>
+            </div>
+            <details class="engine-path-narratives">
+              <summary>Path narratives</summary>
+              <div class="path-outcomes-single">
+                <div class="path-block-inline">
+                  <strong>Contained ({{ result.paths.get('contained', 0) }}%):</strong> {{ result.path_descriptions.get('contained', '—') }}
+                </div>
+                <div class="path-block-inline">
+                  <strong>Regional escalation ({{ result.paths.get('regional_escalation', 0) }}%):</strong> {{ result.path_descriptions.get('regional_escalation', '—') }}
+                </div>
+                <div class="path-block-inline">
+                  <strong>Systemic crisis ({{ result.paths.get('systemic_crisis', 0) }}%):</strong> {{ result.path_descriptions.get('systemic_crisis', '—') }}
+                </div>
+              </div>
+            </details>
+            <details class="engine-path-adjust">
+              <summary>Adjust display only (not saved)</summary>
+              <p class="path-override-note">Override percentages for slides or discussion; does not change stored run data.</p>
+              <div class="path-overrides" aria-label="Path overrides (display only)">
+                <label class="path-override"><span>Contained %</span><input type="number" id="path-override-contained" min="0" max="100" value="{{ result.paths.get('contained', 0) }}" data-path="contained"></label>
+                <label class="path-override"><span>Regional %</span><input type="number" id="path-override-regional" min="0" max="100" value="{{ result.paths.get('regional_escalation', 0) }}" data-path="regional_escalation"></label>
+                <label class="path-override"><span>Systemic %</span><input type="number" id="path-override-systemic" min="0" max="100" value="{{ result.paths.get('systemic_crisis', 0) }}" data-path="systemic_crisis"></label>
+              </div>
+            </details>
+            {% else %}
+            <p class="engine-placeholder">Run a simulation to see three-path probability outputs with chart and narratives.</p>
+            {% endif %}
+          </div>
+
+          <div class="engine-inspector-panel" role="tabpanel" data-engine-panel="export" id="engine-tab-panel-export" aria-labelledby="engine-tab-btn-export" hidden>
+            <h2 class="panel-title panel-title-inline">Export</h2>
+            <div class="export-buttons">
+              {% if result and result.engine_run_id %}
+              <a href="{{ url_for('main.scenario_engine_export', format='policy_memo', run_id=result.engine_run_id) }}" class="export-btn">Policy memo (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='risk_briefing', run_id=result.engine_run_id) }}" class="export-btn">Risk briefing (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='investor_note', run_id=result.engine_run_id) }}" class="export-btn">Investor note (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='exec_summary_ppt', run_id=result.engine_run_id) }}" class="export-btn">Executive summary (PPTX)</a>
+              <a href="{{ url_for('main.scenario_engine_summary', run_id=result.engine_run_id) }}" class="export-btn">Summary (print to PDF)</a>
+              {% else %}
+              <a href="{{ url_for('main.scenario_engine_export', format='policy_memo') }}" class="export-btn">Policy memo (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='risk_briefing') }}" class="export-btn">Risk briefing (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='investor_note') }}" class="export-btn">Investor note (DOCX)</a>
+              <a href="{{ url_for('main.scenario_engine_export', format='exec_summary_ppt') }}" class="export-btn">Executive summary (PPTX)</a>
+              <a href="{{ url_for('main.scenario_engine_summary') }}" class="export-btn">Summary (print to PDF)</a>
+              {% endif %}
+            </div>
+            <p class="export-meta">Exports use the current run when available. Open a run from History to export past results. {% if result and result.engine_run_id %}<a href="{{ url_for('main.scenario_engine_export_all', run_id=result.engine_run_id) }}">Export all formats</a>{% endif %}</p>
+          </div>
+
+          <div class="engine-inspector-panel" role="tabpanel" data-engine-panel="save" id="engine-tab-panel-save" aria-labelledby="engine-tab-btn-save" hidden>
+            {% if result %}
+            <p class="engine-context-links">
+              <a href="{{ url_for('main.scenarios_outlook') }}{% if result.event_type or result.region or result.country %}?{% if result.event_type %}event_type={{ result.event_type }}{% endif %}{% if result.region %}&amp;region={{ result.region | urlencode }}{% endif %}{% if result.country %}&amp;country={{ result.country | urlencode }}{% endif %}{% endif %}">10-year outlook (with context)</a>
+              · <a href="{{ url_for('main.alerts_list', _anchor='create-watchlist') }}">Create watchlist for this scenario</a>
+            </p>
+            <div class="engine-save-as-scenario">
+              <h2 class="panel-title panel-title-inline">Save as scenario</h2>
+              <form method="post" action="{{ url_for('main.scenario_engine_save_as_scenario') }}" class="engine-save-form">
+                <label for="engine-save-name">Name</label>
+                <input type="text" name="name" id="engine-save-name" value="{{ result.event_label or result.event_type }}" placeholder="e.g. Taiwan election upset">
+                <button type="submit">Save to library</button>
+              </form>
+            </div>
+            {% else %}
+            <p class="engine-placeholder">Run a simulation to unlock outlook links, watchlist shortcuts, and saving to the scenario library.</p>
+            {% endif %}
+          </div>
+        </div>
+      </aside>
+      </div>
+    </div>
+  </div>
+
+  <p class="scenario-engine-footer scenario-engine-footer-compact">
+    <a href="{{ url_for('main.scenarios_list') }}">Scenario library</a>
+    · <a href="{{ url_for('main.scenarios_outlook') }}">10-year outlook</a>
+    · <a href="{{ url_for('main.scenario_engine_history') }}">Run history</a>
+    · <a href="{{ url_for('main.workspace', layout='4', t1=url_for('main.scenario_engine'), t2='/risk', t3='/integration', t4='/index') }}">Workspace</a>
+  </p>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('scenario-engine-form');
+  var runBtn = document.getElementById('engine-run-btn');
+  var regionInput = document.getElementById('engine-region');
+  var countryInput = document.getElementById('engine-country');
+
+  function bindCopy(btn) {
+    if (!btn || !form) return;
+    btn.addEventListener('click', function () {
+      var eventType = (form.querySelector('input[name="event_type"]:checked') || {}).value || 'election_upset';
+      var region = (regionInput && regionInput.value) ? regionInput.value.trim() : '';
+      var country = (countryInput && countryInput.value) ? countryInput.value.trim() : '';
+      var url = (window.location.origin || '') + '{{ url_for("main.scenario_engine") }}' + '?event_type=' + encodeURIComponent(eventType);
+      if (region) url += '&region=' + encodeURIComponent(region);
+      if (country) url += '&country=' + encodeURIComponent(country);
+      var copyEls = document.querySelectorAll('#engine-copy-setup-link, .engine-copy-setup-secondary');
+      function flashCopied() {
+        var prev = [];
+        copyEls.forEach(function (el, idx) { prev[idx] = el.textContent; el.textContent = 'Copied'; });
+        setTimeout(function () {
+          copyEls.forEach(function (el, idx) { el.textContent = prev[idx]; });
+        }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(flashCopied);
+      } else {
+        var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        flashCopied();
+      }
+    });
+  }
+  bindCopy(document.getElementById('engine-copy-setup-link'));
+  document.querySelectorAll('.engine-copy-setup-secondary').forEach(bindCopy);
+
+  if (form && runBtn) {
+    form.addEventListener('submit', function () {
+      runBtn.disabled = true;
+      runBtn.textContent = runBtn.getAttribute('data-loading-text') || 'Running simulation…';
+    });
+  }
+  document.querySelectorAll('.engine-chip').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var r = btn.getAttribute('data-region') || '';
+      var c = btn.getAttribute('data-country') || '';
+      if (regionInput) regionInput.value = r;
+      if (countryInput) countryInput.value = c;
+    });
+  });
+
+  var definePanel = document.getElementById('scenario-engine-form');
+  var defineOpen = document.getElementById('engine-define-drawer-open');
+  var defineClose = document.getElementById('engine-define-close');
+  var defineBackdrop = document.getElementById('engine-define-backdrop');
+  function openDefineDrawer() {
+    if (!definePanel) return;
+    definePanel.classList.add('open');
+    if (defineBackdrop) { defineBackdrop.hidden = false; defineBackdrop.setAttribute('aria-hidden', 'false'); }
+    if (defineOpen) defineOpen.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('engine-define-drawer-active');
+  }
+  function closeDefineDrawer() {
+    if (!definePanel) return;
+    definePanel.classList.remove('open');
+    if (defineBackdrop) { defineBackdrop.hidden = true; defineBackdrop.setAttribute('aria-hidden', 'true'); }
+    if (defineOpen) defineOpen.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('engine-define-drawer-active');
+  }
+  if (defineOpen) defineOpen.addEventListener('click', function () { openDefineDrawer(); });
+  if (defineClose) defineClose.addEventListener('click', function () { closeDefineDrawer(); });
+  if (defineBackdrop) defineBackdrop.addEventListener('click', closeDefineDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.body.classList.contains('engine-define-drawer-active')) closeDefineDrawer();
+  });
+
+  var tabButtons = document.querySelectorAll('.engine-inspector-tab[data-engine-tab]');
+  var tabPanels = document.querySelectorAll('.engine-inspector-panel[data-engine-panel]');
+  function activateEngineTab(id) {
+    tabButtons.forEach(function (btn) {
+      var on = btn.getAttribute('data-engine-tab') === id;
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    tabPanels.forEach(function (panel) {
+      var on = panel.getAttribute('data-engine-panel') === id;
+      panel.classList.toggle('is-active', on);
+      panel.hidden = !on;
+    });
+    if (id === 'paths' && window.__scenarioEnginePathChart && typeof window.__scenarioEnginePathChart.resize === 'function') {
+      requestAnimationFrame(function () {
+        window.__scenarioEnginePathChart.resize();
+      });
+    }
+  }
+  tabButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      activateEngineTab(btn.getAttribute('data-engine-tab'));
+    });
+  });
+
+  var canvas = document.getElementById('engine-path-chart');
+  if (canvas && typeof Chart !== 'undefined') {
+    var contained = {{ (result.paths.get('contained', 0) if result and result.paths else 0) }};
+    var regional = {{ (result.paths.get('regional_escalation', 0) if result and result.paths else 0) }};
+    var systemic = {{ (result.paths.get('systemic_crisis', 0) if result and result.paths else 0) }};
+    window.__scenarioEnginePathChart = new Chart(canvas, {
+      type: 'doughnut',
+      data: {
+        labels: ['Contained', 'Regional escalation', 'Systemic crisis'],
+        datasets: [{ data: [contained, regional, systemic], backgroundColor: ['#22c55e', '#eab308', '#dc2626'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+    });
+    document.querySelectorAll('.path-overrides input').forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        var c = parseInt(document.getElementById('path-override-contained').value, 10) || 0;
+        var r = parseInt(document.getElementById('path-override-regional').value, 10) || 0;
+        var s = parseInt(document.getElementById('path-override-systemic').value, 10) || 0;
+        var sum = c + r + s;
+        if (sum !== 100 && sum > 0) { c = Math.round(100 * c / sum); r = Math.round(100 * r / sum); s = 100 - c - r; }
+        document.getElementById('path-override-contained').value = c;
+        document.getElementById('path-override-regional').value = r;
+        document.getElementById('path-override-systemic').value = s;
+        if (window.__scenarioEnginePathChart && window.__scenarioEnginePathChart.data.datasets[0]) {
+          window.__scenarioEnginePathChart.data.datasets[0].data = [c, r, s];
+          window.__scenarioEnginePathChart.update();
+        }
+      });
+    });
+  }
+})();
+</script>
+{% endblock %}

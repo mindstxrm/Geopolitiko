@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ country.country_name }} — Economic–Geopolitical Integration — Geopolitical News{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('main.integration_dashboard') }}" class="back-link">← Countries & Regions</a></p>
+  <h1 class="page-title">{{ country.country_name }} ({{ country.country_code }})</h1>
+  <p class="integration-meta">{{ country.region or '—' }} · Updated {{ (country.updated_at or '')[:16].replace('T', ' ') }} UTC</p>
+
+  <section class="risk-section integration-scores">
+    <h2>Fragility & systemic risk scores</h2>
+    <p class="risk-meta">0–100: higher = more fragile / at risk.</p>
+    <div class="score-cards">
+      <div class="score-card">
+        <span class="score-label">Geopolitical fragility score</span>
+        <span class="score-value score-{{ 'high' if (country.geopolitical_fragility_score or 0) >= 60 else ('med' if (country.geopolitical_fragility_score or 0) >= 40 else 'low') }}">{{ country.geopolitical_fragility_score or 0 }}</span>
+      </div>
+      <div class="score-card">
+        <span class="score-label">Economic fragility score</span>
+        <span class="score-value score-{{ 'high' if (country.economic_fragility_score or 0) >= 60 else ('med' if (country.economic_fragility_score or 0) >= 40 else 'low') }}">{{ country.economic_fragility_score or 0 }}</span>
+      </div>
+      <div class="score-card score-card-combined">
+        <span class="score-label">Combined systemic risk score</span>
+        <span class="score-value score-{{ 'high' if (country.combined_systemic_risk_score or 0) >= 60 else ('med' if (country.combined_systemic_risk_score or 0) >= 40 else 'low') }}">{{ country.combined_systemic_risk_score or 0 }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="risk-section">
+    <h2>Underlying indicators</h2>
+    <p class="risk-meta">Trade flows, debt distress, capital flight, reserves, FX vulnerability, energy import exposure.</p>
+    <div class="indicators-table-wrap">
+      <table class="indicators-table">
+        <tbody>
+          <tr>
+            <th>Trade flow (% GDP)</th>
+            <td>{{ "%.0f"|format(country.trade_flow_pct_gdp or 0) }}%</td>
+            <td class="indicator-desc">Trade openness / dependency</td>
+          </tr>
+          <tr>
+            <th>Debt distress score</th>
+            <td>{{ country.debt_distress_score or 0 }} (0–100)</td>
+            <td class="indicator-desc">Sovereign debt sustainability</td>
+          </tr>
+          <tr>
+            <th>Capital flight risk</th>
+            <td>{{ country.capital_flight_risk or 0 }} (0–100)</td>
+            <td class="indicator-desc">Risk of sudden outflows</td>
+          </tr>
+          <tr>
+            <th>Reserve months (import cover)</th>
+            <td>{{ "%.1f"|format(country.reserve_months_imports or 0) }} months</td>
+            <td class="indicator-desc">FX reserve adequacy</td>
+          </tr>
+          <tr>
+            <th>FX vulnerability score</th>
+            <td>{{ country.fx_vulnerability_score or 0 }} (0–100)</td>
+            <td class="indicator-desc">Exchange rate / dollarization risk</td>
+          </tr>
+          <tr>
+            <th>Energy import exposure</th>
+            <td>{{ "%.0f"|format(country.energy_import_exposure_pct or 0) }}%</td>
+            <td class="indicator-desc">Share of energy imported</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p><a href="{{ url_for('main.integration_dashboard') }}">← Countries & Regions</a></p>
+{% endblock %}

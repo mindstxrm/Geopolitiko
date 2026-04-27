@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}World Monitor — Geopolitical Terminal{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" crossorigin=""></script>
+  <style>
+    /* World Monitor dashboard — dark situational-awareness UI */
+    .wm-dashboard { background: #1a1d23; color: #e2e8f0; min-height: 100vh; margin: 0 -24px; padding: 0; }
+    .wm-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #2d333b; background: #21262d; }
+    .wm-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; }
+    .wm-brand span { color: #8b949e; font-weight: 400; font-size: 0.8rem; }
+    .wm-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #3fb950; flex-shrink: 0; }
+    .wm-live-text { font-size: 0.75rem; font-weight: 600; color: #3fb950; text-transform: uppercase; letter-spacing: 0.05em; }
+    .wm-view-dropdown { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #30363d; border: 1px solid #21262d; border-radius: 6px; color: #c9d1d9; font-size: 0.875rem; }
+    .wm-timestamp { font-size: 0.8rem; color: #8b949e; font-family: var(--font-mono, monospace); }
+    .wm-main { display: flex; min-height: 65vh; }
+    .wm-sidebar { width: 220px; min-width: 220px; background: #21262d; border-right: 1px solid #2d333b; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+    .wm-sidebar-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #8b949e; display: flex; align-items: center; gap: 6px; }
+    .wm-time-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .wm-time-row a { display: inline-block; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.8rem; color: #8b949e; border: 1px solid #30363d; background: #21262d; }
+    .wm-time-row a:hover { border-color: #58a6ff; color: #58a6ff; }
+    .wm-time-row a.active { background: #238636; border-color: #238636; color: #fff; }
+    .wm-layers-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; max-height: 50vh; }
+    .wm-layers-list label { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #c9d1d9; cursor: pointer; }
+    .wm-layers-list input { margin: 0; accent-color: #3fb950; }
+    .wm-map-wrap { flex: 1; position: relative; }
+    #world-monitor-map { height: 100%; min-height: 400px; background: #0d1117; }
+    .wm-legend-bar { padding: 8px 16px; background: #21262d; border-top: 1px solid #2d333b; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 0.7rem; color: #8b949e; }
+    .wm-legend-bar span { display: inline-flex; align-items: center; gap: 6px; }
+    .wm-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .wm-panels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-top: 1px solid #2d333b; }
+    @media (max-width: 900px) { .wm-panels { grid-template-columns: 1fr; } }
+    .wm-panel { background: #21262d; border-right: 1px solid #2d333b; padding: 16px; display: flex; flex-direction: column; min-height: 200px; }
+    .wm-panel:last-child { border-right: none; }
+    .wm-panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .wm-panel-title .wm-live-badge { display: inline-flex; align-items: center; gap: 4px; }
+    .wm-panel-content { flex: 1; font-size: 0.85rem; color: #8b949e; }
+    .wm-panel-content a { color: #58a6ff; text-decoration: none; }
+    .wm-panel-content a:hover { text-decoration: underline; }
+    .leaflet-popup-content { font-size: 0.8rem; min-width: 200px; color: #0d1117; }
+    .leaflet-control-zoom { border: none !important; }
+    .leaflet-control-zoom a { background: #21262d !important; color: #c9d1d9 !important; border: 1px solid #30363d !important; }
+    .leaflet-control-zoom a:hover { background: #30363d !important; }
+    .wm-legend-square { border-radius: 2px !important; }
+    .wm-legend-triangle { width: 0 !important; height: 0 !important; border-radius: 0 !important; border-left: 5px solid transparent !important; border-right: 5px solid transparent !important; border-bottom: 8px solid currentColor !important; background: none !important; }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="wm-dashboard">
+  <header class="wm-header">
+    <div class="wm-brand">
+      <span aria-hidden="true">🌐</span>
+      <span>WORLD MONITOR</span>
+      <span>Geopolitical Terminal</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="wm-live-dot" aria-hidden="true"></div>
+      <span class="wm-live-text">Live</span>
+      <div class="wm-view-dropdown">
+        <span>View:</span>
+        <select id="wm-view-select" onchange="window.location.href=this.value">
+          {% for view_key, view_label in view_presets %}
+          <option value="{{ url_for('main.world_monitor', view=view_key, layers=','.join(layers), timeRange=time_range) }}" {{ 'selected' if current_view == view_key else '' }}>{{ view_label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <span class="wm-timestamp" id="wm-timestamp">Loading…</span>
+    </div>
+  </header>
+
+  <div class="wm-main">
+    <aside class="wm-sidebar">
+      <div class="wm-sidebar-title">Time range</div>
+      <div class="wm-time-row">
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='1h') }}" class="{{ 'active' if time_range == '1h' else '' }}">1h</a>
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='6h') }}" class="{{ 'active' if time_range == '6h' else '' }}">6h</a>
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='1d') }}" class="{{ 'active' if time_range in ('1d', '24h') else '' }}">24h</a>
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='2d') }}" class="{{ 'active' if time_range in ('2d', '48h') else '' }}">48h</a>
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='7d') }}" class="{{ 'active' if time_range == '7d' else '' }}">7d</a>
+        <a href="{{ url_for('main.world_monitor', view=request.args.get('view'), lat=lat, lon=lon, zoom=zoom, layers=','.join(layers), timeRange='all') }}" class="{{ 'active' if time_range == 'all' else '' }}">All</a>
+      </div>
+      <div class="wm-sidebar-title">Layers <span title="Toggle map overlays">?</span></div>
+      <form method="get" action="{{ url_for('main.world_monitor') }}" id="world-monitor-layers-form" class="wm-layers-list">
+        <input type="hidden" name="lat" value="{{ lat }}">
+        <input type="hidden" name="lon" value="{{ lon }}">
+        <input type="hidden" name="zoom" value="{{ zoom }}">
+        <input type="hidden" name="timeRange" value="{{ time_range }}">
+        {% if request.args.get('view') %}<input type="hidden" name="view" value="{{ request.args.get('view') }}">{% endif %}
+        {% for layer_id in all_layer_ids %}
+        <label>
+          <input type="checkbox" name="layers" value="{{ layer_id }}" {{ 'checked' if layer_id in layers else '' }}>
+          {{ (layer_labels or {}).get(layer_id, layer_id) }}{% if layer_id in live_layer_ids %} <span class="wm-live-text">Live</span>{% endif %}
+        </label>
+        {% endfor %}
+        <button type="submit" style="margin-top:8px;padding:8px 12px;background:#238636;border:none;border-radius:6px;color:#fff;font-size:0.8rem;cursor:pointer;">Apply</button>
+      </form>
+    </aside>
+    <div class="wm-map-wrap">
+      <div id="world-monitor-map"></div>
+      <div class="wm-legend-bar">
+        <span><i class="wm-legend-dot" style="background:#dc2626;"></i> High Alert</span>
+        <span><i class="wm-legend-dot" style="background:#ea580c;"></i> Elevated</span>
+        <span><i class="wm-legend-dot" style="background:#ca8a04;"></i> Monitoring</span>
+        <span><i class="wm-legend-dot wm-legend-triangle" style="border-bottom-color:#2563eb;"></i> Base</span>
+        <span><i class="wm-legend-dot wm-legend-square" style="background:#ca8a04;"></i> Nuclear</span>
+        <span><i class="wm-legend-dot wm-legend-square" style="background:#7c3aed;"></i> Datacenter</span>
+        <span><i class="wm-legend-dot" style="background:#0ea5e9;"></i> Weather</span>
+        <span><i class="wm-legend-dot" style="background:#16a34a;"></i> Natural</span>
+        {% if last_updated %}<span style="margin-left:auto;">Updated {{ last_updated[:16].replace('T', ' ') }} UTC</span>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="wm-panels">
+    <section class="wm-panel">
+      <h2 class="wm-panel-title"><span class="wm-live-badge"><span class="wm-live-dot"></span> Live</span> Live News</h2>
+      <div class="wm-panel-content">
+        <p><a href="{{ url_for('main.index') }}">Intelligence Feed</a> — latest headlines and analysis.</p>
+        <p><a href="{{ url_for('main.live_streams') }}">Live Streams</a> — news channels and webcams.</p>
+      </div>
+    </section>
+    <section class="wm-panel">
+      <h2 class="wm-panel-title"><span class="wm-live-badge"><span class="wm-live-dot"></span> Live</span> Live Webcams</h2>
+      <div class="wm-panel-content">
+        <p><a href="{{ url_for('main.live_streams') }}">View Live Streams</a> — regional feeds and news channels.</p>
+      </div>
+    </section>
+    <section class="wm-panel">
+      <h2 class="wm-panel-title"><span class="wm-live-badge"><span class="wm-live-dot"></span> Live</span> AI Insights</h2>
+      <div class="wm-panel-content">
+        <p><a href="{{ url_for('main.insights') }}">Insights</a> — trending topics and thematic analysis.</p>
+        <p><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> — country risk and heat maps.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function() {
+  var lat = {{ lat }};
+  var lon = {{ lon }};
+  var zoom = {{ zoom }};
+  var points = {{ points | tojson }};
+  var layerColors = {
+    conflicts: "#dc2626",
+    waterways: "#2563eb",
+    sanctions: "#ca8a04",
+    hotspots: "#ea580c",
+    bases: "#2563eb",
+    nuclear: "#ca8a04",
+    gamma_irradiators: "#94a3b8",
+    spaceports: "#a78bfa",
+    undersea_cables: "#0ea5e9",
+    pipelines: "#f59e0b",
+    ai_datacenters: "#7c3aed",
+    weather: "#0ea5e9",
+    economic: "#059669",
+    outages: "#64748b",
+    military: "#b91c1c",
+    natural: "#16a34a",
+    iranAttacks: "#c2410c"
+  };
+  var markerShape = { bases: "triangle", nuclear: "square", ai_datacenters: "square" };
+
+  function formatTimestamp() {
+    var d = new Date();
+    var days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    var pad = function(n) { return n < 10 ? "0" + n : n; };
+    return days[d.getUTCDay()] + ", " + pad(d.getUTCDate()) + " " + months[d.getUTCMonth()] + " " + d.getUTCFullYear() + " " + pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + ":" + pad(d.getUTCSeconds()) + " UTC";
+  }
+  var tsEl = document.getElementById("wm-timestamp");
+  if (tsEl) { tsEl.textContent = formatTimestamp(); setInterval(function() { tsEl.textContent = formatTimestamp(); }, 1000); }
+
+  var map = L.map("world-monitor-map", { zoomControl: false }).setView([lat, lon], zoom);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    attribution: "&copy; OpenStreetMap, CARTO"
+  }).addTo(map);
+  L.control.zoom({ position: "topright" }).addTo(map);
+
+  var homeLat = lat, homeLon = lon, homeZoom = zoom;
+  var homeBtn = L.control({ position: "topright" });
+  homeBtn.onAdd = function() {
+    var div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+    var a = L.DomUtil.create("a", "", div);
+    a.href = "#";
+    a.title = "Reset view";
+    a.innerHTML = "⌂";
+    a.style.cssText = "width:30px;height:30px;line-height:30px;text-align:center;display:block;background:#21262d;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;";
+    L.DomEvent.on(a, "click", function(e) { L.DomEvent.preventDefault(e); map.setView([homeLat, homeLon], homeZoom); });
+    return div;
+  };
+  homeBtn.addTo(map);
+
+  map.on("moveend", function() {
+    var c = map.getCenter();
+    var z = map.getZoom();
+    var form = document.getElementById("world-monitor-layers-form");
+    if (form) {
+      var latInput = form.querySelector('input[name="lat"]');
+      var lonInput = form.querySelector('input[name="lon"]');
+      var zoomInput = form.querySelector('input[name="zoom"]');
+      if (latInput) latInput.value = c.lat.toFixed(4);
+      if (lonInput) lonInput.value = c.lng.toFixed(4);
+      if (zoomInput) zoomInput.value = z;
+    }
+  });
+
+  if (points.length === 0) {
+    var el = document.getElementById("world-monitor-map");
+    el.innerHTML = "<p style=\"padding:40px;text-align:center;color:#8b949e;\">No points for selected layers and time range. Turn on layers in the sidebar and click Apply.</p>";
+  } else {
+    var useCluster = typeof L.markerClusterGroup === "function" && points.length > 15;
+    var layerGroups = {};
+    points.forEach(function(p) {
+      var layerId = p.layer || "conflicts";
+      if (!layerGroups[layerId]) {
+        layerGroups[layerId] = useCluster ? L.markerClusterGroup() : L.layerGroup();
+      }
+      var color = layerColors[layerId] || "#666";
+      var shape = markerShape[layerId] || "circle";
+      var style = "background:" + color + ";border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.3);display:inline-block;";
+      if (shape === "triangle") {
+        style += "width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid " + color + ";border-radius:0;box-sizing:content-box;";
+      } else if (shape === "square") {
+        style += "width:12px;height:12px;border-radius:2px;";
+      } else {
+        style += "width:12px;height:12px;border-radius:50%;";
+      }
+      var popup = "<strong>" + (p.title || "—") + "</strong><br/>" +
+        (p.summary ? p.summary.slice(0, 200) + (p.summary.length > 200 ? "…" : "") + "<br/>" : "") +
+        (p.observed_date ? "Date: " + p.observed_date + "<br/>" : "") +
+        (p.region ? "Region: " + p.region : "");
+      var icon = L.divIcon({
+        className: "wm-marker",
+        html: shape === "triangle" ? "<span style=\"display:block;width:0;height:0;margin:0 auto;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid " + color + ";border-top:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));\"></span>" : "<span style=\"" + style + "\"></span>",
+        iconSize: shape === "triangle" ? [14, 12] : [16, 16],
+        iconAnchor: shape === "triangle" ? [7, 12] : [8, 8]
+      });
+      var marker = L.marker([p.lat, p.lon], { icon: icon }).bindPopup(popup);
+      layerGroups[layerId].addLayer(marker);
+    });
+    Object.keys(layerGroups).forEach(function(layerId) { map.addLayer(layerGroups[layerId]); });
+    var lats = points.map(function(p) { return p.lat; });
+    var lons = points.map(function(p) { return p.lon; });
+    if (points.length > 1) map.fitBounds([[Math.min.apply(null, lats), Math.min.apply(null, lons)], [Math.max.apply(null, lats), Math.max.apply(null, lons)]], { padding: [30, 30], maxZoom: 10 });
+  }
+
+  setInterval(function() { window.location.reload(); }, 5 * 60 * 1000);
+})();
+</script>
+{% endblock %}

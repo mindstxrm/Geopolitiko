@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Operating Picture: {{ country.country_name }} — Geopolitical Terminal{% endblock %}
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('main.integration_dashboard') }}">Countries & Regions</a> <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('main.country_dashboard', country_code=country.country_code) }}">{{ country.country_name }}</a> <span class="breadcrumb-sep">›</span>
+  Operating Picture
+</nav>
+{% endblock %}
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.country_dashboard', country_code=country.country_code) }}" class="back-link">← {{ country.country_name }} Dashboard</a>
+      <a href="{{ url_for('main.help_page', _anchor='synthesis') }}" class="back-link">Synthesis</a>
+      <h1>Country Operating Picture: {{ country.country_name }} <span class="country-code">({{ country.country_code }})</span></h1>
+      {% if generated_at %}
+      <p class="synthesis-meta">Generated {{ generated_at[:19].replace('T', ' ') }} UTC</p>
+      {% endif %}
+    </header>
+
+    {% if error %}
+    <p class="synthesis-error">{{ error }}</p>
+    {% endif %}
+
+    <section class="synthesis-summary">
+      <h2>Situation Summary</h2>
+      {% if summary %}
+      <div class="synthesis-prose">{{ summary }}</div>
+      {% else %}
+      <p class="empty-state">No LLM summary available. Ensure <code>OPENAI_API_KEY</code> is set, or view raw data below.</p>
+      {% endif %}
+    </section>
+
+    {% if bullets %}
+    <section class="synthesis-bullets">
+      <h2>Key Points</h2>
+      <ul>
+        {% for b in bullets %}
+        <li>{{ b }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if data %}
+    <section class="synthesis-signals">
+      <h2>Source Data</h2>
+      {% set scores = data.get('scores', {}) %}
+      <ul class="data-list">
+        <li>Combined risk: {{ scores.get('combined_risk') or '—' }} | GEPI: {{ scores.get('gepi') or '—' }} | CDEI: {{ scores.get('cdei') or '—' }} | SFI: {{ scores.get('sfi') or '—' }} | Fragility: {{ scores.get('fragility') or '—' }} | Heat map risk: {{ scores.get('heat_map_risk') or '—' }}</li>
+        <li>Sanctions targeting: {{ data.get('sanctions_count', 0) }} · Treaties: {{ data.get('treaties_count', 0) }}</li>
+      </ul>
+      {% if data.get('articles') %}
+      <h3>Recent high-impact articles</h3>
+      <ul>
+        {% for a in data.articles[:8] %}
+        <li><strong>{{ a.title }}</strong> {% if a.impact %}[impact {{ a.impact }}]{% endif %} — {{ a.date }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.get('elections') %}
+      <h3>Elections</h3>
+      <ul>
+        {% for e in data.elections %}
+        <li>{{ e.type }} {{ e.date }} ({{ e.status }})</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.get('protests') %}
+      <h3>Protests</h3>
+      <ul>
+        {% for p in data.protests[:5] %}
+        <li>{{ p.date }}: {{ p.summary }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.get('chokepoint_flows') %}
+      <h3>Chokepoint exposure</h3>
+      <ul>
+        {% for f in data.chokepoint_flows %}
+        <li>{{ f.chokepoint }} ({{ f.sector }}): {{ f.exposure_pct }}%</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+    {% endif %}
+  </article>
+{% endblock %}

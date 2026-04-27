@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scenario Engine — {{ result.event_label or result.event_type }} — Summary</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
+  <style>
+    body.terminal.export-page { padding: 1rem; max-width: 900px; margin: 0 auto; }
+    .no-print { margin-bottom: 1rem; }
+    @media print {
+      .no-print { display: none !important; }
+      body { padding: 0; }
+    }
+    .path-block { margin-bottom: 1rem; }
+    .path-block strong { display: inline-block; min-width: 10rem; }
+    .agent-block { margin-bottom: 1.25rem; break-inside: avoid; }
+  </style>
+</head>
+<body class="terminal export-page">
+  <div class="no-print">
+    <p><a href="{{ url_for('main.scenario_engine') }}">← Back to Scenario Engine</a> · <button onclick="window.print()">Print / Save as PDF</button></p>
+  </div>
+  <h1>{{ result.event_label or result.event_type }}</h1>
+  <p class="engine-meta">Run at {{ (result.run_at or '')[:19].replace('T', ' ') }} UTC{% if result.region or result.country %} · {{ result.region or '' }}{% if result.region and result.country %} · {% endif %}{{ result.country or '' }}{% endif %}</p>
+
+  <h2>Probability pathways</h2>
+  {% for key, label in [('contained', 'Contained'), ('regional_escalation', 'Regional escalation'), ('systemic_crisis', 'Systemic crisis')] %}
+  <div class="path-block">
+    <strong>{{ label }} ({{ result.paths.get(key, 0) }}%):</strong> {{ result.path_descriptions.get(key, '—') }}
+  </div>
+  {% endfor %}
+
+  <h2>Agent assessments</h2>
+  {% for key, title in [('economic_policy', 'Economic agent'), ('political', 'Political agent'), ('military', 'Military agent'), ('diplomatic', 'Diplomatic agent'), ('private_sector', 'Private sector response agent')] %}
+  <div class="agent-block">
+    <h3>{{ title }}</h3>
+    <p>{{ result.agents.get(key, '—') }}</p>
+  </div>
+  {% endfor %}
+
+  <p class="engine-meta">Geopolitical Terminal · Scenario Engine · Confidential.</p>
+</body>
+</html>

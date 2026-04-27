@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Thematic: {{ topic }} — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.help_page', _anchor='synthesis') }}" class="back-link">← Synthesis</a>
+      <h1>Thematic Synthesis: {{ topic }}</h1>
+      <p class="synthesis-meta">This week across articles, treaties, sanctions, chokepoints</p>
+      <form method="get" class="synthesis-topic-form">
+        <label for="topic">Topic</label>
+        <select name="topic" id="topic" onchange="this.form.submit()">
+          {% for t in topics %}
+          <option value="{{ t }}" {{ 'selected' if t == topic else '' }}>{{ t }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </header>
+
+    {% if error %}
+    <p class="synthesis-error">{{ error }}</p>
+    {% endif %}
+
+    {% if generated_at %}
+    <p class="synthesis-meta">Generated {{ generated_at[:19].replace('T', ' ') }} UTC</p>
+    {% endif %}
+
+    <section class="synthesis-summary">
+      <h2>This Week</h2>
+      {% if summary %}
+      <div class="synthesis-prose">{{ summary }}</div>
+      {% else %}
+      <p class="empty-state">No LLM summary available. Ensure <code>OPENAI_API_KEY</code> is set, or view raw data below.</p>
+      {% endif %}
+    </section>
+
+    {% if bullets %}
+    <section class="synthesis-bullets">
+      <h2>Key Points</h2>
+      <ul>
+        {% for b in bullets %}
+        <li>{{ b }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <section class="synthesis-signals">
+      <h2>Data</h2>
+      {% if data %}
+      <ul>
+        <li>Articles: {{ (data.articles or [])|length }}</li>
+        <li>Treaties: {{ data.treaties_count or 0 }}</li>
+        <li>Sanctions: {{ data.sanctions_count or 0 }}</li>
+        <li>Export restrictions: {{ data.export_restrictions_count or 0 }}</li>
+        <li>GEPI: {{ data.gepi or 'N/A' }}</li>
+      </ul>
+      {% if data.articles %}
+      <h3>Top articles</h3>
+      <ul>
+        {% for a in data.articles %}
+        <li><strong>{{ a.title }}</strong> {% if a.impact %}(impact {{ a.impact }}){% endif %} — {{ a.date }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.chokepoints %}
+      <h3>Chokepoints in region</h3>
+      <ul>
+        {% for cp in data.chokepoints %}
+        <li>{{ cp.name }} ({{ cp.region }})</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% else %}
+      <p class="empty-state">No data available for this topic.</p>
+      {% endif %}
+    </section>
+  </article>
+{% endblock %}

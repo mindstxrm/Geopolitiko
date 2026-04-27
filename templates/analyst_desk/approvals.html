@@ -1,0 +1,66 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Approvals — Analyst Desk{% endblock %}
+{% block body %}
+<div class="panel">
+  <h2>Approval Center</h2>
+  <p class="muted">Review queue with bulk approve/reject actions before publishing to Terminal.</p>
+</div>
+
+<div class="panel">
+  <h2>Pending proposals ({{ pending|length }})</h2>
+  <form method="post" action="{{ url_for('analyst_desk.approvals_bulk') }}">
+    <p class="muted" style="margin:0 0 0.5rem 0;">
+      <label><input type="checkbox" name="confirm_publish" value="1"> Confirm publish to Terminal for bulk approvals</label>
+    </p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;">
+      <button type="submit" name="action" value="approve" class="btn ok">Bulk approve + publish</button>
+      <button type="submit" name="action" value="reject" class="btn danger">Bulk reject</button>
+    </div>
+    <table>
+      <thead><tr><th></th><th>ID</th><th>Agent</th><th>Type</th><th>Title</th><th>Created</th></tr></thead>
+      <tbody>
+      {% for p in pending %}
+        <tr>
+          <td><input type="checkbox" name="proposal_ids" value="{{ p.id }}"></td>
+          <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td>
+          <td>{{ p.agent_id }}</td>
+          <td>{{ p.run_type }}</td>
+          <td>{{ p.title or '—' }}</td>
+          <td class="muted">{{ p.created_at }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="muted">No pending proposals.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Recently approved</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Agent</th><th>Title</th><th>Created</th></tr></thead>
+    <tbody>
+      {% for p in approved %}
+      <tr><td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td><td>{{ p.agent_id }}</td><td>{{ p.title or '—' }}</td><td class="muted">{{ p.created_at }}</td></tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">No approved proposals.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Recently rejected</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Agent</th><th>Title</th><th>Created</th></tr></thead>
+    <tbody>
+      {% for p in rejected %}
+      <tr><td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td><td>{{ p.agent_id }}</td><td>{{ p.title or '—' }}</td><td class="muted">{{ p.created_at }}</td></tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">No rejected proposals.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Geopolitical Terminal{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
+  {% block head %}{% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+{% set terminal_embed = (request.args.get('embed') == '1') %}
+{% set embed_ns = namespace(parts=[]) %}
+{% if terminal_embed %}
+  {% for k, v in request.args.items(multi=True) %}
+    {% if k != 'embed' %}
+      {% set _ = embed_ns.parts.append(k + '=' + (v|urlencode)) %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+<body class="terminal{% if terminal_embed %} terminal-embed{% endif %}{% block body_extra_class %}{% endblock %}" id="body-theme" data-terminal-path="{{ request.path }}" data-terminal-endpoint="{{ request.endpoint or '' }}">
+  {% set ep = request.url_rule.endpoint if request.url_rule else '' %}
+  {% set ep15 = (ep or '')[:15] %}
+  {% if not terminal_embed %}
+  <nav class="terminal-nav" aria-label="Main">
+    <a href="{{ url_for('main.situation_room') }}" class="terminal-logo" aria-label="Geopolitical Terminal home">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Geopolitical Terminal" class="terminal-logo-img">
+    </a>
+    <ul class="terminal-nav-list">
+      <li><a href="{{ url_for('main.situation_room') }}" class="{{ 'active' if ep == 'main.situation_room' else '' }}">Home</a></li>
+
+      <li class="nav-group-wrap" data-nav-group="geography">
+        <details class="nav-group" {{ 'open' if ep in ('main.integration_dashboard', 'main.country_dashboard', 'main.relationship_mapper') else '' }}>
+          <summary class="nav-group-trigger" title="Countries and regions: risk and integration by country. Relationship Mapper: alignment and trade.">Geography</summary>
+          <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.integration_dashboard') }}" class="{{ 'active' if ep in ('main.integration_dashboard', 'main.country_dashboard') else '' }}">Countries & Regions</a></li>
+            <li><a href="{{ url_for('main.relationship_mapper') }}" class="{{ 'active' if ep == 'main.relationship_mapper' else '' }}">Relationship Mapper</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li class="nav-group-wrap" data-nav-group="security">
+        <details class="nav-group" {{ 'open' if ep in ('main.supply_chain_dashboard', 'main.diplomacy_sanctions', 'main.conflict_dashboard') or ep15 == 'main.diplomacy' else '' }}>
+          <summary class="nav-group-trigger" title="Military & security; diplomacy, treaties, agreements; trade & supply chains; sanctions.">Security & Diplomacy</summary>
+          <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.conflict_dashboard') }}" class="{{ 'active' if ep == 'main.conflict_dashboard' else '' }}">Military & Security</a></li>
+            <li><a href="{{ url_for('main.diplomacy_dashboard') }}" class="{{ 'active' if ep15 == 'main.diplomacy' else '' }}">Diplomacy & Agreements</a></li>
+            <li><a href="{{ url_for('main.supply_chain_dashboard') }}" class="{{ 'active' if ep == 'main.supply_chain_dashboard' else '' }}">Trade & Supply Chains</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li class="nav-group-wrap" data-nav-group="politics">
+        <details class="nav-group" {{ 'open' if ep in ('main.approval_protests', 'main.stability_dashboard') else '' }}>
+          <summary class="nav-group-trigger" title="Elections, approval ratings, protests; political stability indicators.">Politics</summary>
+          <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.approval_protests') }}" class="{{ 'active' if ep == 'main.approval_protests' else '' }}">Elections, approval & protests</a></li>
+            <li><a href="{{ url_for('main.stability_dashboard') }}" class="{{ 'active' if ep == 'main.stability_dashboard' else '' }}">Political Stability</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li class="nav-group-wrap" data-nav-group="intelligence">
+        <details class="nav-group" {{ 'open' if ep in ('main.index', 'main.insights', 'main.alerts_list', 'main.macro_dashboard') else '' }}>
+          <summary class="nav-group-trigger" title="Intelligence feed, watchlists, digests.">Intelligence</summary>
+          <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.index') }}" class="{{ 'active' if ep == 'main.index' else '' }}">Intelligence Feed</a></li>
+            <li><a href="{{ url_for('main.insights') }}" class="{{ 'active' if ep == 'main.insights' else '' }}">Insights</a></li>
+            <li><a href="{{ url_for('main.alerts_list') }}" class="{{ 'active' if ep == 'main.alerts_list' else '' }}">Watchlists</a></li>
+            <li><a href="{{ url_for('main.macro_dashboard') }}" class="{{ 'active' if ep == 'main.macro_dashboard' else '' }}">Live Macro Indicators</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li class="nav-group-wrap" data-nav-group="tools">
+        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks') else '' }}>
+          <summary class="nav-group-trigger" title="Scenario Engine: run scenarios and export reports. Reports: briefings and outlook. Workspace: multi-panel views.">Tools</summary>
+          <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.scenario_engine') }}" class="{{ 'active' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary') else '' }}">Scenario Engine</a></li>
+            <li><a href="{{ url_for('main.reports_hub') }}" class="{{ 'active' if ep == 'main.reports_hub' else '' }}">Reports</a></li>
+            <li><a href="{{ url_for('main.workspace') }}" class="{{ 'active' if ep == 'main.workspace' else '' }}">Workspace</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('main.workspace_tasks') }}" class="{{ 'active' if ep == 'main.workspace_tasks' else '' }}">Tasks</a></li>
+            {% endif %}
+          </ul>
+        </details>
+      </li>
+      <li><a href="{{ url_for('main.help_page') }}" class="{{ 'active' if ep == 'main.help_page' else '' }}">Help</a></li>
+    </ul>
+  </nav>
+
+  <header class="terminal-command-bar" role="search">
+    <div class="command-bar-inner">
+      <div class="command-bar-left">
+        <div class="command-bar-wrap">
+          <form class="command-form" action="{{ url_for('main.command_search') }}" method="get" id="command-form">
+            <label for="command-type">Search by</label>
+            <select name="type" id="command-type" class="command-type" aria-label="Search by">
+              <option value="keyword" {{ 'selected' if request.args.get('type') == 'keyword' else '' }}>Keyword</option>
+              <option value="country" {{ 'selected' if request.args.get('type') == 'country' else '' }}>Country</option>
+              <option value="region" {{ 'selected' if request.args.get('type') == 'region' else '' }}>Region</option>
+              <option value="sector" {{ 'selected' if request.args.get('type') == 'sector' else '' }}>Sector</option>
+              <option value="treaty" {{ 'selected' if request.args.get('type') == 'treaty' else '' }}>Treaty</option>
+              <option value="risk" {{ 'selected' if request.args.get('type') == 'risk' else '' }}>Risk type</option>
+              <option value="scenario" {{ 'selected' if request.args.get('type') == 'scenario' else '' }}>Scenario</option>
+              <option value="sanctions" {{ 'selected' if request.args.get('type') == 'sanctions' else '' }}>Sanctions entity</option>
+            </select>
+            <input type="search" name="q" id="command-input" class="command-input" placeholder="Search…" value="{{ request.args.get('q', '') }}" autocomplete="off" aria-label="Command search" aria-expanded="false" aria-controls="command-suggestions" aria-autocomplete="list">
+            <button type="submit" style="position:absolute;left:-9999px;">Go</button>
+          </form>
+          <div id="command-suggestions" class="command-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
+        </div>
+        <span class="command-hint">Type to jump (country, region, risk…). <kbd>/</kbd> or <kbd>⌘K</kbd> focus. <kbd>⌘⇧1</kbd>–<kbd>4</kbd> open <strong>Workspace</strong> presets (CHN, SGP, ASEAN, TWN). <kbd>⌘⇧W</kbd> Workspace.</span>
+        <a href="{{ url_for('main.help_page') }}#command-bar" class="command-help-link" aria-label="How search works">?</a>
+      </div>
+      <div class="top-bar-links">
+        {% if current_user.is_authenticated %}
+        <button type="button" class="top-bar-link top-bar-link-icon {{ 'active' if ep in ('main.messaging_hub', 'main.messaging_channel', 'main.messaging_create_channel_route') else '' }}" title="Intelligence Messaging" aria-label="Open chat panel" id="chat-panel-toggle">
+          <svg class="chat-bubble-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        {% else %}
+        <a href="{{ url_for('main.messaging_hub') }}" class="top-bar-link top-bar-link-icon {{ 'active' if ep in ('main.messaging_hub', 'main.messaging_channel', 'main.messaging_create_channel_route') else '' }}" title="Intelligence Messaging" aria-label="Intelligence Messaging">
+          <svg class="chat-bubble-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.account') }}" class="top-bar-link {{ 'active' if ep == 'main.account' else '' }}">Account</a>
+        <a href="{{ url_for('main.logout') }}" class="top-bar-link">Log out</a>
+        {% else %}
+        <a href="{{ url_for('main.login') }}" class="top-bar-link {{ 'active' if ep == 'main.login' else '' }}">Log in</a>
+        <a href="{{ url_for('main.register') }}" class="top-bar-link {{ 'active' if ep == 'main.register' else '' }}">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+  {% else %}
+  <div class="terminal-embed-bar" role="region" aria-label="Embedded view">
+    <a href="{{ request.path }}{% if embed_ns.parts %}?{{ embed_ns.parts|join('&') }}{% endif %}" class="terminal-embed-bar-link" target="_blank" rel="noopener">Open in full app</a>
+    <span class="terminal-embed-bar-hint">Minimal chrome for workspace panels</span>
+  </div>
+  {% endif %}
+
+  <main class="terminal-main">
+    <div class="container layout-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <ul class="flash-messages">
+        {% for category, msg in messages %}
+        <li class="flash-msg {{ category or 'message' }}">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+      {% block breadcrumbs %}{% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+    <footer class="terminal-footer container{% if terminal_embed %} terminal-footer-embed-hidden{% endif %}">
+      {% if last_scrape_time is defined and last_scrape_time %}
+      <p>Data: <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time></p>
+      {% endif %}
+      <p><a href="{{ url_for('main.help_page') }}">Help & Getting started</a> · <a href="{{ url_for('main.saved_views_list') }}">Saved views</a> · <a href="{{ url_for('main.reports_hub') }}">Reports</a> · <a href="{{ url_for('main.export_briefing') }}">Briefing</a> · <a href="/api/articles" target="_blank" rel="noopener">API</a></p>
+      {% if not terminal_embed %}
+      <p class="terminal-footer-disclaimer">Geopolitical Terminal is a decision-support tool. Content is not legal, investment, or classified-briefing advice. Model-assisted text may contain errors.</p>
+      {% endif %}
+    </footer>
+  </main>
+
+  {% if current_user.is_authenticated %}
+  <div class="chat-panel-backdrop" id="chat-panel-backdrop" aria-hidden="true"></div>
+  <aside class="chat-panel" id="chat-panel" aria-label="Chat panel" role="dialog">
+    <div class="chat-panel-drop-overlay" id="chat-panel-drop-overlay"><span>Drop to share in chat</span></div>
+    <header class="chat-panel-header">
+      <h2 id="chat-panel-title">Messaging</h2>
+      <div>
+        <a href="{{ url_for('main.messaging_hub') }}" class="chat-panel-full-link" id="chat-panel-full-link">Full page</a>
+        <button type="button" class="chat-panel-close" id="chat-panel-close" aria-label="Close panel">×</button>
+      </div>
+    </header>
+    <div class="chat-panel-body" id="chat-panel-body">
+      <div class="chat-panel-drop-hint" id="chat-panel-drop-hint">Drag an article, country, risk dashboard, or other item from the page and drop it here to share in a channel.</div>
+      <div id="chat-panel-channel-list-wrap" style="display:none;">
+        <ul class="chat-channel-list" id="chat-channel-list"></ul>
+      </div>
+      <div id="chat-panel-channel-view" style="display:none;">
+        <div class="chat-channel-back"><button type="button" id="chat-panel-back">← Back to channels</button></div>
+        <div class="chat-messages-area" id="chat-messages-area">
+          <ul class="chat-message-list" id="chat-message-list"></ul>
+        </div>
+        <div class="chat-panel-composer" id="chat-panel-composer">
+          <textarea id="chat-panel-message-input" placeholder="Type a message…" maxlength="10000" rows="2"></textarea>
+          <div id="chat-panel-attach-chip" class="composer-attach-chip" style="display:none;"><span id="chat-panel-attach-label"></span><button type="button" id="chat-panel-attach-clear">×</button></div>
+          <div class="composer-send-row"><button type="button" class="btn btn-primary" id="chat-panel-send">Send</button></div>
+        </div>
+      </div>
+      <div id="chat-panel-forward-wrap" style="display:none;">
+        <div class="chat-panel-forward-form">
+          <p id="chat-panel-forward-label" class="forward-drop-label">Share in channel:</p>
+          <select id="chat-panel-forward-select"><option value="">— Select channel —</option></select>
+          <label for="chat-panel-forward-content">Message (optional)</label>
+          <textarea id="chat-panel-forward-content" rows="2" placeholder="Add a note…" maxlength="10000"></textarea>
+          <div class="forward-actions">
+            <button type="button" class="btn btn-primary" id="chat-panel-forward-send">Send to channel</button>
+            <button type="button" class="btn btn-secondary" id="chat-panel-forward-cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  {% endif %}
+
+  <script>
+    (function() {
+      var RECENT_KEY = 'geopolitical-command-recent';
+      var RECENT_MAX = 10;
+      var cmd = document.getElementById('command-input');
+      var form = document.getElementById('command-form');
+      var typeSelect = document.getElementById('command-type');
+      var panel = document.getElementById('command-suggestions');
+      var debounceTimer = null;
+      var suggestions = [];
+      var highlightedIndex = -1;
+
+      function focusCommand() {
+        if (cmd) { cmd.focus(); cmd.select && cmd.select(); }
+      }
+
+      function getRecent() {
+        try {
+          var raw = localStorage.getItem(RECENT_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) { return []; }
+      }
+      function setRecent(list) {
+        try {
+          localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, RECENT_MAX)));
+        } catch (e) {}
+      }
+      function addRecent(entry) {
+        var list = getRecent().filter(function(r) {
+          return r.url !== entry.url || r.q !== entry.q;
+        });
+        list.unshift(entry);
+        setRecent(list);
+      }
+
+      function showPanel(show) {
+        if (!panel) return;
+        panel.hidden = !show;
+        if (cmd) cmd.setAttribute('aria-expanded', show ? 'true' : 'false');
+        if (!show) { highlightedIndex = -1; }
+      }
+      function render(items, isRecent) {
+        if (!panel) return;
+        if (!items || items.length === 0) {
+          panel.innerHTML = '';
+          panel.hidden = true;
+          return;
+        }
+        panel.innerHTML = items.map(function(item, i) {
+          var url = item.url || ('{{ url_for("main.command_search") }}?type=' + encodeURIComponent(item.type || typeSelect.value) + '&q=' + encodeURIComponent(item.q || ''));
+          var label = item.label || item.q || '';
+          var sub = item.subtitle || item.description || '';
+          var kind = item.kind || item.type || '';
+          var optId = 'cmd-opt-' + i;
+          return '<div class="command-suggestion-item" role="option" id="' + optId + '" data-index="' + i + '" data-url="' + (url.replace(/"/g, '&quot;')) + '" data-label="' + (label.replace(/"/g, '&quot;')) + '" data-q="' + ((item.q || '').replace(/"/g, '&quot;')) + '">' +
+            (kind ? '<span class="command-suggestion-kind">' + kind + '</span>' : '') +
+            '<span class="command-suggestion-label">' + escapeHtml(label) + '</span>' +
+            (sub ? '<span class="command-suggestion-sub">' + escapeHtml(sub) + '</span>' : '') +
+            '</div>';
+        }).join('');
+        panel.hidden = false;
+        if (cmd) cmd.setAttribute('aria-expanded', 'true');
+        highlightedIndex = -1;
+      }
+      function escapeHtml(s) {
+        if (!s) return '';
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function selectItem(item) {
+        var url = item.url;
+        var label = item.label || item.q;
+        var q = item.q !== undefined ? item.q : (cmd && cmd.value) || '';
+        if (url && url.indexOf('/command') !== 0) {
+          addRecent({ label: label, url: url, type: typeSelect.value, q: q });
+          window.location.href = url;
+          return;
+        }
+        if (item.q !== undefined && cmd) cmd.value = item.q;
+        form.submit();
+      }
+
+      function fetchSuggestions() {
+        var q = (cmd && cmd.value) || '';
+        var type = (typeSelect && typeSelect.value) || 'keyword';
+        if (!q.trim()) {
+          var recent = getRecent();
+          if (recent.length > 0) {
+            render(recent.map(function(r) { return { label: r.label, url: r.url, q: r.q, type: r.type }; }), true);
+            if (panel && !panel.hidden) {
+              var heading = document.createElement('div');
+              heading.className = 'command-suggestion-heading';
+              heading.textContent = 'Recent';
+              heading.setAttribute('aria-hidden', 'true');
+              panel.insertBefore(heading, panel.firstChild);
+            }
+          } else {
+            panel.innerHTML = '';
+            showPanel(false);
+          }
+          return;
+        }
+        var url = '/api/command/suggest?q=' + encodeURIComponent(q) + '&type=' + encodeURIComponent(type);
+        fetch(url).then(function(res) { return res.json(); }).then(function(data) {
+          suggestions = (data && data.suggestions) || [];
+          render(suggestions);
+        }).catch(function() {
+          suggestions = [];
+          render([]);
+        });
+      }
+
+      function onInput() {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(fetchSuggestions, 180);
+      }
+      function onFocus() {
+        fetchSuggestions();
+      }
+      function onBlur() {
+        setTimeout(function() {
+          var active = document.activeElement;
+          if (active && panel && (active === panel || panel.contains(active))) return;
+          showPanel(false);
+        }, 150);
+      }
+
+      if (cmd) {
+        cmd.addEventListener('input', onInput);
+        cmd.addEventListener('focus', onFocus);
+        cmd.addEventListener('blur', onBlur);
+        cmd.addEventListener('keydown', function(e) {
+          if (!panel || panel.hidden) return;
+          var items = panel.querySelectorAll('.command-suggestion-item');
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            highlightedIndex = highlightedIndex < items.length - 1 ? highlightedIndex + 1 : 0;
+            items.forEach(function(el, i) { el.classList.toggle('highlighted', i === highlightedIndex); });
+            if (items[highlightedIndex]) items[highlightedIndex].scrollIntoView({ block: 'nearest' });
+            return;
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            highlightedIndex = highlightedIndex <= 0 ? items.length - 1 : highlightedIndex - 1;
+            items.forEach(function(el, i) { el.classList.toggle('highlighted', i === highlightedIndex); });
+            if (items[highlightedIndex]) items[highlightedIndex].scrollIntoView({ block: 'nearest' });
+            return;
+          }
+          if (e.key === 'Enter' && items.length && highlightedIndex >= 0 && items[highlightedIndex]) {
+            e.preventDefault();
+            var el = items[highlightedIndex];
+            var url = el.getAttribute('data-url');
+            var label = el.getAttribute('data-label');
+            var q = el.getAttribute('data-q');
+            selectItem({ url: url, label: label, q: q || cmd.value });
+            return;
+          }
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            showPanel(false);
+          }
+        });
+      }
+      if (panel) {
+        panel.addEventListener('click', function(e) {
+          var item = e.target && e.target.closest('.command-suggestion-item');
+          if (!item) return;
+          var url = item.getAttribute('data-url');
+          var label = item.getAttribute('data-label');
+          var q = item.getAttribute('data-q');
+          selectItem({ url: url, label: label, q: q || (cmd && cmd.value) });
+        });
+      }
+      if (form) {
+        form.addEventListener('submit', function() {
+          var q = (cmd && cmd.value) || '';
+          var type = (typeSelect && typeSelect.value) || 'keyword';
+          if (q.trim()) {
+            addRecent({ label: q, url: form.action + '?type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(q), type: type, q: q });
+          }
+        });
+      }
+
+      document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+        if (e.key === '/') { e.preventDefault(); focusCommand(); }
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); focusCommand(); }
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+          if (e.key === '1') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/country/CN", t2="/supply-chain", t3="/risk", t4="/country/TW") }}'; }
+          if (e.key === '2') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/country/SG", t2="/supply-chain", t3="/risk", t4="/country/MY") }}'; }
+          if (e.key === '3') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/risk", t2="/country/ID", t3="/country/TH", t4="/country/VN") }}'; }
+          if (e.key === '4') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/country/TW", t2="/scenarios/engine", t3="/risk", t4="/supply-chain") }}'; }
+          if (e.key === 'W') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace") }}'; }
+        }
+      });
+    })();
+  </script>
+  {% if current_user.is_authenticated %}
+  <script src="{{ url_for('static', filename='js/chat-panel.js') }}"></script>
+  {% endif %}
+  {% if not terminal_embed %}
+  <script src="{{ url_for('static', filename='js/policy-ux.js') }}" defer></script>
+  {% endif %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Saved views — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Saved views</h1>
+  <p class="page-intro">Load a saved filter combination or delete it.</p>
+  {% if not saved_views %}
+  <p class="empty-state">No saved views. On the News page, set filters and use "Save view" in the sidebar.</p>
+  {% else %}
+  <ul class="saved-views-list">
+    {% for v in saved_views %}
+    <li class="saved-view-item">
+      <a href="{{ url_for('main.load_saved_view', view_id=v.id) }}">{{ v.name }}</a>
+      <form action="{{ url_for('main.delete_saved_view_route', view_id=v.id) }}" method="post" class="inline-form">
+        <button type="submit" class="btn-link danger">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p><a href="{{ url_for('main.index') }}">← Back to News</a></p>
+{% endblock %}

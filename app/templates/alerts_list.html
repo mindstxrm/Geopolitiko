@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Watchlists — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <div class="watchlists-workspace">
+    <div class="watchlists-top-strip">
+      <div class="watchlists-top-left">
+        <h1 class="page-title">Watchlists</h1>
+        <p class="page-intro">Create and manage watchlists by topics or countries; set minimum impact and optional webhook. Match counts use the last 24h.</p>
+      </div>
+      <div class="watchlists-top-actions">
+        <button type="button" class="watchlists-mobile-create-btn" id="watchlists-mobile-create-btn">Create watchlist</button>
+      </div>
+    </div>
+
+    <div class="watchlists-grid">
+      <section class="watchlists-left-canvas" aria-label="Watchlists list">
+        <div class="watchlists-left-header">
+          <h2>Your watchlists</h2>
+        </div>
+
+        {% if not alerts %}
+          <p class="empty-state">No watchlists yet. Create one in the panel.</p>
+        {% else %}
+          <ul class="cluster-list cluster-list-watchlists watchlists-list">
+            {% for a in alerts %}
+            {% set badge_count = alert_count_by_id.get(a.id) %}
+            <li
+              class="watchlists-row"
+              role="button"
+              tabindex="0"
+              data-watchlist-id="{{ a.id }}"
+              data-watchlist-name="{{ a.name }}"
+              data-watchlist-view-url="{{ url_for('main.alert_detail', alert_id=a.id) }}"
+              data-watchlist-edit-url="{{ url_for('main.alert_edit', alert_id=a.id) if current_user.is_authenticated else '' }}"
+              data-watchlist-delete-url="{{ url_for('main.alert_delete', alert_id=a.id) if current_user.is_authenticated else '' }}"
+              data-watchlist-badge="{{ badge_count if badge_count else '' }}"
+            >
+              <span class="watchlists-row-main">
+                <span class="watchlists-row-name">{{ a.name }}</span>
+                {% if badge_count %}<span class="alert-badge">({{ badge_count }} in 24h)</span>{% endif %}
+              </span>
+              <span class="watchlists-row-right">
+                <a href="{{ url_for('main.alert_detail', alert_id=a.id) }}" class="watchlists-view-link" aria-label="View watchlist">
+                  View
+                </a>
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </section>
+
+      <aside class="watchlists-right-panel" id="watchlists-right-panel" aria-label="Watchlist create and selected preview">
+        <div class="watchlists-right-header">
+          <h2>Create watchlist</h2>
+          <button type="button" class="watchlists-right-close-btn" id="watchlists-right-close-btn" aria-label="Close panel">×</button>
+        </div>
+
+        <div class="watchlists-right-body">
+          <section id="create-watchlist" class="analysis-section watchlists-create-section">
+            <form method="post" class="inline-form" id="alert-form">
+              <input type="hidden" name="form_type" value="alert">
+              <label>
+                Name
+                <input type="text" name="name" placeholder="e.g. High-impact Russia–Ukraine" required>
+              </label>
+              <label>
+                Topics or countries (optional, comma-separated; click below to add)
+                <input type="text" name="topics" id="alert-topics-input" placeholder="e.g. China, Russia, Ukraine, NATO">
+              </label>
+              <p class="alert-suggestions-label">Topics:</p>
+              <p class="alert-suggestions-row">
+                {% for s in (alert_topic_suggestions or []) %}
+                <button type="button" class="alert-suggestion-chip" data-topic="{{ s }}">{{ s }}</button>
+                {% endfor %}
+              </p>
+              <p class="alert-suggestions-label">Countries &amp; Regions (all {{ (alert_country_suggestions or [])|length }}):</p>
+              <div class="alert-suggestions-scroll">
+                {% for s in (alert_country_suggestions or []) %}
+                <button type="button" class="alert-suggestion-chip" data-topic="{{ s }}">{{ s }}</button>
+                {% endfor %}
+              </div>
+              <label>
+                Min impact (0–10)
+                <select name="min_impact_score">
+                  <option value="0">Any</option>
+                  <option value="2">Low+ (2+)</option>
+                  <option value="5" selected>Med+ (5+)</option>
+                  <option value="7">High only (7+)</option>
+                </select>
+              </label>
+              <label>
+                Webhook URL (optional; POST when new matches)
+                <input type="url" name="webhook_url" placeholder="https://...">
+              </label>
+              <button type="submit">Save watchlist</button>
+            </form>
+          </section>
+
+          <section class="watchlists-selected-preview" id="watchlists-selected-preview" style="display:none;">
+            <h3>Selected watchlist</h3>
+            <p class="watchlists-selected-name" id="watchlists-selected-name">—</p>
+            <p class="watchlists-selected-badge" id="watchlists-selected-badge"></p>
+
+            <div class="watchlists-selected-actions">
+              <a href="#" id="watchlists-selected-view-link" class="btn btn-secondary">View</a>
+              {% if current_user.is_authenticated %}
+              <a href="#" id="watchlists-selected-edit-link" class="btn btn-secondary">Edit</a>
+              <form method="post" id="watchlists-selected-delete-form" class="inline-delete-form" onsubmit="return confirm('Remove this watchlist?');">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+              {% endif %}
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="watchlists-backdrop" id="watchlists-backdrop" aria-hidden="true"></div>
+
+  <p class="insights-footer"><a href="{{ url_for('main.insights') }}">← Insights</a> (digests, trends, clusters)</p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Mobile drawer open/close
+      var mobileCreateBtn = document.getElementById("watchlists-mobile-create-btn");
+      var rightPanel = document.getElementById("watchlists-right-panel");
+      var rightCloseBtn = document.getElementById("watchlists-right-close-btn");
+      var backdrop = document.getElementById("watchlists-backdrop");
+
+      function setPanelOpen(open) {
+        if (!rightPanel) return;
+        rightPanel.classList.toggle("open", !!open);
+        if (backdrop) backdrop.setAttribute("aria-hidden", String(!open));
+      }
+
+      if (mobileCreateBtn) mobileCreateBtn.addEventListener("click", function () { setPanelOpen(true); });
+      if (rightCloseBtn) rightCloseBtn.addEventListener("click", function () { setPanelOpen(false); });
+      if (backdrop) backdrop.addEventListener("click", function () { setPanelOpen(false); });
+
+      // Watchlist selection preview
+      var selectedPreview = document.getElementById("watchlists-selected-preview");
+      var selectedName = document.getElementById("watchlists-selected-name");
+      var selectedBadge = document.getElementById("watchlists-selected-badge");
+      var selectedViewLink = document.getElementById("watchlists-selected-view-link");
+      var selectedEditLink = document.getElementById("watchlists-selected-edit-link");
+      var deleteForm = document.getElementById("watchlists-selected-delete-form");
+
+      function renderSelectedFromRow(row) {
+        if (!selectedPreview || !selectedName) return;
+        var name = row.getAttribute("data-watchlist-name") || "—";
+        var badge = row.getAttribute("data-watchlist-badge") || "";
+        var viewUrl = row.getAttribute("data-watchlist-view-url") || "#";
+        var editUrl = row.getAttribute("data-watchlist-edit-url") || "";
+        var deleteUrl = row.getAttribute("data-watchlist-delete-url") || "";
+
+        selectedName.textContent = name;
+        selectedBadge.textContent = badge ? "(" + badge + " in 24h)" : "";
+
+        if (selectedViewLink) selectedViewLink.setAttribute("href", viewUrl);
+        if (selectedEditLink) selectedEditLink.setAttribute("href", editUrl || "#");
+        if (deleteForm) deleteForm.setAttribute("action", deleteUrl || "");
+
+        selectedPreview.style.display = "block";
+      }
+
+      document.querySelectorAll(".watchlists-row").forEach(function (row) {
+        row.addEventListener("click", function () {
+          renderSelectedFromRow(row);
+        });
+        row.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            renderSelectedFromRow(row);
+          }
+        });
+      });
+
+      document.querySelectorAll(".alert-suggestion-chip").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const input = document.getElementById("alert-topics-input");
+          if (!input) return;
+          const topic = (this.getAttribute("data-topic") || "").trim();
+          if (!topic) return;
+          const current = (input.value || "").trim();
+          const parts = current ? current.split(/\s*,\s*/).map(function (p) { return p.trim(); }).filter(Boolean) : [];
+          if (parts.indexOf(topic) !== -1) return;
+          parts.push(topic);
+          input.value = parts.join(", ");
+        });
+      });
+    });
+  </script>
+{% endblock %}

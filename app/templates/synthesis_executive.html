@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Executive One-Pager{% if data.type == 'country' %}: {{ data.name }}{% else %}: {{ data.region }}{% endif %} — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.help_page', _anchor='synthesis') }}" class="back-link">← Synthesis</a>
+      <h1>Executive One-Pager{% if data.type == 'country' %}: {{ data.name }}{% else %}: {{ data.region }}{% endif %}</h1>
+      <form method="get" action="{{ url_for('main.synthesis_executive') }}" class="synthesis-executive-form">
+        <label for="country">Country</label>
+        <input type="text" name="country" id="country" placeholder="e.g. USA" value="{{ data.link_keys.get('country_code', '') if data.type == 'country' and data.link_keys else '' }}">
+        <span>or</span>
+        <label for="region">Region</label>
+        <input type="text" name="region" id="region" placeholder="e.g. EU" value="{{ data.link_keys.get('region_code', '') if data.type == 'region' and data.link_keys else '' }}">
+        <button type="submit">Go</button>
+      </form>
+    </header>
+
+    <section class="executive-risk">
+      <h2>Risk</h2>
+      {% if data.type == 'country' %}
+      <ul>
+        <li>Combined: {{ data.risk or '—' }}</li>
+        <li>Geopolitical: {{ data.geopolitical or '—' }}</li>
+        <li>Economic: {{ data.economic or '—' }}</li>
+        {% if data.fragility is not none %}<li>Fragility: {{ data.fragility }}%</li>{% endif %}
+        <li>Articles (7d): {{ data.article_count or 0 }}</li>
+      </ul>
+      {% else %}
+      <ul>
+        <li>GEPI: {{ data.gepi or 'N/A' }}</li>
+        <li>Top risk countries: {% for r in data.top_risk_countries %}{{ r.code }} ({{ r.score }}){% if not loop.last %}, {% endif %}{% endfor %}{% if not data.top_risk_countries %}—{% endif %}</li>
+      </ul>
+      {% endif %}
+    </section>
+
+    <section class="executive-drivers">
+      <h2>Top 3 Drivers</h2>
+      <ul>
+        {% for d in data.drivers %}
+        <li>{{ d }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="executive-implications">
+      <h2>Implications (policy / markets)</h2>
+      <ul>
+        {% for imp in data.implications %}
+        <li>{{ imp }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="executive-links">
+      <h2>Relevant Dashboards</h2>
+      <ul>
+        {% for label, path in data.links.items() %}
+        <li><a href="{{ path }}">{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </article>
+{% endblock %}

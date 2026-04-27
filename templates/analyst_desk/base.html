@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Analyst Desk{% endblock %}</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a2332;
+      --text: #e7ecf3;
+      --muted: #8b9bb4;
+      --accent: #5b8def;
+      --ok: #3ecf8e;
+      --bad: #e85d6a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header {
+      background: var(--panel);
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid #2a3545;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header strong { font-size: 1.05rem; }
+    .tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      border: 1px solid #2a3545;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+    main { max-width: 960px; margin: 0 auto; padding: 1.25rem; }
+    .flash {
+      padding: 0.6rem 0.9rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .flash.info { background: #1e3a2f; color: #b8f0d2; }
+    .flash.error { background: #3a1e24; color: #ffb4bc; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.5rem 0.4rem; border-bottom: 1px solid #2a3545; }
+    th { color: var(--muted); font-weight: 600; }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      text-decoration: none !important;
+    }
+    .btn.secondary { background: #3d4f66; }
+    .btn.danger { background: var(--bad); }
+    .btn.ok { background: #2d6a4f; }
+    textarea, input[type="password"] {
+      width: 100%;
+      background: #0d1117;
+      color: var(--text);
+      border: 1px solid #2a3545;
+      border-radius: 6px;
+      padding: 0.6rem;
+      font-family: ui-monospace, monospace;
+      font-size: 0.85rem;
+    }
+    textarea { min-height: 320px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid #2a3545;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    details.panel > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    details.panel > summary::-webkit-details-marker {
+      display: none;
+    }
+    details.panel > summary + * {
+      margin-top: 0.6rem;
+    }
+    h2 { font-size: 1.1rem; margin-top: 0; }
+    .muted { color: var(--muted); font-size: 0.85rem; }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <div>
+      <strong>Analyst Desk</strong>
+      <span class="tag">Separate from Geopolitiko</span>
+    </div>
+    <nav>
+      <a href="{{ url_for('analyst_desk.index') }}">Home</a>
+      · <a href="{{ url_for('analyst_desk.operations') }}">Operations</a>
+      · <a href="{{ url_for('analyst_desk.approvals') }}">Approvals</a>
+      · <a href="{{ url_for('analyst_desk.intel_feed') }}">Intel Feed</a>
+      · <a href="{{ url_for('analyst_desk.extraction_qc') }}">Extraction QA</a>
+      {% if session.analyst_desk_ok %}
+        · <a href="{{ url_for('analyst_desk.logout') }}">Log out</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+  </main>
+</body>
+</html>

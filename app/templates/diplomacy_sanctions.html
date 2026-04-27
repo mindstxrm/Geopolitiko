@@ -1,0 +1,639 @@
+{% extends "base.html" %}
+{% block title %}Sanctions registry — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+<div class="sanctions-watch-page sanctions-workspace">
+  <header class="sanctions-top">
+    <div class="sanctions-title-row">
+      <div>
+        <h1 class="page-title">Sanctions registry</h1>
+        <p class="page-intro sanctions-subtitle">OFAC/EU/UK sanctions, entity lists, and export restrictions. Filter by source, target, date, or search.</p>
+      </div>
+      <div class="sanctions-actions-row" aria-label="Actions">
+        <a class="sanctions-chip" href="{{ url_for('main.diplomacy_sanctions_global') }}">Global sanctions</a>
+        <a class="sanctions-chip" href="{{ url_for('main.sanctions_watch_supply_chain_check') }}">Supply chain check</a>
+        {% if diplomacy_sanctions_export_url %}<a class="sanctions-chip" href="{{ diplomacy_sanctions_export_url }}">Export registry CSV</a>{% endif %}
+        <a class="sanctions-chip sanctions-chip-secondary" href="{{ url_for('main.alerts_list') }}">Alerts</a>
+        {% if relationship_mapper_url %}<a class="sanctions-chip sanctions-chip-secondary" href="{{ relationship_mapper_url }}">Sanctions network</a>{% endif %}
+        <a class="sanctions-chip sanctions-chip-secondary" href="{{ url_for('main.diplomacy_dashboard') }}">← Diplomacy</a>
+      </div>
+    </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}{% for category, msg in messages %}<p class="flash {{ category or 'message' }}">{{ msg }}</p>{% endfor %}{% endif %}
+  {% endwith %}
+
+    <div class="sanctions-kpi-strip">
+      <div class="sanctions-kpi">
+        <div class="kpi-num">{{ new_sanctions_7d }}</div>
+        <div class="kpi-label">New sanctions (7d)</div>
+      </div>
+      <div class="sanctions-kpi">
+        <div class="kpi-num">{{ new_entities_7d }}</div>
+        <div class="kpi-label">New entities (7d)</div>
+      </div>
+      <div class="sanctions-kpi">
+        <div class="kpi-num">{{ new_restrictions_7d }}</div>
+        <div class="kpi-label">New export rules (7d)</div>
+      </div>
+      <div class="sanctions-kpi sanctions-kpi-wide">
+        <div class="kpi-label">Last updated</div>
+        <div class="kpi-meta">{% if last_updated %}<strong>{{ last_updated }}</strong>{% else %}—{% endif %}</div>
+      </div>
+    </div>
+
+    <form method="get" action="{{ url_for('main.diplomacy_sanctions') }}" class="sanctions-filters sanctions-filters-compact" id="sanctions-filters-form">
+      <fieldset>
+        <legend class="sr-only">Filters</legend>
+        <div class="sanctions-filter-strip">
+          <label for="sanctions-source">Source</label>
+          <select id="sanctions-source" name="source">
+            <option value="">All</option>
+            <option value="OFAC" {{ 'selected' if filter_source == 'OFAC' else '' }}>OFAC</option>
+            <option value="EU" {{ 'selected' if filter_source == 'EU' else '' }}>EU</option>
+            <option value="UK" {{ 'selected' if filter_source == 'UK' else '' }}>UK</option>
+          </select>
+
+          <label for="sanctions-target">Target</label>
+          <input type="text" id="sanctions-target" name="target" value="{{ filter_target or '' }}" placeholder="e.g. Russia">
+
+          <label for="sanctions-search">Search</label>
+          <input type="search" id="sanctions-search" name="search" value="{{ filter_search or '' }}" placeholder="Description…">
+
+          <button type="submit" class="sanctions-apply">Apply</button>
+          <a href="{{ url_for('main.diplomacy_sanctions') }}" class="sanctions-clear-filters">Clear</a>
+
+          <details class="sanctions-filters-drawer" id="sanctions-filters-drawer">
+            <summary class="sanctions-chip sanctions-chip-secondary">Filters ▾</summary>
+            <div class="sanctions-filters-body">
+              <div class="sanctions-filter-row">
+                <label for="sanctions-imposing">Imposing</label>
+                <input type="text" id="sanctions-imposing" name="imposing" value="{{ filter_imposing or '' }}" placeholder="e.g. US">
+                <label for="sanctions-date-from">From date</label>
+                <input type="date" id="sanctions-date-from" name="date_from" value="{{ filter_date_from or '' }}">
+                <label for="sanctions-date-to">To date</label>
+                <input type="date" id="sanctions-date-to" name="date_to" value="{{ filter_date_to or '' }}">
+              </div>
+              <div class="sanctions-filter-row">
+                <label for="entity-search">Entity search</label>
+                <input type="search" id="entity-search" name="entity_search" value="{{ filter_entity_search or '' }}" placeholder="Entity, country…">
+                <label for="entity-source">Entity source</label>
+                <select id="entity-source" name="entity_source">
+                  <option value="">All</option>
+                  <option value="OFAC" {{ 'selected' if filter_entity_source == 'OFAC' else '' }}>OFAC</option>
+                  <option value="EU" {{ 'selected' if filter_entity_source == 'EU' else '' }}>EU</option>
+                  <option value="US_BIS" {{ 'selected' if filter_entity_source == 'US_BIS' else '' }}>US BIS</option>
+                  <option value="China" {{ 'selected' if filter_entity_source == 'China' else '' }}>China</option>
+                </select>
+                <label for="export-search">Export search</label>
+                <input type="search" id="export-search" name="export_search" value="{{ filter_export_search or '' }}" placeholder="Title, issuer…">
+                <label for="export-issuer">Issuer</label>
+                <select id="export-issuer" name="export_issuer">
+                  <option value="">All</option>
+                  <option value="US" {{ 'selected' if filter_export_issuer == 'US' else '' }}>US</option>
+                  <option value="EU" {{ 'selected' if filter_export_issuer == 'EU' else '' }}>EU</option>
+                  <option value="China" {{ 'selected' if filter_export_issuer == 'China' else '' }}>China</option>
+                  <option value="Japan" {{ 'selected' if filter_export_issuer == 'Japan' else '' }}>Japan</option>
+                  <option value="Netherlands" {{ 'selected' if filter_export_issuer == 'Netherlands' else '' }}>Netherlands</option>
+                </select>
+                <label for="export-type">Export type</label>
+                <select id="export-type" name="export_type">
+                  <option value="">All</option>
+                  <option value="dual_use" {{ 'selected' if filter_export_type == 'dual_use' else '' }}>Dual-use</option>
+                  <option value="technology" {{ 'selected' if filter_export_type == 'technology' else '' }}>Technology</option>
+                </select>
+              </div>
+            </div>
+          </details>
+        </div>
+        <div class="sanctions-active-filters" id="sanctions-active-filters" aria-label="Active filters"></div>
+      </fieldset>
+    </form>
+
+    <div class="sanctions-tabs" role="tablist" aria-label="Sanctions sections">
+      <button type="button" class="sanctions-tab active" data-tab="sanctions" role="tab" aria-selected="true">Sanctions</button>
+      <button type="button" class="sanctions-tab" data-tab="entities" role="tab" aria-selected="false">Entity lists</button>
+      <button type="button" class="sanctions-tab" data-tab="export" role="tab" aria-selected="false">Export restrictions</button>
+      <button type="button" class="sanctions-tab" data-tab="add" role="tab" aria-selected="false">Add</button>
+    </div>
+  </header>
+
+  <div class="sanctions-body">
+    <main class="sanctions-main">
+      <section class="sanctions-pane active" data-pane="sanctions" role="tabpanel">
+
+  <section id="ofac" class="risk-section sanctions-section">
+    <h2>OFAC updates</h2>
+    <p class="section-actions"><a href="{{ sanctions_export_url }}?source=OFAC{% if filter_target %}&target={{ filter_target|urlencode }}{% endif %}{% if filter_imposing %}&imposing={{ filter_imposing|urlencode }}{% endif %}{% if filter_date_from %}&date_from={{ filter_date_from }}{% endif %}{% if filter_date_to %}&date_to={{ filter_date_to }}{% endif %}{% if filter_search %}&search={{ filter_search|urlencode }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Imposing</th>
+            <th>Target</th>
+            <th>Measure</th>
+            <th>Description</th>
+            <th>Start</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in ofac_sanctions %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"sanction","source":(filter_source or "OFAC"),"imposing":s.imposing_country,"target":s.target_country,"measure":(s.measure_type or ""),"start":((s.start_date or "")[:10]),"description":(s.description or ""),"url":(s.source_url or "")} | tojson }}'>
+            <td>{% set imp_code = country_name_to_code.get(s.imposing_country) if country_name_to_code else none %}{% if imp_code %}<a href="{{ url_for('main.country_dashboard', country_code=imp_code) }}">{{ s.imposing_country }}</a>{% else %}{{ s.imposing_country }}{% endif %}</td>
+            <td>{% set tgt_code = country_name_to_code.get(s.target_country) if country_name_to_code else none %}{% if tgt_code %}<a href="{{ url_for('main.country_dashboard', country_code=tgt_code) }}">{{ s.target_country }}</a>{% else %}{{ s.target_country }}{% endif %}</td>
+            <td>{{ s.measure_type or '—' }}</td>
+            <td class="cell-expandable">
+              {% if (s.description or '')|length > 80 %}
+              <details><summary>{{ (s.description or '—')[:80] }}…</summary>{{ s.description or '—' }}</details>
+              {% else %}{{ s.description or '—' }}{% endif %}
+            </td>
+            <td>{{ (s.start_date or '—')[:10] }}</td>
+            <td>{% if s.source_url %}<a href="{{ s.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not ofac_sanctions %}<p class="empty-state">No OFAC-tagged sanctions. Add entries with source=OFAC or broaden filters.</p>{% endif %}
+  </section>
+
+  <section id="eu" class="risk-section sanctions-section">
+    <h2>EU sanctions tracker</h2>
+    <p class="section-actions"><a href="{{ sanctions_export_url }}?source=EU{% if filter_target %}&target={{ filter_target|urlencode }}{% endif %}{% if filter_imposing %}&imposing={{ filter_imposing|urlencode }}{% endif %}{% if filter_date_from %}&date_from={{ filter_date_from }}{% endif %}{% if filter_date_to %}&date_to={{ filter_date_to }}{% endif %}{% if filter_search %}&search={{ filter_search|urlencode }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Imposing</th>
+            <th>Target</th>
+            <th>Measure</th>
+            <th>Description</th>
+            <th>Start</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in eu_sanctions %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"sanction","source":"EU","imposing":s.imposing_country,"target":s.target_country,"measure":(s.measure_type or ""),"start":((s.start_date or "")[:10]),"description":(s.description or ""),"url":(s.source_url or "")} | tojson }}'>
+            <td>{% set imp_code = country_name_to_code.get(s.imposing_country) if country_name_to_code else none %}{% if imp_code %}<a href="{{ url_for('main.country_dashboard', country_code=imp_code) }}">{{ s.imposing_country }}</a>{% else %}{{ s.imposing_country }}{% endif %}</td>
+            <td>{% set tgt_code = country_name_to_code.get(s.target_country) if country_name_to_code else none %}{% if tgt_code %}<a href="{{ url_for('main.country_dashboard', country_code=tgt_code) }}">{{ s.target_country }}</a>{% else %}{{ s.target_country }}{% endif %}</td>
+            <td>{{ s.measure_type or '—' }}</td>
+            <td class="cell-expandable">
+              {% if (s.description or '')|length > 80 %}
+              <details><summary>{{ (s.description or '—')[:80] }}…</summary>{{ s.description or '—' }}</details>
+              {% else %}{{ s.description or '—' }}{% endif %}
+            </td>
+            <td>{{ (s.start_date or '—')[:10] }}</td>
+            <td>{% if s.source_url %}<a href="{{ s.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not eu_sanctions %}<p class="empty-state">No EU-tagged sanctions. Add entries with source=EU or broaden filters.</p>{% endif %}
+  </section>
+
+  <section id="all-sanctions" class="risk-section sanctions-section">
+    <h2>All sanctions</h2>
+    <p class="section-actions">
+      <a href="{{ url_for('main.sanctions_watch_export', export_type='all', **query_base) }}" class="sanctions-export-link">Export all (ZIP)</a>
+    </p>
+    <nav class="sanctions-pagination" aria-label="All sanctions pagination">
+      {% if total_pages > 1 %}
+      <p class="pagination-info">Page {{ page }} of {{ total_pages }} ({{ all_sanctions_total }} total)</p>
+      <ul>
+        <li>{% if query_prev %}<a href="{{ url_for('main.diplomacy_sanctions', **query_prev) }}#all-sanctions">Previous</a>{% else %}<span>Previous</span>{% endif %}</li>
+        <li>{% if query_next %}<a href="{{ url_for('main.diplomacy_sanctions', **query_next) }}#all-sanctions">Next</a>{% else %}<span>Next</span>{% endif %}</li>
+      </ul>
+      {% else %}
+      <p class="pagination-info">{{ all_sanctions_total }} sanction{{ 's' if all_sanctions_total != 1 else '' }}</p>
+      {% endif %}
+    </nav>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Imposing</th>
+            <th>Target</th>
+            <th>Measure</th>
+            <th>Description</th>
+            <th>Start</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in all_sanctions %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"sanction","source":(s.source or ""),"imposing":s.imposing_country,"target":s.target_country,"measure":(s.measure_type or ""),"start":((s.start_date or "")[:10]),"description":(s.description or ""),"url":(s.source_url or "")} | tojson }}'>
+            <td>{% set imp_code = country_name_to_code.get(s.imposing_country) if country_name_to_code else none %}{% if imp_code %}<a href="{{ url_for('main.country_dashboard', country_code=imp_code) }}">{{ s.imposing_country }}</a>{% else %}{{ s.imposing_country }}{% endif %}</td>
+            <td>{% set tgt_code = country_name_to_code.get(s.target_country) if country_name_to_code else none %}{% if tgt_code %}<a href="{{ url_for('main.country_dashboard', country_code=tgt_code) }}">{{ s.target_country }}</a>{% else %}{{ s.target_country }}{% endif %}</td>
+            <td>{{ s.measure_type or '—' }}</td>
+            <td class="cell-expandable">
+              {% if (s.description or '')|length > 80 %}
+              <details><summary>{{ (s.description or '—')[:80] }}…</summary>{{ s.description or '—' }}</details>
+              {% else %}{{ s.description or '—' }}{% endif %}
+            </td>
+            <td>{{ (s.start_date or '—')[:10] }}</td>
+            <td>{% if s.source_url %}<a href="{{ s.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not all_sanctions %}<p class="empty-state">No sanctions match the current filters.</p>{% endif %}
+  </section>
+
+      </section>
+
+      <section class="sanctions-pane" data-pane="entities" role="tabpanel">
+
+  <section id="entity-lists" class="risk-section sanctions-section">
+    <h2>Entity lists (OFAC, EU, US BIS, China)</h2>
+    <p class="section-actions"><a href="{{ entity_list_export_url }}{% if filter_entity_search %}?entity_search={{ filter_entity_search }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+
+    <h3 id="entity-us">US BIS entity list</h3>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Entity</th>
+            <th>Type</th>
+            <th>Country</th>
+            <th>List</th>
+            <th>Listed</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in entity_list_us %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"entity","source":(e.source or ""),"name":(e.entity_name or ""),"etype":(e.entity_type or ""),"country":(e.country or ""),"list":(e.list_name or ""),"listed":((e.listed_date or "")[:10]),"summary":(e.summary or "")} | tojson }}'>
+            <td>{{ e.source }}</td>
+            <td><strong>{{ e.entity_name }}</strong></td>
+            <td>{{ e.entity_type or '—' }}</td>
+            <td>{{ e.country or '—' }}</td>
+            <td>{{ e.list_name or '—' }}</td>
+            <td>{{ (e.listed_date or '—')[:10] }}</td>
+            <td class="cell-expandable">{% if (e.summary or '')|length > 60 %}<details><summary>{{ (e.summary or '—')[:60] }}…</summary>{{ e.summary or '—' }}</details>{% else %}{{ e.summary or '—' }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not entity_list_us %}<p class="empty-state">No US BIS entity list entries.</p>{% endif %}
+
+    <h3 id="entity-ofac-eu">OFAC SDN / EU list</h3>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Entity</th>
+            <th>Country</th>
+            <th>List</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in entity_list_ofac %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"entity","source":(e.source or ""),"name":(e.entity_name or ""),"etype":(e.entity_type or ""),"country":(e.country or ""),"list":(e.list_name or ""),"listed":"","summary":(e.summary or "")} | tojson }}'>
+            <td>{{ e.source }}</td>
+            <td><strong>{{ e.entity_name }}</strong></td>
+            <td>{{ e.country or '—' }}</td>
+            <td>{{ e.list_name or '—' }}</td>
+            <td class="cell-expandable">{% if (e.summary or '')|length > 50 %}<details><summary>{{ (e.summary or '—')[:50] }}…</summary>{{ e.summary or '—' }}</details>{% else %}{{ e.summary or '—' }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+          {% for e in entity_list_eu %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"entity","source":(e.source or ""),"name":(e.entity_name or ""),"etype":(e.entity_type or ""),"country":(e.country or ""),"list":(e.list_name or ""),"listed":"","summary":(e.summary or "")} | tojson }}'>
+            <td>{{ e.source }}</td>
+            <td><strong>{{ e.entity_name }}</strong></td>
+            <td>{{ e.country or '—' }}</td>
+            <td>{{ e.list_name or '—' }}</td>
+            <td class="cell-expandable">{% if (e.summary or '')|length > 50 %}<details><summary>{{ (e.summary or '—')[:50] }}…</summary>{{ e.summary or '—' }}</details>{% else %}{{ e.summary or '—' }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="entity-china">China entity list</h3>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Entity</th>
+            <th>Type</th>
+            <th>Country</th>
+            <th>List</th>
+            <th>Listed</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in entity_list_china %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"entity","source":(e.source or ""),"name":(e.entity_name or ""),"etype":(e.entity_type or ""),"country":(e.country or ""),"list":(e.list_name or ""),"listed":((e.listed_date or "")[:10]),"summary":(e.summary or "")} | tojson }}'>
+            <td>{{ e.source }}</td>
+            <td><strong>{{ e.entity_name }}</strong></td>
+            <td>{{ e.entity_type or '—' }}</td>
+            <td>{{ e.country or '—' }}</td>
+            <td>{{ e.list_name or '—' }}</td>
+            <td>{{ (e.listed_date or '—')[:10] }}</td>
+            <td class="cell-expandable">{% if (e.summary or '')|length > 60 %}<details><summary>{{ (e.summary or '—')[:60] }}…</summary>{{ e.summary or '—' }}</details>{% else %}{{ e.summary or '—' }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not entity_list_china %}<p class="empty-state">No China entity list entries.</p>{% endif %}
+  </section>
+
+      </section>
+
+      <section class="sanctions-pane" data-pane="export" role="tabpanel">
+
+  <section id="china-restrictions" class="risk-section sanctions-section">
+    <h2>Chinese export restrictions</h2>
+    <p class="section-actions"><a href="{{ export_restrictions_export_url }}?issuer=China{% if filter_export_search %}&export_search={{ filter_export_search|urlencode }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Issuer</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Effective</th>
+            <th>Description</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in china_restrictions %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"export","issuer":(r.issuer or ""),"rtype":(r.restriction_type or ""),"title":(r.title or ""),"effective":((r.effective_date or "")[:10]),"description":(r.description or ""),"url":(r.source_url or "")} | tojson }}'>
+            <td>{{ r.issuer }}</td>
+            <td>{{ r.restriction_type or '—' }}</td>
+            <td><strong>{{ r.title }}</strong></td>
+            <td>{{ (r.effective_date or '—')[:10] }}</td>
+            <td class="cell-expandable">{% if (r.description or '')|length > 70 %}<details><summary>{{ (r.description or '—')[:70] }}…</summary>{{ r.description or '—' }}</details>{% else %}{{ r.description or '—' }}{% endif %}</td>
+            <td>{% if r.source_url %}<a href="{{ r.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not china_restrictions %}<p class="empty-state">No China export restrictions.</p>{% endif %}
+  </section>
+
+  <section id="dual-use" class="risk-section sanctions-section">
+    <h2>Dual-use technology tracking</h2>
+    <p class="section-actions"><a href="{{ export_restrictions_export_url }}?restriction_type=dual_use{% if filter_export_search %}&export_search={{ filter_export_search|urlencode }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Issuer</th>
+            <th>Title</th>
+            <th>Effective</th>
+            <th>Description</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in dual_use %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"export","issuer":(r.issuer or ""),"rtype":(r.restriction_type or "dual_use"),"title":(r.title or ""),"effective":((r.effective_date or "")[:10]),"description":(r.description or ""),"url":(r.source_url or "")} | tojson }}'>
+            <td>{{ r.issuer }}</td>
+            <td><strong>{{ r.title }}</strong></td>
+            <td>{{ (r.effective_date or '—')[:10] }}</td>
+            <td class="cell-expandable">{% if (r.description or '')|length > 80 %}<details><summary>{{ (r.description or '—')[:80] }}…</summary>{{ r.description or '—' }}</details>{% else %}{{ r.description or '—' }}{% endif %}</td>
+            <td>{% if r.source_url %}<a href="{{ r.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if not dual_use %}<p class="empty-state">No dual-use entries.</p>{% endif %}
+  </section>
+
+  <section id="export-restrictions" class="risk-section sanctions-section">
+    <h2>All export restrictions</h2>
+    <p class="section-actions"><a href="{{ export_restrictions_export_url }}{% if filter_export_search %}?export_search={{ filter_export_search|urlencode }}{% endif %}" class="sanctions-export-link">Export CSV</a></p>
+    <div class="sanctions-table-canvas">
+      <table class="stability-table sanctions-table sortable">
+        <thead>
+          <tr>
+            <th>Issuer</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Effective</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in export_restrictions %}
+          <tr class="sanctions-row" data-item='{{ {"kind":"export","issuer":(r.issuer or ""),"rtype":(r.restriction_type or ""),"title":(r.title or ""),"effective":((r.effective_date or "")[:10]),"description":"","url":(r.source_url or "")} | tojson }}'>
+            <td>{{ r.issuer }}</td>
+            <td>{{ r.restriction_type or '—' }}</td>
+            <td>{{ r.title }}</td>
+            <td>{{ (r.effective_date or '—')[:10] }}</td>
+            <td>{% if r.source_url %}<a href="{{ r.source_url }}" target="_blank" rel="noopener">Link</a>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+      </section>
+
+      <section class="sanctions-pane" data-pane="add" role="tabpanel">
+        <h2 id="add">Add sanction</h2>
+        <form method="post" action="{{ url_for('main.diplomacy_sanction_add') }}" class="diplomacy-form">
+          <label for="imposing_country">Imposing country *</label>
+          <input type="text" id="imposing_country" name="imposing_country" required>
+          <label for="target_country">Target country *</label>
+          <input type="text" id="target_country" name="target_country" required>
+          <label for="measure_type">Measure type</label>
+          <input type="text" id="measure_type" name="measure_type" placeholder="e.g. asset freeze, export ban">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="2"></textarea>
+          <label for="start_date">Start date</label>
+          <input type="text" id="start_date" name="start_date" placeholder="YYYY-MM-DD">
+          <label for="end_date">End date</label>
+          <input type="text" id="end_date" name="end_date" placeholder="YYYY-MM-DD">
+          <label for="form_source">Source</label>
+          <input type="text" id="form_source" name="source" placeholder="e.g. OFAC, EU">
+          <label for="source_url">Source URL</label>
+          <input type="url" id="source_url" name="source_url">
+          <button type="submit">Add</button>
+        </form>
+      </section>
+    </main>
+
+    <aside class="sanctions-inspector" id="sanctions-inspector" aria-label="Inspector">
+      <div class="sanctions-inspector-head">
+        <div>
+          <div class="sanctions-inspector-title" id="sanctions-inspector-title">Inspector</div>
+          <div class="sanctions-inspector-sub" id="sanctions-inspector-sub">Click a row to inspect</div>
+        </div>
+        <button type="button" class="sanctions-inspector-close" id="sanctions-inspector-close" aria-label="Close inspector">×</button>
+      </div>
+      <div class="sanctions-inspector-body">
+        <div class="sanctions-inspector-card">
+          <div class="sanctions-inspector-card-title" id="sanctions-inspector-kind">—</div>
+          <div class="sanctions-inspector-name" id="sanctions-inspector-name">—</div>
+          <div class="sanctions-inspector-meta" id="sanctions-inspector-meta"></div>
+          <div class="sanctions-inspector-desc" id="sanctions-inspector-desc"></div>
+          <div class="sanctions-inspector-actions">
+            <a href="#" class="sanctions-chip" id="sanctions-inspector-link" hidden target="_blank" rel="noopener">Open source →</a>
+          </div>
+        </div>
+        <details class="sanctions-inspector-help">
+          <summary>Tips</summary>
+          <p class="muted">Use tabs to switch datasets. Filters apply across sanctions/entity/export. Click any row to see the full text here.</p>
+        </details>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  // Tabs + filter chips + inspector
+  var STORAGE_KEY = 'sanctionsTab';
+  function activateTab(key) {
+    document.querySelectorAll('.sanctions-tab').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.sanctions-pane').forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-pane') === key);
+    });
+    try { localStorage.setItem(STORAGE_KEY, key); } catch (e) {}
+    if (typeof history.replaceState !== 'undefined') history.replaceState(null, '', '#' + key);
+  }
+  document.querySelectorAll('.sanctions-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() { activateTab(btn.getAttribute('data-tab')); });
+  });
+  var hash = (window.location.hash || '').replace('#', '');
+  if (hash && document.querySelector('.sanctions-pane[data-pane="' + hash + '"]')) activateTab(hash);
+  else {
+    var saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (saved && document.querySelector('.sanctions-pane[data-pane="' + saved + '"]')) activateTab(saved);
+  }
+
+  // Active filter chips
+  var form = document.getElementById('sanctions-filters-form');
+  var drawer = document.getElementById('sanctions-filters-drawer');
+  var chipsWrap = document.getElementById('sanctions-active-filters');
+  function labelFor(el) {
+    if (!el || !el.id) return null;
+    var lab = document.querySelector('label[for="' + el.id + '"]');
+    return lab ? (lab.textContent || '').trim() : null;
+  }
+  function buildChips() {
+    if (!form || !chipsWrap) return;
+    chipsWrap.innerHTML = '';
+    var els = Array.from(form.querySelectorAll('input, select')).filter(function(el) {
+      if (!el.name) return false;
+      if (el.type === 'submit') return false;
+      var v = (el.value || '').trim();
+      return v !== '';
+    });
+    if (!els.length) return;
+    els.slice(0, 12).forEach(function(el) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'sanctions-filter-chip';
+      var label = labelFor(el) || el.name;
+      var val = el.tagName === 'SELECT' ? ((el.options[el.selectedIndex] && el.options[el.selectedIndex].textContent) || el.value) : el.value;
+      chip.textContent = label + ': ' + val;
+      chip.addEventListener('click', function() {
+        if (drawer) drawer.open = true;
+        try { el.focus(); } catch (e) {}
+      });
+      chipsWrap.appendChild(chip);
+    });
+  }
+  buildChips();
+  if (form) form.addEventListener('change', buildChips);
+  if (form) form.addEventListener('input', function(e) {
+    if (e && e.target && e.target.tagName === 'INPUT') buildChips();
+  });
+
+  // Inspector
+  var inspector = document.getElementById('sanctions-inspector');
+  var closeBtn = document.getElementById('sanctions-inspector-close');
+  if (closeBtn) closeBtn.addEventListener('click', function() { if (inspector) inspector.classList.remove('open'); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && inspector) inspector.classList.remove('open'); });
+
+  function setInspector(item) {
+    if (!item) return;
+    if (inspector) inspector.classList.add('open');
+    var kind = document.getElementById('sanctions-inspector-kind');
+    var name = document.getElementById('sanctions-inspector-name');
+    var meta = document.getElementById('sanctions-inspector-meta');
+    var desc = document.getElementById('sanctions-inspector-desc');
+    var link = document.getElementById('sanctions-inspector-link');
+    if (kind) kind.textContent = item.kind || '—';
+    if (item.kind === 'sanction') {
+      if (name) name.textContent = (item.imposing || '—') + ' → ' + (item.target || '—');
+      if (meta) meta.textContent = [item.source, item.measure, item.start].filter(Boolean).join(' · ');
+      if (desc) desc.textContent = item.description || '';
+    } else if (item.kind === 'entity') {
+      if (name) name.textContent = item.name || '—';
+      if (meta) meta.textContent = [item.source, item.etype, item.country, item.list, item.listed].filter(Boolean).join(' · ');
+      if (desc) desc.textContent = item.summary || '';
+    } else if (item.kind === 'export') {
+      if (name) name.textContent = item.title || '—';
+      if (meta) meta.textContent = [item.issuer, item.rtype, item.effective].filter(Boolean).join(' · ');
+      if (desc) desc.textContent = item.description || '';
+    } else {
+      if (name) name.textContent = '—';
+      if (meta) meta.textContent = '';
+      if (desc) desc.textContent = '';
+    }
+    if (link && item.url) { link.href = item.url; link.removeAttribute('hidden'); }
+    else if (link) link.setAttribute('hidden', '');
+  }
+
+  document.querySelectorAll('[data-item]').forEach(function(row) {
+    row.addEventListener('click', function(e) {
+      // Let regular external links open normally
+      if (e && e.target && e.target.closest && e.target.closest('a') && !e.target.classList.contains('cell-expandable')) return;
+      try { setInspector(JSON.parse(row.getAttribute('data-item'))); } catch (err) {}
+    });
+  });
+
+  document.querySelectorAll('.sanctions-table.sortable thead th').forEach(function(th, idx) {
+    th.setAttribute('role', 'button');
+    th.setAttribute('tabindex', '0');
+    th.setAttribute('aria-sort', 'none');
+    th.addEventListener('click', function() { sortTable(th.closest('table'), idx, th); });
+    th.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sortTable(th.closest('table'), idx, th); } });
+  });
+  function sortTable(table, colIndex, thEl) {
+    var tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    var thead = table.querySelector('thead');
+    thead.querySelectorAll('th').forEach(function(h) { h.setAttribute('aria-sort', h === thEl ? (h.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending') : 'none'); });
+    var asc = thEl.getAttribute('aria-sort') === 'ascending';
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort(function(a, b) {
+      var ac = a.cells[colIndex], bc = b.cells[colIndex];
+      if (!ac || !bc) return 0;
+      var at = (ac.textContent || '').trim(), bt = (bc.textContent || '').trim();
+      var an = at.replace(/[^0-9.-]/g, '') || null, bn = bt.replace(/[^0-9.-]/g, '') || null;
+      var cmp = 0;
+      if (an != null && bn != null && !isNaN(parseFloat(an)) && !isNaN(parseFloat(bn))) cmp = parseFloat(an) - parseFloat(bn);
+      else cmp = at.localeCompare(bt, undefined, { numeric: true });
+      return asc ? cmp : -cmp;
+    });
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  }
+})();
+</script>
+{% endblock %}

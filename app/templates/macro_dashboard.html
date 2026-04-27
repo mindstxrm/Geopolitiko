@@ -1,0 +1,1346 @@
+{% extends "base.html" %}
+{% block title %}Live Macroeconomic Indicators — Geopolitical Terminal{% endblock %}
+{% block body_extra_class %} macro-terminal{% endblock %}
+
+{% block head %}
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="macro-page">
+    <header class="macro-page-head">
+      <h1 class="macro-page-title">Macro workstation</h1>
+      <p class="macro-page-sub">Charts are chosen automatically from the indicator (FX vs macro, frequency, transform, and sample size)—cross-country snapshots, time series, and alerts. Sources: World Bank + FX.</p>
+    </header>
+
+    <section class="macro-market-strip" aria-label="Macro market strip">
+      <div class="macro-market-panel">
+        <div class="macro-market-head">
+          <h2>FX (latest)</h2>
+          <p id="macro-strip-fx-meta" class="macro-market-meta">—</p>
+        </div>
+        <div class="macro-market-body">
+          <table class="macro-mini-table" aria-label="FX latest table">
+            <thead>
+              <tr><th>Pair</th><th class="num">Last</th><th class="muted">As of</th></tr>
+            </thead>
+            <tbody id="macro-strip-fx-tbody">
+              <tr><td colspan="3" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="macro-market-panel">
+        <div class="macro-market-head">
+          <h2>Inflation (CPI)</h2>
+          <p id="macro-strip-infl-meta" class="macro-market-meta">—</p>
+        </div>
+        <div class="macro-market-body">
+          <table class="macro-mini-table" aria-label="Inflation latest table">
+            <thead>
+              <tr><th>Country</th><th class="num">%</th><th class="muted">As of</th></tr>
+            </thead>
+            <tbody id="macro-strip-infl-tbody">
+              <tr><td colspan="3" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="macro-market-panel">
+        <div class="macro-market-head">
+          <h2>Growth & debt</h2>
+          <p id="macro-strip-gd-meta" class="macro-market-meta">—</p>
+        </div>
+        <div class="macro-market-body macro-market-body--split">
+          <div>
+            <div class="macro-market-subtitle">GDP growth (YoY)</div>
+            <table class="macro-mini-table" aria-label="GDP growth latest table">
+              <thead>
+                <tr><th>Country</th><th class="num">%</th><th class="muted">As of</th></tr>
+              </thead>
+              <tbody id="macro-strip-gdp-tbody">
+                <tr><td colspan="3" class="muted">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="macro-market-subtitle">Gov debt (% GDP)</div>
+            <table class="macro-mini-table" aria-label="Debt latest table">
+              <thead>
+                <tr><th>Country</th><th class="num">%</th><th class="muted">As of</th></tr>
+              </thead>
+              <tbody id="macro-strip-debt-tbody">
+                <tr><td colspan="3" class="muted">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="macro-toolbar" role="region" aria-label="Macro controls">
+      <form id="macro-form" class="macro-toolbar-form" onsubmit="return false;">
+        <div class="macro-toolbar-row macro-toolbar-row--primary">
+          <label class="macro-field">
+            <span class="macro-field-label">View</span>
+            <select id="macro-panel" name="panel" class="macro-select">
+              <option value="global">Global</option>
+              <option value="country">Series</option>
+              <option value="alerts">Alerts</option>
+            </select>
+          </label>
+          <label class="macro-field">
+            <span class="macro-field-label">Transform</span>
+            <select id="macro-transform" name="transform" class="macro-select">
+              <option value="level">Level</option>
+              <option value="pct_change">Δ% (step)</option>
+              <option value="yoy">YoY %</option>
+              <option value="zscore">Z-score</option>
+            </select>
+          </label>
+          <label class="macro-field">
+            <span class="macro-field-label">Group</span>
+            <select id="macro-group" name="group" class="macro-select">
+              <option value="">All</option>
+              <option value="asean">ASEAN</option>
+              <option value="g20">G20</option>
+              <option value="major">Major</option>
+            </select>
+          </label>
+          <label class="macro-field macro-field--grow">
+            <span class="macro-field-label">Country</span>
+            <select id="macro-country" name="country" class="macro-select"></select>
+          </label>
+          <label class="macro-field macro-field--grow">
+            <span class="macro-field-label">Indicator</span>
+            <select id="macro-indicator" name="indicator" class="macro-select"></select>
+          </label>
+        </div>
+        <div class="macro-toolbar-row macro-toolbar-row--secondary">
+          <label class="macro-field macro-field--grow" id="macro-field-range">
+            <span class="macro-field-label">Range</span>
+            <select id="macro-range" name="range" class="macro-select">
+              <option value="">Custom</option>
+              <option value="30y">30Y</option>
+              <option value="10y">10Y</option>
+              <option value="5y">5Y</option>
+              <option value="3y">3Y</option>
+              <option value="1y">1Y</option>
+              <option value="3m">3M</option>
+              <option value="1m">1M</option>
+              <option value="7d">1W</option>
+              <option value="3d">3D</option>
+              <option value="24h">1D</option>
+              <option value="1h">1H</option>
+            </select>
+          </label>
+          <label class="macro-field macro-field--grow" id="macro-field-fx-pair" style="display:none;">
+            <span class="macro-field-label">FX pair</span>
+            <select id="macro-fx-pair" name="fx_pair" class="macro-select"></select>
+          </label>
+          <label class="macro-field">
+            <span class="macro-field-label">Start</span>
+            <input id="macro-start" name="start" type="text" class="macro-input" placeholder="YYYY-MM-DD">
+          </label>
+          <label class="macro-field">
+            <span class="macro-field-label">End</span>
+            <input id="macro-end" name="end" type="text" class="macro-input" placeholder="YYYY-MM-DD">
+          </label>
+          <div class="macro-toolbar-actions">
+            <button type="button" id="macro-refresh" class="macro-btn macro-btn--primary">Refresh</button>
+            <button type="button" id="macro-export-csv" class="macro-btn">CSV</button>
+            <a class="macro-btn macro-btn--link" id="macro-export-pdf" href="{{ url_for('main.export_macro_pdf') }}" target="_blank" rel="noopener">PDF</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="macro-workstation">
+      <aside class="macro-left">
+        <section class="sidebar-panel macro-browser-card">
+          <h3>Indicators</h3>
+          <input type="search" id="macro-indicator-search" placeholder="Filter…" class="macro-search" autocomplete="off">
+          <div class="macro-indicator-list" id="macro-indicator-list"></div>
+        </section>
+      </aside>
+
+      <main class="macro-main">
+        <section class="sidebar-panel macro-panel macro-panel--active" id="panel-global" data-macro-panel="global">
+          <div class="macro-panel-head">
+            <h3>Global snapshot</h3>
+            <p class="macro-panel-hint" id="macro-basket-meta">—</p>
+          </div>
+          <div class="macro-chart-stage" id="macro-chart-stage-global">
+            <div id="macro-basket" class="macro-chart-canvas"></div>
+          </div>
+          <div class="macro-heatmap-block" id="macro-heatmap-block">
+            <h4 class="macro-subhead">FX matrix (last 10 dates)</h4>
+            <div class="macro-heatmap-wrap" id="macro-heatmap-wrap"></div>
+            <p class="sidebar-empty" id="macro-heatmap-meta"></p>
+          </div>
+        </section>
+
+        <section class="sidebar-panel macro-panel" id="panel-country" style="display:none;" data-macro-panel="country">
+          <div class="macro-panel-head">
+            <h3>Time series</h3>
+            <p class="macro-panel-hint" id="macro-line-meta">—</p>
+          </div>
+          <div class="macro-chart-stage macro-chart-stage--series" id="macro-chart-stage-series">
+            <div id="macro-deepdive" class="macro-chart-canvas"></div>
+          </div>
+        </section>
+
+        <section class="sidebar-panel macro-panel" id="panel-alerts" style="display:none;" data-macro-panel="alerts">
+          <div class="macro-panel-head">
+            <h3>Alerts</h3>
+          </div>
+          <p class="sidebar-empty" id="macro-alerts-loading">Loading…</p>
+          <div id="macro-alerts-empty" class="empty-state-box" style="display:none;">
+            <p><strong>No alerts.</strong></p>
+            <p>Rules: inflation ≥ 8%, GDP ≤ 0%, debt ≥ 90% GDP.</p>
+          </div>
+          <div class="indicator-table-wrap" id="macro-alerts-table-wrap" style="display:none;">
+            <table class="indicator-table">
+              <thead>
+                <tr>
+                  <th>Severity</th>
+                  <th>Country</th>
+                  <th>Alert</th>
+                  <th>Date</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody id="macro-alerts-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <aside class="macro-right">
+        <section class="sidebar-panel">
+          <h3>Exports</h3>
+          <ul class="metric-list">
+            <li><span class="metric-label">CSV</span> <span class="metric-value"><a href="/api/macro/export.csv" target="_blank" rel="noopener">Latest</a></span></li>
+            <li><span class="metric-label">PDF</span> <span class="metric-value"><a href="{{ url_for('main.export_macro_pdf') }}" target="_blank" rel="noopener">Report</a></span></li>
+          </ul>
+        </section>
+        <section class="sidebar-panel">
+          <h3>API</h3>
+          <ul class="metric-list" id="macro-status">
+            <li><span class="metric-label">Latest</span> <span class="metric-value"><a href="/api/macro/latest" target="_blank" rel="noopener">/api/macro/latest</a></span></li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var panelSel = document.getElementById('macro-panel');
+    var transformSel = document.getElementById('macro-transform');
+    var groupSel = document.getElementById('macro-group');
+    var countrySel = document.getElementById('macro-country');
+    var indSel = document.getElementById('macro-indicator');
+    var indSearch = document.getElementById('macro-indicator-search');
+    /** @type {Array<{name:string,label?:string,unit?:string,category?:string,frequency?:string}>} */
+    var macroIndicatorCatalog = [];
+    var indList = document.getElementById('macro-indicator-list');
+    var rangeSel = document.getElementById('macro-range');
+    var fxPairField = document.getElementById('macro-field-fx-pair');
+    var fxPairSel = document.getElementById('macro-fx-pair');
+    var startEl = document.getElementById('macro-start');
+    var endEl = document.getElementById('macro-end');
+    var btn = document.getElementById('macro-refresh');
+    var exportBtn = document.getElementById('macro-export-csv');
+    var exportPdf = document.getElementById('macro-export-pdf');
+
+    var lineMeta = document.getElementById('macro-line-meta');
+    var basketMeta = document.getElementById('macro-basket-meta');
+    var heatmapMeta = document.getElementById('macro-heatmap-meta');
+    var heatmapWrap = document.getElementById('macro-heatmap-wrap');
+    var heatmapBlock = document.getElementById('macro-heatmap-block');
+    var chartStageGlobal = document.getElementById('macro-chart-stage-global');
+    var chartStageSeries = document.getElementById('macro-chart-stage-series');
+    var alertsLoading = document.getElementById('macro-alerts-loading');
+    var alertsEmpty = document.getElementById('macro-alerts-empty');
+    var alertsWrap = document.getElementById('macro-alerts-table-wrap');
+    var alertsBody = document.getElementById('macro-alerts-tbody');
+
+    var stripFxMeta = document.getElementById('macro-strip-fx-meta');
+    var stripFxBody = document.getElementById('macro-strip-fx-tbody');
+    var stripInflMeta = document.getElementById('macro-strip-infl-meta');
+    var stripInflBody = document.getElementById('macro-strip-infl-tbody');
+    var stripGdMeta = document.getElementById('macro-strip-gd-meta');
+    var stripGdpBody = document.getElementById('macro-strip-gdp-tbody');
+    var stripDebtBody = document.getElementById('macro-strip-debt-tbody');
+
+    var FX_LIST = ['fx_usd_sgd','fx_usd_myr','fx_usd_idr','fx_usd_thb','fx_usd_php','fx_usd_vnd','fx_usd_cny','fx_usd_jpy','fx_usd_krw','fx_usd_eur'];
+    var FX_LABEL = {
+      fx_usd_sgd: 'USD/SGD',
+      fx_usd_myr: 'USD/MYR',
+      fx_usd_idr: 'USD/IDR',
+      fx_usd_thb: 'USD/THB',
+      fx_usd_php: 'USD/PHP',
+      fx_usd_vnd: 'USD/VND',
+      fx_usd_cny: 'USD/CNY',
+      fx_usd_jpy: 'USD/JPY',
+      fx_usd_krw: 'USD/KRW',
+      fx_usd_eur: 'USD/EUR',
+    };
+
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function fmtNum(v, dp) {
+      try {
+        if (v === null || v === undefined || v === '') return '—';
+        var n = Number(v);
+        if (!isFinite(n)) return '—';
+        return n.toFixed(dp == null ? 2 : dp);
+      } catch (e) { return '—'; }
+    }
+
+    function _fetchJson(url) {
+      return fetch(url, { headers: { 'Accept': 'application/json' } }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+    }
+
+    function _renderMiniRows(tbodyEl, rows, mapper) {
+      if (!tbodyEl) return;
+      if (!rows || !rows.length) {
+        tbodyEl.innerHTML = '<tr><td colspan="3" class="muted">No data.</td></tr>';
+        return;
+      }
+      var html = '';
+      for (var i = 0; i < rows.length; i++) {
+        html += mapper(rows[i]);
+      }
+      tbodyEl.innerHTML = html;
+    }
+
+    function _stripGroupParam() {
+      var g = (groupSel && groupSel.value) ? String(groupSel.value).trim().toLowerCase() : '';
+      return g || '';
+    }
+
+    function refreshMarketStrip() {
+      var group = _stripGroupParam();
+
+      // --- FX strip (top pairs) ---
+      var fxWant = ['fx_usd_sgd','fx_usd_myr','fx_usd_idr','fx_usd_cny','fx_usd_jpy','fx_usd_eur'];
+      stripFxMeta && (stripFxMeta.textContent = group ? ('Group: ' + group.toUpperCase()) : 'All countries');
+      if (stripFxBody) stripFxBody.innerHTML = '<tr><td colspan="3" class="muted">Loading…</td></tr>';
+
+      Promise.all(fxWant.map(function (ind) {
+        var url = '/api/macro/latest?indicator=' + encodeURIComponent(ind) + '&limit=4' + (group ? ('&group=' + encodeURIComponent(group)) : '');
+        return _fetchJson(url).then(function (data) {
+          var latest = (data && data.latest) ? data.latest : [];
+          // Pick first row with a numeric value
+          for (var i = 0; i < latest.length; i++) {
+            var v = latest[i] && latest[i].value;
+            if (v !== null && v !== undefined && v !== '') return { indicator: ind, row: latest[i] };
+          }
+          return { indicator: ind, row: null };
+        }).catch(function () {
+          return { indicator: ind, row: null };
+        });
+      })).then(function (items) {
+        var rows = items.map(function (it) {
+          var r = it.row || {};
+          return {
+            pair: FX_LABEL[it.indicator] || it.indicator,
+            value: r.value,
+            date: r.date || '—',
+          };
+        });
+        _renderMiniRows(stripFxBody, rows, function (r) {
+          return (
+            '<tr>' +
+              '<td class="mono">' + esc(r.pair) + '</td>' +
+              '<td class="num">' + esc(fmtNum(r.value, 4)) + '</td>' +
+              '<td class="muted">' + esc(r.date) + '</td>' +
+            '</tr>'
+          );
+        });
+      });
+
+      // --- CPI / GDP / Debt strips (top movers by level) ---
+      function loadTop(indicator, tbodyEl, metaEl, title, dp, sortDir) {
+        if (tbodyEl) tbodyEl.innerHTML = '<tr><td colspan="3" class="muted">Loading…</td></tr>';
+        var url = '/api/macro/latest?indicator=' + encodeURIComponent(indicator) + '&limit=220' + (group ? ('&group=' + encodeURIComponent(group)) : '');
+        return _fetchJson(url).then(function (data) {
+          var latest = (data && data.latest) ? data.latest : [];
+          var filtered = latest.filter(function (r) {
+            return r && r.country_name && r.value !== null && r.value !== undefined && r.value !== '';
+          }).map(function (r) {
+            return {
+              country: r.country_name,
+              code: r.country_code,
+              value: Number(r.value),
+              date: r.date || '—',
+              unit: r.unit || '%',
+            };
+          }).filter(function (r) { return isFinite(r.value); });
+
+          filtered.sort(function (a, b) {
+            var dir = (sortDir === 'asc') ? 1 : -1;
+            return dir * (a.value - b.value);
+          });
+          var top = filtered.slice(0, 7);
+          if (metaEl) metaEl.textContent = (group ? (group.toUpperCase() + ' • ') : '') + title + ' • top ' + top.length;
+          _renderMiniRows(tbodyEl, top, function (r) {
+            return (
+              '<tr>' +
+                '<td>' + esc(r.country) + ' <span class="muted mono">(' + esc(r.code) + ')</span></td>' +
+                '<td class="num">' + esc(fmtNum(r.value, dp)) + '</td>' +
+                '<td class="muted">' + esc(r.date) + '</td>' +
+              '</tr>'
+            );
+          });
+        }).catch(function () {
+          if (tbodyEl) tbodyEl.innerHTML = '<tr><td colspan="3" class="muted">Failed to load.</td></tr>';
+          if (metaEl) metaEl.textContent = '—';
+        });
+      }
+
+      loadTop('inflation_cpi', stripInflBody, stripInflMeta, 'highest', 1, 'desc');
+      loadTop('gdp_growth_yoy', stripGdpBody, stripGdMeta, 'lowest', 1, 'asc');
+      loadTop('gov_debt_pct_gdp', stripDebtBody, null, 'highest', 0, 'desc');
+    }
+
+    function _cssVar(name, fallback) {
+      try {
+        var cs = getComputedStyle(document.body);
+        var v = (cs && cs.getPropertyValue(name)) ? cs.getPropertyValue(name).trim() : '';
+        return v || fallback;
+      } catch (e) { return fallback; }
+    }
+
+    function plotlyTerminalTheme() {
+      var ink = _cssVar('--t-ink', '#e6e9ef');
+      var inkMuted = _cssVar('--t-ink-muted', '#6b7280');
+      var inkSecondary = _cssVar('--t-ink-secondary', '#9ca3b4');
+      var border = _cssVar('--t-border', '#272b33');
+      var surface = _cssVar('--t-surface', '#14171d');
+      var accent = _cssVar('--t-accent', '#22c55e');
+      var grid = 'rgba(39, 43, 51, 0.35)';
+      return {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { family: 'Plus Jakarta Sans, system-ui, sans-serif', color: ink, size: 12 },
+        colorway: [accent, '#60a5fa', '#f59e0b', '#f97316', '#a78bfa', '#e879f9', '#fca5a5', '#34d399'],
+        margin: { t: 12, l: 12, r: 12, b: 12 },
+        xaxis: {
+          automargin: true,
+          showgrid: true,
+          gridcolor: grid,
+          showline: true,
+          linecolor: border,
+          zeroline: false,
+          tickfont: { color: inkSecondary, size: 11 },
+        },
+        yaxis: {
+          automargin: true,
+          showgrid: true,
+          gridcolor: grid,
+          showline: true,
+          linecolor: border,
+          zeroline: false,
+          tickfont: { color: inkSecondary, size: 11 },
+        },
+        legend: { orientation: 'h', font: { color: inkSecondary }, bgcolor: 'rgba(0,0,0,0)' },
+        hoverlabel: { bgcolor: surface, bordercolor: border, font: { color: ink } },
+      };
+    }
+
+    if (groupSel) {
+      groupSel.addEventListener('change', function () {
+        refreshMarketStrip();
+      });
+    }
+
+    // First paint: load strip quickly (independent of chart renders)
+    refreshMarketStrip();
+
+    function mergeLayout(base, extra) {
+      var out = {};
+      function assign(dst, src) {
+        Object.keys(src || {}).forEach(function (k) {
+          if (src[k] && typeof src[k] === 'object' && !Array.isArray(src[k])) {
+            dst[k] = dst[k] || {};
+            assign(dst[k], src[k]);
+          } else {
+            dst[k] = src[k];
+          }
+        });
+      }
+      assign(out, base || {});
+      assign(out, extra || {});
+      return out;
+    }
+
+    var _resizeTimer;
+    function resizeMacroCharts() {
+      ['macro-basket', 'macro-deepdive'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && window.Plotly && el.querySelector && el.querySelector('.svg-container')) {
+          try { window.Plotly.Plots.resize(el); } catch (e) {}
+        }
+      });
+    }
+    window.addEventListener('resize', function () {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(resizeMacroCharts, 150);
+    });
+
+    function showPanel(key) {
+      ['global', 'country', 'alerts'].forEach(function (k) {
+        var el = document.getElementById('panel-' + k);
+        if (!el) return;
+        el.style.display = (k === key) ? 'block' : 'none';
+      });
+      var isAlerts = key === 'alerts';
+      if (startEl) startEl.disabled = isAlerts;
+      if (endEl) endEl.disabled = isAlerts;
+      if (countrySel) countrySel.disabled = (key === 'global' || isAlerts);
+      if (key === 'alerts') loadAlerts();
+      setTimeout(resizeMacroCharts, 50);
+    }
+
+    function isFxIndicator(indName) {
+      return (indName || '').indexOf('fx_usd_') === 0;
+    }
+
+    function num(v) {
+      var x = Number(v);
+      return isFinite(x) ? x : null;
+    }
+
+    function pct(a, b) {
+      if (a == null || b == null || b === 0) return null;
+      return (a / b - 1) * 100;
+    }
+
+    function rollingMean(arr, win) {
+      var out = new Array(arr.length).fill(null);
+      var sum = 0, q = [];
+      for (var i = 0; i < arr.length; i++) {
+        var v = arr[i];
+        q.push(v);
+        if (v != null) sum += v;
+        if (q.length > win) {
+          var old = q.shift();
+          if (old != null) sum -= old;
+        }
+        if (q.length === win) {
+          var count = 0;
+          for (var j = 0; j < q.length; j++) if (q[j] != null) count++;
+          out[i] = count ? (sum / count) : null;
+        }
+      }
+      return out;
+    }
+
+    function rollingStd(arr, win) {
+      var out = new Array(arr.length).fill(null);
+      for (var i = 0; i < arr.length; i++) {
+        if (i < win - 1) continue;
+        var slice = arr.slice(i - win + 1, i + 1).filter(function (x) { return x != null; });
+        if (!slice.length) continue;
+        var m = slice.reduce(function (a, b) { return a + b; }, 0) / slice.length;
+        var v = slice.reduce(function (a, b) { return a + (b - m) * (b - m); }, 0) / slice.length;
+        out[i] = Math.sqrt(v);
+      }
+      return out;
+    }
+
+    function rsiN(prices, period) {
+      period = Math.max(2, Math.min(60, period | 0));
+      var out = new Array(prices.length).fill(null);
+      var gains = 0, losses = 0;
+      for (var i = 1; i < prices.length; i++) {
+        var p0 = prices[i - 1], p1 = prices[i];
+        if (p0 == null || p1 == null) continue;
+        var ch = p1 - p0;
+        var g = ch > 0 ? ch : 0;
+        var l = ch < 0 ? -ch : 0;
+        if (i <= period) {
+          gains += g; losses += l;
+          if (i === period) {
+            var rs = losses === 0 ? 999 : gains / losses;
+            out[i] = 100 - (100 / (1 + rs));
+          }
+        } else {
+          gains = (gains * (period - 1) + g) / period;
+          losses = (losses * (period - 1) + l) / period;
+          var rs2 = losses === 0 ? 999 : gains / losses;
+          out[i] = 100 - (100 / (1 + rs2));
+        }
+      }
+      return out;
+    }
+
+    function applyTransform(dates, values, mode) {
+      if (mode === 'level') return { x: dates, y: values, label: 'Level' };
+      if (mode === 'pct_change') {
+        var out = values.map(function (v, i) {
+          if (i === 0) return null;
+          var a = values[i], b = values[i - 1];
+          if (a == null || b == null || b === 0) return null;
+          return (a / b - 1) * 100;
+        });
+        return { x: dates, y: out, label: 'Δ%' };
+      }
+      if (mode === 'yoy') {
+        var lag = 252;
+        var out2 = values.map(function (v, i) {
+          if (i < lag) return null;
+          var a = values[i], b = values[i - lag];
+          if (a == null || b == null || b === 0) return null;
+          return (a / b - 1) * 100;
+        });
+        return { x: dates, y: out2, label: 'YoY %' };
+      }
+      var m = rollingMean(values, 60);
+      var s = rollingStd(values, 60);
+      var out3 = values.map(function (v, i) {
+        if (v == null || m[i] == null || s[i] == null || s[i] === 0) return null;
+        return (v - m[i]) / s[i];
+      });
+      return { x: dates, y: out3, label: 'Z' };
+    }
+
+    /** Cross-indicator pairs for global scatter (x = primary indicator, y = value below). */
+    var GLOBAL_SCATTER_Y = {
+      gdp_growth_yoy: 'inflation_cpi',
+      inflation_cpi: 'gdp_growth_yoy',
+      current_account_pct_gdp: 'gdp_growth_yoy',
+      gov_debt_pct_gdp: 'gdp_growth_yoy',
+    };
+
+    function getIndMeta(name) {
+      var n = (name || '').toLowerCase();
+      if (n === 'fx_usd_basket') {
+        return { name: n, label: 'FX: USD basket', category: 'fx', frequency: 'daily', unit: 'rate' };
+      }
+      for (var i = 0; i < macroIndicatorCatalog.length; i++) {
+        if ((macroIndicatorCatalog[i].name || '') === n) return macroIndicatorCatalog[i];
+      }
+      return { name: n, label: name, category: '', frequency: '', unit: '' };
+    }
+
+    function isFxBasket(name) {
+      return (name || '').toLowerCase() === 'fx_usd_basket';
+    }
+
+    /** What to draw for global + macro (latest snapshot). */
+    function pickGlobalMacroViz(indName, meta) {
+      var n = (indName || '').toLowerCase();
+      var cat = (meta.category || '').toLowerCase();
+      if (GLOBAL_SCATTER_Y[n]) return { kind: 'scatter_pair', yKey: GLOBAL_SCATTER_Y[n] };
+      if (n.indexOf('volatility') !== -1) return { kind: 'histogram' };
+      if (cat === 'labor' || n.indexOf('unemployment') !== -1) return { kind: 'box_region' };
+      return { kind: 'bar_h' };
+    }
+
+    /** What to draw for country time series after we know n points. */
+    function pickCountryViz(isFx, transform, nPts, meta) {
+      var cat = (meta.category || '').toLowerCase();
+      var freq = (meta.frequency || '').toLowerCase();
+      if (isFx && transform === 'level') return { kind: 'fx_level_stack' };
+      if (isFx && transform !== 'level' && nPts >= 40) return { kind: 'histogram', reason: 'daily returns' };
+      if (isFx) return { kind: 'line' };
+      if (!isFx && transform === 'level' && freq === 'annual' && nPts >= 5) return { kind: 'box_year' };
+      if (transform !== 'level' && nPts >= 12) return { kind: 'histogram', reason: trReason(transform) };
+      if (transform === 'level' && (cat === 'demographics' || cat === 'energy') && nPts >= 8) return { kind: 'area' };
+      if (transform === 'level' && nPts <= 24) return { kind: 'line_markers' };
+      return { kind: 'line' };
+    }
+
+    function trReason(transform) {
+      if (transform === 'pct_change') return 'step changes';
+      if (transform === 'yoy') return 'YoY';
+      if (transform === 'zscore') return 'Z-scores';
+      return transform;
+    }
+
+    function yearFromDate(d) {
+      if (!d || typeof d !== 'string') return null;
+      var y = parseInt(d.slice(0, 4), 10);
+      return isFinite(y) ? String(y) : null;
+    }
+
+    function opt(value, label) {
+      var o = document.createElement('option');
+      o.value = value;
+      o.textContent = label;
+      return o;
+    }
+
+    function setLoading(select, label) {
+      select.innerHTML = '';
+      select.appendChild(opt('', label || '…'));
+    }
+
+    function buildIndicatorListForPanel(panel, indicators) {
+      var list = (indicators || []).slice();
+      if (panel === 'global') {
+        // Global FX is always a USD basket chart; show ONE entry instead of individual pairs.
+        list = list.filter(function (i) {
+          return !((i.category || '').toLowerCase() === 'fx' && (i.frequency || '').toLowerCase() === 'daily' && isFxIndicator(i.name));
+        });
+        list.unshift({ name: 'fx_usd_basket', label: 'FX: USD basket (all pairs)', unit: 'rate', frequency: 'daily', category: 'fx' });
+      }
+      // For Series view we keep all indicators (including individual FX pairs).
+      return list;
+    }
+
+    function rebuildIndicatorUI(panel, indicators) {
+      var list = buildIndicatorListForPanel(panel, indicators);
+
+      if (indSel) {
+        var prev = (indSel.value || '').toLowerCase();
+        indSel.innerHTML = '';
+        list.forEach(function (i) {
+          indSel.appendChild(opt(i.name, (i.label || i.name) + (i.unit ? (' [' + i.unit + ']') : '')));
+        });
+        // restore previous choice if still present
+        var hasPrev = false;
+        for (var j = 0; j < indSel.options.length; j++) {
+          if ((indSel.options[j].value || '').toLowerCase() === prev) { hasPrev = true; break; }
+        }
+        if (hasPrev) indSel.value = prev;
+        else if (panel === 'global') indSel.value = 'fx_usd_basket';
+        else indSel.value = indSel.value || 'gdp_growth_yoy';
+      }
+
+      function renderList(filterText) {
+        if (!indList) return;
+        var q = (filterText || '').toLowerCase().trim();
+        var byCat = {};
+        list.forEach(function (i) {
+          var name = i.name || '';
+          var label = i.label || name;
+          var hay = (name + ' ' + label + ' ' + (i.category || '') + ' ' + (i.frequency || '')).toLowerCase();
+          if (q && hay.indexOf(q) === -1) return;
+          var cat = (i.category || 'other').toUpperCase();
+          (byCat[cat] = byCat[cat] || []).push(i);
+        });
+        var cats = Object.keys(byCat).sort();
+        var html = '';
+        cats.forEach(function (c) {
+          html += '<div class="macro-cat"><div class="macro-cat-title">' + c + '</div><ul class="macro-ind-ul">';
+          byCat[c].slice(0, 120).forEach(function (i) {
+            var lab = (i.label || i.name);
+            var sub = (i.frequency ? i.frequency : '') + (i.unit ? (' · ' + i.unit) : '');
+            html += '<li><button type="button" class="macro-ind-btn" data-ind="' + (i.name || '') + '"><span class="macro-ind-lab">' + lab + '</span><span class="macro-ind-sub">' + sub + '</span></button></li>';
+          });
+          html += '</ul></div>';
+        });
+        indList.innerHTML = html || '<p class="sidebar-empty">No match.</p>';
+      }
+
+      renderList(indSearch ? indSearch.value : '');
+      if (indSearch) indSearch.oninput = function () { renderList(indSearch.value); };
+    }
+
+    function _pad2(n) { return (n < 10 ? ('0' + n) : String(n)); }
+    function _toISODate(d) {
+      return d.getUTCFullYear() + '-' + _pad2(d.getUTCMonth() + 1) + '-' + _pad2(d.getUTCDate());
+    }
+    function _addDaysUTC(d, days) {
+      var out = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0));
+      out.setUTCDate(out.getUTCDate() + days);
+      return out;
+    }
+    function _addMonthsUTC(d, months) {
+      var out = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0));
+      out.setUTCMonth(out.getUTCMonth() + months);
+      return out;
+    }
+    function _addYearsUTC(d, years) {
+      var out = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0));
+      out.setUTCFullYear(out.getUTCFullYear() + years);
+      return out;
+    }
+
+    function applyRangePreset(preset, meta) {
+      if (!preset) return;
+      var freq = (meta && meta.frequency) ? String(meta.frequency).toLowerCase() : '';
+      var now = new Date();
+      var end = _toISODate(now);
+      var start;
+      // Hour presets: we do not have intraday in this app; clamp to daily window.
+      if (preset === '1h') start = _toISODate(_addDaysUTC(now, -2));
+      else if (preset === '24h') start = _toISODate(_addDaysUTC(now, -2));
+      else if (preset === '3d') start = _toISODate(_addDaysUTC(now, -3));
+      else if (preset === '7d') start = _toISODate(_addDaysUTC(now, -7));
+      else if (preset === '1m') start = _toISODate(_addMonthsUTC(now, -1));
+      else if (preset === '3m') start = _toISODate(_addMonthsUTC(now, -3));
+      else if (preset === '1y') start = _toISODate(_addYearsUTC(now, -1));
+      else if (preset === '3y') start = _toISODate(_addYearsUTC(now, -3));
+      else if (preset === '5y') start = _toISODate(_addYearsUTC(now, -5));
+      else if (preset === '10y') start = _toISODate(_addYearsUTC(now, -10));
+      else if (preset === '30y') start = _toISODate(_addYearsUTC(now, -30));
+      else return;
+
+      // For annual series, start/end can be yearly; our API accepts YYYY-MM-DD. Keep it ISO anyway.
+      if (startEl) startEl.value = start;
+      if (endEl) endEl.value = end;
+
+      // Make it obvious when user picked intraday.
+      if ((preset === '1h' || preset === '24h') && basketMeta) {
+        basketMeta.textContent = 'Note: intraday not available; showing ~2 days for daily data.';
+      }
+    }
+
+    function updateFxPairVisibility(panel, indicator) {
+      var show = (panel === 'global') && isFxBasket(indicator);
+      if (fxPairField) fxPairField.style.display = show ? '' : 'none';
+    }
+
+    function ensureFxPairOptions() {
+      if (!fxPairSel || fxPairSel.options.length) return;
+      FX_LIST.forEach(function (k) {
+        fxPairSel.appendChild(opt(k, (FX_LABEL[k] || k).toUpperCase()));
+      });
+      fxPairSel.value = fxPairSel.value || 'fx_usd_sgd';
+    }
+
+    function loadCatalog() {
+      var group = (groupSel && groupSel.value) || '';
+      var url = '/api/macro/catalog' + (group ? ('?group=' + encodeURIComponent(group)) : '');
+      setLoading(countrySel, '…');
+      setLoading(indSel, '…');
+      fetch(url, { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var countries = (data && data.countries) || [];
+          var indicators = (data && data.indicators) || [];
+          macroIndicatorCatalog = indicators;
+
+          countrySel.innerHTML = '';
+          countries.forEach(function (c) {
+            countrySel.appendChild(opt(c.code, (c.name || c.code) + (c.code ? (' (' + c.code + ')') : '')));
+          });
+
+          rebuildIndicatorUI((panelSel && panelSel.value) || 'global', indicators);
+          ensureFxPairOptions();
+          updateFxPairVisibility((panelSel && panelSel.value) || 'global', (indSel && indSel.value) || '');
+          if (indList) {
+            indList.onclick = function (e) {
+              var btn = e.target && e.target.closest && e.target.closest('.macro-ind-btn');
+              if (!btn) return;
+              var ind = btn.getAttribute('data-ind') || '';
+              if (indSel) indSel.value = ind;
+              refresh();
+            };
+          }
+
+          if (countrySel.options.length) countrySel.value = countrySel.value || 'SGP';
+          refresh();
+        })
+        .catch(function () {
+          countrySel.innerHTML = '';
+          indSel.innerHTML = '';
+        });
+    }
+
+    function setGlobalChartHeight(px) {
+      px = Math.max(320, Math.min(920, px | 0));
+      if (chartStageGlobal) chartStageGlobal.style.height = px + 'px';
+      var el = document.getElementById('macro-basket');
+      if (el) el.style.height = '100%';
+    }
+
+    function setSeriesChartHeight(px) {
+      px = Math.max(440, Math.min(780, px | 0));
+      if (chartStageSeries) chartStageSeries.style.height = px + 'px';
+      var el = document.getElementById('macro-deepdive');
+      if (el) el.style.height = '100%';
+    }
+
+    function refresh() {
+      var panel = (panelSel && panelSel.value) || 'global';
+      showPanel(panel);
+      var country = (countrySel && countrySel.value) || '';
+      var indicator = (indSel && indSel.value) || '';
+      if (!indicator) return;
+      // Keep global FX orderly: single basket entry.
+      if (panel === 'global' && isFxIndicator(indicator)) {
+        indicator = 'fx_usd_basket';
+        if (indSel) indSel.value = 'fx_usd_basket';
+      }
+      if (panel === 'country' && isFxBasket(indicator)) {
+        // Series requires a concrete pair; pick a sensible default.
+        indicator = 'fx_usd_sgd';
+        if (indSel) indSel.value = indicator;
+      }
+      var metaInd = getIndMeta(indicator);
+      updateFxPairVisibility(panel, indicator);
+      var transform = (transformSel && transformSel.value) || 'level';
+      var start = (startEl && startEl.value || '').trim();
+      var end = (endEl && endEl.value || '').trim();
+
+      // FX series are stored under a synthetic "USD" country (base currency entity).
+      // If the user is in Series view and picks an FX indicator, always pull series from USD.
+      if (panel === 'country' && isFxIndicator(indicator)) {
+        country = 'USD';
+      }
+
+      if (panel === 'country' && country) {
+        var qs = ['indicator=' + encodeURIComponent(indicator)];
+        if (start) qs.push('start=' + encodeURIComponent(start));
+        if (end) qs.push('end=' + encodeURIComponent(end));
+        var seriesUrl = '/api/macro/country/' + encodeURIComponent(country) + '?' + qs.join('&');
+
+        fetch(seriesUrl, { credentials: 'same-origin' })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            var series = (data && data.series) || [];
+            var x = series.map(function (p) { return p.date; });
+            var y0 = series.map(function (p) { return num(p.value); });
+            var tr = applyTransform(x, y0, transform);
+            var viz = pickCountryViz(isFxIndicator(indicator), transform, series.length, metaInd);
+            var vk = viz.kind;
+            var useStackedFx = vk === 'fx_level_stack';
+
+            setSeriesChartHeight(useStackedFx ? 620 : ((vk === 'histogram' || vk === 'box_year') ? 420 : 480));
+            // Auto-scale windows when history is short (FX may have < 20 daily points early on).
+            var n = y0.length || 0;
+            var w20 = Math.max(5, Math.min(20, n));
+            var w60 = Math.max(10, Math.min(60, n));
+            var wRsi = Math.max(5, Math.min(14, Math.max(0, n - 1)));
+            var wVol = Math.max(5, Math.min(20, Math.max(0, n - 1)));
+
+            var ma20 = rollingMean(y0, w20);
+            var ma60 = rollingMean(y0, w60);
+            var rsi = rsiN(y0, wRsi);
+            var ret = y0.map(function (v, i) {
+              return i === 0 ? null : (v != null && y0[i - 1] != null && y0[i - 1] !== 0 ? (v / y0[i - 1] - 1) : null);
+            });
+            var vol20 = rollingStd(ret.map(function (v) { return v == null ? null : v * 100; }), wVol);
+            var peak = null;
+            var dd = y0.map(function (v) {
+              if (v == null) return null;
+              peak = peak == null ? v : Math.max(peak, v);
+              return peak ? ((v / peak - 1) * 100) : null;
+            });
+
+            var acc = _cssVar('--t-accent', '#22c55e');
+            var mut = _cssVar('--t-ink-muted', '#6b7280');
+
+            var theme = plotlyTerminalTheme();
+            var h = (chartStageSeries && chartStageSeries.clientHeight) ? chartStageSeries.clientHeight : 600;
+            var traces = [];
+            var layout;
+
+            if (vk === 'histogram') {
+              var hx;
+              if (isFxIndicator(indicator)) {
+                hx = [];
+                for (var ri = 1; ri < y0.length; ri++) {
+                  if (y0[ri] != null && y0[ri - 1] != null && y0[ri - 1] !== 0) hx.push((y0[ri] / y0[ri - 1] - 1) * 100);
+                }
+              } else {
+                hx = tr.y.filter(function (v) { return v != null && isFinite(v); });
+              }
+              traces = [{ type: 'histogram', x: hx, name: tr.label || 'Δ', marker: { color: acc }, nbinsx: Math.min(40, Math.max(8, Math.floor(hx.length / 4))) }];
+              layout = mergeLayout(theme, { showlegend: false, height: h, barmode: 'overlay', xaxis: mergeLayout(theme.xaxis, { title: isFxIndicator(indicator) ? 'Step Δ %' : tr.label }), yaxis: mergeLayout(theme.yaxis, { title: 'Count' }) });
+              if (lineMeta) lineMeta.textContent = (data.country_code || country) + ' · ' + indicator + ' · histogram (' + (viz.reason || 'distribution') + ')';
+            } else if (vk === 'box_year') {
+              var byY = {};
+              for (var bi = 0; bi < x.length; bi++) {
+                var yr = yearFromDate(x[bi]);
+                if (!yr || tr.y[bi] == null) continue;
+                (byY[yr] = byY[yr] || []).push(tr.y[bi]);
+              }
+              var years = Object.keys(byY).sort();
+              if (years.length <= 1) {
+                var allV = tr.y.filter(function (v) { return v != null; });
+                traces = [{ type: 'box', y: allV, name: 'Series', marker: { color: acc }, boxmean: 'sd' }];
+              } else {
+                years.forEach(function (yy) {
+                  traces.push({ type: 'box', y: byY[yy], name: yy, marker: { color: acc }, boxmean: 'sd' });
+                });
+              }
+              layout = mergeLayout(theme, { showlegend: years.length > 1, height: h, yaxis: mergeLayout(theme.yaxis, { title: tr.label }) });
+              if (lineMeta) lineMeta.textContent = (data.country_code || country) + ' · ' + indicator + ' · box by year (annual series)';
+            } else {
+              var lineTrace = { x: tr.x, y: tr.y, name: tr.label, type: 'scatter', mode: (vk === 'line_markers' ? 'lines+markers' : 'lines'), line: { width: vk === 'area' ? 2 : 2.5, color: acc }, hovertemplate: '%{x}<br>%{y}<extra></extra>', xaxis: 'x', yaxis: 'y' };
+              if (vk === 'area') {
+                lineTrace.fill = 'tozeroy';
+                lineTrace.line = { width: 2, color: acc };
+              }
+              if (vk === 'line_markers') lineTrace.marker = { size: 6, color: acc };
+              traces = [lineTrace];
+              if (useStackedFx) {
+                traces.push({ x: x, y: ma20, name: 'MA20', type: 'scatter', mode: 'lines', line: { width: 1.2, color: mut, dash: 'dot' }, xaxis: 'x', yaxis: 'y' });
+                traces.push({ x: x, y: ma60, name: 'MA60', type: 'scatter', mode: 'lines', line: { width: 1.2, color: '#94a3b8', dash: 'dot' }, xaxis: 'x', yaxis: 'y' });
+                traces.push({ x: x, y: rsi, name: 'RSI', type: 'scatter', mode: 'lines', line: { width: 1.2, color: '#34d399' }, xaxis: 'x2', yaxis: 'y2' });
+                traces.push({ x: x, y: vol20, name: 'Vol', type: 'scatter', mode: 'lines', line: { width: 1.2, color: '#f59e0b' }, xaxis: 'x3', yaxis: 'y3' });
+                traces.push({ x: x, y: dd, name: 'DD%', type: 'scatter', mode: 'lines', line: { width: 1.2, color: '#f87171' }, xaxis: 'x4', yaxis: 'y4' });
+              }
+              if (useStackedFx) {
+                layout = mergeLayout(theme, {
+                  showlegend: true,
+                  height: h,
+                  margin: { t: 8, l: 52, r: 12, b: 40 },
+                  xaxis: mergeLayout(theme.xaxis, { domain: [0.06, 1], anchor: 'y', automargin: true }),
+                  yaxis: mergeLayout(theme.yaxis, { domain: [0.76, 0.995], automargin: true, title: '' }),
+                  xaxis2: mergeLayout(theme.xaxis, { domain: [0.06, 1], anchor: 'y2', matches: 'x', showticklabels: false }),
+                  yaxis2: mergeLayout(theme.yaxis, { domain: [0.52, 0.74], title: 'RSI', range: [0, 100] }),
+                  xaxis3: mergeLayout(theme.xaxis, { domain: [0.06, 1], anchor: 'y3', matches: 'x', showticklabels: false }),
+                  yaxis3: mergeLayout(theme.yaxis, { domain: [0.28, 0.50], title: 'Vol %' }),
+                  xaxis4: mergeLayout(theme.xaxis, { domain: [0.06, 1], anchor: 'y4', matches: 'x' }),
+                  yaxis4: mergeLayout(theme.yaxis, { domain: [0.02, 0.26], title: 'DD %' }),
+                });
+              } else {
+                layout = mergeLayout(theme, {
+                  showlegend: true,
+                  height: h,
+                  margin: { t: 12, l: 12, r: 12, b: 12 },
+                  xaxis: mergeLayout(theme.xaxis, { automargin: true }),
+                  yaxis: mergeLayout(theme.yaxis, { automargin: true }),
+                });
+              }
+              if (lineMeta) lineMeta.textContent = (data.country_code || country) + ' · ' + indicator + ' · n=' + series.length + ' · auto: ' + vk;
+            }
+
+            Plotly.newPlot('macro-deepdive', traces, layout, { displayModeBar: false, responsive: true });
+            resizeMacroCharts();
+          })
+          .catch(function () {
+            if (lineMeta) lineMeta.textContent = 'Could not load series.';
+          });
+      }
+
+      var group = (groupSel && groupSel.value) || '';
+      if (panel === 'global') {
+        if (isFxBasket(indicator) || isFxIndicator(indicator)) {
+          if (heatmapBlock) heatmapBlock.style.display = 'block';
+          var url = '/api/macro/series_multi?country=USD&indicators=' + encodeURIComponent(FX_LIST.join(',')) + (start ? ('&start=' + encodeURIComponent(start)) : '') + (end ? ('&end=' + encodeURIComponent(end)) : '');
+          setGlobalChartHeight(440);
+          fetch(url, { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              var seriesBy = (data && data.series) || {};
+              var theme = plotlyTerminalTheme();
+              var h = chartStageGlobal ? chartStageGlobal.clientHeight : 440;
+              var traces = [];
+              var allDates = null;
+              var palA = ['#22c55e', '#60a5fa', '#f59e0b', '#f97316', '#a78bfa', '#e879f9', '#34d399', '#f87171', '#fb7185', '#38bdf8'];
+              // If user selected a specific pair, show only that pair; otherwise show full basket.
+              var chosen = (fxPairSel && fxPairSel.value) ? String(fxPairSel.value).toLowerCase() : '';
+              var activeList = (chosen && FX_LIST.indexOf(chosen) !== -1) ? [chosen] : FX_LIST.slice();
+              activeList.forEach(function (ind4, ii) {
+                var s = seriesBy[ind4] || [];
+                var xs = s.map(function (p) { return p.date; });
+                var ys = s.map(function (p) { return num(p.value); });
+                if (!allDates || xs.length > allDates.length) allDates = xs;
+                var t = applyTransform(xs, ys, transform);
+                var c = palA[ii % palA.length];
+                traces.push({
+                  x: t.x, y: t.y, type: 'scatter', mode: 'lines',
+                  name: (FX_LABEL[ind4] || ind4.replace('fx_usd_', 'USD/')).toUpperCase(),
+                  line: { width: 2, color: c },
+                  hovertemplate: '%{fullData.name}<br>%{x}<br>%{y:.4f}<extra></extra>',
+                });
+              });
+              var layout = mergeLayout(theme, {
+                height: h,
+                showlegend: true,
+                hovermode: 'x unified',
+                legend: { orientation: 'h', y: 1.12, x: 0 },
+                xaxis: mergeLayout(theme.xaxis, { automargin: true, tickangle: 0 }),
+                yaxis: mergeLayout(theme.yaxis, { automargin: true, title: '' }),
+              });
+              if (basketMeta) {
+                basketMeta.textContent = (activeList.length === 1 ? ('FX: ' + (FX_LABEL[activeList[0]] || activeList[0]) + ' · ') : 'FX: USD basket · all pairs · ') + transform;
+              }
+
+              Plotly.newPlot('macro-basket', traces, layout, { displayModeBar: false, responsive: true });
+
+              var allDates = null;
+              FX_LIST.forEach(function (ind) {
+                var s = seriesBy[ind] || [];
+                var xs = s.map(function (p) { return p.date; });
+                if (!allDates || xs.length > allDates.length) allDates = xs;
+              });
+              var N = 10;
+              var dates = allDates ? allDates.slice(-N) : [];
+              function colorClass(v) {
+                if (v == null) return 'hm-na';
+                if (v > 0.75) return 'hm-pos3';
+                if (v > 0.25) return 'hm-pos2';
+                if (v > 0.05) return 'hm-pos1';
+                if (v < -0.75) return 'hm-neg3';
+                if (v < -0.25) return 'hm-neg2';
+                if (v < -0.05) return 'hm-neg1';
+                return 'hm-flat';
+              }
+              var html = '<table class="macro-heatmap"><thead><tr><th>Pair</th>' + dates.map(function (d) { return '<th>' + d + '</th>'; }).join('') + '</tr></thead><tbody>';
+              FX_LIST.forEach(function (ind) {
+                var s = seriesBy[ind] || [];
+                var y = s.map(function (p) { return num(p.value); });
+                var xs = s.map(function (p) { return p.date; });
+                var byDate = {};
+                for (var i = 0; i < xs.length; i++) byDate[xs[i]] = y[i];
+                html += '<tr><td class="hm-label">' + ind.replace('fx_usd_', 'USD/').toUpperCase() + '</td>';
+                for (var j = 0; j < dates.length; j++) {
+                  var d = dates[j];
+                  var v = byDate[d];
+                  var prevD = j > 0 ? dates[j-1] : null;
+                  var pv = prevD ? byDate[prevD] : null;
+                  var ch = (v != null && pv != null && pv !== 0) ? ((v / pv - 1) * 100) : null;
+                  html += '<td class="' + colorClass(ch) + '">' + (v == null ? '—' : v.toFixed(4)) + '</td>';
+                }
+                html += '</tr>';
+              });
+              html += '</tbody></table>';
+              if (heatmapWrap) heatmapWrap.innerHTML = html;
+              if (heatmapMeta) heatmapMeta.textContent = 'Δ% vs prior column';
+              resizeMacroCharts();
+            })
+            .catch(function () {
+              if (basketMeta) basketMeta.textContent = 'FX basket failed';
+            });
+        } else {
+          if (heatmapBlock) heatmapBlock.style.display = 'none';
+          var gViz = pickGlobalMacroViz(indicator, metaInd);
+          var grpQ = group ? ('&group=' + encodeURIComponent(group)) : '';
+          var acc = _cssVar('--t-accent', '#22c55e');
+
+          function plotEmptyBasket(msg) {
+            setGlobalChartHeight(360);
+            Plotly.newPlot('macro-basket', [], mergeLayout(plotlyTerminalTheme(), {
+              height: 360,
+              annotations: [{ text: msg || 'No data', xref: 'paper', yref: 'paper', x: 0.5, y: 0.5, showarrow: false, font: { color: _cssVar('--t-ink-muted', '#6b7280'), size: 14 } }],
+            }), { displayModeBar: false, responsive: true });
+            if (basketMeta) basketMeta.textContent = 'No data';
+            resizeMacroCharts();
+          }
+
+          if (gViz.kind === 'scatter_pair' && gViz.yKey) {
+            var yInd = gViz.yKey;
+            var uA = '/api/macro/latest?indicator=' + encodeURIComponent(indicator) + '&limit=400' + grpQ;
+            var uB = '/api/macro/latest?indicator=' + encodeURIComponent(yInd) + '&limit=400' + grpQ;
+            Promise.all([fetch(uA, { credentials: 'same-origin' }).then(function (r) { return r.json(); }), fetch(uB, { credentials: 'same-origin' }).then(function (r) { return r.json(); })])
+              .then(function (arr) {
+                var r1 = (arr[0] && arr[0].latest) || [];
+                var r2 = (arr[1] && arr[1].latest) || [];
+                var mapB = {};
+                r2.forEach(function (row) {
+                  if (row.country_code) mapB[row.country_code] = row.value;
+                });
+                var pts = [];
+                r1.forEach(function (row) {
+                  var yv = mapB[row.country_code];
+                  if (row.value != null && yv != null) pts.push({ code: row.country_code, name: row.country_name, x: row.value, y: yv });
+                });
+                if (!pts.length) {
+                  plotEmptyBasket();
+                  return;
+                }
+                var theme = plotlyTerminalTheme();
+                setGlobalChartHeight(440);
+                Plotly.newPlot('macro-basket', [{
+                  type: 'scatter',
+                  mode: 'markers',
+                  x: pts.map(function (p) { return p.x; }),
+                  y: pts.map(function (p) { return p.y; }),
+                  text: pts.map(function (p) { return (p.name || p.code || ''); }),
+                  marker: { size: 11, color: acc, line: { width: 0 } },
+                  hovertemplate: '%{text}<br>' + indicator + ': %{x}<br>' + yInd + ': %{y}<extra></extra>',
+                }], mergeLayout(theme, { height: 440, xaxis: mergeLayout(theme.xaxis, { title: indicator }), yaxis: mergeLayout(theme.yaxis, { title: yInd }) }), { displayModeBar: false, responsive: true });
+                if (basketMeta) basketMeta.textContent = 'Scatter (auto) · ' + pts.length + ' countries · ' + indicator + ' vs ' + yInd;
+                resizeMacroCharts();
+              })
+              .catch(function () {
+                if (basketMeta) basketMeta.textContent = 'Scatter chart failed';
+              });
+            return;
+          }
+
+          var latestUrl = '/api/macro/latest?indicator=' + encodeURIComponent(indicator) + '&limit=300' + grpQ;
+          fetch(latestUrl, { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              var rows = (data && data.latest) || [];
+              rows = rows.filter(function (r) { return r && r.value != null; });
+              rows.sort(function (a, b) { return Math.abs((b.value || 0)) - Math.abs((a.value || 0)); });
+              rows = rows.slice(0, 80);
+              if (!rows.length) {
+                plotEmptyBasket('No values for this indicator');
+                return;
+              }
+
+              if (gViz.kind === 'histogram') {
+                var vals = rows.map(function (r) { return r.value; });
+                setGlobalChartHeight(400);
+                var theme = plotlyTerminalTheme();
+                Plotly.newPlot('macro-basket', [{ type: 'histogram', x: vals, nbinsx: Math.min(35, Math.max(12, Math.floor(vals.length / 4))), marker: { color: acc }, name: indicator }], mergeLayout(theme, { height: 400, xaxis: mergeLayout(theme.xaxis, { title: indicator }), yaxis: mergeLayout(theme.yaxis, { title: 'Countries' }) }), { displayModeBar: false, responsive: true });
+                if (basketMeta) basketMeta.textContent = 'Histogram (auto: volatility / dispersion) · n=' + vals.length;
+                resizeMacroCharts();
+                return;
+              }
+
+              if (gViz.kind === 'box_region') {
+                var byReg = {};
+                rows.forEach(function (r) {
+                  var reg = ((r.region != null && r.region !== '') ? r.region : 'Other') + '';
+                  reg = reg.slice(0, 28);
+                  (byReg[reg] = byReg[reg] || []).push(r.value);
+                });
+                var regs = Object.keys(byReg).sort();
+                var tracesR = regs.map(function (reg) {
+                  return {
+                    type: 'box',
+                    name: reg,
+                    y: byReg[reg],
+                    boxmean: 'sd',
+                    marker: { color: acc },
+                  };
+                });
+                setGlobalChartHeight(440);
+                var theme = plotlyTerminalTheme();
+                Plotly.newPlot('macro-basket', tracesR, mergeLayout(theme, { height: 440, showlegend: regs.length > 1, xaxis: mergeLayout(theme.xaxis, { title: 'Region' }), yaxis: mergeLayout(theme.yaxis, { title: (rows[0] && rows[0].unit) ? rows[0].unit : '' }) }), { displayModeBar: false, responsive: true });
+                if (basketMeta) basketMeta.textContent = 'Box (auto: labor / unemployment — distribution by region) · ' + indicator;
+                resizeMacroCharts();
+                return;
+              }
+
+              rows = rows.slice(0, 20);
+              var n = rows.length;
+              var barH = 26;
+              var chartH = Math.min(880, Math.max(380, 80 + n * barH));
+              setGlobalChartHeight(chartH);
+
+              var lab = rows.map(function (r) { return ((r.country_name || r.country_code || '') + '').slice(0, 32); });
+              var val = rows.map(function (r) { return r.value; });
+              var unit = (rows[0] && rows[0].unit) ? rows[0].unit : '';
+              var maxLabLen = Math.max.apply(null, lab.map(function (s) { return String(s).length; }));
+              var theme = plotlyTerminalTheme();
+
+              var y = lab.slice().reverse();
+              var xv = val.slice().reverse();
+              var layout = mergeLayout(theme, {
+                height: chartH,
+                bargap: 0.22,
+                bargroupgap: 0.08,
+                xaxis: mergeLayout(theme.xaxis, { title: unit, automargin: true, zeroline: true, zerolinecolor: _cssVar('--t-border', '#272b33') }),
+                yaxis: mergeLayout(theme.yaxis, { automargin: true, showgrid: false, tickfont: { size: 11 } }),
+                margin: { l: Math.min(220, 12 + maxLabLen * 7), r: 16, t: 16, b: 48 },
+              });
+              Plotly.newPlot('macro-basket', [{
+                type: 'bar',
+                orientation: 'h',
+                x: xv,
+                y: y,
+                marker: { color: acc, line: { width: 0 } },
+                hovertemplate: '%{y}<br>%{x}<extra></extra>',
+              }], layout, { displayModeBar: false, responsive: true });
+              if (basketMeta) basketMeta.textContent = 'Bar (auto: cross-country rank) · top ' + n + ' · ' + (indSel.options[indSel.selectedIndex] ? indSel.options[indSel.selectedIndex].text : indicator);
+              resizeMacroCharts();
+            })
+            .catch(function () {
+              if (basketMeta) basketMeta.textContent = 'Snapshot failed';
+            });
+        }
+      }
+
+      if (exportPdf) {
+        var pdfUrl = '/export/macro/pdf?indicator=' + encodeURIComponent(indicator) + (group ? ('&group=' + encodeURIComponent(group)) : '');
+        exportPdf.setAttribute('href', pdfUrl);
+      }
+    }
+
+    function loadAlerts() {
+      var group = (groupSel && groupSel.value) || '';
+      if (alertsLoading) alertsLoading.style.display = 'block';
+      if (alertsEmpty) alertsEmpty.style.display = 'none';
+      if (alertsWrap) alertsWrap.style.display = 'none';
+      if (alertsBody) alertsBody.innerHTML = '';
+      fetch('/api/macro/alerts' + (group ? ('?group=' + encodeURIComponent(group)) : ''), { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var alerts = (data && data.alerts) || [];
+          if (alertsLoading) alertsLoading.style.display = 'none';
+          if (!alerts.length) {
+            if (alertsEmpty) alertsEmpty.style.display = 'block';
+            return;
+          }
+          alerts.forEach(function (a) {
+            var tr = document.createElement('tr');
+            function td(txt) { var el = document.createElement('td'); el.textContent = txt; return el; }
+            tr.appendChild(td((a.severity || 'low').toUpperCase()));
+            tr.appendChild(td((a.country_name || a.country_code || '—')));
+            tr.appendChild(td(a.message || '—'));
+            tr.appendChild(td(a.date || '—'));
+            tr.appendChild(td((a.value == null ? '—' : String(a.value)) + (a.unit ? (' ' + a.unit) : '')));
+            alertsBody.appendChild(tr);
+          });
+          if (alertsWrap) alertsWrap.style.display = 'block';
+        })
+        .catch(function () {
+          if (alertsLoading) alertsLoading.textContent = 'Alerts failed';
+        });
+    }
+
+    function exportCsv() {
+      var panel = (panelSel && panelSel.value) || 'global';
+      var group = (groupSel && groupSel.value) || '';
+      var country = (countrySel && countrySel.value) || '';
+      var indicator = (indSel && indSel.value) || '';
+      var start = (startEl && startEl.value || '').trim();
+      var end = (endEl && endEl.value || '').trim();
+      if (!indicator) return;
+      var url = '/api/macro/export.csv';
+      if (panel === 'country' && country) {
+        url += '?scope=series&country=' + encodeURIComponent(country) + '&indicator=' + encodeURIComponent(indicator);
+        if (start) url += '&start=' + encodeURIComponent(start);
+        if (end) url += '&end=' + encodeURIComponent(end);
+      } else {
+        url += '?scope=latest&indicator=' + encodeURIComponent(indicator);
+        if (group) url += '&group=' + encodeURIComponent(group);
+      }
+      window.open(url, '_blank');
+    }
+
+    if (groupSel) groupSel.addEventListener('change', loadCatalog);
+    if (panelSel) panelSel.addEventListener('change', function () {
+      // Switching views changes which indicators are sensible to show.
+      rebuildIndicatorUI((panelSel && panelSel.value) || 'global', macroIndicatorCatalog || []);
+      updateFxPairVisibility((panelSel && panelSel.value) || 'global', (indSel && indSel.value) || '');
+      refresh();
+    });
+    if (transformSel) transformSel.addEventListener('change', refresh);
+    if (rangeSel) rangeSel.addEventListener('change', function () {
+      var preset = (rangeSel && rangeSel.value) || '';
+      var ind = (indSel && indSel.value) || '';
+      var meta = getIndMeta(ind);
+      applyRangePreset(preset, meta);
+      refresh();
+    });
+    if (fxPairSel) fxPairSel.addEventListener('change', refresh);
+    if (btn) btn.addEventListener('click', refresh);
+    if (exportBtn) exportBtn.addEventListener('click', exportCsv);
+
+    setSeriesChartHeight(560);
+    setGlobalChartHeight(440);
+    loadCatalog();
+  })();
+  </script>
+{% endblock %}

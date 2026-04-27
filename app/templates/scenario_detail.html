@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ scenario.name }} — Scenario Planning — Geopolitical News{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('main.scenarios_list') }}" class="back-link">← Scenarios</a></p>
+  <h1 class="page-title">{{ scenario.name }}</h1>
+  <p class="scenario-meta">{{ scenario.region or '—' }} · Horizon {{ scenario.horizon_year or '—' }} · {{ scenario.scenario_type or 'custom' }}</p>
+  <p class="scenario-desc">{{ scenario.description or '—' }}</p>
+
+  <form method="post" action="{{ url_for('main.scenario_run', scenario_id=scenario.id) }}" class="inline-form">
+    <button type="submit">Run multi-agent simulation</button>
+  </form>
+  <p><a href="{{ url_for('main.scenario_engine', event_type=scenario.engine_event_type or 'election_upset', region=scenario.region or '', country='') }}">Open in Scenario Engine</a> — Prefill event type and region, then run or refine.</p>
+
+  <h2>Past runs</h2>
+  {% if not runs %}
+  <p class="empty-state">No runs yet. Click “Run multi-agent simulation” above.</p>
+  {% else %}
+  <ul class="run-list">
+    {% for r in runs %}
+    <li>
+      <a href="{{ url_for('main.scenario_run_result', run_id=r.id) }}">Run {{ (r.run_at or r.created_at or '')[:19].replace('T', ' ') }} UTC</a>
+      {% if r.probability_summary %}<span class="run-preview">— {{ (r.probability_summary or '')[:80] }}…</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <p><a href="{{ url_for('main.scenarios_outlook') }}?scenario_id={{ scenario.id }}">Generate 10-year risk outlook for this scenario</a></p>
+  <p><a href="{{ url_for('main.scenarios_list') }}">← Scenarios</a></p>
+{% endblock %}

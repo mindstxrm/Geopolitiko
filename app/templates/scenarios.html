@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Scenario Library — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Scenario Library</h1>
+  <p class="page-intro">Pre-built scenarios: Taiwan crisis 2028, ASEAN currency stress. Run multi-agent simulation, view probability-weighted outcomes, generate 10-year risk outlook reports.</p>
+
+  <p class="scenario-cta-top"><a href="{{ url_for('main.scenario_engine') }}" class="scenario-cta-link">→ Scenario Engine</a> — Define event (election upset, coup, military incursion, sanctions, financial crisis, trade embargo), run simulation, export policy memo and risk briefing.</p>
+
+  <section class="supply-chain-cta">
+    <a href="{{ url_for('main.scenarios_outlook') }}" class="scenario-cta-link">Generate 10-year risk outlook report</a>
+    <p class="scenario-cta-desc">Select a scenario or use global outlook. Probability-weighted, institutional-grade.</p>
+  </section>
+
+  <section class="risk-section">
+    <h2>Scenarios</h2>
+    <p class="risk-meta">Run multi-agent simulation for each scenario. View probability-weighted outcomes and agent responses.</p>
+    {% if not scenarios %}
+    <p class="empty-state">No scenarios. Seed data should add Taiwan crisis 2028, ASEAN currency stress, and others.</p>
+    {% else %}
+    <ul class="scenario-list">
+      {% for s in scenarios %}
+      <li class="scenario-card">
+        <h3><a href="{{ url_for('main.scenario_detail', scenario_id=s.id) }}">{{ s.name }}</a></h3>
+        <p class="scenario-meta">{{ s.region or '—' }} · Horizon {{ s.horizon_year or '—' }} · {{ s.scenario_type or 'custom' }}</p>
+        <p class="scenario-desc">{{ (s.description or '—')[:200] }}{% if (s.description or '')|length > 200 %}…{% endif %}</p>
+        <p>
+          <a href="{{ url_for('main.scenario_detail', scenario_id=s.id) }}">View & run simulation</a>
+          · <a href="{{ url_for('main.scenarios_outlook') }}?scenario_id={{ s.id }}">10-year outlook</a>
+          · <a href="{{ url_for('main.scenario_engine', event_type=s.engine_event_type or 'election_upset', region=s.region or '', country='') }}">Open in Scenario Engine</a>
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+
+  <section class="risk-section">
+    <h2>Multi-agent simulation</h2>
+    <p class="risk-meta">Each run produces responses from five agents:</p>
+    <ul class="agent-list">
+      <li><strong>Economic policy agent</strong> — Fiscal, monetary, trade, and supply chain implications.</li>
+      <li><strong>Military agent</strong> — Force posture, escalation pathways, deterrence.</li>
+      <li><strong>Domestic politics agent</strong> — Public opinion, elections, coalition dynamics.</li>
+      <li><strong>Diplomatic agent</strong> — Alliances, multilateral forums, messaging.</li>
+      <li><strong>Private sector response agent</strong> — Corporates, supply chain, pricing, contingency.</li>
+    </ul>
+  </section>
+
+  <p><a href="{{ url_for('main.scenarios_outlook') }}">→ 10-year risk outlook</a></p>
+{% endblock %}

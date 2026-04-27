@@ -1,0 +1,15 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}Login — Analyst Desk{% endblock %}
+{% block body %}
+<div class="panel" style="max-width: 400px;">
+  <h2>Analyst Desk login</h2>
+  <p class="muted">This console is separate from the main Geopolitiko platform.</p>
+  <form method="post">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+    <p style="margin-top: 1rem;">
+      <button type="submit" class="btn">Enter</button>
+    </p>
+  </form>
+</div>
+{% endblock %}

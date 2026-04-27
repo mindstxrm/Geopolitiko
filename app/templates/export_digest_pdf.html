@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ digest.title }} — Export</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .no-print{}
+    .digest-pdf h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .digest-pdf .meta { color: #64748b; font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .digest-pdf .story { margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; break-inside: avoid; }
+    .digest-pdf .story:last-child { border-bottom: none; }
+    .digest-pdf .story-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.35; }
+    .digest-pdf .story-analysis { font-size: 0.9375rem; color: #334155; line-height: 1.6; margin: 0 0 0.5rem; }
+    .digest-pdf .story-source { font-size: 0.75rem; color: #64748b; }
+    .digest-pdf .story-source a { color: #2563eb; }
+  </style>
+</head>
+<body class="export-page digest-pdf">
+  <p class="no-print"><a href="{{ url_for('main.digest_detail', digest_id=digest.id) }}">← Back</a> · <button onclick="window.print()">Print / Save as PDF</button></p>
+  <h1>{{ digest.title }}</h1>
+  <p class="meta">{{ digest.digest_type }} — {{ digest.created_at[:10] }}</p>
+  {% if digest['items'] %}
+  <div class="digest-stories">
+    {% for item in digest['items'] %}
+    <div class="story">
+      <div class="story-title">{{ item.get('title', item.get('headline', '—')) }}</div>
+      {% if item.get('analysis') %}
+      <p class="story-analysis">{{ item.analysis }}</p>
+      {% endif %}
+      <p class="story-source">
+        {% if item.get('source') %}<span>{{ item.source }}</span>{% endif %}
+        {% if item.get('url') %} · <a href="{{ item.url }}" target="_blank" rel="noopener">Read full article</a>{% endif %}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <script>window.onload = function() { window.print(); }</script>
+</body>
+</html>

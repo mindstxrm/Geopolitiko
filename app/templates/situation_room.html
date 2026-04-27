@@ -1,0 +1,889 @@
+{% extends "base.html" %}
+{% block title %}Global Situation Room — Geopolitical Terminal{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" crossorigin=""></script>
+  <style>
+    .wm-dashboard { background: #1a1d23; color: #e2e8f0; margin: 24px 0 0; padding: 0; border-radius: 8px; border: 1px solid var(--t-border, #2d333b); overflow: hidden; }
+    .wm-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #3fb950; flex-shrink: 0; }
+    .wm-live-text { font-size: 0.75rem; font-weight: 600; color: #3fb950; text-transform: uppercase; letter-spacing: 0.05em; }
+    .wm-legend-bar { padding: 8px 16px; background: #21262d; border-top: 1px solid #2d333b; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 0.7rem; color: #8b949e; }
+    .wm-legend-bar span { display: inline-flex; align-items: center; gap: 6px; }
+    .wm-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .wm-legend-square { border-radius: 2px !important; }
+    .wm-legend-triangle { width: 0 !important; height: 0 !important; border-radius: 0 !important; border-left: 5px solid transparent !important; border-right: 5px solid transparent !important; border-bottom: 8px solid currentColor !important; background: none !important; }
+    .wm-panels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-top: 1px solid #2d333b; }
+    @media (max-width: 900px) { .wm-panels { grid-template-columns: 1fr; } }
+    .wm-panel { background: #21262d; border-right: 1px solid #2d333b; padding: 16px; display: flex; flex-direction: column; min-height: 180px; }
+    .wm-panel:last-child { border-right: none; }
+    .wm-panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .wm-panel-title .wm-live-badge { display: inline-flex; align-items: center; gap: 4px; }
+    .wm-panel-content { flex: 1; font-size: 0.85rem; color: #8b949e; min-height: 0; }
+    .wm-panel-content .wm-stream-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .wm-panel-content .wm-stream-cell { position: relative; padding-bottom: 56.25%; background: #0d1117; border-radius: 4px; overflow: hidden; }
+    .wm-panel-content .wm-stream-cell iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .wm-panel-content .wm-stream-label { font-size: 0.7rem; color: #c9d1d9; margin-bottom: 4px; }
+    .leaflet-popup-content { font-size: 0.8rem; min-width: 200px; color: #0d1117; }
+    .leaflet-control-zoom { border: none !important; }
+    .leaflet-control-zoom a { background: #21262d !important; color: #c9d1d9 !important; border: 1px solid #30363d !important; }
+    .leaflet-control-zoom a:hover { background: #30363d !important; }
+  </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Situation Room
+</nav>
+{% endblock %}
+{% block content %}
+<div class="situation-room layout">
+  <div id="situation-first-time-banner" class="situation-first-time-banner" role="alert" style="display: none;">
+    <p><strong>New here?</strong> Start with the map and quick links above. Use the search bar to jump to countries or risk. <a href="{{ url_for('main.help_page') }}">Getting started</a></p>
+    <div class="banner-actions">
+      <a href="{{ url_for('main.help_page') }}" class="btn btn-primary">Getting started</a>
+      <button type="button" class="banner-dismiss" id="situation-banner-dismiss">Don't show again</button>
+    </div>
+  </div>
+  <section class="situation-main" aria-label="Global heatmap">
+    <header class="situation-header">
+      <h1 class="page-title">Global Situation Room</h1>
+      <p class="page-intro">Where in the world should I be worried right now? <a href="{{ url_for('main.situation_room') }}?tour=1" class="tour-trigger-link">Take the tour</a></p>
+      {% if last_scrape_time %}
+      <p class="situation-data-freshness">Data as of <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time>{% if data_stale %} <span class="situation-stale-warning">— Data may be stale (last updated {{ "%.0f"|format(hours_since_scrape) }}h ago)</span>{% endif %}</p>
+      {% endif %}
+      <p class="situation-system-status"><span class="situation-status-dot {{ 'stale' if data_stale else 'ok' }}"></span> {{ system_status }}</p>
+      <div class="situation-top-strip" aria-label="Status and quick stats">
+        <span class="situation-strip-item"><strong>{{ high_risk_count }}</strong> high-risk</span>
+        <span class="situation-strip-item"><strong>{{ alerts_firing }}</strong> alerts ({{ window }})</span>
+        <span class="situation-strip-item"><strong>{{ articles_24h }}</strong> articles</span>
+        {% if highest_risk_region %}<span class="situation-strip-item">Top region: <strong>{{ highest_risk_region }}</strong></span>{% endif %}
+        {% if new_sanctions_7d is defined and new_sanctions_7d %}<span class="situation-strip-item"><strong>{{ new_sanctions_7d }}</strong> new sanctions (7d)</span>{% endif %}
+        {% if gepi_latest %}<span class="situation-strip-item" title="Escalation Pressure Index (0–1). Method: v{{ gepi_latest.model_version or '1.0' }}"><strong>{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</strong> GEPI</span>{% endif %}
+        <span class="situation-window-toggle compact">
+          <span class="muted">Window</span>
+          <a href="{{ url_for('main.situation_room', window='24h') }}" class="{{ 'active' if window == '24h' else '' }}">24h</a>
+          <a href="{{ url_for('main.situation_room', window='7d') }}" class="{{ 'active' if window == '7d' else '' }}">7d</a>
+        </span>
+      </div>
+
+      <nav class="situation-quick-links compact" aria-label="Quick access">
+        <a href="{{ url_for('main.index') }}" title="Intelligence Feed">Feed</a>
+        <a href="{{ url_for('main.risk_dashboard') }}" title="Risk Engine">Risk</a>
+        <a href="{{ url_for('main.diplomacy_sanctions') }}" title="Sanctions">Sanctions</a>
+        <a href="{{ url_for('main.approval_protests') }}#elections" title="Elections">Elections</a>
+        <a href="{{ url_for('main.workspace') }}" class="situation-workspace-cta" title="Workspace">Workspace →</a>
+      </nav>
+
+      <details class="situation-help-collapsible">
+        <summary>How to use this page</summary>
+        <div class="situation-help-body">
+          <p class="contextual-help">Integrated view: composite risk shading + live incident markers (World Monitor). Click a country to open its dashboard; click a marker for details.</p>
+          <p class="contextual-help">Tip: use the command bar (<kbd>/</kbd> or <kbd>⌘K</kbd>) to jump quickly.</p>
+        </div>
+      </details>
+      <div class="situation-map-legend" aria-hidden="true">
+        <span id="situation-legend-caption" class="legend-caption">Composite risk: stability + conflict + sanctions + trade + supply</span>
+      </div>
+    </header>
+    <div class="situation-map-wrap">
+      <div id="situation-map" class="situation-map" aria-live="polite" data-has-risk-data="{{ 'true' if (heat_map or integration_countries or risk_index) else 'false' }}">Loading map…</div>
+      <div class="situation-map-overlay" aria-hidden="true">
+        <div class="situation-map-overlay-block">
+          <div class="situation-map-overlay-title">Composite risk</div>
+          <div class="situation-map-overlay-legend">
+            <span class="legend-item"><span class="legend-swatch" style="background:#166534"></span></span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#65a30d"></span></span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#ca8a04"></span></span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#ea580c"></span></span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#dc2626"></span></span>
+            <span class="legend-caption">Low → Critical</span>
+          </div>
+          <div class="situation-map-overlay-sub">Stability + Conflict + Sanctions + Trade + Supply</div>
+        </div>
+        <div class="situation-map-overlay-block">
+          <div class="situation-map-overlay-title">Markers</div>
+          <div class="situation-map-overlay-markers">
+            <span><i class="wm-legend-dot" style="background:#dc2626;"></i> Conflict</span>
+            <span><i class="wm-legend-dot" style="background:#ea580c;"></i> Hotspot</span>
+            <span><i class="wm-legend-dot wm-legend-triangle" style="border-bottom-color:#2563eb;"></i> Base</span>
+            <span><i class="wm-legend-dot wm-legend-square" style="background:#ca8a04;"></i> Nuclear</span>
+            <span><i class="wm-legend-dot wm-legend-square" style="background:#7c3aed;"></i> Datacenter</span>
+            <span><i class="wm-legend-dot" style="background:#0ea5e9;"></i> Cables/Weather</span>
+            <span><i class="wm-legend-dot" style="background:#f59e0b;"></i> Pipelines</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="situation-map-meta">
+      {% if heat_map or integration_countries or risk_index %}
+      Layer reflects latest risk and integration data.
+      {% else %}
+      No risk data loaded. Run <code>python run_jobs.py --all</code> (and ensure articles have topics/impact). Political Stability and Trade use seeded country data once the app has run.
+      {% endif %}
+    </p>
+
+    <div class="situation-bottom-drawer" id="situation-bottom-drawer" data-open="0">
+      <button type="button" class="situation-drawer-handle" id="situation-drawer-toggle" aria-expanded="false">
+        <span class="situation-drawer-title"><span class="wm-live-dot" aria-hidden="true"></span> Live</span>
+        <span class="situation-drawer-now" id="situation-drawer-now">Now playing: <span id="situation-now-name">{{ (live_streams[0].name if live_streams and live_streams[0].name else '—') }}</span></span>
+        <span class="situation-drawer-chevron" aria-hidden="true">▴</span>
+      </button>
+      <div class="situation-drawer-body" aria-label="Live streams">
+        <div class="wm-panels wm-dashboard" style="grid-template-columns: 1fr 1fr;">
+          <section class="wm-panel">
+            <h2 class="wm-panel-title">Live News</h2>
+            <div class="wm-panel-content">
+              {% set webcam_names = ['Tehran', 'Tel Aviv', 'Jerusalem', 'Middle East'] %}
+              {% set news_streams = [] %}
+              {% for s in (live_streams or []) %}
+                {% if s.embed_url and s.name not in webcam_names %}
+                  {% set _ = news_streams.append(s) %}
+                {% endif %}
+              {% endfor %}
+              <div class="wm-stream-label wm-channel-row">
+                {% for s in news_streams %}
+                  <button type="button" class="wm-channel-btn {{ 'active' if loop.first else '' }}" data-target="news" data-name="{{ s.name }}" data-embed="{{ s.embed_url }}{{ '&' if '?' in s.embed_url else '?' }}autoplay=1&mute=1">{{ s.name }}</button>
+                {% endfor %}
+              </div>
+              <div class="wm-stream-cell wm-player-cell">
+                <iframe id="wm-player-news" src="{{ (news_streams[0].embed_url if news_streams and news_streams[0].embed_url else '') }}{{ '&' if news_streams and news_streams[0].embed_url and '?' in (news_streams[0].embed_url or '') else '?' }}autoplay=1&mute=1" title="Live News" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+          </section>
+          <section class="wm-panel">
+            <h2 class="wm-panel-title">Live Webcams</h2>
+            <div class="wm-panel-content">
+              {% set webcams = [] %}
+              {% for s in (live_streams or []) %}
+                {% if s.embed_url and s.name in webcam_names %}
+                  {% set _ = webcams.append(s) %}
+                {% endif %}
+              {% endfor %}
+              <div class="wm-stream-label wm-channel-row">
+                {% for s in webcams %}
+                  <button type="button" class="wm-channel-btn {{ 'active' if loop.first else '' }}" data-target="webcams" data-name="{{ s.name }}" data-embed="{{ s.embed_url }}{{ '&' if '?' in s.embed_url else '?' }}autoplay=1&mute=1">{{ s.name }}</button>
+                {% endfor %}
+              </div>
+              <div class="wm-stream-cell wm-player-cell">
+                <iframe id="wm-player-webcams" src="{{ (webcams[0].embed_url if webcams and webcams[0].embed_url else '') }}{{ '&' if webcams and webcams[0].embed_url and '?' in (webcams[0].embed_url or '') else '?' }}autoplay=1&mute=1" title="Live Webcams" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="situation-drawer-meta">
+          {% if wm_last_updated %}<span>World Monitor updated {{ wm_last_updated[:16].replace('T', ' ') }} UTC</span>{% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="situation-sidebar" aria-label="Right sidebar">
+    <div class="situation-sidebar-tabs" role="tablist" aria-label="Sidebar tabs">
+      <button type="button" class="situation-sidebar-tab active" data-tab="intel" role="tab" aria-selected="true">Intel</button>
+      <button type="button" class="situation-sidebar-tab" data-tab="alerts" role="tab" aria-selected="false">Alerts</button>
+      <button type="button" class="situation-sidebar-tab" data-tab="elections" role="tab" aria-selected="false">Elections</button>
+      <button type="button" class="situation-sidebar-tab" data-tab="un" role="tab" aria-selected="false">UN</button>
+      <button type="button" class="situation-sidebar-tab" data-tab="system" role="tab" aria-selected="false">System</button>
+    </div>
+
+    <div class="situation-sidebar-tabpanes">
+      <div class="situation-sidebar-pane active" data-pane="intel" role="tabpanel">
+        {% if headline_articles %}
+        <section class="sidebar-panel situation-panel situation-panel-priority">
+          <h2 class="situation-panel-title">Headline intel</h2>
+          <ul class="situation-list situation-headlines">
+            {% for a in headline_articles %}
+            <li>
+              <a href="{{ url_for('main.article_detail', article_id=a.id) if a.get('id') else url_for('main.index') }}">{{ a.title or 'Untitled' }}</a>
+              <span class="situation-headline-meta">{{ (a.published_utc or a.scraped_at or '')[:10] }}{% if (a.get('impact_score') or 0) >= 7 or (a.get('signal_score') or 0) >= 7 %} <span class="situation-headline-badge">High impact</span>{% elif (a.get('impact_score') or 0) >= 4 %} <span class="situation-headline-badge signal">Signal {{ a.get('signal_score') or '—' }}</span>{% endif %}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          <p class="situation-cta"><a href="{{ url_for('main.index') }}">Intelligence Feed</a></p>
+        </section>
+        {% endif %}
+
+        <section class="sidebar-panel situation-panel situation-macro-panel">
+          <h2 class="situation-panel-title">Macro snapshot <span class="situation-panel-badge"><a href="{{ url_for('main.macro_dashboard') }}">Live</a></span></h2>
+          <div class="situation-macro-grid" role="region" aria-label="Macro snapshot">
+            <table class="mini-terminal-table" aria-label="Macro indicators">
+              <thead>
+                <tr>
+                  <th>Indicator</th>
+                  <th class="num">Value</th>
+                  <th class="muted">As of</th>
+                </tr>
+              </thead>
+              <tbody id="home-macro-tbody">
+                <tr><td colspan="3" class="muted">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {% if recent_incidents %}
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">Recent incidents</h2>
+          <ul class="situation-list situation-incidents">
+            {% for inc in recent_incidents %}
+            <li><span class="situation-incident-label">{{ inc.label }}</span> {{ (inc.date or '')[:10] }} — {{ (inc.summary or '')[:60] }}{% if (inc.summary or '')|length > 60 %}…{% endif %}</li>
+            {% endfor %}
+          </ul>
+          <p class="situation-cta"><a href="{{ url_for('main.conflict_dashboard') }}">Military & Security</a></p>
+        </section>
+        {% endif %}
+      </div>
+
+      <div class="situation-sidebar-pane" data-pane="alerts" role="tabpanel">
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">Breaking alerts <span class="situation-panel-badge">Last {{ window }} (UTC)</span></h2>
+          {% if alerts %}
+            <ul class="situation-list">
+              {% for a in alerts %}
+                <li><a href="{{ url_for('main.alert_detail', alert_id=a.id) }}">{{ a.name }}{% if alert_count_by_id.get(a.id) %} <span class="alert-badge">({{ alert_count_by_id.get(a.id) }})</span>{% endif %}</a></li>
+              {% endfor %}
+            </ul>
+            <p class="situation-cta"><a href="{{ url_for('main.alerts_list') }}">+ Add alert</a></p>
+          {% else %}
+            <p class="sidebar-empty">No alerts. <a href="{{ url_for('main.alerts_list') }}">Create one</a> to monitor topics by impact.</p>
+          {% endif %}
+        </section>
+
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">Escalation warnings</h2>
+          {% if escalation_treaties %}
+            <ul class="situation-list">
+              {% for t in escalation_treaties[:5] %}
+                <li>
+                  <a href="{{ url_for('main.diplomacy_treaty_detail', treaty_id=t.id) }}">{{ t.name }}</a>
+                  <span class="situation-treaty-ctx">{{ t.party_a or '' }}{% if t.party_b %} – {{ t.party_b }}{% endif %}{% if t.signed_date %} · {{ (t.signed_date or '')[:10] }}{% endif %}</span>
+                </li>
+              {% endfor %}
+            </ul>
+            <p class="situation-cta"><a href="{{ url_for('main.diplomacy_escalation') }}">View all</a></p>
+          {% else %}
+            <p class="sidebar-empty">No treaties with escalation clauses on file.</p>
+          {% endif %}
+        </section>
+
+        <section class="sidebar-panel situation-panel situation-panel-priority">
+          <h2 class="situation-panel-title">Top 5 risk hotspots <span class="situation-panel-badge">Last {{ window }} (UTC)</span></h2>
+          {% if top_5_risk %}
+            <ul class="situation-list situation-risk-list">
+              {% for r in top_5_risk %}
+                <li>
+                  <a href="{{ url_for('main.country_dashboard', country_code=r.country_code) }}" class="situation-risk-row">
+                    <span class="risk-code">{{ r.country_code }}</span>
+                    <span class="risk-score risk-score-{{ 'high' if r.risk_score >= 60 else ('med' if r.risk_score >= 35 else 'low') }}">{{ r.risk_score }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            <p class="situation-cta"><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
+          {% else %}
+            <p class="sidebar-empty">No risk data. Run <code>python run_jobs.py --risk</code>.</p>
+          {% endif %}
+        </section>
+      </div>
+
+      <div class="situation-sidebar-pane" data-pane="elections" role="tabpanel">
+        {% if upcoming_elections %}
+        <section class="sidebar-panel situation-panel situation-panel-priority">
+          <h2 class="situation-panel-title">Upcoming elections</h2>
+          <ul class="situation-list">
+            {% for e in upcoming_elections %}
+            <li><a href="{{ url_for('main.country_dashboard', country_code=e.country_code) }}">{{ e.country_name }}</a> — {{ (e.date_planned or '')[:10] }} <span class="muted">{{ e.election_type or '' }}</span></li>
+            {% endfor %}
+          </ul>
+          <p class="situation-cta"><a href="{{ url_for('main.approval_protests') }}#elections">Election calendars</a></p>
+        </section>
+        {% else %}
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">Elections</h2>
+          <p class="sidebar-empty">No upcoming elections found.</p>
+        </section>
+        {% endif %}
+      </div>
+
+      <div class="situation-sidebar-pane" data-pane="un" role="tabpanel">
+        {% if un_polarization or un_shocks or un_bloc_cohesion %}
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">UN voting analytics</h2>
+          {% if un_polarization %}
+          <p class="situation-un-polarization">Global polarization (24m): <strong>{{ "%.1f"|format(un_polarization[0].polarization_score or 0) }}</strong> — US–China similarity {{ "%.0f"|format(un_polarization[0].us_china_similarity or 0) }}%</p>
+          <p class="situation-cta"><a href="{{ url_for('main.diplomacy_alignment') }}">UN voting & alignment</a></p>
+          {% endif %}
+          {% if un_shocks %}
+          <p><strong>Foreign policy shifts</strong> (recent):</p>
+          <ul class="situation-list">
+            {% for s in un_shocks[:5] %}
+            <li>{{ s.country_code }} vs {{ s.reference }}: Δ {{ "%+.0f"|format(s.delta or 0) }}pts ({{ s.period_end[:7] }})</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if un_bloc_cohesion %}
+          <p><strong>Bloc cohesion</strong>: {% for b in un_bloc_cohesion[:3] %}{{ b.bloc_name }} {{ "%.0f"|format(b.cohesion_score or 0) }}%{% if not loop.last %} · {% endif %}{% endfor %}</p>
+          {% endif %}
+        </section>
+        {% else %}
+        <section class="sidebar-panel situation-panel">
+          <h2 class="situation-panel-title">UN voting analytics</h2>
+          <p class="sidebar-empty">No UN analytics data loaded.</p>
+        </section>
+        {% endif %}
+      </div>
+
+      <div class="situation-sidebar-pane" data-pane="system" role="tabpanel">
+        {% if trajectory_data %}
+        <section class="sidebar-panel situation-panel situation-panel-synthesis">
+          <h2 class="situation-panel-title">Escalation trajectory</h2>
+          <p class="situation-trajectory-trend">Trend: <strong>{{ trajectory_data.trend }}</strong> (last 30d)</p>
+          <p class="situation-trajectory-narrative">{{ (trajectory_data.narrative or '')[:200] }}{% if (trajectory_data.narrative or '')|length > 200 %}…{% endif %}</p>
+          <p class="situation-cta"><a href="{{ url_for('main.synthesis_trajectory') }}">Full trajectory</a> · <a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
+        </section>
+        {% endif %}
+
+        {% if divergences %}
+        <section class="sidebar-panel situation-panel situation-panel-synthesis situation-panel-divergences">
+          <h2 class="situation-panel-title">Signal divergences</h2>
+          <ul class="situation-list">
+            {% for d in divergences[:3] %}
+            <li class="situation-divergence-item"><strong>{{ d.title }}</strong> — {{ (d.detail or '')[:80] }}{% if (d.detail or '')|length > 80 %}…{% endif %}</li>
+            {% endfor %}
+          </ul>
+          <p class="situation-cta"><a href="{{ url_for('main.synthesis_divergences') }}">View all divergences</a></p>
+        </section>
+        {% endif %}
+
+        <section class="sidebar-panel situation-panel situation-panel-synthesis">
+          <h2 class="situation-panel-title">System state</h2>
+          <p class="situation-system-briefing-desc">Weekly meta-briefing: GEPI, risk heat map, fragility hotspots, spike/declining topics.</p>
+          <p class="situation-cta"><a href="{{ url_for('main.synthesis_meta_briefing') }}">Generate meta-briefing</a></p>
+        </section>
+      </div>
+    </div>
+
+    {% if trajectory_data %}
+    <section class="sidebar-panel situation-panel situation-panel-synthesis">
+      <h2 class="situation-panel-title">Escalation trajectory</h2>
+      <p class="situation-trajectory-trend">Trend: <strong>{{ trajectory_data.trend }}</strong> (last 30d)</p>
+      <p class="situation-trajectory-narrative">{{ (trajectory_data.narrative or '')[:200] }}{% if (trajectory_data.narrative or '')|length > 200 %}…{% endif %}</p>
+      <p class="situation-cta"><a href="{{ url_for('main.synthesis_trajectory') }}">Full trajectory</a> · <a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
+    </section>
+    {% endif %}
+
+    {% if divergences %}
+    <section class="sidebar-panel situation-panel situation-panel-synthesis situation-panel-divergences">
+      <h2 class="situation-panel-title">Signal divergences</h2>
+      <ul class="situation-list">
+        {% for d in divergences[:3] %}
+        <li class="situation-divergence-item">
+          <strong>{{ d.title }}</strong> — {{ (d.detail or '')[:80] }}{% if (d.detail or '')|length > 80 %}…{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="situation-cta"><a href="{{ url_for('main.synthesis_divergences') }}">View all divergences</a></p>
+    </section>
+    {% endif %}
+
+    <section class="sidebar-panel situation-panel situation-panel-synthesis">
+      <h2 class="situation-panel-title">System state</h2>
+      <p class="situation-system-briefing-desc">Weekly meta-briefing: GEPI, risk heat map, fragility hotspots, spike/declining topics.</p>
+      <p class="situation-cta"><a href="{{ url_for('main.synthesis_meta_briefing') }}">Generate meta-briefing</a></p>
+    </section>
+  </aside>
+</div>
+
+<script>
+// Macro snapshot (Home): small, fast, cached endpoints.
+(function () {
+  'use strict';
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function fmt(v, unit) {
+    if (v === null || v === undefined || v === '') return '—';
+    var n = Number(v);
+    if (!isFinite(n)) return esc(String(v));
+    var dp = (Math.abs(n) >= 100 && (unit || '').toLowerCase() === '%') ? 1 : 2;
+    return esc(n.toFixed(dp) + (unit ? (' ' + unit) : ''));
+  }
+
+  function fetchJson(url) {
+    return fetch(url, { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+  }
+
+  function loadMacroSnapshot() {
+    var tbody = document.getElementById('home-macro-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="3" class="muted">Loading…</td></tr>';
+
+    var fxWant = [
+      { ind: 'fx_usd_sgd', label: 'USD/SGD' },
+      { ind: 'fx_usd_cny', label: 'USD/CNY' },
+    ];
+
+    Promise.all([
+      fetchJson('/api/macro/indicators').catch(function () { return { indicators: [] }; }),
+      Promise.all(fxWant.map(function (x) {
+        return fetchJson('/api/macro/latest?indicator=' + encodeURIComponent(x.ind) + '&limit=1')
+          .then(function (d) {
+            var row = (d && d.latest && d.latest[0]) ? d.latest[0] : null;
+            return { label: x.label, value: row ? row.value : null, as_of: row ? row.date : null, unit: '' };
+          })
+          .catch(function () { return { label: x.label, value: null, as_of: null, unit: '' }; });
+      })),
+    ]).then(function (parts) {
+      var macro = parts[0] || {};
+      var fxRows = parts[1] || [];
+      var inds = (macro.indicators || []).slice(0, 4);
+      var rows = [];
+
+      fxRows.forEach(function (r) {
+        rows.push({ label: r.label, value: r.value, unit: '', as_of: r.as_of || '—' });
+      });
+      inds.forEach(function (i) {
+        rows.push({
+          label: i.label || i.key || 'Indicator',
+          value: i.value,
+          unit: i.unit || '',
+          as_of: i.as_of || '—',
+        });
+      });
+
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="3" class="muted">No macro data.</td></tr>';
+        return;
+      }
+
+      var html = '';
+      rows.slice(0, 6).forEach(function (r) {
+        html += '<tr>' +
+          '<td>' + esc(r.label) + '</td>' +
+          '<td class="num">' + fmt(r.value, r.unit) + '</td>' +
+          '<td class="muted">' + esc((r.as_of || '—')) + '</td>' +
+        '</tr>';
+      });
+      tbody.innerHTML = html;
+    }).catch(function () {
+      tbody.innerHTML = '<tr><td colspan="3" class="muted">Failed to load.</td></tr>';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadMacroSnapshot);
+  } else {
+    loadMacroSnapshot();
+  }
+})();
+</script>
+
+
+<script>
+(function() {
+  var GEOJSON_URL = {{ url_for('api.api_world_geojson') | tojson }};
+  var ISO3_TO_2 = { AFG:'AF', AGO:'AO', ALB:'AL', ARE:'AE', ARG:'AR', ARM:'AM', ATA:'AQ', ATF:'TF', AUS:'AU', AUT:'AT', AZE:'AZ', BDI:'BI', BEL:'BE', BEN:'BJ', BFA:'BF', BGD:'BD', BGR:'BG', BHR:'BH', BHS:'BS', BIH:'BA', BLR:'BY', BLZ:'BZ', BOL:'BO', BRA:'BR', BRN:'BN', BTN:'BT', BWA:'BW', CAF:'CF', CAN:'CA', CHE:'CH', CHL:'CL', CHN:'CN', CIV:'CI', CMR:'CM', COD:'CD', COG:'CG', COL:'CO', COM:'KM', CPV:'CV', CRI:'CR', CUB:'CU', CYP:'CY', CZE:'CZ', DEU:'DE', DJI:'DJ', DNK:'DK', DOM:'DO', DZA:'DZ', ECU:'EC', EGY:'EG', ERI:'ER', ESP:'ES', EST:'EE', ETH:'ET', FIN:'FI', FJI:'FJ', FRA:'FR', GAB:'GA', GBR:'GB', GEO:'GE', GHA:'GH', GIN:'GN', GMB:'GM', GNB:'GW', GNQ:'GQ', GRC:'GR', GRD:'GD', GTM:'GT', GUY:'GY', HND:'HN', HRV:'HR', HTI:'HT', HUN:'HU', IDN:'ID', IND:'IN', IRL:'IE', IRN:'IR', IRQ:'IQ', ISL:'IS', ISR:'IL', ITA:'IT', JAM:'JM', JOR:'JO', JPN:'JP', KAZ:'KZ', KEN:'KE', KGZ:'KG', KHM:'KH', KIR:'KI', KOR:'KR', KWT:'KW', LAO:'LA', LBN:'LB', LBR:'LR', LBY:'LY', LCA:'LC', LIE:'LI', LKA:'LK', LSO:'LS', LTU:'LT', LUX:'LU', LVA:'LV', MAR:'MA', MCO:'MC', MDA:'MD', MDG:'MG', MKD:'MK', MLI:'ML', MLT:'MT', MMR:'MM', MNE:'ME', MNG:'MN', MOZ:'MZ', MRT:'MR', MUS:'MU', MWI:'MW', MYS:'MY', NAM:'NA', NER:'NE', NGA:'NG', NIC:'NI', NLD:'NL', NOR:'NO', NPL:'NP', NZL:'NZ', OMN:'OM', PAK:'PK', PAN:'PA', PER:'PE', PHL:'PH', PNG:'PG', POL:'PL', PRK:'KP', PRT:'PT', PRY:'PY', PSE:'PS', QAT:'QA', ROU:'RO', RUS:'RU', RWA:'RW', SAU:'SA', SDN:'SD', SEN:'SN', SGP:'SG', SLB:'SB', SLE:'SL', SLV:'SV', SOM:'SO', SRB:'RS', SSD:'SS', STP:'ST', SUR:'SR', SVK:'SK', SVN:'SI', SWE:'SE', SWZ:'SZ', SYC:'SC', SYR:'SY', TCD:'TD', TGO:'TG', THA:'TH', TJK:'TJ', TKM:'TM', TLS:'TL', TTO:'TT', TUN:'TN', TUR:'TR', TWN:'TW', TZA:'TZ', UGA:'UG', UKR:'UA', USA:'US', URY:'UY', UZB:'UZ', VEN:'VE', VNM:'VN', VUT:'VU', YEM:'YE', ZAF:'ZA', ZMB:'ZM', ZWE:'ZW' };
+
+  var heatMap = {{ (heat_map or []) | tojson }};
+  var integration = {{ (integration_countries or []) | tojson }};
+  var riskIndex = {{ (risk_index or []) | tojson }};
+  var wmPoints = {{ wm_points | default([], true) | tojson }};
+
+  function buildLayerData() {
+    var stability = {}, conflict = {}, sanctions = {}, trade = {}, supply = {}, composite = {};
+    heatMap.forEach(function(r) {
+      var c = (r.country_code || '').toUpperCase();
+      if (c.length === 2) conflict[c] = Math.min(100, r.risk_score || 0);
+      if (c.length === 2) supply[c] = Math.min(100, r.sector_supply_chain || 0);
+    });
+    integration.forEach(function(r) {
+      var c3 = (r.country_code || '').toUpperCase();
+      var c = c3.length === 3 ? ISO3_TO_2[c3] : c3;
+      if (c) {
+        stability[c] = Math.min(100, r.geopolitical_fragility_score || 0);
+        trade[c] = Math.min(100, r.economic_fragility_score || 0);
+        if (!supply[c]) supply[c] = Math.min(100, (r.geopolitical_fragility_score || 0) * 0.5 + (r.economic_fragility_score || 0) * 0.5);
+      }
+    });
+    riskIndex.forEach(function(r) {
+      var reg = (r.region_code || '').toUpperCase();
+      if (reg.length === 2) sanctions[reg] = Math.min(100, r.sanctions_probability_pct || 0);
+    });
+    // Composite: weighted average of available metrics (0-100)
+    var allCodes = {};
+    [stability, conflict, sanctions, trade, supply].forEach(function(m) {
+      Object.keys(m || {}).forEach(function(k) { allCodes[k] = true; });
+    });
+    Object.keys(allCodes).forEach(function(code2) {
+      var s = stability[code2], c = conflict[code2], sa = sanctions[code2], t = trade[code2], su = supply[code2];
+      var parts = [];
+      if (typeof s === 'number') parts.push({ v: s, w: 0.25 });
+      if (typeof c === 'number') parts.push({ v: c, w: 0.30 });
+      if (typeof sa === 'number') parts.push({ v: sa, w: 0.15 });
+      if (typeof t === 'number') parts.push({ v: t, w: 0.15 });
+      if (typeof su === 'number') parts.push({ v: su, w: 0.15 });
+      var num = 0, den = 0;
+      parts.forEach(function(p) { num += p.v * p.w; den += p.w; });
+      composite[code2] = den ? Math.round(num / den) : null;
+    });
+    return { stability: stability, conflict: conflict, sanctions: sanctions, trade: trade, supply: supply, composite: composite };
+  }
+
+  var layerData = buildLayerData();
+  var currentLayer = 'composite';
+
+  function getColor(d) {
+    if (d == null || isNaN(d)) return '#1a1e26';
+    if (d >= 70) return '#dc2626';
+    if (d >= 50) return '#ea580c';
+    if (d >= 30) return '#ca8a04';
+    if (d >= 10) return '#65a30d';
+    return '#166534';
+  }
+
+  var map = null;
+  var geoLayer = null;
+
+  function getIso3(feature) {
+    if (feature.id && feature.id.length === 3) return feature.id;
+    var p = feature.properties;
+    return (p && (p.iso_a3 || p.adm0_a3)) ? (p.iso_a3 || p.adm0_a3) : null;
+  }
+
+  function style(feature) {
+    var id = getIso3(feature);
+    var code2 = ISO3_TO_2[id] || (id && id.length === 2 ? id : null);
+    var val = code2 ? (layerData[currentLayer] && layerData[currentLayer][code2]) : null;
+    return {
+      fillColor: getColor(val),
+      weight: 1,
+      opacity: 1,
+      color: '#272b33',
+      fillOpacity: 0.85
+    };
+  }
+
+  function onEachFeature(feature, layer) {
+    var id = getIso3(feature);
+    var code2 = ISO3_TO_2[id] || (id && id.length === 2 ? id : null);
+    var val = code2 ? (layerData[currentLayer] && layerData[currentLayer][code2]) : null;
+    var name = (feature.properties && feature.properties.name) || id || '';
+    var s = code2 ? layerData.stability[code2] : null;
+    var c = code2 ? layerData.conflict[code2] : null;
+    var sa = code2 ? layerData.sanctions[code2] : null;
+    var t = code2 ? layerData.trade[code2] : null;
+    var su = code2 ? layerData.supply[code2] : null;
+    var lines = [];
+    lines.push('<strong>' + escapeHtml(name) + '</strong>' + (val != null ? ' — composite ' + Math.round(val) : ''));
+    lines.push('Stability: ' + (s != null ? Math.round(s) : '—'));
+    lines.push('Conflict: ' + (c != null ? Math.round(c) : '—'));
+    lines.push('Sanctions: ' + (sa != null ? Math.round(sa) : '—'));
+    lines.push('Trade: ' + (t != null ? Math.round(t) : '—'));
+    lines.push('Supply: ' + (su != null ? Math.round(su) : '—'));
+    layer.bindTooltip(lines.join('<br/>'), { permanent: false, direction: 'top', opacity: 0.95, className: 'situation-tooltip' });
+    if (code2) {
+      layer.on('click', function() { window.location.href = '/country/' + code2; });
+      layer.on('mouseover', function() { if (map && map.getContainer()) map.getContainer().style.cursor = 'pointer'; });
+      layer.on('mouseout', function() { if (map && map.getContainer()) map.getContainer().style.cursor = ''; });
+    }
+  }
+
+  function initMap() {
+    if (typeof L === 'undefined') return;
+    var mapEl = document.getElementById('situation-map');
+    if (!mapEl) return;
+    mapEl.textContent = '';
+    map = L.map('situation-map', { zoomControl: true }).setView([20, 0], 2);
+    window.__situationMap = map;
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; CARTO',
+      maxZoom: 19
+    }).addTo(map);
+    fetch(GEOJSON_URL)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        var features = data && data.features ? data.features : [];
+        if (features.length === 0) {
+          mapEl.innerHTML = '<p class="empty-state">No country data from server.</p>';
+          return;
+        }
+        geoLayer = L.geoJSON(data, {
+          style: style,
+          onEachFeature: onEachFeature
+        }).addTo(map);
+
+        // World Monitor marker overlay (clustered)
+        try {
+          var layerColors = { conflicts: "#dc2626", waterways: "#2563eb", sanctions: "#ca8a04", hotspots: "#ea580c", bases: "#2563eb", nuclear: "#ca8a04", gamma_irradiators: "#94a3b8", spaceports: "#a78bfa", undersea_cables: "#0ea5e9", pipelines: "#f59e0b", ai_datacenters: "#7c3aed", weather: "#0ea5e9", economic: "#059669", outages: "#64748b", military: "#b91c1c", natural: "#16a34a", iranAttacks: "#c2410c" };
+          var markerShape = { bases: "triangle", nuclear: "square", ai_datacenters: "square" };
+          var useCluster = typeof L.markerClusterGroup === "function" && wmPoints.length > 15;
+          var cluster = useCluster ? L.markerClusterGroup() : L.layerGroup();
+          (wmPoints || []).forEach(function(p) {
+            if (p == null || p.lat == null || p.lon == null) return;
+            var layerId = p.layer || "conflicts";
+            var color = layerColors[layerId] || "#666";
+            var shape = markerShape[layerId] || "circle";
+            var style = "background:" + color + ";border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.3);display:inline-block;";
+            if (shape === "square") style += "width:12px;height:12px;border-radius:2px;";
+            else style += "width:12px;height:12px;border-radius:50%;";
+            var icon = L.divIcon({
+              className: "wm-marker",
+              html: shape === "triangle" ? "<span style=\"display:block;width:0;height:0;margin:0 auto;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid " + color + ";border-top:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));\"></span>" : "<span style=\"" + style + "\"></span>",
+              iconSize: shape === "triangle" ? [14, 12] : [16, 16],
+              iconAnchor: shape === "triangle" ? [7, 12] : [8, 8]
+            });
+            var popup = "<strong>" + escapeHtml(p.title || "—") + "</strong><br/>" +
+              (p.summary ? escapeHtml(String(p.summary)).slice(0, 220) + (String(p.summary).length > 220 ? "…" : "") + "<br/>" : "") +
+              (p.observed_date ? "Date: " + escapeHtml(String(p.observed_date)) + "<br/>" : "") +
+              (p.region ? "Region: " + escapeHtml(String(p.region)) : "");
+            var m = L.marker([p.lat, p.lon], { icon: icon }).bindPopup(popup);
+            cluster.addLayer(m);
+          });
+          cluster.addTo(map);
+        } catch (e) {}
+
+        var hasData = mapEl.getAttribute('data-has-risk-data') === 'true';
+        if (!hasData) {
+          var overlay = document.createElement('div');
+          overlay.className = 'situation-map-empty-overlay';
+          overlay.innerHTML = 'No risk data loaded';
+          mapEl.appendChild(overlay);
+        }
+        setTimeout(function() { if (map && map.invalidateSize) map.invalidateSize(); }, 150);
+      })
+      .catch(function() {
+        mapEl.innerHTML = '<p class="empty-state">Map could not load. <a href="' + GEOJSON_URL + '" target="_blank">Test GeoJSON</a> or check the console.</p>';
+      });
+  }
+
+  function escapeHtml(str) {
+    if (str == null) return '';
+    var div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+
+  if (typeof L !== 'undefined') {
+    initMap();
+  } else {
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    s.crossOrigin = 'anonymous';
+    s.onload = initMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+<script>
+(function() {
+  var BANNER_KEY = 'geopolitical-terminal-seen-help';
+  var TOUR_KEY = 'geopolitical-terminal-tour-done';
+  var bannerEl = document.getElementById('situation-first-time-banner');
+  if (bannerEl && !localStorage.getItem(BANNER_KEY)) {
+    bannerEl.style.display = 'flex';
+  }
+  var dismissBtn = document.getElementById('situation-banner-dismiss');
+  if (dismissBtn) {
+    dismissBtn.addEventListener('click', function() {
+      localStorage.setItem(BANNER_KEY, '1');
+      if (bannerEl) bannerEl.style.display = 'none';
+    });
+  }
+
+  var HIGHLIGHT_CLASS = 'tour-highlight';
+
+  function runTour() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('tour') !== '1') return;
+    history.replaceState({}, '', window.location.pathname + (window.location.hash || ''));
+
+    var mapEl = document.getElementById('situation-map');
+    var commandBar = document.querySelector('.terminal-command-bar');
+    var workspaceLink = document.querySelector('.situation-workspace-cta') || document.querySelector('a[href*="/workspace"]');
+
+    var steps = [
+      { el: mapEl, title: 'Situation Room map', body: 'Use the layer toggles above the map to switch between Political Stability, Conflict Risk, Sanctions, Trade, and Supply Chain. Click any country to open its dashboard.' },
+      { el: commandBar, title: 'Command bar', body: 'Use this search to jump to a country, region, risk, or scenario. Try typing "CHN GOV" or "SGP TRADE" to open Workspace with preset panels. Press / or ⌘K anywhere to focus the bar.' },
+      { el: workspaceLink, title: 'Workspace', body: 'Open Workspace to view Risk, Feed, Country, and Scenario Engine in 2–4 panels side by side. Shortcuts ⌘⇧1–4 open preset layouts.' }
+    ];
+
+    var stepIndex = 0;
+    var backdrop = null;
+    var card = null;
+    var currentTarget = null;
+
+    function removeHighlight() {
+      if (currentTarget && currentTarget.classList) {
+        currentTarget.classList.remove(HIGHLIGHT_CLASS);
+        currentTarget = null;
+      }
+    }
+
+    function showStep() {
+      if (stepIndex >= steps.length) {
+        endTour();
+        return;
+      }
+
+      removeHighlight();
+      var s = steps[stepIndex];
+      var target = s.el;
+
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'tour-backdrop';
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(backdrop);
+      }
+
+      if (target && target.parentNode) {
+        target.classList.add(HIGHLIGHT_CLASS);
+        currentTarget = target;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      if (!card) {
+        card = document.createElement('div');
+        card.className = 'tour-card';
+        card.setAttribute('role', 'dialog');
+        card.setAttribute('aria-labelledby', 'tour-card-title');
+        document.body.appendChild(card);
+      }
+
+      var stepNum = stepIndex + 1;
+      var total = steps.length;
+      var isLast = stepIndex === steps.length - 1;
+      card.innerHTML =
+        '<div class="tour-step-indicator">Step ' + stepNum + ' of ' + total + '</div>' +
+        '<h4 id="tour-card-title">' + escapeHtml(s.title) + '</h4>' +
+        '<p>' + escapeHtml(s.body) + '</p>' +
+        '<div class="tour-buttons">' +
+          '<label><input type="checkbox" class="tour-dont-show"> Don\'t show again</label>' +
+          '<span>' +
+            (isLast
+              ? '<button type="button" class="btn btn-primary tour-done">Done</button>'
+              : '<button type="button" class="btn btn-primary tour-next">Next</button>') +
+            ' <button type="button" class="btn btn-secondary tour-skip">Skip</button>' +
+          '</span>' +
+        '</div>';
+
+      var nextBtn = card.querySelector('.tour-next');
+      if (nextBtn) nextBtn.onclick = function() { stepIndex++; showStep(); };
+      var doneBtn = card.querySelector('.tour-done');
+      if (doneBtn) doneBtn.onclick = endTour;
+      card.querySelector('.tour-skip').onclick = endTour;
+
+      var dontShowCb = card.querySelector('.tour-dont-show');
+      dontShowCb.addEventListener('change', function() {
+        if (dontShowCb.checked) localStorage.setItem(TOUR_KEY, '1');
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function endTour() {
+      var cardEl = document.querySelector('.tour-card');
+      if (cardEl) {
+        var dontShow = cardEl.querySelector('.tour-dont-show');
+        if (dontShow && dontShow.checked) localStorage.setItem(TOUR_KEY, '1');
+      }
+      removeHighlight();
+      if (backdrop && backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
+      if (card && card.parentNode) card.parentNode.removeChild(card);
+      backdrop = null;
+      card = null;
+    }
+
+    setTimeout(showStep, 100);
+  }
+
+  function tryRunTour() { runTour(); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(tryRunTour, 400); });
+  } else {
+    setTimeout(tryRunTour, 400);
+  }
+})();
+</script>
+<script>
+(function() {
+  function setActive(target, btn) {
+    document.querySelectorAll('.wm-channel-btn[data-target="' + target + '"]').forEach(function(b) {
+      b.classList.toggle('active', b === btn);
+    });
+  }
+
+  document.querySelectorAll('.wm-channel-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = btn.getAttribute('data-target');
+      var embed = btn.getAttribute('data-embed') || '';
+      var name = btn.getAttribute('data-name') || '';
+      var iframeId = target === 'webcams' ? 'wm-player-webcams' : 'wm-player-news';
+      var frame = document.getElementById(iframeId);
+      if (frame && embed) {
+        frame.setAttribute('src', embed);
+      }
+      var nowEl = document.getElementById('situation-now-name');
+      if (nowEl && name && target === 'news') nowEl.textContent = name;
+      setActive(target, btn);
+    });
+  });
+
+  // Initialize active styling on load
+  ['news', 'webcams'].forEach(function(t) {
+    var first = document.querySelector('.wm-channel-btn[data-target="' + t + '"].active') || document.querySelector('.wm-channel-btn[data-target="' + t + '"]');
+    if (first) setActive(t, first);
+  });
+
+  // Bottom drawer toggle
+  var drawer = document.getElementById('situation-bottom-drawer');
+  var toggle = document.getElementById('situation-drawer-toggle');
+  if (drawer && toggle) {
+    toggle.addEventListener('click', function() {
+      var open = drawer.getAttribute('data-open') === '1';
+      drawer.setAttribute('data-open', open ? '0' : '1');
+      toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      // Leaflet needs a resize tick after layout shifts
+      setTimeout(function() {
+        if (window.__situationMap && window.__situationMap.invalidateSize) window.__situationMap.invalidateSize();
+      }, 200);
+    });
+  }
+
+  // Sidebar tabs
+  function activateTab(key) {
+    document.querySelectorAll('.situation-sidebar-tab').forEach(function(b) {
+      var is = b.getAttribute('data-tab') === key;
+      b.classList.toggle('active', is);
+      b.setAttribute('aria-selected', is ? 'true' : 'false');
+    });
+    document.querySelectorAll('.situation-sidebar-pane').forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-pane') === key);
+    });
+  }
+  document.querySelectorAll('.situation-sidebar-tab').forEach(function(b) {
+    b.addEventListener('click', function() { activateTab(b.getAttribute('data-tab')); });
+  });
+
+  window.addEventListener('resize', function() {
+    if (window.__situationMap && window.__situationMap.invalidateSize) window.__situationMap.invalidateSize();
+  });
+})();
+</script>
+{% endblock %}

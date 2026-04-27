@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Macro Report — Export</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .no-print{}
+    .macro-pdf h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .macro-pdf .meta { color: #64748b; font-size: 0.875rem; margin-bottom: 1.25rem; }
+    .macro-pdf .section { margin-bottom: 1.25rem; break-inside: avoid; }
+    .macro-pdf .section h2 { font-size: 1rem; margin: 0 0 0.5rem; }
+    .macro-pdf table { width: 100%; border-collapse: collapse; }
+    .macro-pdf th, .macro-pdf td { border-bottom: 1px solid #e2e8f0; padding: 8px 6px; font-size: 0.875rem; text-align: left; }
+    .macro-pdf th { color: #475569; font-weight: 600; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eff6ff; color: #1d4ed8; font-size: 0.75rem; }
+    .pill-high { background: #fee2e2; color: #991b1b; }
+    .pill-med { background: #ffedd5; color: #9a3412; }
+  </style>
+</head>
+<body class="export-page macro-pdf">
+  <p class="no-print">
+    <a href="{{ url_for('main.macro_dashboard') }}">← Back</a>
+    · <button onclick="window.print()">Print / Save as PDF</button>
+  </p>
+
+  <h1>Macro Report</h1>
+  <p class="meta">
+    {% if group %}Group: <strong>{{ group|upper }}</strong>{% else %}Group: <strong>All</strong>{% endif %}
+    {% if indicator %} · Indicator: <strong>{{ indicator }}</strong>{% endif %}
+    · Generated: {{ generated_at }}
+  </p>
+
+  <div class="section">
+    <h2>Global Overview (latest)</h2>
+    {% if latest %}
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Region</th>
+          <th>Date</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in latest[:40] %}
+        <tr>
+          <td>{{ r.country_name or r.country_code }}</td>
+          <td>{{ r.region or '—' }}</td>
+          <td>{{ r.date or '—' }}</td>
+          <td>{{ r.value if r.value is not none else '—' }}{% if r.unit %} {{ r.unit }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="meta">No data yet. Wait for macro ingest or run `ingest_macro_once()`.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h2>Macro Alerts (MVP)</h2>
+    {% if alerts %}
+      <table>
+        <thead>
+          <tr>
+            <th>Severity</th>
+            <th>Country</th>
+            <th>Alert</th>
+            <th>Date</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in alerts[:60] %}
+          <tr>
+            <td>
+              <span class="pill {% if a.severity == 'high' %}pill-high{% elif a.severity == 'med' %}pill-med{% endif %}">
+                {{ a.severity or 'low' }}
+              </span>
+            </td>
+            <td>{{ a.country_name or a.country_code }}</td>
+            <td>{{ a.message }}</td>
+            <td>{{ a.date or '—' }}</td>
+            <td>{{ a.value if a.value is not none else '—' }}{% if a.unit %} {{ a.unit }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="meta">No alerts triggered.</p>
+    {% endif %}
+  </div>
+
+  <script>window.onload = function() { window.print(); }</script>
+</body>
+</html>
+

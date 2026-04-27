@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Timeline — Geopolitical News{% endblock %}
+{% block content %}
+  <h1 class="page-title">Timeline</h1>
+  <p class="page-intro">Stories over time. Filter by topic.</p>
+  <form method="get" class="filter-form">
+    <label for="topic">Topic</label>
+    <select name="topic" id="topic" onchange="this.form.submit()">
+      <option value="">All</option>
+      {% for t in topics %}
+      <option value="{{ t[0] }}" {{ 'selected' if request.args.get('topic') == t[0] else '' }}>{{ t[0] }} ({{ t[1] }})</option>
+      {% endfor %}
+    </select>
+    <input type="hidden" name="window" value="{{ window }}">
+  </form>
+  <div class="time-window">
+    <a href="{{ url_for('main.timeline', topic=request.args.get('topic'), window='1d') }}" class="time-window-chip {{ 'active' if window == '1d' else '' }}">24h</a>
+    <a href="{{ url_for('main.timeline', topic=request.args.get('topic'), window='7d') }}" class="time-window-chip {{ 'active' if window == '7d' else '' }}">7d</a>
+    <a href="{{ url_for('main.timeline', topic=request.args.get('topic'), window='30d') }}" class="time-window-chip {{ 'active' if window == '30d' else '' }}">30d</a>
+  </div>
+  <ul class="timeline-list">
+    {% for a in articles %}
+    <li class="timeline-item">
+      <span class="timeline-date">{{ (a.published_utc or a.scraped_at)[:10] if (a.published_utc or a.scraped_at) else '—' }}</span>
+      <a href="{{ a.url }}" target="_blank" rel="noopener" class="timeline-title">{{ a.title }}</a>
+      <span class="timeline-source">{{ a.source_name }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if not articles %}<p class="empty-state">No articles in this window.</p>{% endif %}
+{% endblock %}

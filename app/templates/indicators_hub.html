@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Indicator Layers — Geopolitical Terminal{% endblock %}
+{% block content %}
+  <h1 class="page-title">Indicator Layers</h1>
+  <p class="page-intro">13 policy-oriented data layers: political → political-economy. Each category links to where it appears (Countries & Regions, Country Dashboard, or dedicated pages). Data feeds to be wired (World Bank, IMF, ACLED, SIPRI, etc.).</p>
+
+  <p class="indicators-doc-link"><a href="{{ url_for('main.help_page') }}#indicators">View full roadmap</a> · <a href="{{ url_for('main.integration_dashboard') }}">Countries & Regions</a></p>
+
+  <div class="indicators-grid">
+    <div class="indicator-card">
+      <h2>🏦 1. Macroeconomic Stress Indicators</h2>
+      <p><strong>Question:</strong> &ldquo;Can this country absorb shock?&rdquo;</p>
+      <ul>
+        <li>GDP growth (quarterly + annual)</li>
+        <li>Inflation</li>
+        <li>FX reserves</li>
+        <li>Current account balance</li>
+        <li>External debt / Debt-to-GDP</li>
+        <li>Sovereign credit rating</li>
+        <li>Bond spreads</li>
+      </ul>
+      <p class="indicator-sources">Sources: World Bank, IMF, BIS, FRED, Trading Economics, OECD</p>
+      <p class="indicator-where">→ <a href="{{ url_for('main.integration_dashboard') }}">Countries & Regions</a> · Country Dashboard → Economic tab (Sovereign rating / Macro stress)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>⚡ 2. Energy & Commodity Exposure</h2>
+      <p><strong>Energy moves geopolitics.</strong> Supply shock mapping.</p>
+      <ul>
+        <li>Oil production</li>
+        <li>Gas exports / LNG capacity</li>
+        <li>Major pipeline routes</li>
+        <li>Energy import dependency %</li>
+        <li>Rare earth production</li>
+        <li>Grain export/import exposure</li>
+      </ul>
+      <p class="indicator-sources">Overlay with sanctions, chokepoints, conflict zones</p>
+      <p class="indicator-where">→ Country Dashboard → Economic tab (Energy & commodity)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🛡 3. Military Capability Snapshot</h2>
+      <p><strong>Open-source metrics.</strong> Escalation model has structural muscle behind it.</p>
+      <ul>
+        <li>Military spending (SIPRI)</li>
+        <li>Active troops</li>
+        <li>Naval tonnage</li>
+        <li>Major weapons imports/exports</li>
+        <li>Defense alliances</li>
+      </ul>
+      <p class="indicator-sources">SIPRI, arms trade data</p>
+      <p class="indicator-where">→ Country Dashboard → Security tab</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>📈 4. Public Opinion & Legitimacy</h2>
+      <p><strong>Policy shifts follow political survival.</strong> Domestic constraint modeling.</p>
+      <ul>
+        <li>Leader approval ratings</li>
+        <li>Protest frequency</li>
+        <li>Coup attempts history</li>
+        <li>Election cycle timing</li>
+        <li>Fragile state indicators</li>
+      </ul>
+      <p class="indicator-sources">Combine with UN vote drift + sanctions pressure</p>
+      <p class="indicator-where">→ Country Dashboard → Stability tab · <a href="{{ url_for('main.approval_protests') }}">Elections, approval & protests</a></p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🌐 5. Trade Flow Granularity</h2>
+      <p><strong>Not just RTAs.</strong> Sanctions friction becomes real.</p>
+      <ul>
+        <li>Top 5 export destinations</li>
+        <li>Top 5 imports</li>
+        <li>Sectoral trade breakdown</li>
+        <li>Strategic dependence (e.g. semiconductor imports from X%)</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Economic tab (Export dependency / Trade flow)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🧠 6. Elite & Institutional Structure</h2>
+      <p><strong>&ldquo;Who actually controls decisions?&rdquo;</strong></p>
+      <ul>
+        <li>Governance model</li>
+        <li>Key political actors</li>
+        <li>Major state-owned enterprises</li>
+        <li>Central bank independence indicator</li>
+        <li>Party structure</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Stability tab (Elite & institutional)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🌍 7. Conflict & Event Datasets</h2>
+      <p><strong>Overlay with fragility + escalation probability.</strong></p>
+      <ul>
+        <li>ACLED (protest + conflict events)</li>
+        <li>Uppsala UCDP</li>
+        <li>ICEWS dataset</li>
+      </ul>
+      <p class="indicator-sources">ACLED, Uppsala UCDP, ICEWS</p>
+      <p class="indicator-where">→ Country Dashboard → Stability tab (Conflict & event datasets)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>📊 8. Capital Flows & FDI</h2>
+      <p><strong>Geopolitics is also capital politics.</strong></p>
+      <ul>
+        <li>FDI inflow/outflow</li>
+        <li>Portfolio flows</li>
+        <li>Exposure by sector</li>
+        <li>Sovereign wealth funds</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Economic tab (Capital flows & FDI)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🌎 9. Multilateral Participation</h2>
+      <p><strong>Institutional embeddedness.</strong></p>
+      <ul>
+        <li>WTO</li>
+        <li>IMF / World Bank programs</li>
+        <li>Development banks (AIIB, AfDB)</li>
+        <li>NATO partnership</li>
+        <li>BRI participation</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Treaties tab (Multilateral participation)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🛰 10. Geospatial Infrastructure</h2>
+      <p><strong>Map layer: ports, cables, chokepoints.</strong></p>
+      <ul>
+        <li>Ports</li>
+        <li>Undersea cables</li>
+        <li>Pipelines</li>
+        <li>Chokepoints</li>
+        <li>Logistics hubs</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Economic tab · <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chains</a></p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>💡 11. Legislative / Policy Tracker</h2>
+      <p><strong>Early signal layer.</strong></p>
+      <ul>
+        <li>Sanction law proposals</li>
+        <li>Defense spending bills</li>
+        <li>Trade bill amendments</li>
+        <li>Export control updates</li>
+      </ul>
+      <p class="indicator-where">→ <a href="{{ url_for('main.indicators_legislative') }}">Legislative / Policy Tracker</a></p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🚨 12. Technology & Semiconductor Layer</h2>
+      <p><strong>Strategic chokepoint 2.0.</strong> US–China relevance.</p>
+      <ul>
+        <li>Chip exports</li>
+        <li>Critical tech companies</li>
+        <li>Export restriction lists</li>
+        <li>Advanced manufacturing capacity</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Economic tab (Technology & semiconductor)</p>
+    </div>
+
+    <div class="indicator-card">
+      <h2>🧬 13. Climate & Resource Vulnerability</h2>
+      <p><strong>Climate stress is geopolitics.</strong> Migration risk + fragility.</p>
+      <ul>
+        <li>Water stress index</li>
+        <li>Food insecurity index</li>
+        <li>Natural disaster frequency</li>
+        <li>Climate risk scores</li>
+      </ul>
+      <p class="indicator-where">→ Country Dashboard → Stability tab (Climate & resource vulnerability)</p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,383 @@
+{% extends "base.html" %}
+{% block title %}UN voting & alignment — Diplomacy — Geopolitical News{% endblock %}
+{% block content %}
+  <div class="alignment-workspace">
+    <header class="alignment-top">
+      <div class="alignment-title-row">
+        <h1 class="page-title">UN voting & alignment</h1>
+      </div>
+      <p class="page-intro alignment-subtitle">UN General Assembly votes, resolutions, and alignment: which countries consistently vote together. Score = % of resolutions where both voted the same (yes/yes, no/no, abstain/abstain).</p>
+
+      {% if un_polarization or un_shocks or un_bloc_cohesion %}
+      <section class="alignment-gpi-panel" aria-label="UN voting trends">
+        <div class="alignment-gpi-mini-cards">
+          {% if un_polarization %}
+          <div class="alignment-mini-card">
+            <div class="mini-card-label">Polarization</div>
+            <div class="mini-card-value">{{ "%.1f"|format(un_polarization[0]['polarization_score']|default(0)) }}</div>
+            <div class="mini-card-sub">US–China similarity {{ "%.0f"|format(un_polarization[0]['us_china_similarity']|default(0)) }}%</div>
+          </div>
+          {% endif %}
+          {% if un_bloc_cohesion %}
+          <div class="alignment-mini-card">
+            <div class="mini-card-label">Bloc cohesion</div>
+            <div class="mini-card-sub">
+              {% for b in un_bloc_cohesion[:4] %}{{ b['bloc_name']|default('') }} {{ "%.0f"|format(b['cohesion_score']|default(0)) }}%{% if not loop.last %} · {% endif %}{% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if un_shocks %}
+          <div class="alignment-mini-card">
+            <div class="mini-card-label">Policy shifts</div>
+            <div class="mini-card-sub">
+              <strong>Foreign policy shifts</strong>: {% for s in un_shocks[:4] %}{{ s['country_code']|default('') }} vs {{ s['reference']|default('') }} Δ {{ "%+.0f"|format(s['delta']|default(0)) }}pts{% if not loop.last %} · {% endif %}{% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+      {% endif %}
+
+      <form method="get" class="filter-form alignment-filter-form" id="alignment-filter">
+        <input type="hidden" name="archive" value="{{ '1' if archive else '' }}">
+        <label for="country" class="sr-only">Country</label>
+        <input type="text" name="country" id="country" value="{{ selected_country or '' }}" placeholder="Country (e.g. France or FRA)" autocomplete="off" list="country-datalist">
+        <datalist id="country-datalist"></datalist>
+        <label for="bloc" class="sr-only">Bloc</label>
+        <select name="bloc" id="bloc">
+          <option value="">Any bloc</option>
+          {% for key, label in blocs_for_filter %}
+          <option value="{{ key }}" {{ 'selected' if bloc == key else '' }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <label for="min_votes" class="sr-only">Min votes</label>
+        <select name="min_votes" id="min_votes">
+          <option value="">Any votes</option>
+          <option value="3" {{ 'selected' if min_votes == 3 else '' }}>3+</option>
+          <option value="5" {{ 'selected' if min_votes == 5 else '' }}>5+</option>
+          <option value="10" {{ 'selected' if min_votes == 10 else '' }}>10+</option>
+          <option value="20" {{ 'selected' if min_votes == 20 else '' }}>20+</option>
+          <option value="50" {{ 'selected' if min_votes == 50 else '' }}>50+</option>
+        </select>
+        <label for="sort" class="sr-only">Sort</label>
+        <select name="sort" id="sort">
+          <option value="score_desc" {{ 'selected' if sort == 'score_desc' else '' }}>Highest alignment</option>
+          <option value="score_asc" {{ 'selected' if sort == 'score_asc' else '' }}>Lowest alignment</option>
+          <option value="votes_desc" {{ 'selected' if sort == 'votes_desc' else '' }}>Most votes</option>
+          <option value="votes_asc" {{ 'selected' if sort == 'votes_asc' else '' }}>Fewest votes</option>
+        </select>
+        <button type="submit" class="btn-secondary">Filter</button>
+      </form>
+
+      <details class="alignment-data-tools">
+        <summary class="btn-secondary">Data tools ▾</summary>
+        <div class="alignment-data-tools-body">
+          <form method="post" action="{{ url_for('main.diplomacy_alignment_recompute') }}" class="inline-form">
+            <button type="submit">Recompute alignment</button>
+          </form>
+          <form method="post" action="{{ url_for('main.diplomacy_alignment_normalize') }}" class="inline-form" title="Convert country names to ISO3 codes, fix duplicate pairs like Denmark/DENMARK">
+            <button type="submit">Normalize &amp; recompute</button>
+          </form>
+          <form method="post" action="{{ url_for('main.diplomacy_alignment_sync_unige') }}" class="inline-form" id="sync" style="display:inline;">
+            <label for="sync-limit">Sync from <a href="https://unvotes.unige.ch/mariadb" target="_blank" rel="noopener">UNIGE UNGA-DM</a>:</label>
+            <input type="text" id="sync-limit" name="limit" placeholder="Optional limit (e.g. 50000)" size="25">
+            <button type="submit">Sync UN votes</button>
+          </form>
+          <form method="post" action="{{ url_for('main.diplomacy_alignment_import_csv') }}" enctype="multipart/form-data" class="inline-form" id="import-csv" style="display:inline;">
+            <label for="csv-file">Or import from CSV:</label>
+            <input type="file" id="csv-file" name="csv_file" accept=".csv,.txt">
+            <input type="text" name="limit" placeholder="Optional limit" size="12">
+            <button type="submit">Import CSV</button>
+          </form>
+          {% if diplomacy_alignment_export_url %}
+          <p><a href="{{ diplomacy_alignment_export_url }}">Export CSV</a></p>
+          {% endif %}
+          <p class="sidebar-empty">Data: UN vote records. <a href="https://sites.google.com/view/christopher-kilby/datasets" target="_blank" rel="noopener">Download All_Votes CSV</a> if sync fails.</p>
+        </div>
+      </details>
+    </header>
+
+  {% if archive %}
+  <p><a href="{{ url_for('main.diplomacy_alignment', country=selected_country or '', min_votes=min_votes or '', sort=sort or '', bloc=bloc or '') }}">← Back to current countries</a></p>
+  <h2>Historical countries archive</h2>
+  <p class="muted">Defunct states (e.g. Soviet Union, Czechoslovakia, East Germany) from UN voting records.</p>
+  {% endif %}
+
+  <div class="alignment-body">
+  <div id="alignment-section">
+    {% if not alignment %}
+    {% if archive %}
+    <p class="empty-state">No archived alignment data for historical countries.</p>
+    {% else %}
+    <p class="empty-state">No alignment data. Add UN votes then click Recompute alignment.</p>
+    {% endif %}
+    {% else %}
+    <div class="alignment-table-canvas">
+      <table class="alignment-table sortable">
+        <thead>
+          <tr>
+            <th data-sort="country_a">Country A</th>
+            <th data-sort="country_b">Country B</th>
+            <th data-sort="score" data-sort-default>Alignment %</th>
+            <th data-sort="votes">Votes agreed / total</th>
+          </tr>
+        </thead>
+        <tbody id="alignment-tbody">
+          {% for a in alignment %}
+          <tr data-country-a="{{ a.country_a }}" data-country-b="{{ a.country_b }}" data-score="{{ a.alignment_score }}" data-votes="{{ a.votes_total }}">
+            <td><a href="{{ url_for('main.country_dashboard', country_code=a.country_a) }}">{{ a.country_a_name or a.country_a }}</a></td>
+            <td><a href="{{ url_for('main.country_dashboard', country_code=a.country_b) }}">{{ a.country_b_name or a.country_b }}</a></td>
+            <td><strong>{{ "%.1f"|format(a.alignment_score) }}%</strong></td>
+            <td>{{ a.votes_agreed }} / {{ a.votes_total }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div id="alignment-load-more" class="alignment-load-more" style="display:none;">
+      <button type="button" id="load-more-btn">Load more</button>
+    </div>
+    <p id="alignment-loading" class="alignment-loading" style="display:none;">Loading…</p>
+    {% if not archive and alignment %}
+    <p class="alignment-archive-link"><a href="{{ url_for('main.diplomacy_alignment', archive='1', country=selected_country or '', min_votes=min_votes or '', sort=sort or '', bloc=bloc or '') }}">View historical countries archive</a></p>
+    {% endif %}
+    {% endif %}
+  </div>
+
+  <section id="resolutions-section" class="alignment-resolutions alignment-resolutions-canvas">
+    <h2>Resolutions <span id="resolutions-label">{% if selected_country %}with votes from {{ selected_country }}{% else %}recent{% endif %}</span></h2>
+    <div class="resolution-search-wrap">
+      <input type="text" id="resolution-search" placeholder="Search by ID or title…" style="max-width:280px;">
+      <button type="button" id="resolution-search-btn">Search</button>
+    </div>
+    <div id="resolutions-loading" class="alignment-loading">Loading resolutions…</div>
+    <ul id="resolutions-list" class="resolution-list" style="display:none;"></ul>
+    <p id="resolutions-empty" class="empty-state" style="display:none;">No resolutions found.</p>
+    <button type="button" id="resolutions-load-more" style="display:none;">Load more resolutions</button>
+  </section>
+  </div>
+
+  <div id="resolution-modal" class="alignment-modal" style="display:none;" aria-hidden="true">
+    <div class="alignment-modal-backdrop"></div>
+    <div class="alignment-modal-content">
+      <button type="button" class="alignment-modal-close" aria-label="Close">&times;</button>
+      <h3 id="resolution-modal-title"></h3>
+      <p id="resolution-modal-meta" class="muted"></p>
+      <div id="resolution-modal-counts"></div>
+      <div id="resolution-modal-votes" class="resolution-vote-list"></div>
+    </div>
+  </div>
+
+  <p><a href="{{ url_for('main.diplomacy_dashboard') }}">← Diplomacy</a></p>
+
+  <script>
+(function() {
+  const API_BASE = "{{ request.url_root.rstrip('/') }}/api";
+  const COUNTRY_URL = "{{ request.url_root.rstrip('/') }}{{ url_for('main.country_dashboard', country_code='XXX').replace('XXX', '') }}";
+
+  const params = new URLSearchParams(window.location.search);
+  const getParam = (k) => params.get(k) || "";
+
+  let selectedCountry = getParam("country");
+
+  let alignmentOffset = {{ alignment|length if alignment else 0 }};
+  let resolutionsOffset = 0;
+  const PAGE_SIZE = 50;
+  let countryList = [];
+
+  function countryAutocomplete() {
+    const inp = document.getElementById("country");
+    const list = document.getElementById("country-datalist");
+    if (!inp || !list) return;
+    fetch(API_BASE + "/diplomacy/countries")
+      .then(r => r.json())
+      .then(data => {
+        countryList = data.countries || [];
+        list.innerHTML = countryList.slice(0, 100).map(c =>
+          `<option value="${escapeHtml(c.iso3)}">${escapeHtml(c.name)}</option>`
+        ).join("");
+      })
+      .catch(() => {});
+  }
+
+  function escapeHtml(s) {
+    if (!s) return "";
+    const div = document.createElement("div");
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function loadMoreAlignment() {
+    const btn = document.getElementById("load-more-btn");
+    const loading = document.getElementById("alignment-loading");
+    const tbody = document.getElementById("alignment-tbody");
+    if (!tbody) return;
+    if (btn) btn.style.display = "none";
+    if (loading) loading.style.display = "block";
+    const q = new URLSearchParams(window.location.search);
+    q.set("limit", PAGE_SIZE);
+    q.set("offset", alignmentOffset);
+    fetch(API_BASE + "/diplomacy/alignment?" + q.toString())
+      .then(r => r.json())
+      .then(data => {
+        const rows = data.alignment || [];
+        rows.forEach(a => {
+          const tr = document.createElement("tr");
+          tr.dataset.countryA = a.country_a || "";
+          tr.dataset.countryB = a.country_b || "";
+          tr.dataset.score = a.alignment_score || 0;
+          tr.dataset.votes = a.votes_total || 0;
+          tr.innerHTML = `<td><a href="${COUNTRY_URL}${a.country_a}">${escapeHtml(a.country_a_name || a.country_a)}</a></td>
+            <td><a href="${COUNTRY_URL}${a.country_b}">${escapeHtml(a.country_b_name || a.country_b)}</a></td>
+            <td><strong>${(a.alignment_score || 0).toFixed(1)}%</strong></td>
+            <td>${a.votes_agreed || 0} / ${a.votes_total || 0}</td>`;
+          tbody.appendChild(tr);
+        });
+        alignmentOffset += rows.length;
+        if (btn) btn.style.display = rows.length >= PAGE_SIZE ? "block" : "none";
+      })
+      .catch(() => { if (btn) btn.style.display = "block"; })
+      .finally(() => { if (loading) loading.style.display = "none"; });
+  }
+
+  function loadResolutions(append) {
+    const list = document.getElementById("resolutions-list");
+    const loading = document.getElementById("resolutions-loading");
+    const empty = document.getElementById("resolutions-empty");
+    const loadMore = document.getElementById("resolutions-load-more");
+    const search = (document.getElementById("resolution-search") || {}).value || "";
+    const country = selectedCountry;
+    if (!append) { if (list) list.innerHTML = ""; resolutionsOffset = 0; }
+    if (loading) loading.style.display = "block";
+    if (empty) empty.style.display = "none";
+    const q = new URLSearchParams({ limit: 30, offset: resolutionsOffset });
+    if (search) q.set("search", search);
+    if (country) q.set("country", country);
+    fetch(API_BASE + "/diplomacy/resolutions?" + q.toString())
+      .then(r => r.json())
+      .then(data => {
+        let rows = data.resolutions || [];
+        renderResolutions(rows, append, list, loading, empty, loadMore);
+      })
+      .catch(() => {
+        if (loading) loading.style.display = "none";
+        if (empty) empty.style.display = "block";
+      });
+  }
+
+  function renderResolutions(rows, append, list, loading, empty, loadMore) {
+    if (!list) return;
+    if (!append) list.innerHTML = "";
+    rows.forEach(r => {
+      const li = document.createElement("li");
+      const votePart = r.vote ? ` — vote: ${escapeHtml(r.vote)}` : "";
+      li.innerHTML = `<a href="#" class="resolution-link" data-id="${escapeHtml(r.resolution_id)}">${escapeHtml(r.resolution_id)}</a> — ${escapeHtml((r.resolution_title || "").substring(0, 60))}${(r.resolution_title || "").length > 60 ? "…" : ""} (${(r.vote_date || "").substring(0, 10)})${votePart}`;
+      list.appendChild(li);
+    });
+    list.style.display = "block";
+    if (loading) loading.style.display = "none";
+    if (empty) empty.style.display = rows.length ? "none" : "block";
+    if (loadMore) loadMore.style.display = rows.length >= 30 ? "block" : "none";
+    resolutionsOffset += rows.length;
+    list.querySelectorAll(".resolution-link").forEach(el => {
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        showResolutionModal(this.dataset.id);
+      });
+    });
+  }
+
+  function showResolutionModal(id) {
+    const modal = document.getElementById("resolution-modal");
+    const title = document.getElementById("resolution-modal-title");
+    const meta = document.getElementById("resolution-modal-meta");
+    const counts = document.getElementById("resolution-modal-counts");
+    const votes = document.getElementById("resolution-modal-votes");
+    if (!modal) return;
+    modal.style.display = "block";
+    modal.setAttribute("aria-hidden", "false");
+    title.textContent = "Loading…";
+    counts.innerHTML = "";
+    votes.innerHTML = "";
+    fetch(API_BASE + "/diplomacy/resolutions/" + encodeURIComponent(id))
+      .then(r => r.json())
+      .then(data => {
+        title.textContent = data.resolution_id || id;
+        meta.textContent = (data.resolution_title || "") + " — " + (data.vote_date || "").substring(0, 10);
+        const c = data.counts || {};
+        counts.innerHTML = `<p>Yes: ${c.yes || 0} · No: ${c.no || 0} · Abstain: ${c.abstain || 0} · Absent: ${c.absent || 0} (Total: ${data.total || 0})</p>`;
+        const v = data.votes || [];
+        votes.innerHTML = v.slice(0, 100).map(x => `<span class="resolution-vote-chip">${escapeHtml(x.country_code)}: ${escapeHtml(x.vote)}</span>`).join(" ");
+        if (v.length > 100) votes.innerHTML += ` <span class="muted">+${v.length - 100} more</span>`;
+      })
+      .catch(() => { title.textContent = "Error loading resolution"; });
+  }
+
+  document.getElementById("resolution-modal")?.querySelector(".alignment-modal-close")?.addEventListener("click", () => {
+    const modal = document.getElementById("resolution-modal");
+    if (modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden", "true"); }
+  });
+  document.getElementById("resolution-modal")?.querySelector(".alignment-modal-backdrop")?.addEventListener("click", () => {
+    const modal = document.getElementById("resolution-modal");
+    if (modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden", "true"); }
+  });
+
+  document.getElementById("load-more-btn")?.addEventListener("click", loadMoreAlignment);
+  document.getElementById("resolutions-load-more")?.addEventListener("click", () => loadResolutions(true));
+  document.getElementById("resolution-search-btn")?.addEventListener("click", () => loadResolutions(false));
+  document.getElementById("resolution-search")?.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") { e.preventDefault(); loadResolutions(false); }
+  });
+
+  if (document.getElementById("alignment-tbody")?.rows.length >= PAGE_SIZE) {
+    document.getElementById("alignment-load-more").style.display = "block";
+  }
+
+  document.querySelectorAll(".alignment-table th[data-sort]").forEach(th => {
+    th.addEventListener("click", function() {
+      const key = this.dataset.sort;
+      const tbody = document.getElementById("alignment-tbody");
+      if (!tbody) return;
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const rev = this.dataset.sortDir === "asc";
+      this.dataset.sortDir = rev ? "desc" : "asc";
+      const dk = key === "country_a" ? "countryA" : (key === "country_b" ? "countryB" : key);
+      rows.sort((a, b) => {
+        let va = key === "score" ? parseFloat(a.dataset.score) : (key === "votes" ? parseFloat(a.dataset.votes) : ((a.dataset[dk] || a.getAttribute("data-"+key.replace("_","-")) || "") + "").toLowerCase());
+        let vb = key === "score" ? parseFloat(b.dataset.score) : (key === "votes" ? parseFloat(b.dataset.votes) : ((b.dataset[dk] || b.getAttribute("data-"+key.replace("_","-")) || "") + "").toLowerCase());
+        if (key === "score" || key === "votes") return rev ? va - vb : vb - va;
+        return rev ? (va < vb ? 1 : -1) : (va > vb ? 1 : -1);
+      });
+      rows.forEach(r => tbody.appendChild(r));
+    });
+  });
+
+  // Row click context: clicking a row updates the resolutions sidebar to match that country votes.
+  const tbody = document.getElementById("alignment-tbody");
+  if (tbody) {
+    tbody.addEventListener("click", function(e) {
+      const tr = e.target.closest("tr");
+      if (!tr) return;
+      // If the click is on a country link, let navigation happen.
+      if (e.target.closest("a")) return;
+      const tds = tr.querySelectorAll("td");
+      if (!tds || !tds.length) return;
+      const td = e.target.closest("td");
+      if (!td) return;
+      const idx = Array.prototype.indexOf.call(tds, td);
+      var code = idx === 1 ? (tr.dataset.countryB || "") : (tr.dataset.countryA || "");
+      selectedCountry = (code || "").trim();
+      var inp = document.getElementById("country");
+      if (inp) inp.value = selectedCountry;
+      var label = document.getElementById("resolutions-label");
+      if (label) label.textContent = selectedCountry ? ("with votes from " + selectedCountry) : "recent";
+      loadResolutions(false);
+    });
+  }
+
+  countryAutocomplete();
+  loadResolutions(false);
+})();
+  </script>
+  </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Military movement map — Geopolitical News{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" crossorigin=""></script>
+  <style>
+    #movement-map { height: 70vh; min-height: 400px; width: 100%; border: 1px solid var(--t-border); border-radius: 8px; }
+    .conflict-map-page .map-filters { margin-bottom: 16px; font-size: 0.875rem; }
+    .conflict-map-page .map-filters a { color: var(--t-accent); text-decoration: none; }
+    .conflict-map-page .map-filters a:hover { text-decoration: underline; }
+    .conflict-map-page .map-date-form { margin-bottom: 12px; }
+    .conflict-map-page .map-date-form input, .conflict-map-page .map-date-form button { margin-right: 8px; }
+    .leaflet-popup-content { font-size: 0.875rem; min-width: 200px; }
+  </style>
+{% endblock %}
+{% block content %}
+<div class="conflict-map-page">
+  <h1 class="page-title">Satellite-detected military movement (map)</h1>
+  <p class="page-intro">Locations with valid coordinates. Filter by region, country, or date range. Points are clustered when many.</p>
+  <p class="map-filters">
+    <a href="{{ url_for('main.conflict_dashboard') }}#movement">← Back to Military &amp; Security</a>
+    {% if filter_region or filter_country or filter_date_from or filter_date_to %}
+    <span> · {% if filter_region %}region={{ filter_region }}{% endif %}{% if filter_country %} country={{ filter_country }}{% endif %}{% if filter_date_from %} from {{ filter_date_from }}{% endif %}{% if filter_date_to %} to {{ filter_date_to }}{% endif %}</span>
+    {% endif %}
+  </p>
+  <form method="get" action="{{ url_for('main.conflict_movement_map') }}" class="map-date-form">
+    {% if filter_region %}<input type="hidden" name="region" value="{{ filter_region }}">{% endif %}
+    {% if filter_country %}<input type="hidden" name="country_code" value="{{ filter_country }}">{% endif %}
+    <label for="date_from">From date</label>
+    <input type="date" id="date_from" name="date_from" value="{{ filter_date_from or '' }}">
+    <label for="date_to">To date</label>
+    <input type="date" id="date_to" name="date_to" value="{{ filter_date_to or '' }}">
+    <button type="submit">Apply</button>
+  </form>
+  <div id="movement-map"></div>
+  <p class="conflict-meta" style="margin-top:12px;">{{ movements|length }} point(s) with coordinates. Data: seed/manual.</p>
+</div>
+<script>
+(function() {
+  var movements = {{ movements | tojson }};
+  if (movements.length === 0) {
+    document.getElementById('movement-map').innerHTML = '<p class="empty-state" style="padding:40px;text-align:center;">No movement points with coordinates. Try adjusting filters or add data with lat/lon.</p>';
+    return;
+  }
+  var center = [20, 0];
+  var zoom = 2;
+  var bounds = null;
+  if (movements.length === 1) {
+    center = [movements[0].lat, movements[0].lon];
+    zoom = 8;
+  } else if (movements.length > 0) {
+    var lats = movements.map(function(m) { return m.lat; });
+    var lons = movements.map(function(m) { return m.lon; });
+    bounds = [[Math.min.apply(null, lats), Math.min.apply(null, lons)], [Math.max.apply(null, lats), Math.max.apply(null, lons)]];
+  }
+  var map = L.map('movement-map').setView(center, zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  var useCluster = typeof L.markerClusterGroup === 'function' && movements.length > 10;
+  var layer = useCluster ? L.markerClusterGroup() : null;
+  movements.forEach(function(m) {
+    var popup = '<strong>' + (m.country_name || '—') + '</strong> (' + (m.country_code || '') + ')<br/>' +
+      'Region: ' + (m.region || '—') + '<br/>Type: ' + (m.detection_type || '—') + '<br/>' +
+      'Observed: ' + (m.observed_date ? m.observed_date.slice(0, 10) : '—') + '<br/>' +
+      (m.summary ? 'Summary: ' + m.summary.slice(0, 200) + (m.summary.length > 200 ? '…' : '') : '');
+    var marker = L.marker([m.lat, m.lon]).bindPopup(popup);
+    if (layer) layer.addLayer(marker); else marker.addTo(map);
+  });
+  if (layer) map.addLayer(layer);
+  if (bounds && movements.length > 1) map.fitBounds(bounds, { padding: [30, 30] });
+})();
+</script>
+{% endblock %}

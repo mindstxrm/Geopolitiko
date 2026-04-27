@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Scenario Engine — Run history{% endblock %}
+{% block content %}
+<div class="scenario-engine-history">
+  <h1 class="page-title">Scenario Engine — Run history</h1>
+  <p class="page-intro">View and filter all runs. <a href="{{ url_for('main.scenario_engine') }}">← Back to Scenario Engine</a></p>
+
+  <form method="get" class="engine-history-filters">
+    <label for="filter_event_type">Event type</label>
+    <select name="event_type" id="filter_event_type">
+      <option value="">All</option>
+      {% for slug, label in event_types %}
+      <option value="{{ slug }}" {{ 'selected' if filters.event_type == slug else '' }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <label for="filter_region">Region</label>
+    <input type="text" name="region" id="filter_region" value="{{ filters.region or '' }}" placeholder="e.g. East Asia">
+    <label for="filter_country">Country</label>
+    <input type="text" name="country" id="filter_country" value="{{ filters.country or '' }}" placeholder="e.g. Taiwan">
+    <label for="filter_date_from">From date</label>
+    <input type="date" name="date_from" id="filter_date_from" value="{{ filters.date_from or '' }}">
+    <label for="filter_date_to">To date</label>
+    <input type="date" name="date_to" id="filter_date_to" value="{{ filters.date_to or '' }}">
+    <button type="submit">Filter</button>
+  </form>
+
+  <p class="engine-history-meta">Total: {{ total }} run(s). Page {{ page }} of {{ total_pages or 1 }}.</p>
+
+  {% if runs %}
+  <ul class="engine-history-list">
+    {% for r in runs %}
+    <li>
+      <span class="engine-history-label">{{ r.name or r.event_label }} {% if r.region or r.country %}({{ r.region or '' }}{% if r.region and r.country %} · {% endif %}{{ r.country or '' }}){% endif %}</span>
+      <span class="engine-history-meta">{{ (r.run_at or r.created_at or '')[:19].replace('T', ' ') }} UTC · {{ r.event_label }}</span>
+      <a href="{{ url_for('main.scenario_engine', run_id=r.id) }}">View</a>
+      <a href="{{ url_for('main.scenario_engine', event_type=r.event_type, region=r.region or '', country=r.country or '') }}">Re-run</a>
+      <a href="{{ url_for('main.scenario_engine_export_all', run_id=r.id) }}">Export all</a>
+      <a href="{{ url_for('main.scenario_engine_compare', run_a=r.id) }}">Compare</a>
+      <form action="{{ url_for('main.scenario_engine_delete_run', run_id=r.id) }}" method="post" class="engine-delete-inline">
+        <button type="submit" class="engine-delete-btn" aria-label="Delete run">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <nav class="engine-history-pagination">
+    {% if page > 1 %}
+    <a href="{{ url_for('main.scenario_engine_history', page=page-1, per_page=per_page, event_type=filters.event_type, region=filters.region, country=filters.country, date_from=filters.date_from, date_to=filters.date_to) }}">← Previous</a>
+    {% endif %}
+    {% if page < total_pages %}
+    <a href="{{ url_for('main.scenario_engine_history', page=page+1, per_page=per_page, event_type=filters.event_type, region=filters.region, country=filters.country, date_from=filters.date_from, date_to=filters.date_to) }}">Next →</a>
+    {% endif %}
+  </nav>
+  {% else %}
+  <p class="empty-state">No runs match the filters. <a href="{{ url_for('main.scenario_engine') }}">Run a simulation</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

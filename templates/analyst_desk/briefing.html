@@ -1,0 +1,19 @@
+{% extends "analyst_desk/base.html" %}
+{% block title %}{{ b.title }} — Analyst Desk{% endblock %}
+{% block body %}
+<p><a href="{{ url_for('analyst_desk.index') }}">← Inbox</a></p>
+<div class="panel">
+  <h2>{{ b.title }}</h2>
+  <p class="muted">
+    Type: {{ b.briefing_type }} · Scope: {{ b.scope_type }}{% if b.scope_id %} ({{ b.scope_id }}){% endif %} ·
+    Generated: {{ b.generated_at }} · Agent: {{ b.generated_by_agent or '—' }}
+  </p>
+  {% if b.summary %}
+  <p>{{ b.summary }}</p>
+  {% endif %}
+</div>
+<div class="panel">
+  <h2>Body</h2>
+  <pre style="white-space: pre-wrap; font-family: inherit; margin: 0;">{{ b.body_markdown }}</pre>
+</div>
+{% endblock %}

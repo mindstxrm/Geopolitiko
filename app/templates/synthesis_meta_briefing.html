@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Meta-Briefing — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <article class="synthesis-detail">
+    <header>
+      <a href="{{ url_for('main.synthesis_hub') }}" class="back-link">← Synthesis</a>
+      <h1>Meta-Briefing</h1>
+      <p class="synthesis-meta">Weekly system state · Last {{ data.days }} days</p>
+      {% if data.generated_at %}
+      <p class="synthesis-meta">Generated {{ data.generated_at[:19].replace('T', ' ') }} UTC</p>
+      {% endif %}
+      <form method="get" class="synthesis-days-form">
+        <label for="days">Days</label>
+        <select name="days" id="days" onchange="this.form.submit()">
+          <option value="7" {{ 'selected' if data.days == 7 else '' }}>7</option>
+          <option value="14" {{ 'selected' if data.days == 14 else '' }}>14</option>
+          <option value="30" {{ 'selected' if data.days == 30 else '' }}>30</option>
+        </select>
+      </form>
+    </header>
+
+    <section class="synthesis-summary">
+      <h2>Where the system thinks things stand</h2>
+      <div class="synthesis-prose">{{ data.briefing }}</div>
+    </section>
+
+    <section class="meta-data">
+      <h2>Source data</h2>
+      <ul>
+        <li>GEPI: {{ data.gepi.gepi_score if data.gepi else 'N/A' }}</li>
+        <li>Scenario runs: {{ data.scenario_runs_count or 0 }}</li>
+        <li>Digests: {{ data.digests_count or 0 }}</li>
+        <li>Story clusters: {{ data.clusters_count or 0 }}</li>
+      </ul>
+      {% if data.top_risk %}
+      <h3>Top risk countries</h3>
+      <ul>
+        {% for r in data.top_risk %}
+        <li>{{ r.code }}: {{ r.score }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.fragility_hotspots %}
+      <h3>Fragility hotspots</h3>
+      <ul>
+        {% for h in data.fragility_hotspots %}
+        <li>{{ h.code }}: {{ h.level }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.spike_topics %}
+      <h3>Spiking topics</h3>
+      <ul>
+        {% for t in data.spike_topics %}
+        <li>{{ t[0] }} (recent: {{ t[1] }}, prior: {{ t[2] }})</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.declining_topics %}
+      <h3>Declining topics</h3>
+      <ul>
+        {% for t in data.declining_topics %}
+        <li>{{ t[0] }} (recent: {{ t[1] }}, prior: {{ t[2] }})</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data.divergences %}
+      <h3>Signal divergences</h3>
+      <ul>
+        {% for d in data.divergences %}
+        <li>{{ d.title }}: {{ d.detail[:80] }}{% if d.detail|length > 80 %}…{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+    <p class="synthesis-links"><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a> · <a href="{{ url_for('main.insights') }}">Insights</a> · <a href="{{ url_for('main.help_page', _anchor='synthesis') }}">Synthesis</a></p>
+  </article>
+{% endblock %}
