@@ -1,0 +1,148 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T11:55:00Z",
+  "window_end_utc": "2026-09-15T12:55:00Z",
+  "generated_at_utc": "2026-09-15T12:55:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T11:55:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL", "TUV"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Waigani–Buka split on Panguna: Maru warned Lloyds; Tokura names Buin group",
+      "summary": "Trade Minister Richard Maru says he repeatedly advised Lloyds not to invest and that PNG must not be blamed. Toroama still guarantees investor protection and says work continues. BPS chief Francis Tokura attributes the raid to a Buin group with high-powered weapons. Casualties remain a PNG-media CLAIM (at least one killed).",
+      "countries": ["PNG"],
+      "importance": 4,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://www.nbc.com.pg/post/39767/i-warned-lloyds-metals-maru",
+        "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/"
+      ]
+    },
+    {
+      "title": "PMMM-4 plenary still ahead; PNG Independence Day from 14:00 UTC",
+      "summary": "Tonga is already 16 Sep local. Matatoa Ministerial Declaration not yet adopted. PNG Independence Day is 16 Sep local; PIF Secretariat lists a 15 Sep 22:00 UTC observance.",
+      "countries": ["TON", "PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://forumsec.org/events/independence-day-papua-new-guinea"
+      ]
+    },
+    {
+      "title": "MV Matui SAR toll band unchanged",
+      "summary": "2 confirmed dead, 14 survivors, ~30+ missing; 10 vessels still tasked east of Santo. VFSC strike-off remains a Daily Post CLAIM. Napat Santo travel still this weekend.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "up",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "12h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Does Marape endorse or walk back Maru's Lloyds-responsibility line?",
+    "Lloyds on-site posture after 16 Sep?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 Matatoa Declaration text on 16 Sep?",
+    "WIM ExCom 25 decision language on 18 Sep?",
+    "AUS-SLB signature date?"
+  ],
+  "sources": [
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "‘I warned Lloyds Metals’: Maru",
+      "publisher": "NBC PNG",
+      "url": "https://www.nbc.com.pg/post/39767/i-warned-lloyds-metals-maru",
+      "published_at": "2026-09-14",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "‘Selfish and greedy’: President slams perpetrators of Panguna mine attack",
+      "publisher": "NBC PNG",
+      "url": "https://www.nbc.com.pg/post/39718/selfish-and-greedy-president-slams-perpetrators-of-panguna-mine-attack",
+      "published_at": "2026-09-14",
+      "countries": ["PNG"],
+      "topics": ["security"],
+      "claim_type": "CLAIM",
+      "confidence": "L",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Bougainville President Toroama assures investors after Panguna camp violence",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/",
+      "published_at": "2026-09-15",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
