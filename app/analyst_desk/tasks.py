@@ -64,7 +64,7 @@ def run_full_pipeline(self) -> dict[str, Any]:
             stats = run_full_pipeline_tick()
             logger.info(
                 "run_full_pipeline OK task_id=%s ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s "
-                "events=%s alerts=%s briefing=%s topics=%s regional=%s country_risk=%s movers=%s scenarios=%s",
+                "events=%s alerts=%s briefing=%s oceania_briefing=%s topics=%s regional=%s country_risk=%s movers=%s scenarios=%s",
                 self.request.id,
                 stats.get("ingested", 0),
                 stats.get("enriched", 0),
@@ -73,6 +73,7 @@ def run_full_pipeline(self) -> dict[str, Any]:
                 stats.get("events", 0),
                 stats.get("alerts_created", 0),
                 stats.get("briefing_id"),
+                stats.get("oceania_briefing_id"),
                 stats.get("topic_briefings", 0),
                 stats.get("regional_snaps", 0),
                 stats.get("country_snaps", 0),

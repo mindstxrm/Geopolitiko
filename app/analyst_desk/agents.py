@@ -264,6 +264,39 @@ AGENTS: dict[str, dict] = {
         "countries": ["SLB", "VUT", "WSM", "TON", "KIR", "TUV", "NRU"],
         "country_tiers": {"SLB": 3, "VUT": 3, "WSM": 3, "TON": 3, "KIR": 3, "TUV": 3, "NRU": 3},
     },
+    # Oceania workspace (union of Oceania I/II + COFA watch)
+    "oceania": {
+        "label": "Oceania Desk",
+        "description": (
+            "ANZ and Pacific Island Countries (oceania_i ∪ oceania_ii); COFA watch "
+            "(PLW, FSM, MHL); PIF/MSG and climate-security, maritime, and alliance tracks. "
+            "Territories (NCL, PYF, GUM, etc.) are watch tags, not core ISO3 scope."
+        ),
+        "countries": [
+            "AUS", "NZL", "PNG", "FJI",
+            "SLB", "VUT", "WSM", "TON", "KIR", "TUV", "NRU",
+            "PLW", "FSM", "MHL",
+        ],
+        "country_tiers": {
+            "AUS": 1,
+            "NZL": 2,
+            "PNG": 2,
+            "FJI": 2,
+            "SLB": 3,
+            "VUT": 3,
+            "WSM": 3,
+            "TON": 3,
+            "KIR": 3,
+            "TUV": 3,
+            "NRU": 3,
+            "PLW": 3,
+            "FSM": 3,
+            "MHL": 3,
+        },
+        "workspace": True,
+        "scope_ids": ["oceania_i", "oceania_ii"],
+        "watch_tags": ["NCL", "PYF", "GUM", "MNP", "ASM", "WLF", "COK", "NIU"],
+    },
 }
 
 

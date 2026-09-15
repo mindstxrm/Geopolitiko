@@ -40,7 +40,7 @@ def _run_pipeline_once() -> None:
 
     st = run_full_pipeline_tick()
     logger.info(
-        "Analyst desk pipeline tick: ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s events=%s alerts=%s briefing=%s topics=%s regions=%s countries=%s movers=%s scenarios=%s",
+        "Analyst desk pipeline tick: ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s events=%s alerts=%s briefing=%s oceania_briefing=%s topics=%s regions=%s countries=%s movers=%s scenarios=%s",
         st.get("ingested", 0),
         st.get("enriched", 0),
         st.get("metrics_docs", 0),
@@ -48,6 +48,7 @@ def _run_pipeline_once() -> None:
         st.get("events", 0),
         st.get("alerts_created", 0),
         st.get("briefing_id"),
+        st.get("oceania_briefing_id"),
         st.get("topic_briefings", 0),
         st.get("regional_snaps", 0),
         st.get("country_snaps", 0),

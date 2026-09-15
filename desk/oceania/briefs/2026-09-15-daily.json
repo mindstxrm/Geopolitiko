@@ -1,0 +1,268 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-13T19:00:00Z",
+  "window_end_utc": "2026-09-15T07:00:00Z",
+  "generated_at_utc": "2026-09-15T09:52:25Z",
+  "overall_confidence": "M",
+  "countries_touched": ["VUT", "PNG", "FJI", "SLB", "FSM", "KIR", "AUS", "NZL"],
+  "pif_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "priority_items": [
+    {
+      "title": "Vanuatu PM cancels UNGA as MV Matui search continues; VMSA pulled under PMO",
+      "summary": "MV Matui sank 11 Sep between Santo and Ambae. As of 15 Sep: 2 confirmed dead, 14 survivors, ~30+ missing; passenger counts disputed. Napat cancelled UNGA-81 trip and took VMSA oversight from the maritime ministry. Daily Post/RNZ: vessel allegedly deregistered in June.",
+      "countries": ["VUT"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["disaster", "maritime", "governance", "climate_security"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+        "https://www.rnz.co.nz/news/pacific/1367205/vanuatu-ferry-disaster-exposes-gap-between-warnings-and-action"
+      ]
+    },
+    {
+      "title": "Bougainville Panguna camp arson; Toroama guarantees investor security",
+      "summary": "Armed group burned Lloyds Metals equipment at Panguna on 13 Sep. Toroama (15 Sep) said work continues and police will protect partners. Landowners council apologised. OCCRP claim of two shot / seven arrested is uncorroborated by PINA/PMN.",
+      "countries": ["PNG"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["bougainville", "resources", "security", "independence"],
+      "sources": [
+        "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/",
+        "https://pmn.co.nz/read/pacific-region/panguna-mine-attack-puts-bougainville-s-redevelopment-focus-under-fresh-pressure",
+        "https://www.occrp.org/en/news/two-shot-several-arrested-in-clashes-over-papua-new-guinea-mine"
+      ]
+    },
+    {
+      "title": "US Landau tour: COFA reconstruction intent, Peace Corps return to Solomon Islands, MCC studies",
+      "summary": "State (11 Sep) / PINA (14 Sep): >US$100m FSM Sinlaku reconstruction intent under COFA; Peace Corps return agreement with SLB; four ARFF vehicles for Honiara Airport; MCC Parliament assessment; MCC Kiritimati wharf study. PINA US$150m roll-up is an official aggregation, not an appropriation.",
+      "countries": ["USA", "FSM", "SLB", "KIR"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["cofa", "development_finance", "diplomacy"],
+      "sources": [
+        "https://www.state.gov/releases/office-of-the-spokesperson/2026/09/strengthening-u-s-ties-with-the-pacific-deputy-secretary-landau-engages-partners-in-federated-states-of-micronesia-solomon-islands-and-kiribati",
+        "https://pina.com.fj/2026/09/14/u-s-deepens-pacific-engagement-with-new-economic-and-security-initiatives/"
+      ]
+    },
+    {
+      "title": "Fiji declares HIV epidemic a national emergency",
+      "summary": "Health Minister Lalabalavu (15 Sep): outbreak-level response insufficient; 1 in 60 adults estimated living with HIV vs 1 in 167 five years ago. Needle-and-syringe programme to be mobilised; Cabinet sub-committee of five. Cabinet had used 'national crisis under emergency powers' language on 9–10 Sep.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["health", "non_traditional_security", "labour_mobility"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/hiv-declared-a-national-emergency/",
+        "https://www.fijivillage.com/news/cabinet-declares-hiv-outbreak-a-national-crisis-77b957/"
+      ]
+    },
+    {
+      "title": "Australia Hunter-class ~A$27bn for first three ships; UK pitches hybrid navy to NZ",
+      "summary": "ABC: budget documents allocate close to A$27bn to first three Hunter frigates. Conroy has previously treated remaining spend vs Mogami/autonomous as an open option. Newsroom: RN Fleet Commander Moorhouse pitched crewed+uncrewed mix to NZ; argued against a frigate-less fleet. AUKUS fifth-anniversary copy is analysis, not an operational milestone.",
+      "countries": ["AUS", "NZL", "GBR"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["defence_industry", "alliance", "maritime"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-14/federal-politics-australia-billions-spent-on-three-warships/107132330",
+        "https://newsroom.co.nz/2026/09/15/uk-navy-pitches-hybrid-drone-and-frigate-model-for-nz-military/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Peace Corps return to Solomon Islands",
+      "type": "development",
+      "parties": ["USA", "SLB"],
+      "status": "signed",
+      "date": "2026-09-11",
+      "venue": "Honiara",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "State primary 11 Sep; PINA 14 Sep is the in-window media delta."
+    },
+    {
+      "name": "COFA Typhoon Sinlaku reconstruction intent >US$100m",
+      "type": "development compact",
+      "parties": ["USA", "FSM"],
+      "status": "announced",
+      "date": "2026-09-11",
+      "venue": "Chuuk",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Intent under Compact; not booked as disbursed."
+    },
+    {
+      "name": "MCC Kiritimati wharf study",
+      "type": "infrastructure",
+      "parties": ["USA", "KIR"],
+      "status": "announced",
+      "date": "2026-09-11",
+      "venue": "Kiritimati",
+      "bindingness": "political",
+      "in_window": true
+    },
+    {
+      "name": "Australia–Solomon Islands bilateral treaty",
+      "type": "security/development compact",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle",
+      "date": "2026-09-07",
+      "venue": "bilateral",
+      "bindingness": "mixed",
+      "in_window": false,
+      "note": "Leaked ~A$980m additional. Unsigned. Carried as live unfinished business."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Vanuatu maritime mass-casualty / regulatory failure",
+      "direction": "up",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "trigger": "Death toll well above current band; capital unrest; foreign SAR implying capacity breach"
+    },
+    {
+      "risk": "Bougainville Panguna conflict relapse",
+      "direction": "up",
+      "horizon": "days-weeks",
+      "confidence": "M",
+      "trigger": "Confirmed fatalities; Lloyds work stoppage; BPS loss of site"
+    },
+    {
+      "risk": "Solomon Islands treaty vs coalition durability",
+      "direction": "flat_elevated",
+      "horizon": "2-8w",
+      "confidence": "M",
+      "trigger": "Signing into a new no-confidence window; Honiara-scale protest"
+    },
+    {
+      "risk": "Fiji HIV / drug-health spillover",
+      "direction": "up",
+      "horizon": "3-12m",
+      "confidence": "H",
+      "trigger": "Emergency gazette hitting mobility/policing; PALM/RSE restrictions"
+    },
+    {
+      "risk": "COFA cash vs announcement gap",
+      "direction": "flat",
+      "horizon": "1-6m",
+      "confidence": "M",
+      "trigger": "FSM reconstruction stall; Compact trust-fund draw"
+    }
+  ],
+  "open_questions": [
+    "VMSA/PMO official passenger list and deregistration gazette for MV Matui",
+    "Bougainville Police confirmation of shots fired and arrest identities",
+    "US Compact apportionment document for the >US$100m FSM package",
+    "AUS–SLB treaty text or DFAT/SIG joint statement if a signing date firms",
+    "Fiji gazette of HIV emergency powers",
+    "PPC-1 operator NOC notice after the 10 Sep Guam M5.1",
+    "Quiet scan: WSM, TUV, PLW, MHL, NCL primaries"
+  ],
+  "sources": [
+    {
+      "title": "Vanuatu PM scraps UNGA trip as dozens remain missing after ferry disaster",
+      "publisher": "RNZ",
+      "url": "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["disaster", "maritime"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["disaster"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Bougainville President Toroama assures investors after Panguna camp violence",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/",
+      "published_at": "2026-09-15",
+      "countries": ["PNG"],
+      "topics": ["security", "resources"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "U.S deepens Pacific engagement with new economic and security initiatives",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/14/u-s-deepens-pacific-engagement-with-new-economic-and-security-initiatives/",
+      "published_at": "2026-09-14",
+      "countries": ["FSM", "SLB", "KIR"],
+      "topics": ["cofa", "diplomacy"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "HIV declared a national emergency",
+      "publisher": "FBC",
+      "url": "https://www.fbcnews.com.fj/news/hiv-declared-a-national-emergency/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["health"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Marape: Papua LNG final decision at year’s end",
+      "publisher": "The National",
+      "url": "https://www.thenational.com.pg/marape-papua-lng-final-decision-at-years-end/",
+      "published_at": "2026-09-14",
+      "countries": ["PNG"],
+      "topics": ["energy", "macro"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "oceania_relevance": "economic"
+    },
+    {
+      "title": "Australia is spending $27 billion to build three warships",
+      "publisher": "ABC",
+      "url": "https://www.abc.net.au/news/2026-09-14/federal-politics-australia-billions-spent-on-three-warships/107132330",
+      "published_at": "2026-09-14",
+      "countries": ["AUS"],
+      "topics": ["defence"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "UK Navy pitches hybrid drone and frigate model for NZ military",
+      "publisher": "Newsroom",
+      "url": "https://newsroom.co.nz/2026/09/15/uk-navy-pitches-hybrid-drone-and-frigate-model-for-nz-military/",
+      "published_at": "2026-09-14",
+      "countries": ["NZL", "GBR"],
+      "topics": ["defence"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    }
+  ]
+}
