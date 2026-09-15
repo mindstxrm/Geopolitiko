@@ -1,0 +1,160 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T12:55:00Z",
+  "window_end_utc": "2026-09-15T13:55:00Z",
+  "generated_at_utc": "2026-09-15T13:55:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T12:55:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "LPMEL headline reaffirms Panguna commitment; still no BPS SITREP",
+      "summary": "Post Courier (15 Sep 18:07 PGT / 08:07 UTC) reports Lloyds Panguna Metals and Energy Limited condemned the Sunday arson and reaffirmed commitment to Bougainville. Body paywalled. Corroborates Toroama's earlier line that Lloyds management remained committed. RNZ still has no company reply. Maru/Tokura items and casualty CLAIMs unchanged.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/",
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/"
+      ]
+    },
+    {
+      "title": "PMMM-4 sitting from 19:30 UTC; PNG Independence Day from 14:00 UTC",
+      "summary": "Tonga is already 16 Sep local (02:55 at cutoff). Official programme lists sitting 08:30–17:10 TOT; Matatoa/ministerial declaration adoption 15:30–17:00 TOT (02:30–04:00 UTC 16 Sep). No adopted text. PNG Independence Day local begins at this cutoff.",
+      "countries": ["TON", "PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://forumsec.org/events/independence-day-papua-new-guinea"
+      ]
+    },
+    {
+      "title": "MV Matui SAR toll band unchanged; PSC Day postponed",
+      "summary": "2 confirmed dead, 14 survivors, ~30+ missing; 10 vessels still tasked east of Santo. VFSC strike-off remains a Daily Post CLAIM. PINA recap restates Napat UNGA cancel (already in the daily) and notes Public Service Commission Day in Torba is postponed.",
+      "countries": ["VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+        "https://pina.com.fj/2026/09/15/vanuatu-pm-cancels-un-trip-after-mv-matui-tragedy/"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "12h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Does Marape endorse or walk back Maru's Lloyds-responsibility line?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep?",
+    "AUS-SLB signature date?"
+  ],
+  "sources": [
+    {
+      "title": "LPMEL condemns Panguna arson, says commitment to Bougainville unchanged",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/",
+      "published_at": "2026-09-15T08:07:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Bougainville President Toroama assures investors after Panguna camp violence",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/bougainville-president-toroama-assures-investors-after-panguna-camp-violence/",
+      "published_at": "2026-09-15",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Vanuatu PM cancels UN trip after MV Matui tragedy",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/vanuatu-pm-cancels-un-trip-after-mv-matui-tragedy/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "governance", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    }
+  ]
+}
