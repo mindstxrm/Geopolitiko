@@ -1,0 +1,268 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-09-13T20:00:00Z",
+  "window_end_utc": "2026-09-15T08:00:00Z",
+  "generated_at_utc": "2026-09-15T08:53:04Z",
+  "overall_confidence": "M",
+  "countries_touched": ["IDN", "MYS", "SGP", "VNM", "PHL", "THA", "KHM", "MMR"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "priority_items": [
+    {
+      "title": "Transboundary haze: island-wide unhealthy PSI in Singapore; 38 unhealthy API stations in Malaysia",
+      "summary": "ASMC-tracked smoke from Sumatra/Kalimantan fires. SGP 24h PSI at 06:00 SGT 15 Sep: Central 154, East/West 128, South 111, North 104 (first all-region unhealthy since Sep 2019). MYS DOE: 38 unhealthy areas; Serian 188. Haze also observed over southern Vietnam.",
+      "countries": ["IDN", "MYS", "SGP", "VNM"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "non_traditional_security", "AATHP"],
+      "sources": [
+        "https://www.channelnewsasia.com/singapore/singapore-haze-psi-unhealthy-6382851",
+        "https://www.channelnewsasia.com/asia/haze-worsens-across-malaysia-38-areas-recording-unhealthy-air-quality-6385056",
+        "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/14/transboundary-haze-reaches-southern-vietnam-as-singapore039s-central-region-turns-unhealthy"
+      ]
+    },
+    {
+      "title": "Indonesia: Suahasil Nazara sworn in as finance minister, replacing Purbaya Yudhi Sadewa",
+      "summary": "Presidential Decree 97/P of 2026. Third MoF in under two years under Prabowo. Suahasil pledged deficit below 3% of GDP. Market read is personnel credibility relief, policy mandate unproven.",
+      "countries": ["IDN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["macro", "fiscal", "elite_politics"],
+      "sources": [
+        "https://en.antaranews.com/news/431237/prabowo-appoints-nazara-to-replace-purbaya-as-finance-minister",
+        "https://theprint.in/world/indonesia-president-appoints-his-third-finance-minister-in-under-two-years/3042284"
+      ]
+    },
+    {
+      "title": "SG Kao Kim Hourn: ASEAN centrality must be earned as minilaterals proliferate",
+      "summary": "Keynote at 3rd ASEAN Think Tanks Summit, Jakarta, 14 Sep. Warned ASEAN-led processes could lose convening power; urged harder use of EAS, ARF, ADMM-Plus. 2027 Singapore Chair / 60th anniversary framed as a fitness test.",
+      "countries": ["PHL", "SGP"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["asean_centrality", "institutional", "minilaterals"],
+      "sources": [
+        "https://www.straitstimes.com/asia/se-asia/asean-risks-irrelevance-as-sub-groupings-grow-sec-gen-kao-warns",
+        "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/14/asean-sec-gen-asean-must-move-from-frameworks-to-outcomes"
+      ]
+    },
+    {
+      "title": "AMCDR opens in Manila as PH Chair flagship on disaster resilience",
+      "summary": "Two-day ASEAN Ministerial Conference on Disaster Resilience, 15-16 Sep, hosted by OCD. Implementation agenda (DRR, anticipatory action, financing). Outcomes pending at cutoff.",
+      "countries": ["PHL"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["disaster", "chair_track", "institutional"],
+      "sources": [
+        "https://www.philstar.com/nation/2026/09/15/2556317/asean-ministers-meet-disaster-management"
+      ]
+    },
+    {
+      "title": "Thailand EC accuses 26 sitting senators of 2024 Senate-election collusion",
+      "summary": "77 people in the file; 60 days to petition Supreme Court. Penalties up to 10 years. Alleged Bhumjaithai alignment unconfirmed by named list. Protests 13 Sep (iLaw).",
+      "countries": ["THA"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "peripheral",
+      "claim_type": "fact",
+      "topics": ["domestic_politics", "elections"],
+      "sources": [
+        "https://www.malaymail.com/news/world/2026/09/14/thailand-accuses-26-senators-of-rigging-election-in-vote-buying-scandal/235226"
+      ]
+    },
+    {
+      "title": "Anwar: Malaysia BRICS partner track is hedging, not bloc opposition",
+      "summary": "Post-summit remarks in India, 14 Sep. Partner status since 1 Jan 2025; membership moratorium. Restated ties with USA/EU/AUS; local-currency settlement language.",
+      "countries": ["MYS"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "official_claim",
+      "topics": ["hedging", "brics", "external_alignment"],
+      "sources": [
+        "https://www.thestar.com.my/news/nation/2026/09/14/joining-brics-not-about-opposing-other-blocs-but-to-seek-fairer-global-order-says-anwar"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Cambodia–Myanmar cooperation package (DTA; investment; cultural amendment; media MoU)",
+      "type": "bilateral_package",
+      "parties": ["KHM", "MMR"],
+      "status": "signed",
+      "date": "2026-09-11",
+      "venue": "Phnom Penh",
+      "bindingness": "mixed",
+      "chair_year_relevance": "tests 5PC vs bilateral normalisation",
+      "in_window": false,
+      "note": "Signed 11 Sep; still the latest instrument move. Outside 36h cutoff; carried as unfinished business."
+    },
+    {
+      "name": "Sadao–Bukit Kayu Hitam cross-border road inauguration",
+      "type": "connectivity",
+      "parties": ["THA", "MYS"],
+      "status": "announced",
+      "date": "2026-09-15",
+      "venue": "THA–MYS border",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Single-outlet (Thai Times); corroboration needed."
+    },
+    {
+      "name": "ASEAN Ministerial Conference on Disaster Resilience",
+      "type": "asean_meeting",
+      "parties": ["ASEAN"],
+      "status": "convened",
+      "date": "2026-09-15",
+      "venue": "Manila",
+      "bindingness": "political",
+      "in_window": true
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze",
+      "direction": "up",
+      "horizon": "3-10d",
+      "confidence": "H",
+      "trigger": "Hazardous API/PSI >300 in a capital; airport/school shutdowns; formal protest to Jakarta"
+    },
+    {
+      "risk": "IDR / IDN fiscal credibility",
+      "direction": "down_then_flat",
+      "horizon": "1-8w",
+      "confidence": "M",
+      "trigger": "Deficit-path backtrack; capital controls; another MoF/BI shock"
+    },
+    {
+      "risk": "THA Senate/EC/Court elite bargain",
+      "direction": "up",
+      "horizon": "60d",
+      "confidence": "M",
+      "trigger": "Court accepts mass petition; cabinet crisis; street fatalities"
+    },
+    {
+      "risk": "Myanmar 5PC vs bilateral normalisation",
+      "direction": "flat",
+      "horizon": "1-3m",
+      "confidence": "M",
+      "trigger": "Emergency AMM; change in Myanmar representation rule"
+    },
+    {
+      "risk": "SCS gray-zone PHL–CHN",
+      "direction": "flat_elevated",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Shots fired or collision involving major-power assets"
+    }
+  ],
+  "open_questions": [
+    "Indonesian BMKG/KLHK hotspot and enforcement releases for 14–15 Sep",
+    "AMCDR outcome documents / haze paragraph",
+    "Full text of Presidential Decree 97/P (2026) and Suahasil first written guidance",
+    "EC named list of the 26 senators",
+    "PMO/MFA corroboration of THA–MYS road inauguration",
+    "Live USD crosses for IDR MYR THB PHP VND SGD at 08:00 UTC",
+    "TLS remaining ASEAN-instrument accessions"
+  ],
+  "sources": [
+    {
+      "title": "Air quality in all regions of Singapore in unhealthy range; central PSI 154",
+      "publisher": "CNA",
+      "url": "https://www.channelnewsasia.com/singapore/singapore-haze-psi-unhealthy-6382851",
+      "published_at": "2026-09-15",
+      "countries": ["SGP"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Haze worsens across Malaysia, 38 areas unhealthy",
+      "publisher": "CNA",
+      "url": "https://www.channelnewsasia.com/asia/haze-worsens-across-malaysia-38-areas-recording-unhealthy-air-quality-6385056",
+      "published_at": "2026-09-15",
+      "countries": ["MYS", "SGP", "IDN"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Transboundary haze reaches southern Vietnam",
+      "publisher": "The Star / Bernama / ASMC",
+      "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/14/transboundary-haze-reaches-southern-vietnam-as-singapore039s-central-region-turns-unhealthy",
+      "published_at": "2026-09-14",
+      "countries": ["SGP", "VNM", "IDN", "MYS"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Prabowo appoints Nazara to replace Purbaya as finance minister",
+      "publisher": "ANTARA",
+      "url": "https://en.antaranews.com/news/431237/prabowo-appoints-nazara-to-replace-purbaya-as-finance-minister",
+      "published_at": "2026-09-14",
+      "countries": ["IDN"],
+      "topics": ["macro"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "indirect"
+    },
+    {
+      "title": "ASEAN risks irrelevance as sub-groupings grow, Sec-Gen Kao warns",
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/asia/se-asia/asean-risks-irrelevance-as-sub-groupings-grow-sec-gen-kao-warns",
+      "published_at": "2026-09-14",
+      "countries": [],
+      "topics": ["institutional"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "ASEAN ministers to meet on disaster management",
+      "publisher": "Philstar",
+      "url": "https://www.philstar.com/nation/2026/09/15/2556317/asean-ministers-meet-disaster-management",
+      "published_at": "2026-09-15",
+      "countries": ["PHL"],
+      "topics": ["institutional"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Thailand accuses 26 senators of rigging election",
+      "publisher": "Malay Mail / AFP",
+      "url": "https://www.malaymail.com/news/world/2026/09/14/thailand-accuses-26-senators-of-rigging-election-in-vote-buying-scandal/235226",
+      "published_at": "2026-09-14",
+      "countries": ["THA"],
+      "topics": ["domestic_politics"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "peripheral"
+    },
+    {
+      "title": "Anwar on BRICS partner status",
+      "publisher": "The Star / Bernama",
+      "url": "https://www.thestar.com.my/news/nation/2026/09/14/joining-brics-not-about-opposing-other-blocs-but-to-seek-fairer-global-order-says-anwar",
+      "published_at": "2026-09-14",
+      "countries": ["MYS"],
+      "topics": ["hedging"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "asean_relevance": "indirect"
+    }
+  ]
+}
