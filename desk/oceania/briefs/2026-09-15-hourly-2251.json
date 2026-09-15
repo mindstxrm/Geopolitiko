@@ -1,0 +1,277 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T21:51:00Z",
+  "window_end_utc": "2026-09-15T22:51:00Z",
+  "generated_at_utc": "2026-09-15T23:12:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T21:51:00Z",
+  "countries_touched": ["VUT", "PNG", "TON", "FJI", "SLB", "AUS", "CHN", "MHL", "FSM", "NZL", "COK"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "VMSA lodges Matui criminal complaint; Napuati wants Master arrested; family-list 53; confirmed SAR band unchanged",
+      "summary": "In-window Daily Post (16 Sep): VMSA complaint lodged with police Monday 14 Sep against captain, management and owners (Shipping Act s.42). Napuati requests Penal Code s.108 charges for unintentional death. Family/relative list 53 including crew is CLAIM, not a verified manifest. Confirmed still 2 dead / 14 survivors / ~30+ missing. Arrest requested, not confirmed. PENAMA police to protect owner family on Ambae. VFSC notices page still has no Tui extract; Daily Post adds 22 Jun Limited Partnership certification after 2 Jun business-name strike-off. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.dailypost.vu/news/police-to-provide-security-support-to-mv-matui-ship-owner-s-family/article_03ab545f-e619-5015-a70a-951ca60df643.html",
+        "https://www.vfsc.vu/public-notices/",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+        "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster"
+      ]
+    },
+    {
+      "title": "China hands Vanuatu US$100k for Ambae volcanic response and MV Matui — modest grant, not a pact",
+      "summary": "In-window wire. Daily Post and RNZ (10:03 NZST 16 Sep / 22:03 UTC 15 Sep): US$100,000 (VT11m / ~NZ$155k) handed over 15 Sep afternoon in Port Vila by Ambassador Li Minggang to PM Napat. Reported split: VT4.6m Ambae drilling machine, VT4.4m Ambae relief goods, VT2.25m Matui response. Napat thanked Xi. Distinct from the earlier VT6.8bn earthquake reconstruction grant. Do not inflate into alignment shift or security presence. Not FLASH.",
+      "countries": ["VUT", "CHN"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "sources": [
+        "https://www.dailypost.vu/news/china-donates-us-100-000-for-ambae-mv-matui-tragedy-response/article_674993f3-841d-5a80-990c-cc7bf1b93b21.html",
+        "https://www.rnz.co.nz/news/pacific/1410325/vanuatu-pm-praises-china-s-generous-nz-155-000-donation-for-dual-disaster-recovery"
+      ]
+    },
+    {
+      "title": "PNG still no 16 Sep Panguna national-day text or BPS SITREP; PMMM-4 sitting still unconfirmed",
+      "summary": "PMNEC still has no 16 Sep transcript. Post Courier ceremony piece unchanged (unity/constitution quote; body paywalled). NBC Independence copy still provincial plus a Lae schools-arrive item — no Panguna. RNZ still no Lloyds reply. PMMM-4: Tonga 11:51 local — Item 4 slot if programme held. No Chair, no Matatoa text. Adoption still 02:30–04:00 UTC 16 Sep. East Makira and Fiji HIV gazette unchanged. AUS–SLB still unsigned.",
+      "countries": ["PNG", "TON", "SLB", "FJI", "AUS"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.pmnec.gov.pg/",
+        "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+        "https://www.nbc.com.pg/",
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/",
+        "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+        "https://www.fiji.gov.fj/Media-Centre/News"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "CHN-VUT dual-disaster cash grant",
+      "parties": ["CHN", "VUT"],
+      "status": "announced_handed_over_2026-09-15",
+      "notes": "US$100k / VT11m; Ambae wells/relief + Matui response; not a security pact; distinct from VT6.8bn quake reconstruction"
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "complaint_lodged_2026-09-14_wired_this_hour",
+      "notes": "Shipping Act s.42 alleged; Penal Code s.108 arrest requested not confirmed; family-list 53 CLAIM"
+    },
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "item4_slot_sitting_unconfirmed",
+      "notes": "Programme listed Item 4 22:30–23:30 UTC; no official confirmation or adopted text. Adoption still 02:30–04:00 UTC 16 Sep."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "up",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges/arrest executed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "CHN-VUT disaster-aid optics",
+      "direction": "up",
+      "horizon": "days",
+      "confidence": "H",
+      "escalate_trigger": "Follow-on security/police/port language; not FLASH on US$100k cash"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "0-5h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "SLB East Makira community arson",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "M",
+      "escalate_trigger": "Spread beyond Wainoni; Honiara unrest; RSIPF partner-force request; FLASH only if capital-scale"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "stable",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    },
+    {
+      "risk": "Penrhyn dual-use / access",
+      "direction": "stable",
+      "horizon": "months (design phase)",
+      "confidence": "M",
+      "escalate_trigger": "Published defence-access instrument or official confirmation of standing foreign security presence"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs the family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs the 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full 16 Sep Marape Independence transcript — Bougainville/Panguna/Lloyds mention or unity-only?",
+    "First verified ABG 16 Sep remarks on Panguna?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "PMMM-4 sitting-open / Chair confirmation; Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note?",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?",
+    "Fiji HIV gazette / Legal Notice under s.69 Public Health Act 1935? Next-sitting order paper for needle-programme / SO 51?",
+    "Penrhyn: any new official text beyond the 1 Sep joint statement / 5 Sep Novelly interview?",
+    "East Makira: arrests/charges; displacement numbers; any RSIPF reinforcement from Honiara?",
+    "Any ANZ/other-partner Matui/Ambae package announced against the China US$100k?"
+  ],
+  "sources": [
+    {
+      "title": "Criminal complaint lodged, VMSA wants MV Matui captain arrested",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+      "published_at": "2026-09-15T21:51:00Z",
+      "countries": ["VUT"],
+      "topics": ["maritime", "governance", "humanitarian"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "China donates US$100,000 for Ambae, MV Matui tragedy response",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/china-donates-us-100-000-for-ambae-mv-matui-tragedy-response/article_674993f3-841d-5a80-990c-cc7bf1b93b21.html",
+      "published_at": "2026-09-15T20:51:00Z",
+      "countries": ["VUT", "CHN"],
+      "topics": ["humanitarian", "development", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic"
+    },
+    {
+      "title": "Vanuatu PM praises China's 'generous' NZ$155,000 donation for dual-disaster recovery",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1410325/vanuatu-pm-praises-china-s-generous-nz-155-000-donation-for-dual-disaster-recovery",
+      "published_at": "2026-09-15T22:03:00Z",
+      "countries": ["VUT", "CHN"],
+      "topics": ["humanitarian", "development", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic"
+    },
+    {
+      "title": "Police to provide security support to MV Matui ship owner’s family",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/police-to-provide-security-support-to-mv-matui-ship-owner-s-family/article_03ab545f-e619-5015-a70a-951ca60df643.html",
+      "published_at": "2026-09-15T22:01:00Z",
+      "countries": ["VUT"],
+      "topics": ["governance", "humanitarian"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "We are one people, one nation and one country",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+      "published_at": "2026-09-15T21:23:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Vanuatu PM scraps UNGA trip as dozens remain missing after ferry disaster",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+      "published_at": "2026-09-15T05:20:00Z",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Solomon Islands police investigate burning of 13 homes in East Makira",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1408416/solomon-islands-police-investigate-burning-of-13-homes-in-east-makira",
+      "published_at": "2026-09-15T19:18:00Z",
+      "countries": ["SLB"],
+      "topics": ["governance", "security"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Australia-Solomon Islands engagement",
+      "publisher": "DFAT",
+      "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+      "published_at": "2026-06-03",
+      "countries": ["AUS", "SLB"],
+      "topics": ["security", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
