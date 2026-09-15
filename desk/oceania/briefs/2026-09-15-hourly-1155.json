@@ -1,0 +1,186 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T11:10:00Z",
+  "window_end_utc": "2026-09-15T11:55:00Z",
+  "generated_at_utc": "2026-09-15T11:55:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T11:10:00Z",
+  "countries_touched": ["FJI", "VUT", "TON", "TUV", "AUS", "MHL", "PNG", "GUM", "MNP", "PLW", "FSM", "SLB"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Fiji appoints Solo Mara MFA&ET Permanent Secretary",
+      "summary": "Public Service process complete; Taga contract ended; three-week handover. Official MFA statement 15 Sep. PIDF status not stated in the release.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.foreignaffairs.gov.fj/ministry-of-foreign-affairs-and-external-trade-welcomes-new-permanent-secretary/",
+        "https://pina.com.fj/2026/09/15/solo-mara-appointed-fiji-foreign-affairs-permanent-secretary/"
+      ]
+    },
+    {
+      "title": "Tui Shipping Agency business name struck off VFSC (CLAIM)",
+      "summary": "Daily Post cites a VFSC source: registered 6 Mar 2024, removed 2 Jun 2026. Separate from VMSA vessel-certification findings. Matui toll band unchanged.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.dailypost.vu/news/tui-shipping-deregistered-by-vfsc-in-june/article_19622689-0ec1-5b8c-8e49-f0bda46b2374.html",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/"
+      ]
+    },
+    {
+      "title": "Pre-COP31 expects 2000+ delegates in Nadi; leaders’ hop in Tuvalu",
+      "summary": "Waqairamasi at PMC-8: 5–8 Oct, AUS-funded with FJI/TUV; 360 side-event EOIs, 126 selected. Concurrent Tuvalu leaders’ component 5–6 Oct.",
+      "countries": ["FJI", "TUV", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://fijisun.com.fj/news/nation/2000-plus-delegates-expected-for-pre-cop31"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Solo Mara MFA&ET Permanent Secretary",
+      "type": "personnel",
+      "parties": ["FJI"],
+      "status": "in force (3-week handover)",
+      "bindingness": "administrative",
+      "date": "2026-09-15",
+      "strategic_read_ASSESS": "HQ continuity for Pre-COP31/COP31 window; not a pact"
+    },
+    {
+      "name": "Pre-COP31 (Australia–Pacific)",
+      "type": "climate convening",
+      "parties": ["AUS", "FJI", "TUV"],
+      "status": "convening 2026-10-05 to 2026-10-08",
+      "bindingness": "political",
+      "date": "2026-09-15",
+      "strategic_read_ASSESS": "Logistics scale update; funding already framed as AUS partnership"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "FJI MFA transition during Pre-COP31 prep",
+      "direction": "new_watch",
+      "horizon": "3 weeks",
+      "confidence": "H",
+      "escalate_trigger": "Handover disruption to partner coordination"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "24h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    }
+  ],
+  "open_questions": [
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "MV Matui passenger manifest / onboard total?",
+    "PMMM-4 Matatoa Declaration text on 16 Sep?",
+    "WIM ExCom 25 decision language on 18 Sep?",
+    "AUS-SLB signature date?"
+  ],
+  "sources": [
+    {
+      "title": "Ministry of Foreign Affairs and External Trade Welcomes New Permanent Secretary",
+      "publisher": "Fiji MFA&ET",
+      "url": "https://www.foreignaffairs.gov.fj/ministry-of-foreign-affairs-and-external-trade-welcomes-new-permanent-secretary/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["governance", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Solo Mara appointed Fiji Foreign Affairs Permanent Secretary",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/solo-mara-appointed-fiji-foreign-affairs-permanent-secretary/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "TUI SHIPPING deregistered by VFSC in June",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/tui-shipping-deregistered-by-vfsc-in-june/article_19622689-0ec1-5b8c-8e49-f0bda46b2374.html",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["maritime", "governance"],
+      "claim_type": "CLAIM",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Vanuatu PM cancels UN trip after MV Matui tragedy",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/vanuatu-pm-cancels-un-trip-after-mv-matui-tragedy/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "2000-plus delegates expected for Pre-COP31",
+      "publisher": "Fiji Sun",
+      "url": "https://fijisun.com.fj/news/nation/2000-plus-delegates-expected-for-pre-cop31",
+      "published_at": "2026-09-15",
+      "countries": ["FJI", "TUV", "AUS"],
+      "topics": ["climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "US think tank proposes military shift to Guam, CNMI and Pacific Islands",
+      "publisher": "RNZ",
+      "url": "https://www.rnz.co.nz/news/pacific/1387911/us-think-tank-proposes-military-shift-to-guam-cnmi-and-pacific-islands",
+      "published_at": "2026-09-15",
+      "countries": ["GUM", "MNP", "PLW", "FSM", "MHL"],
+      "topics": ["alliance", "COFA"],
+      "claim_type": "ASSESS",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "$3.9bn reserves | Buffer strong despite 5.7% inflation",
+      "publisher": "Fiji Times",
+      "url": "https://www.fijitimes.com.fj/3-9bn-reserves-buffer-strong-despite-5-7-inflation/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["macro"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic"
+    }
+  ]
+}
