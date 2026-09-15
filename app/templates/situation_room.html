@@ -49,44 +49,40 @@
   </div>
   <section class="situation-main" aria-label="Global heatmap">
     <header class="situation-header">
-      <h1 class="page-title">Global Situation Room</h1>
-      <p class="page-intro">Where in the world should I be worried right now? <a href="{{ url_for('main.situation_room') }}?tour=1" class="tour-trigger-link">Take the tour</a></p>
-      {% if last_scrape_time %}
-      <p class="situation-data-freshness">Data as of <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time>{% if data_stale %} <span class="situation-stale-warning">— Data may be stale (last updated {{ "%.0f"|format(hours_since_scrape) }}h ago)</span>{% endif %}</p>
-      {% endif %}
-      <p class="situation-system-status"><span class="situation-status-dot {{ 'stale' if data_stale else 'ok' }}"></span> {{ system_status }}</p>
+      <h1 class="page-title">Situation Room</h1>
+      <p class="page-intro">A clear view of where risk is concentrating right now.</p>
+
       <div class="situation-top-strip" aria-label="Status and quick stats">
         <span class="situation-strip-item"><strong>{{ high_risk_count }}</strong> high-risk</span>
-        <span class="situation-strip-item"><strong>{{ alerts_firing }}</strong> alerts ({{ window }})</span>
+        <span class="situation-strip-item"><strong>{{ alerts_firing }}</strong> alerts</span>
         <span class="situation-strip-item"><strong>{{ articles_24h }}</strong> articles</span>
-        {% if highest_risk_region %}<span class="situation-strip-item">Top region: <strong>{{ highest_risk_region }}</strong></span>{% endif %}
-        {% if new_sanctions_7d is defined and new_sanctions_7d %}<span class="situation-strip-item"><strong>{{ new_sanctions_7d }}</strong> new sanctions (7d)</span>{% endif %}
-        {% if gepi_latest %}<span class="situation-strip-item" title="Escalation Pressure Index (0–1). Method: v{{ gepi_latest.model_version or '1.0' }}"><strong>{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</strong> GEPI</span>{% endif %}
+        {% if highest_risk_region %}<span class="situation-strip-item"><strong>{{ highest_risk_region }}</strong> top region</span>{% endif %}
         <span class="situation-window-toggle compact">
-          <span class="muted">Window</span>
           <a href="{{ url_for('main.situation_room', window='24h') }}" class="{{ 'active' if window == '24h' else '' }}">24h</a>
           <a href="{{ url_for('main.situation_room', window='7d') }}" class="{{ 'active' if window == '7d' else '' }}">7d</a>
         </span>
       </div>
 
       <nav class="situation-quick-links compact" aria-label="Quick access">
-        <a href="{{ url_for('main.index') }}" title="Intelligence Feed">Feed</a>
-        <a href="{{ url_for('main.risk_dashboard') }}" title="Risk Engine">Risk</a>
-        <a href="{{ url_for('main.diplomacy_sanctions') }}" title="Sanctions">Sanctions</a>
-        <a href="{{ url_for('main.approval_protests') }}#elections" title="Elections">Elections</a>
-        <a href="{{ url_for('main.workspace') }}" class="situation-workspace-cta" title="Workspace">Workspace →</a>
+        <a href="{{ url_for('main.index') }}">Feed</a>
+        <a href="{{ url_for('main.macro_dashboard') }}">Macro</a>
+        <a href="{{ url_for('main.risk_dashboard') }}">Risk</a>
+        <a href="{{ url_for('main.workspace') }}" class="situation-workspace-cta">Workspace</a>
       </nav>
 
       <details class="situation-help-collapsible">
-        <summary>How to use this page</summary>
+        <summary>More details</summary>
         <div class="situation-help-body">
-          <p class="contextual-help">Integrated view: composite risk shading + live incident markers (World Monitor). Click a country to open its dashboard; click a marker for details.</p>
-          <p class="contextual-help">Tip: use the command bar (<kbd>/</kbd> or <kbd>⌘K</kbd>) to jump quickly.</p>
+          {% if last_scrape_time %}
+          <p class="situation-data-freshness">Data as of <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time>{% if data_stale %} — may be stale ({{ "%.0f"|format(hours_since_scrape) }}h){% endif %}</p>
+          {% endif %}
+          <p class="situation-system-status"><span class="situation-status-dot {{ 'stale' if data_stale else 'ok' }}"></span> {{ system_status }}</p>
+          {% if new_sanctions_7d is defined and new_sanctions_7d %}<p class="contextual-help"><strong>{{ new_sanctions_7d }}</strong> new sanctions in the last 7 days.</p>{% endif %}
+          {% if gepi_latest %}<p class="contextual-help">GEPI: <strong>{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</strong></p>{% endif %}
+          <p class="contextual-help">Map combines stability, conflict, sanctions, trade, and supply signals. Click a country for its dashboard.</p>
+          <p class="contextual-help"><a href="{{ url_for('main.situation_room') }}?tour=1" class="tour-trigger-link">Take a short tour</a></p>
         </div>
       </details>
-      <div class="situation-map-legend" aria-hidden="true">
-        <span id="situation-legend-caption" class="legend-caption">Composite risk: stability + conflict + sanctions + trade + supply</span>
-      </div>
     </header>
     <div class="situation-map-wrap">
       <div id="situation-map" class="situation-map" aria-live="polite" data-has-risk-data="{{ 'true' if (heat_map or integration_countries or risk_index) else 'false' }}">Loading map…</div>

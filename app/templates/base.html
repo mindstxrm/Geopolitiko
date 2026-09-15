@@ -114,8 +114,14 @@
           </form>
           <div id="command-suggestions" class="command-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
         </div>
-        <span class="command-hint">Type to jump (country, region, risk…). <kbd>/</kbd> or <kbd>⌘K</kbd> focus. <kbd>⌘⇧1</kbd>–<kbd>4</kbd> open <strong>Workspace</strong> presets (CHN, SGP, ASEAN, TWN). <kbd>⌘⇧W</kbd> Workspace.</span>
-        <a href="{{ url_for('main.help_page') }}#command-bar" class="command-help-link" aria-label="How search works">?</a>
+        <details class="command-help-details">
+          <summary class="command-help-summary" aria-label="Search shortcuts">Shortcuts</summary>
+          <div class="command-help-panel">
+            Jump with <kbd>/</kbd> or <kbd>⌘K</kbd>. Search by country, region, risk, or scenario.
+            Workspace presets: <kbd>⌘⇧1</kbd>–<kbd>4</kbd> (CHN, SGP, ASEAN, TWN). <kbd>⌘⇧W</kbd> opens Workspace.
+            <a href="{{ url_for('main.help_page') }}#command-bar">Help</a>
+          </div>
+        </details>
       </div>
       <div class="top-bar-links">
         {% if current_user.is_authenticated %}

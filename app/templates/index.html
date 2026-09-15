@@ -7,34 +7,30 @@
   {% set w = window or '7d' %}
   <header class="intelligence-feed-header">
     <h1 class="page-title">Intelligence Feed</h1>
-    <p class="page-intro">Not raw news. Structured intelligence: filter by country and risk category, confidence score, signal vs noise ranking.</p>
-    {% if last_scrape_time %}
-    <p class="feed-meta">Last feed refresh: {{ (last_scrape_time or '')[:19].replace('T', ' ') }} UTC</p>
-    {% endif %}
-    <div class="feed-header-actions">
+    <p class="page-intro">Structured geopolitical stories with country, risk, and signal filters.</p>
+    <div class="feed-header-actions feed-header-actions--compact">
       {% if country_filter or risk_category_filter or request.args.get('source') or request.args.get('topic') or topic_filter_list or country_filter_list or risk_category_filter_list or domain_filter or impact_filter or search_query or watchlist_id %}
       <a href="{{ url_for('main.index', window='7d') }}" class="feed-clear-link">Clear filters</a>
       {% endif %}
-      <details class="feed-score-help">
-        <summary aria-label="What do C and S mean?">Scores</summary>
-        <p class="feed-score-help-text">C = confidence (0–100). S = signal vs noise (higher = more signal).</p>
+      <details class="feed-more-menu">
+        <summary>More</summary>
+        <div class="feed-more-panel">
+          {% if last_scrape_time %}
+          <p class="feed-meta">Last refresh: {{ (last_scrape_time or '')[:19].replace('T', ' ') }} UTC</p>
+          {% endif %}
+          {% if today_count is not none and yesterday_count is not none %}
+          <p class="feed-trending-hint">Today: <strong>{{ today_count }}</strong>{% if yesterday_count is not none %} · yesterday: {{ yesterday_count }}{% endif %}</p>
+          {% endif %}
+          <p class="feed-score-help-text">C = confidence (0–100). S = signal vs noise.</p>
+          <div class="feed-more-links">
+            <button type="button" class="feed-copy-link-btn" data-feed-url="{{ request.url }}">Copy link</button>
+            <a href="{{ url_for('main.feed_rss', **feed_query) }}" class="feed-rss-link">RSS</a>
+            <a href="{{ url_for('main.feed_export_csv', **feed_query) }}">Export CSV</a>
+          </div>
+        </div>
       </details>
-      <button type="button" class="feed-copy-link-btn" data-feed-url="{{ request.url }}">Copy link to this view</button>
-      <a href="{{ url_for('main.feed_rss', **feed_query) }}" class="feed-rss-link">RSS</a>
-      <a href="{{ url_for('main.feed_export_csv', **feed_query) }}">Export CSV</a>
     </div>
   </header>
-
-  {% if today_count is not none and yesterday_count is not none %}
-  <p class="feed-trending-hint">Today: <strong>{{ today_count }}</strong> stories{% if yesterday_count is not none %} (yesterday: {{ yesterday_count }}){% endif %}</p>
-  {% endif %}
-  {% if daily_counts_sparkline and daily_sparkline_max %}
-  <div class="feed-sparkline" aria-hidden="true" title="Last 7 days">
-    {% for d in daily_counts_sparkline %}
-    <span class="feed-sparkline-bar" style="height: {{ (d.count / daily_sparkline_max * 24)|int }}px" title="{{ d.day }}: {{ d.count }}"></span>
-    {% endfor %}
-  </div>
-  {% endif %}
 
   {% if search_query %}
   <p class="feed-search-chip">Search: <strong>{{ search_query }}</strong> <a href="{{ url_for('main.index', **feed_query_no_search) }}" class="feed-remove-search">Clear search</a></p>
@@ -42,24 +38,11 @@
   <div class="intelligence-feed-command-strip" role="toolbar" aria-label="Feed controls">
     <div class="feed-command-strip-top">
       <div class="time-window time-window-inline" aria-label="Time window">
-        <span class="time-window-label">Time:</span>
+        <span class="time-window-label">Time</span>
         <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='1d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '1d' else '' }}">24h</a>
         <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='3d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '3d' else '' }}">3d</a>
         <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='7d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '7d' else '' }}">7d</a>
         <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort, window='30d', watchlist_id=watchlist_id, q=search_query) }}" class="time-window-chip {{ 'active' if w == '30d' else '' }}">30d</a>
-      </div>
-
-      <div class="sort-toggle" aria-label="Ranking sort">
-        <span class="sort-label">Rank by:</span>
-        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='date', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'date' else '' }}">Date</a>
-        <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='signal', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'signal' else '' }}">Signal vs noise</a>
-      </div>
-
-      <div class="layout-toggle" aria-label="Layout density">
-        <span class="sort-label">Layout:</span>
-        <a href="{{ url_for('main.index', **feed_query_layout_card) }}" class="sort-chip {{ 'active' if layout == 'card' else '' }}">Card</a>
-        <a href="{{ url_for('main.index', **feed_query_layout_compact) }}" class="sort-chip {{ 'active' if layout == 'compact' else '' }}">Compact</a>
-        <a href="{{ url_for('main.index', **feed_query_layout_grid) }}" class="sort-chip {{ 'active' if layout == 'grid' else '' }}">Grid</a>
       </div>
 
       <div class="feed-command-strip-actions">
@@ -67,6 +50,23 @@
         <button type="button" class="feed-sidebar-open-btn" id="feed-sidebar-open-btn" aria-controls="feed-sidebar-panel" aria-expanded="false">Sidebar</button>
       </div>
     </div>
+
+    <details class="feed-view-options">
+      <summary>More view options</summary>
+      <div class="feed-view-options-body">
+        <div class="sort-toggle" aria-label="Ranking sort">
+          <span class="sort-label">Rank by</span>
+          <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='date', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'date' else '' }}">Date</a>
+          <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='signal', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'signal' else '' }}">Signal</a>
+        </div>
+        <div class="layout-toggle" aria-label="Layout density">
+          <span class="sort-label">Layout</span>
+          <a href="{{ url_for('main.index', **feed_query_layout_card) }}" class="sort-chip {{ 'active' if layout == 'card' else '' }}">Card</a>
+          <a href="{{ url_for('main.index', **feed_query_layout_compact) }}" class="sort-chip {{ 'active' if layout == 'compact' else '' }}">Compact</a>
+          <a href="{{ url_for('main.index', **feed_query_layout_grid) }}" class="sort-chip {{ 'active' if layout == 'grid' else '' }}">Grid</a>
+        </div>
+      </div>
+    </details>
 
     <div class="feed-active-filter-chips" aria-label="Active filters">
       {% if country_filter %}<span class="feed-active-filter-chip">Country: {{ country_filter }}</span>{% endif %}
@@ -81,7 +81,7 @@
   </div>
 
   <section class="filters feed-filters-panel" id="feed-filters-panel">
-    <form method="get" class="filter-form" id="filter-form">
+    <form method="get" class="filter-form filter-form--modern" id="filter-form">
       <input type="hidden" name="window" value="{{ w }}">
       <input type="hidden" name="page" value="1">
       <input type="hidden" name="per_page" value="{{ per_page or 25 }}">
@@ -89,21 +89,27 @@
       {% if impact_filter %}<input type="hidden" name="impact" value="{{ impact_filter }}">{% endif %}
       {% if domain_filter %}<input type="hidden" name="domain" value="{{ domain_filter }}">{% endif %}
       {% if sort %}<input type="hidden" name="sort" value="{{ sort }}">{% endif %}
-      <label for="country">Country</label>
-      <select name="country" id="country" onchange="this.form.submit()">
-        <option value="">All countries</option>
-        {% for val, label in (country_options or []) %}
-        <option value="{{ val }}" {{ 'selected' if country_filter == val else '' }}>{{ label }}</option>
-        {% endfor %}
-      </select>
-      <label for="risk_category">Risk category</label>
-      <select name="risk_category" id="risk_category" onchange="this.form.submit()">
-        <option value="">All risk categories</option>
-        {% for et in (event_types or []) %}
-        <option value="{{ et }}" {{ 'selected' if risk_category_filter == et else '' }}>{{ et }}</option>
-        {% endfor %}
-      </select>
-      <details class="feed-advanced-filters">
+      <div class="feed-primary-filters">
+        <div class="feed-filter-field">
+          <label for="country">Country</label>
+          <select name="country" id="country" onchange="this.form.submit()">
+            <option value="">All countries</option>
+            {% for val, label in (country_options or []) %}
+            <option value="{{ val }}" {{ 'selected' if country_filter == val else '' }}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="feed-filter-field">
+          <label for="risk_category">Risk category</label>
+          <select name="risk_category" id="risk_category" onchange="this.form.submit()">
+            <option value="">All risk categories</option>
+            {% for et in (event_types or []) %}
+            <option value="{{ et }}" {{ 'selected' if risk_category_filter == et else '' }}>{{ et }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <details class="feed-advanced-filters"{% if request.args.get('source') or request.args.get('topic') or watchlist_id %} open{% endif %}>
         <summary>More filters</summary>
         <div class="feed-advanced-grid">
           {% if watchlists %}

@@ -707,7 +707,7 @@ body.terminal.macro-terminal .macro-workstation {
   display: grid;
   /* Wider center, slimmer side rails */
   grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(210px, 260px);
-  gap: 10px;
+  gap: 16px;
   align-items: start;
 }
 
@@ -727,15 +727,15 @@ body.terminal.macro-terminal .macro-page {
 }
 
 body.terminal.macro-terminal .macro-page-head {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 /* Macro market strip (top-of-page terminal tiles) */
 body.terminal.macro-terminal .macro-market-strip {
   display: grid;
   grid-template-columns: 1.1fr 1fr 1.35fr;
-  gap: 10px;
-  margin: 0 0 10px;
+  gap: 14px;
+  margin: 12px 0 0;
 }
 
 @media (max-width: 1200px) {
@@ -873,8 +873,8 @@ body.terminal .mini-terminal-table .muted {
 }
 
 body.terminal.macro-terminal .macro-page-title {
-  margin: 0 0 4px;
-  font-size: 1.2rem;
+  margin: 0 0 6px;
+  font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--t-ink);
@@ -882,36 +882,36 @@ body.terminal.macro-terminal .macro-page-title {
 
 body.terminal.macro-terminal .macro-page-sub {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--t-ink-muted);
-  max-width: 90ch;
+  max-width: 58ch;
 }
 
 body.terminal.macro-terminal .macro-toolbar {
   border: 1px solid var(--t-border);
   border-radius: var(--radius-sm);
   background: var(--t-surface-elevated);
-  padding: 10px 10px;
-  margin-bottom: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
 }
 
 body.terminal.macro-terminal .macro-toolbar-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 body.terminal.macro-terminal .macro-toolbar-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 8px 10px;
+  gap: 12px;
 }
 
 body.terminal.macro-terminal .macro-toolbar-row--secondary {
-  border-top: 1px solid var(--t-border);
-  padding-top: 8px;
-  margin-top: 2px;
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 10px;
 }
 
 body.terminal.macro-terminal .macro-field {
@@ -951,7 +951,7 @@ body.terminal.macro-terminal .macro-select:focus,
 body.terminal.macro-terminal .macro-input:focus {
   outline: none;
   border-color: var(--t-accent);
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 0 2px rgba(110, 168, 255, 0.25);
 }
 
 body.terminal.macro-terminal .macro-toolbar-actions {
@@ -1018,8 +1018,7 @@ body.terminal.macro-terminal .macro-panel-hint {
 
 body.terminal.macro-terminal .macro-chart-stage {
   width: 100%;
-  /* Denser by default; JS still sets explicit heights */
-  min-height: 300px;
+  min-height: 320px;
   border: 1px solid var(--t-border);
   border-radius: var(--radius-sm);
   background: rgba(0, 0, 0, 0.2);
@@ -1050,12 +1049,12 @@ body.terminal.macro-terminal .macro-heatmap-block {
 }
 
 body.terminal.macro-terminal .macro-main .sidebar-panel {
-  padding: 12px 12px;
+  padding: 16px;
 }
 
 body.terminal.macro-terminal .macro-left .sidebar-panel,
 body.terminal.macro-terminal .macro-right .sidebar-panel {
-  padding: 12px 12px;
+  padding: 16px;
 }
 
 body.terminal.macro-terminal table.macro-heatmap th:first-child,

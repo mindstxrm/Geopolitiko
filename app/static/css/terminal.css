@@ -1,23 +1,28 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Geopolitical Terminal — Global Design System (Foundation)
-   Command-center feel: dark default, left nav, top command bar, keyboard-first.
+   Geopolitiko — Modern product UI (Foundation)
+   Clean dark workspace: soft blue accent, calm surfaces, less terminal clutter.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Terminal theme (dark default) */
+/* Theme (dark, approachable) */
 body.terminal {
-  --t-bg: #0c0e12;
-  --t-surface: #14171d;
-  --t-surface-elevated: #1a1e26;
-  --t-ink: #e6e9ef;
-  --t-ink-secondary: #9ca3b4;
-  --t-ink-muted: #6b7280;
-  --t-border: #272b33;
-  --t-accent: #22c55e;
-  --t-accent-dim: #16a34a;
-  --t-accent-muted: rgba(34, 197, 94, 0.12);
-  --t-focus-ring: rgba(34, 197, 94, 0.35);
-  --t-nav-width: 220px;
-  --t-command-bar-height: 56px;
+  --t-bg: #0b0f17;
+  --t-surface: #121826;
+  --t-surface-elevated: #182033;
+  --t-ink: #eef2ff;
+  --t-ink-secondary: #a8b3c7;
+  --t-ink-muted: #7b879c;
+  --t-border: #243044;
+  --t-accent: #6ea8ff;
+  --t-accent-dim: #4f8ef7;
+  --t-accent-muted: rgba(110, 168, 255, 0.14);
+  --t-focus-ring: rgba(110, 168, 255, 0.35);
+  --t-danger: #f87171;
+  --t-success: #34d399;
+  --t-warning: #fbbf24;
+  --t-radius: 12px;
+  --t-radius-sm: 8px;
+  --t-nav-width: 232px;
+  --t-command-bar-height: 60px;
   --t-font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --t-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
   background: var(--t-bg);
@@ -31,6 +36,7 @@ body.terminal {
   grid-template-areas:
     "nav command"
     "nav main";
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Embedded pages (?embed=1): no side nav / command bar; slim top bar + full-width main */
@@ -12896,4 +12902,398 @@ body.terminal .account-section .checkbox-label {
   gap: 8px;
   margin: 10px 0;
   font-size: 0.875rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Modern declutter layer — calmer chrome, softer cards, less visual noise
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.terminal .terminal-nav {
+  background: linear-gradient(180deg, #121826 0%, #0f1522 100%);
+  border-right-color: rgba(36, 48, 68, 0.9);
+}
+
+body.terminal .terminal-nav-list a,
+body.terminal .nav-group-trigger {
+  border-radius: 8px;
+  margin: 2px 10px;
+  padding-left: 12px !important;
+}
+
+body.terminal .terminal-nav-list a.active,
+body.terminal .nav-group-menu a.active {
+  border-left: 0 !important;
+  background: var(--t-accent-muted);
+  color: var(--t-accent);
+  box-shadow: inset 0 0 0 1px rgba(110, 168, 255, 0.18);
+}
+
+body.terminal .terminal-command-bar {
+  background: rgba(18, 24, 38, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(36, 48, 68, 0.85);
+}
+
+body.terminal .terminal-command-bar .command-hint {
+  display: none;
+}
+
+body.terminal .terminal-command-bar .command-help-details {
+  position: relative;
+}
+
+body.terminal .terminal-command-bar .command-help-summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--t-ink-muted);
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+}
+
+body.terminal .terminal-command-bar .command-help-summary::-webkit-details-marker {
+  display: none;
+}
+
+body.terminal .terminal-command-bar .command-help-details[open] .command-help-summary {
+  color: var(--t-accent);
+  border-color: rgba(110, 168, 255, 0.35);
+}
+
+body.terminal .terminal-command-bar .command-help-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 80;
+  width: min(420px, 70vw);
+  padding: 12px 14px;
+  border-radius: var(--t-radius-sm);
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-elevated);
+  color: var(--t-ink-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.terminal .terminal-main {
+  padding: 28px 36px 56px;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(110, 168, 255, 0.08), transparent 55%),
+    var(--t-bg);
+}
+
+body.terminal .page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+}
+
+body.terminal .page-intro {
+  color: var(--t-ink-secondary);
+  max-width: 62ch;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+body.terminal .sidebar-panel,
+body.terminal .empty-state-box,
+body.terminal .indicator-table-wrap,
+body.terminal .article-card,
+body.terminal .situation-panel {
+  border-radius: var(--t-radius) !important;
+  border-color: rgba(36, 48, 68, 0.95) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+body.terminal .btn,
+body.terminal .macro-btn,
+body.terminal .time-window-chip,
+body.terminal .sort-chip {
+  border-radius: 999px !important;
+}
+
+body.terminal .situation-header {
+  margin-bottom: 16px;
+}
+
+body.terminal .situation-header .page-intro {
+  margin-bottom: 12px;
+}
+
+body.terminal .situation-top-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+body.terminal .situation-strip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--t-surface-elevated);
+  border: 1px solid var(--t-border);
+  font-size: 0.8125rem;
+  color: var(--t-ink-secondary);
+}
+
+body.terminal .situation-strip-item strong {
+  color: var(--t-ink);
+  font-weight: 650;
+}
+
+body.terminal .situation-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+body.terminal .situation-quick-links a {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-ink-secondary);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+body.terminal .situation-quick-links a:hover,
+body.terminal .situation-quick-links a.situation-workspace-cta {
+  color: var(--t-accent);
+  border-color: rgba(110, 168, 255, 0.35);
+  background: var(--t-accent-muted);
+}
+
+body.terminal .situation-data-freshness,
+body.terminal .situation-system-status,
+body.terminal .situation-map-legend,
+body.terminal .situation-map-meta {
+  color: var(--t-ink-muted);
+  font-size: 0.8125rem;
+}
+
+body.terminal .intelligence-feed-header .page-intro {
+  margin-bottom: 10px;
+}
+
+body.terminal .feed-header-actions,
+body.terminal .intelligence-feed-command-strip {
+  border-radius: var(--t-radius-sm);
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  padding: 10px 12px;
+}
+
+body.terminal .article-card {
+  background: var(--t-surface-elevated) !important;
+  padding: 14px 16px !important;
+  margin-bottom: 10px !important;
+}
+
+body.terminal .macro-page-title {
+  letter-spacing: -0.03em;
+}
+
+body.terminal .macro-page-sub {
+  max-width: 70ch;
+}
+
+@media (max-width: 900px) {
+  body.terminal .terminal-main {
+    padding: 18px 16px 40px;
+  }
+}
+
+/* Feed declutter */
+body.terminal .feed-header-actions--compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+body.terminal .feed-more-menu,
+body.terminal .feed-view-options,
+body.terminal .macro-more-controls,
+body.terminal .macro-market-strip-wrap {
+  margin-top: 10px;
+}
+
+body.terminal .feed-more-menu > summary,
+body.terminal .feed-view-options > summary,
+body.terminal .macro-more-controls > summary,
+body.terminal .macro-market-strip-summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-ink-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+body.terminal .feed-more-menu > summary::-webkit-details-marker,
+body.terminal .feed-view-options > summary::-webkit-details-marker,
+body.terminal .macro-more-controls > summary::-webkit-details-marker,
+body.terminal .macro-market-strip-summary::-webkit-details-marker {
+  display: none;
+}
+
+body.terminal .feed-more-panel,
+body.terminal .feed-view-options-body {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: var(--t-radius-sm);
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-elevated);
+}
+
+body.terminal .feed-more-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+body.terminal .feed-view-options-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+}
+
+body.terminal .intelligence-feed-command-strip {
+  margin: 14px 0 16px;
+  padding: 12px 14px;
+}
+
+body.terminal .feed-primary-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin-bottom: 10px;
+}
+
+body.terminal .feed-filter-field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  color: var(--t-ink-muted);
+  font-weight: 650;
+}
+
+body.terminal .feed-filters-panel {
+  margin-bottom: 18px;
+  padding: 14px;
+  border-radius: var(--t-radius);
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+}
+
+body.terminal .feed-advanced-filters {
+  margin-top: 8px;
+}
+
+body.terminal .feed-advanced-grid {
+  margin-top: 10px;
+  gap: 12px 18px;
+}
+
+body.terminal .feed-advanced-group label {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  color: var(--t-ink-muted);
+  font-weight: 650;
+}
+
+body.terminal .article-list {
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  body.terminal .feed-primary-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Macro declutter + breathing room */
+body.terminal.macro-terminal .macro-page-head {
+  margin-bottom: 16px;
+}
+
+body.terminal.macro-terminal .macro-page-title {
+  font-size: 1.45rem;
+}
+
+body.terminal.macro-terminal .macro-page-sub {
+  font-size: 0.875rem;
+  max-width: 58ch;
+}
+
+body.terminal.macro-terminal .macro-market-strip-wrap {
+  margin: 0 0 16px;
+}
+
+body.terminal.macro-terminal .macro-market-strip {
+  margin-top: 12px;
+  gap: 14px;
+}
+
+body.terminal.macro-terminal .macro-toolbar {
+  padding: 14px;
+  margin-bottom: 16px;
+  border-radius: var(--t-radius);
+}
+
+body.terminal.macro-terminal .macro-toolbar-row--primary {
+  gap: 12px;
+}
+
+body.terminal.macro-terminal .macro-more-controls {
+  margin-top: 12px;
+  padding-top: 4px;
+}
+
+body.terminal.macro-terminal .macro-more-controls[open] {
+  border-top: 1px solid var(--t-border);
+  padding-top: 12px;
+}
+
+body.terminal.macro-terminal .macro-toolbar-row--secondary {
+  border-top: 0;
+  margin-top: 10px;
+  padding-top: 0;
+  gap: 12px;
+}
+
+body.terminal.macro-terminal .macro-workstation {
+  gap: 16px;
+}
+
+body.terminal.macro-terminal .macro-main .sidebar-panel,
+body.terminal.macro-terminal .macro-left .sidebar-panel,
+body.terminal.macro-terminal .macro-right .sidebar-panel {
+  padding: 16px;
+}
+
+body.terminal.macro-terminal .macro-chart-stage {
+  min-height: 320px;
+  border-radius: var(--t-radius-sm);
 }

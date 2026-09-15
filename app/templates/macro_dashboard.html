@@ -9,11 +9,13 @@
 {% block content %}
   <div class="macro-page">
     <header class="macro-page-head">
-      <h1 class="macro-page-title">Macro workstation</h1>
-      <p class="macro-page-sub">Charts are chosen automatically from the indicator (FX vs macro, frequency, transform, and sample size)—cross-country snapshots, time series, and alerts. Sources: World Bank + FX.</p>
+      <h1 class="macro-page-title">Macro indicators</h1>
+      <p class="macro-page-sub">Cross-country snapshots, time series, and alerts from World Bank + FX.</p>
     </header>
 
-    <section class="macro-market-strip" aria-label="Macro market strip">
+    <details class="macro-market-strip-wrap" open>
+      <summary class="macro-market-strip-summary">Market snapshot</summary>
+      <section class="macro-market-strip" aria-label="Macro market strip">
       <div class="macro-market-panel">
         <div class="macro-market-head">
           <h2>FX (latest)</h2>
@@ -78,7 +80,8 @@
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </details>
 
     <div class="macro-toolbar" role="region" aria-label="Macro controls">
       <form id="macro-form" class="macro-toolbar-form" onsubmit="return false;">
@@ -91,24 +94,6 @@
               <option value="alerts">Alerts</option>
             </select>
           </label>
-          <label class="macro-field">
-            <span class="macro-field-label">Transform</span>
-            <select id="macro-transform" name="transform" class="macro-select">
-              <option value="level">Level</option>
-              <option value="pct_change">Δ% (step)</option>
-              <option value="yoy">YoY %</option>
-              <option value="zscore">Z-score</option>
-            </select>
-          </label>
-          <label class="macro-field">
-            <span class="macro-field-label">Group</span>
-            <select id="macro-group" name="group" class="macro-select">
-              <option value="">All</option>
-              <option value="asean">ASEAN</option>
-              <option value="g20">G20</option>
-              <option value="major">Major</option>
-            </select>
-          </label>
           <label class="macro-field macro-field--grow">
             <span class="macro-field-label">Country</span>
             <select id="macro-country" name="country" class="macro-select"></select>
@@ -117,43 +102,66 @@
             <span class="macro-field-label">Indicator</span>
             <select id="macro-indicator" name="indicator" class="macro-select"></select>
           </label>
-        </div>
-        <div class="macro-toolbar-row macro-toolbar-row--secondary">
-          <label class="macro-field macro-field--grow" id="macro-field-range">
-            <span class="macro-field-label">Range</span>
-            <select id="macro-range" name="range" class="macro-select">
-              <option value="">Custom</option>
-              <option value="30y">30Y</option>
-              <option value="10y">10Y</option>
-              <option value="5y">5Y</option>
-              <option value="3y">3Y</option>
-              <option value="1y">1Y</option>
-              <option value="3m">3M</option>
-              <option value="1m">1M</option>
-              <option value="7d">1W</option>
-              <option value="3d">3D</option>
-              <option value="24h">1D</option>
-              <option value="1h">1H</option>
-            </select>
-          </label>
-          <label class="macro-field macro-field--grow" id="macro-field-fx-pair" style="display:none;">
-            <span class="macro-field-label">FX pair</span>
-            <select id="macro-fx-pair" name="fx_pair" class="macro-select"></select>
-          </label>
-          <label class="macro-field">
-            <span class="macro-field-label">Start</span>
-            <input id="macro-start" name="start" type="text" class="macro-input" placeholder="YYYY-MM-DD">
-          </label>
-          <label class="macro-field">
-            <span class="macro-field-label">End</span>
-            <input id="macro-end" name="end" type="text" class="macro-input" placeholder="YYYY-MM-DD">
-          </label>
           <div class="macro-toolbar-actions">
             <button type="button" id="macro-refresh" class="macro-btn macro-btn--primary">Refresh</button>
-            <button type="button" id="macro-export-csv" class="macro-btn">CSV</button>
-            <a class="macro-btn macro-btn--link" id="macro-export-pdf" href="{{ url_for('main.export_macro_pdf') }}" target="_blank" rel="noopener">PDF</a>
           </div>
         </div>
+        <details class="macro-more-controls">
+          <summary>More options</summary>
+          <div class="macro-toolbar-row macro-toolbar-row--secondary">
+            <label class="macro-field">
+              <span class="macro-field-label">Transform</span>
+              <select id="macro-transform" name="transform" class="macro-select">
+                <option value="level">Level</option>
+                <option value="pct_change">Δ% (step)</option>
+                <option value="yoy">YoY %</option>
+                <option value="zscore">Z-score</option>
+              </select>
+            </label>
+            <label class="macro-field">
+              <span class="macro-field-label">Group</span>
+              <select id="macro-group" name="group" class="macro-select">
+                <option value="">All</option>
+                <option value="asean">ASEAN</option>
+                <option value="g20">G20</option>
+                <option value="major">Major</option>
+              </select>
+            </label>
+            <label class="macro-field macro-field--grow" id="macro-field-range">
+              <span class="macro-field-label">Range</span>
+              <select id="macro-range" name="range" class="macro-select">
+                <option value="">Custom</option>
+                <option value="30y">30Y</option>
+                <option value="10y">10Y</option>
+                <option value="5y">5Y</option>
+                <option value="3y">3Y</option>
+                <option value="1y">1Y</option>
+                <option value="3m">3M</option>
+                <option value="1m">1M</option>
+                <option value="7d">1W</option>
+                <option value="3d">3D</option>
+                <option value="24h">1D</option>
+                <option value="1h">1H</option>
+              </select>
+            </label>
+            <label class="macro-field macro-field--grow" id="macro-field-fx-pair" style="display:none;">
+              <span class="macro-field-label">FX pair</span>
+              <select id="macro-fx-pair" name="fx_pair" class="macro-select"></select>
+            </label>
+            <label class="macro-field">
+              <span class="macro-field-label">Start</span>
+              <input id="macro-start" name="start" type="text" class="macro-input" placeholder="YYYY-MM-DD">
+            </label>
+            <label class="macro-field">
+              <span class="macro-field-label">End</span>
+              <input id="macro-end" name="end" type="text" class="macro-input" placeholder="YYYY-MM-DD">
+            </label>
+            <div class="macro-toolbar-actions">
+              <button type="button" id="macro-export-csv" class="macro-btn">CSV</button>
+              <a class="macro-btn macro-btn--link" id="macro-export-pdf" href="{{ url_for('main.export_macro_pdf') }}" target="_blank" rel="noopener">PDF</a>
+            </div>
+          </div>
+        </details>
       </form>
     </div>
 
