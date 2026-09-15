@@ -1,0 +1,213 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T17:51:00Z",
+  "window_end_utc": "2026-09-15T18:51:00Z",
+  "generated_at_utc": "2026-09-15T18:58:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T17:51:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL", "FSM", "NZL", "COK"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PNG Independence Day early morning; no BPS SITREP or Lloyds reply to RNZ",
+      "summary": "Quiet hour. 16 Sep local Independence Day remains open (POM ~04:51). No new Marape/Toroama Panguna language. NBC provincial Independence copy does not mention Panguna. RNZ 15 Sep piece still says it has reached out to Lloyds. Post Courier LPMEL headline unchanged and paywalled. Fatalities remain PNG-media CLAIM. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://www.nbc.com.pg/",
+        "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/"
+      ]
+    },
+    {
+      "title": "PMMM-4 sitting from 19:30 UTC (~0.6 h); MV Matui toll band unchanged",
+      "summary": "Tonga is 07:51 local 16 Sep at cutoff. Official programme lists sitting 08:30–17:10 TOT; Matatoa/ministerial declaration adoption 15:30–17:00 TOT (02:30–04:00 UTC 16 Sep). No adopted text. Islands Business 14 Sep WRP/PIMS series is pre-sitting analysis. Matui still 2 dead / 14 survivors / ~30+ missing. VFSC strike-off remains Daily Post CLAIM; VFSC notices page has no Tui Shipping extract.",
+      "countries": ["TON", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+        "https://www.vfsc.vu/public-notices/",
+        "https://islandsbusiness.com/news-break/weather-ready-pacific-and-the-future-of-sustainable-delivery/"
+      ]
+    },
+    {
+      "title": "Penrhyn RNZ audio is Palau leftover, not a new US base",
+      "summary": "RNZ Pacific Waves this hour restated Novelly 'possible military presence' / 'friendly port' language on the Omoka/Penrhyn upgrade. Underlying FACT remains the 1 Sep USA–NZL–COK joint statement (US$50m working with Congress; NZ$17.5m NZ implementer; design phase). Not a signed access deal. Not FLASH.",
+      "countries": ["COK", "USA", "NZL"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.rnz.co.nz/international/programmes/datelinepacific/audio/2019052024/us-says-military-presence-at-penrhyn-port-is-possible",
+        "https://nz.usembassy.gov/joint-statement-on-penrhyn-port-project/",
+        "https://www.rnz.co.nz/news/pacific/1278614/penrhyn-to-serve-as-friendly-port-for-united-states-to-counter-bad-actors-in-the-pacific"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "1-9h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "stable",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    },
+    {
+      "risk": "Penrhyn dual-use / access",
+      "direction": "stable",
+      "horizon": "months (design phase)",
+      "confidence": "M",
+      "escalate_trigger": "Published defence-access instrument or official confirmation of standing foreign security presence"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Does Marape endorse or walk back Maru's Lloyds-responsibility line after Independence Day flag-raising (~20:00 UTC)?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note?",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?",
+    "Fiji HIV gazette / Legal Notice under s.69 Public Health Act 1935?",
+    "Penrhyn: any new official text beyond the 1 Sep joint statement / 5 Sep Novelly interview?"
+  ],
+  "sources": [
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Vanuatu PM scraps UNGA trip as dozens remain missing after ferry disaster",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+      "published_at": "2026-09-15T05:20:00Z",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Epidemic and emerging disease alerts in the Pacific as of 15 September 2026",
+      "publisher": "SPC / PPHSN via ReliefWeb",
+      "url": "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+      "published_at": "2026-09-15",
+      "countries": ["MHL", "FSM", "PNG", "NZL", "AUS", "SLB"],
+      "topics": ["health", "humanitarian", "climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "25th meeting of the Executive Committee of the Warsaw International Mechanism for Loss and Damage",
+      "publisher": "UNFCCC",
+      "url": "https://unfccc.int/event/WIM_ExCom25",
+      "published_at": "2026-09-14",
+      "countries": ["MHL"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Australia-Solomon Islands engagement",
+      "publisher": "DFAT",
+      "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+      "published_at": "2026-06-03",
+      "countries": ["AUS", "SLB"],
+      "topics": ["security", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "US says military presence at Penrhyn port is possible",
+      "publisher": "RNZ Pacific Waves",
+      "url": "https://www.rnz.co.nz/international/programmes/datelinepacific/audio/2019052024/us-says-military-presence-at-penrhyn-port-is-possible",
+      "published_at": "2026-09-15T17:55:00Z",
+      "countries": ["COK", "USA", "NZL"],
+      "topics": ["security", "infrastructure", "maritime"],
+      "claim_type": "CLAIM",
+      "confidence": "M",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "Joint Statement on Penrhyn Port Project",
+      "publisher": "US Embassy Wellington",
+      "url": "https://nz.usembassy.gov/joint-statement-on-penrhyn-port-project/",
+      "published_at": "2026-09-01",
+      "countries": ["COK", "USA", "NZL"],
+      "topics": ["infrastructure", "development", "security"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "Weather Ready Pacific and the future of sustainable delivery",
+      "publisher": "Islands Business",
+      "url": "https://islandsbusiness.com/news-break/weather-ready-pacific-and-the-future-of-sustainable-delivery/",
+      "published_at": "2026-09-14",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "ASSESS",
+      "confidence": "M",
+      "oceania_relevance": "climate"
+    }
+  ]
+}
