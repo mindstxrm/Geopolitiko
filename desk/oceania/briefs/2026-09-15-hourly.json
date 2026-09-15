@@ -1,0 +1,230 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T07:00:00Z",
+  "window_end_utc": "2026-09-15T11:10:00Z",
+  "generated_at_utc": "2026-09-15T11:10:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "countries_touched": ["MHL", "FJI", "SLB", "VUT", "NCL", "TON", "AUS", "NZL", "PNG"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "MHL hosts first Pacific WIM ExCom 25 (Loss & Damage)",
+      "summary": "WIM Executive Committee meeting in Majuro 14–18 Sep; first Pacific sitting; PINA attributes venue to COP31 Australia–Pacific Partnership. Daily 07:00 UTC incorrectly tagged MHL as quiet.",
+      "countries": ["MHL", "AUS"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://pina.com.fj/2026/09/15/wim-executive-committee-on-loss-and-damage-meets-in-pacific-for-first-time/",
+        "https://pina.com.fj/2026/09/14/pacific-frontline-nations-demand-action-as-loss-and-damage-talks-open-in-majuro/"
+      ]
+    },
+    {
+      "title": "Fiji FiTI MoU — first PIC fisheries-transparency commitment",
+      "summary": "Fisheries Minister Bainivalu signed FiTI Standard MoU in Rome at FAO COFI37; framed as stock assessment, access-agreement leverage, and IUU.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "sources": [
+        "https://pina.com.fj/2026/09/15/fiji-commits-to-greater-transparency-in-fisheries-sector/"
+      ]
+    },
+    {
+      "title": "Fiji launches first MSME climate parametric insurance",
+      "summary": "Tower Insurance Fiji product with UNCDF/ADB/PICAP; AUS and NZ MFAT in the donor stack. Triggers and take-up unpublished.",
+      "countries": ["FJI", "AUS", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://pina.com.fj/2026/09/15/fiji-launches-first-climate-risk-insurance-for-small-businesses/"
+      ]
+    },
+    {
+      "title": "MV Matui: VMSA legal track and NCL SAR assist",
+      "summary": "Toll band unchanged. Named VMSA official: not certified >30 pax, skipped inspection, possible manslaughter, EPIRB not activated. AP: NCL JRCC coordinating search; missing=37 is NCL figure.",
+      "countries": ["VUT", "NCL"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://www.dailypost.vu/news/mv-matui-not-certified-to-carry-more-than-30-passengers-bypassed-mandatory-pre-departure-inspections/article_38e0ede1-9c58-5230-a6fa-82410a3fdbcd.html",
+        "https://www.wral.com/news/ap/7aa92-questions-grow-after-vanuatu-ferry-sinking-as-rescuers-search-for-more-than-30-missing/",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/"
+      ]
+    },
+    {
+      "title": "Wale opens Pacific climate conference in Honiara",
+      "summary": "Fifth Pacific Ocean Pacific Climate Change Conference hosted in Solomon Islands for the first time; 1.5°C and Pre-COP31/COP31 coordination.",
+      "countries": ["SLB"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://pina.com.fj/2026/09/15/turn-pacific-knowledge-into-pacific-action-pm-wale/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FiTI Standard MoU",
+      "type": "fisheries",
+      "parties": ["FJI", "FiTI"],
+      "status": "signed",
+      "date": "2026-09-15",
+      "venue": "Rome / FAO COFI37",
+      "bindingness": "political",
+      "strategic_read_ASSESS": "First PIC transparency commitment; leverage on access agreements and IUU, not a security pact"
+    },
+    {
+      "name": "MSME climate parametric insurance (Tower / PICAP)",
+      "type": "climate finance",
+      "parties": ["FJI", "UNCDF", "ADB", "AUS", "NZL"],
+      "status": "launched",
+      "date": "2026-09-15",
+      "venue": "Fiji",
+      "bindingness": "commercial",
+      "strategic_read_ASSESS": "Adaptation instrument; trigger table not published"
+    },
+    {
+      "name": "WIM ExCom 25",
+      "type": "climate / loss and damage",
+      "parties": ["MHL", "UNFCCC WIM"],
+      "status": "convened",
+      "date": "2026-09-14",
+      "venue": "Majuro",
+      "bindingness": "political",
+      "strategic_read_ASSESS": "First Pacific sitting of global L&D body; COP31 AUS–Pacific partnership attributed by PINA"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable_elevated",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above current band; manslaughter charges filed; foreign SAR implying capacity breach"
+    },
+    {
+      "risk": "L&D / COP31 optics from Majuro WIM ExCom",
+      "direction": "up",
+      "horizon": "4d-COP31",
+      "confidence": "M",
+      "escalate_trigger": "ExCom text that changes FRLD access or a public AUS–Pacific partnership dispute"
+    },
+    {
+      "risk": "FJI HIV emergency powers / labour-mobility spillover",
+      "direction": "stable",
+      "horizon": "3-12m",
+      "confidence": "H",
+      "escalate_trigger": "Gazette of emergency powers; PALM/RSE restrictions"
+    },
+    {
+      "risk": "AUS-SLB treaty signing vs coalition durability",
+      "direction": "stable",
+      "horizon": "2-8w",
+      "confidence": "M",
+      "escalate_trigger": "Signature or Honiara-scale protest"
+    }
+  ],
+  "open_questions": [
+    "VMSA/PMO official passenger list and whether a manslaughter file is opened",
+    "NCL JRCC primary SITREP reconciling 37 missing vs VUT 30+ / families ~50",
+    "WIM ExCom 25 decision text (18 Sep) and DFAT confirmation of COP31 partnership role",
+    "FiTI implementation milestones and parametric insurance trigger table",
+    "Fiji HIV emergency gazette",
+    "BPS confirmation of Panguna shots fired",
+    "US Compact cash actually hitting FSM accounts"
+  ],
+  "sources": [
+    {
+      "title": "WIM Executive Committee on Loss and Damage meets in Pacific for first time",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/wim-executive-committee-on-loss-and-damage-meets-in-pacific-for-first-time/",
+      "published_at": "2026-09-15",
+      "countries": ["MHL"],
+      "topics": ["climate", "loss and damage"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Pacific frontline nations demand action as Loss and Damage talks open in Majuro",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/14/pacific-frontline-nations-demand-action-as-loss-and-damage-talks-open-in-majuro/",
+      "published_at": "2026-09-14",
+      "countries": ["MHL"],
+      "topics": ["climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Fiji commits to greater transparency in fisheries sector",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/fiji-commits-to-greater-transparency-in-fisheries-sector/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["fisheries"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic"
+    },
+    {
+      "title": "Fiji launches first climate risk insurance for small businesses",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/fiji-launches-first-climate-risk-insurance-for-small-businesses/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI", "AUS", "NZL"],
+      "topics": ["climate finance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Turn Pacific knowledge into Pacific action: PM Wale",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/15/turn-pacific-knowledge-into-pacific-action-pm-wale/",
+      "published_at": "2026-09-15",
+      "countries": ["SLB"],
+      "topics": ["climate", "PIF"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "MV Matui not certified to carry more than 30 passengers, bypassed mandatory pre-departure inspections: VMSA",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/mv-matui-not-certified-to-carry-more-than-30-passengers-bypassed-mandatory-pre-departure-inspections/article_38e0ede1-9c58-5230-a6fa-82410a3fdbcd.html",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["maritime", "governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Questions grow after Vanuatu ferry sinking as rescuers search for more than 30 missing",
+      "publisher": "AP via WRAL",
+      "url": "https://www.wral.com/news/ap/7aa92-questions-grow-after-vanuatu-ferry-sinking-as-rescuers-search-for-more-than-30-missing/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT", "NCL"],
+      "topics": ["SAR"],
+      "claim_type": "CLAIM",
+      "confidence": "M",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
