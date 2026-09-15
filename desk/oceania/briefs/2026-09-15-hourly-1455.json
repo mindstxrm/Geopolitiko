@@ -1,0 +1,168 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T13:55:00Z",
+  "window_end_utc": "2026-09-15T14:55:00Z",
+  "generated_at_utc": "2026-09-15T14:55:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T13:55:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL", "FSM", "NZL"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "SPC PacNet 15 Sep: Majuro dengue and PNG measles red alerts; Yap diarrhoea grey alert",
+      "summary": "Catch-up. SPC/PPHSN weekly epidemic-alert map dated 15 Sep records dengue DENV-1 red alert in Majuro (66 confirmed to 5 Sep, during WIM ExCom 25), measles red alert in PNG including Bougainville (8 lab-confirmed YTD), and a grey alert for watery diarrhoea in Yap, FSM (169 clinical cases to 13 Sep, no deaths). Not FLASH. Exact intra-day timestamp not stated on ReliefWeb.",
+      "countries": ["MHL", "FSM", "PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+        "https://unfccc.int/event/WIM_ExCom25"
+      ]
+    },
+    {
+      "title": "PNG Independence Day underway; still no BPS SITREP or Lloyds reply to RNZ",
+      "summary": "16 Sep local Independence Day began 14:00 UTC. No new Marape/Toroama Panguna language located this hour. RNZ 15 Sep piece still says it has reached out to Lloyds. Post Courier LPMEL headline unchanged and paywalled. Fatalities remain PNG-media CLAIM.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/",
+        "https://forumsec.org/events/independence-day-papua-new-guinea"
+      ]
+    },
+    {
+      "title": "PMMM-4 sitting from 19:30 UTC; MV Matui toll band unchanged",
+      "summary": "Tonga is 03:55 local 16 Sep at cutoff. Official programme lists sitting 08:30–17:10 TOT; Matatoa/ministerial declaration adoption 15:30–17:00 TOT (02:30–04:00 UTC 16 Sep). No adopted text. Matui still 2 dead / 14 survivors / ~30+ missing. VFSC strike-off remains Daily Post CLAIM.",
+      "countries": ["TON", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "12h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "up",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Does Marape endorse or walk back Maru's Lloyds-responsibility line on Independence Day?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note?",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?"
+  ],
+  "sources": [
+    {
+      "title": "Epidemic and emerging disease alerts in the Pacific as of 15 September 2026",
+      "publisher": "SPC / PPHSN via ReliefWeb",
+      "url": "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+      "published_at": "2026-09-15",
+      "countries": ["MHL", "FSM", "PNG", "NZL", "AUS", "SLB"],
+      "topics": ["health", "humanitarian", "climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "LPMEL condemns Panguna arson, says commitment to Bougainville unchanged",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/",
+      "published_at": "2026-09-15T08:07:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "25th meeting of the Executive Committee of the Warsaw International Mechanism for Loss and Damage",
+      "publisher": "UNFCCC",
+      "url": "https://unfccc.int/event/WIM_ExCom25",
+      "published_at": "2026-09-14",
+      "countries": ["MHL"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
