@@ -8,4 +8,6 @@ data/
 *.db
 *.sqlite3
 run
-UNGA-DM RS-077/All_Votes_RS-077.csvUNGA-DM RS-077/All_Votes_RS-077.csv
+.DS_Store
+.cursor/
+UNGA-DM RS-077/All_Votes_RS-077.csv
