@@ -1,0 +1,216 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T16:51:00Z",
+  "window_end_utc": "2026-09-15T17:51:00Z",
+  "generated_at_utc": "2026-09-15T17:54:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T16:51:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL", "FSM", "NZL", "MNP"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PNG Independence Day still pre-dawn; no BPS SITREP or Lloyds reply to RNZ",
+      "summary": "Quiet hour. 16 Sep local Independence Day remains open (POM ~03:54). No new Marape/Toroama Panguna language. Marape dinner speech is economy/unity only. RNZ 15 Sep piece still says it has reached out to Lloyds. Post Courier LPMEL headline unchanged and paywalled. Fatalities remain PNG-media CLAIM. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://pnghausbung.com/the-next-50-starts-now-marape/",
+        "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/"
+      ]
+    },
+    {
+      "title": "PMMM-4 sitting from 19:30 UTC (~1.6 h); MV Matui toll band unchanged",
+      "summary": "Tonga is 06:54 local 16 Sep at cutoff. Official programme lists sitting 08:30–17:10 TOT; Matatoa/ministerial declaration adoption 15:30–17:00 TOT (02:30–04:00 UTC 16 Sep). No adopted text. Matui still 2 dead / 14 survivors / ~30+ missing. VFSC strike-off remains Daily Post CLAIM; VFSC notices page has no Tui Shipping extract.",
+      "countries": ["TON", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+        "https://www.vfsc.vu/public-notices/"
+      ]
+    },
+    {
+      "title": "Health overlay unchanged: Majuro dengue and PNG measles red; Yap diarrhoea grey; Fiji HIV gazette still missing",
+      "summary": "No new PacNet map or Yap SITREP #10 this hour. Last official-adjacent product remains SPC/PPHSN 15 Sep map. Fiji HIV emergency still reported as a ministerial declaration under s.69 Public Health Act 1935; no gazette extract located.",
+      "countries": ["MHL", "FSM", "PNG", "FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+        "https://maitvfiji.com/fiji-declares-national-hiv-emergency-as-cases-surge/",
+        "https://unfccc.int/event/WIM_ExCom25"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "4-10h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "stable",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Does Marape endorse or walk back Maru's Lloyds-responsibility line after Independence Day flag-raising (~20:00 UTC)?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note?",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?",
+    "Fiji HIV gazette / Legal Notice under s.69 Public Health Act 1935?"
+  ],
+  "sources": [
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "THE NEXT 50 STARTS NOW: MARAPE",
+      "publisher": "PNG Haus Bung",
+      "url": "https://pnghausbung.com/the-next-50-starts-now-marape/",
+      "published_at": "2026-09-15",
+      "countries": ["PNG"],
+      "topics": ["governance", "economy"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Vanuatu PM scraps UNGA trip as dozens remain missing after ferry disaster",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+      "published_at": "2026-09-15T05:20:00Z",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Epidemic and emerging disease alerts in the Pacific as of 15 September 2026",
+      "publisher": "SPC / PPHSN via ReliefWeb",
+      "url": "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+      "published_at": "2026-09-15",
+      "countries": ["MHL", "FSM", "PNG", "NZL", "AUS", "SLB"],
+      "topics": ["health", "humanitarian", "climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "25th meeting of the Executive Committee of the Warsaw International Mechanism for Loss and Damage",
+      "publisher": "UNFCCC",
+      "url": "https://unfccc.int/event/WIM_ExCom25",
+      "published_at": "2026-09-14",
+      "countries": ["MHL"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Fiji Declares National HIV Emergency as Cases Surge",
+      "publisher": "Mai TV",
+      "url": "https://maitvfiji.com/fiji-declares-national-hiv-emergency-as-cases-surge/",
+      "published_at": "2026-09-15",
+      "countries": ["FJI"],
+      "topics": ["health", "governance"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Australia-Solomon Islands engagement",
+      "publisher": "DFAT",
+      "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+      "published_at": "2026-06-03",
+      "countries": ["AUS", "SLB"],
+      "topics": ["security", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "CNMI eyes stronger role in Pacific Islands Forum",
+      "publisher": "PINA / Marianas Press",
+      "url": "https://pina.com.fj/2026/09/15/cnmi-eyes-stronger-role-in-pacific-islands-forum/",
+      "published_at": "2026-09-15",
+      "countries": ["MNP"],
+      "topics": ["institutions", "governance"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    }
+  ]
+}
