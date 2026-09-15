@@ -1,0 +1,255 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T20:51:00Z",
+  "window_end_utc": "2026-09-15T21:51:00Z",
+  "generated_at_utc": "2026-09-15T22:05:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T20:51:00Z",
+  "countries_touched": ["PNG", "VUT", "TON", "FJI", "SLB", "AUS", "MHL", "FSM", "NZL", "COK"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PNG national flag-raising confirmed; visible Marape quote silent on Panguna; still no BPS SITREP or Lloyds reply",
+      "summary": "In-window delta. Post Courier 07:23 PGT / 21:23 UTC 15 Sep reports Marape spoke at the Independence Hill flag-raising. Visible quote is unity/constitution language; body paywalled. PMNEC has no 16 Sep transcript. NBC provincial Independence copy does not mention Panguna. RNZ 15 Sep piece still says it has reached out to Lloyds. Fatalities remain PNG-media CLAIM. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+        "https://www.pmnec.gov.pg/",
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+        "https://www.nbc.com.pg/",
+        "https://www.postcourier.com.pg/lpmel-condemns-panguna-arson-says-commitment-to-bougainville-unchanged/"
+      ]
+    },
+    {
+      "title": "PMMM-4 morning-tea slot elapsed; sitting unconfirmed in OSINT; MV Matui toll band unchanged",
+      "summary": "Tonga is 10:51 local 16 Sep at cutoff — past the listed 10:00–10:30 TOT morning-tea/group-photo window. If the programme held, Agenda Item 3 should be underway. No sitting-open communiqué, Chair designation, or Matatoa text. Adoption still listed 15:30–17:00 TOT (02:30–04:00 UTC 16 Sep). Matangi Tonga has no sitting-open item. Matui still 2 dead / 14 survivors / ~30+ missing. VFSC strike-off remains Daily Post CLAIM; VFSC notices page has no Tui Shipping extract.",
+      "countries": ["TON", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/",
+        "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+        "https://www.vfsc.vu/public-notices/",
+        "https://vbtc.vu/10-vessels-continue-mv-matui-search/"
+      ]
+    },
+    {
+      "title": "East Makira wire unchanged; Fiji HIV still no gazette (needle-programme / SO 51 is catch-up)",
+      "summary": "RNZ East Makira copy re-fetched unchanged: 13 homes plus fuel depot/kitchens at Naharahau; Horomae says under control; no arrests/spread this hour. Not FLASH. Fiji Village dated 16 Sep (no clock) reports needle-and-syringe legislation planned for the next Parliament sitting under Standing Order 51. fiji.gov.fj still has no Legal Notice. Implementation catch-up on the 15 Sep emergency, not a new declaration.",
+      "countries": ["SLB", "FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1408416/solomon-islands-police-investigate-burning-of-13-homes-in-east-makira",
+        "https://theislandsun.com.sb/thirteen-houses-burnt-down-in-east-makira-police-investigate/",
+        "https://www.fiji.gov.fj/Media-Centre/News",
+        "https://www.fijivillage.com/News/needle-and-syringe-programme-to-be-introduced-as-fiji-declares-hiv-a-national-crisis-be1031/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "morning_tea_slot_elapsed_sitting_unconfirmed",
+      "notes": "Programme listed morning tea 21:00–21:30 UTC; no official confirmation or adopted text. Adoption still 02:30–04:00 UTC 16 Sep."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges filed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "0-6h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "SLB East Makira community arson",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "M",
+      "escalate_trigger": "Spread beyond Wainoni; Honiara unrest; RSIPF partner-force request; FLASH only if capital-scale"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "stable",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    },
+    {
+      "risk": "Penrhyn dual-use / access",
+      "direction": "stable",
+      "horizon": "months (design phase)",
+      "confidence": "M",
+      "escalate_trigger": "Published defence-access instrument or official confirmation of standing foreign security presence"
+    }
+  ],
+  "open_questions": [
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full 16 Sep Marape Independence transcript — Bougainville/Panguna/Lloyds mention or unity-only?",
+    "First verified ABG 16 Sep remarks on Panguna?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "VFSC public extract confirming Tui Shipping Agency removal on 2026-06-02?",
+    "PIDF succession after Mara MFA appointment?",
+    "PMMM-4 sitting-open / Chair confirmation; Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note?",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?",
+    "Fiji HIV gazette / Legal Notice under s.69 Public Health Act 1935? Next-sitting order paper for needle-programme / SO 51?",
+    "Penrhyn: any new official text beyond the 1 Sep joint statement / 5 Sep Novelly interview?",
+    "East Makira: arrests/charges; displacement numbers; any RSIPF reinforcement from Honiara?"
+  ],
+  "sources": [
+    {
+      "title": "We are one people, one nation and one country",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+      "published_at": "2026-09-15T21:23:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-15T05:42:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Vanuatu PM scraps UNGA trip as dozens remain missing after ferry disaster",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393319/vanuatu-pm-scraps-unga-trip-as-dozens-remain-missing-after-ferry-disaster",
+      "published_at": "2026-09-15T05:20:00Z",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Solomon Islands police investigate burning of 13 homes in East Makira",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1408416/solomon-islands-police-investigate-burning-of-13-homes-in-east-makira",
+      "published_at": "2026-09-15T19:18:00Z",
+      "countries": ["SLB"],
+      "topics": ["governance", "security"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Thirteen houses burnt down in East Makira, police investigate",
+      "publisher": "The Island Sun",
+      "url": "https://theislandsun.com.sb/thirteen-houses-burnt-down-in-east-makira-police-investigate/",
+      "published_at": "2026-09-15",
+      "countries": ["SLB"],
+      "topics": ["governance", "security"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Needle and syringe programme to be introduced as Fiji declares HIV a national crisis",
+      "publisher": "Fiji Village",
+      "url": "https://www.fijivillage.com/News/needle-and-syringe-programme-to-be-introduced-as-fiji-declares-hiv-a-national-crisis-be1031/",
+      "published_at": "2026-09-16",
+      "countries": ["FJI"],
+      "topics": ["health", "governance"],
+      "claim_type": "CLAIM",
+      "confidence": "M",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "Epidemic and emerging disease alerts in the Pacific as of 15 September 2026",
+      "publisher": "SPC / PPHSN via ReliefWeb",
+      "url": "https://reliefweb.int/map/world/epidemic-and-emerging-disease-alerts-pacific-15-september-2026",
+      "published_at": "2026-09-15",
+      "countries": ["MHL", "FSM", "PNG", "NZL", "AUS", "SLB"],
+      "topics": ["health", "humanitarian", "climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    },
+    {
+      "title": "25th meeting of the Executive Committee of the Warsaw International Mechanism for Loss and Damage",
+      "publisher": "UNFCCC",
+      "url": "https://unfccc.int/event/WIM_ExCom25",
+      "published_at": "2026-09-14",
+      "countries": ["MHL"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Australia-Solomon Islands engagement",
+      "publisher": "DFAT",
+      "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+      "published_at": "2026-06-03",
+      "countries": ["AUS", "SLB"],
+      "topics": ["security", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "10 Vessels Continue MV Matui Search",
+      "publisher": "VBTC",
+      "url": "https://vbtc.vu/10-vessels-continue-mv-matui-search/",
+      "published_at": "2026-09-15",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "maritime"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
