@@ -69,6 +69,9 @@
     <form method="post" action="{{ url_for('analyst_desk.pipeline_brief') }}">
       <button type="submit" class="btn secondary">5) Generate daily brief</button>
     </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_asean_brief') }}">
+      <button type="submit" class="btn secondary">5b) ASEAN daily brief</button>
+    </form>
     <form method="post" action="{{ url_for('analyst_desk.pipeline_topics') }}">
       <button type="submit" class="btn secondary">6) Topic synthesis</button>
     </form>
@@ -110,6 +113,19 @@
       Install <code>celery[redis]</code> and <code>redis</code>, start Redis, then run workers (see <code>docs/analyst_desk_celery.md</code>).
     {% endif %}
   </p>
+</details>
+
+<details class="panel" open>
+  <summary><h2>ASEAN Desk</h2></summary>
+  <p class="muted">
+    Workspace over SEA I / II / III (ASEAN-10 + TLS). Daily product uses the ASEAN SOP
+    (priority developments, Chair track, agreements deltas, risk board). Drafts land in
+    <a href="{{ url_for('analyst_desk.approvals') }}">Approvals</a> with <code>pending_review</code>
+    until a human publishes to Terminal.
+  </p>
+  <form method="post" action="{{ url_for('analyst_desk.pipeline_asean_brief') }}">
+    <button type="submit" class="btn">Generate ASEAN daily brief</button>
+  </form>
 </details>
 
 <details class="panel">

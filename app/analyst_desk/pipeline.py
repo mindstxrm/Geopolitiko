@@ -537,6 +537,13 @@ def generate_daily_brief(limit_events: int = 20) -> dict[str, int | str]:
         raise
 
 
+def generate_asean_daily_brief(limit_events: int = 80, days: int = 2) -> dict[str, Any]:
+    """ASEAN Desk daily product: region scope_id=asean, proposal pending_review."""
+    from app.analyst_desk.asean_desk import run_asean_daily_brief
+
+    return run_asean_daily_brief(limit_events=limit_events, days=days)
+
+
 def process_topic_synthesis(limit_events: int = 120) -> dict[str, int]:
     """Topic agents: synthesize cross-region themes from normalized events."""
     task_id = create_agent_task("topic_synthesis_agent", "topic_synthesis", {"limit_events": limit_events})

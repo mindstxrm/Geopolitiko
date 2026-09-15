@@ -70,6 +70,7 @@ Analyst Desk now includes Phase-1 and Phase-2 pipeline lanes in the UI:
 - `Build events + scores` (normalizes to `events`/`event_scores`, emits `event_updated` and `alert_required` when thresholds trigger)
 - `Materialize alerts` (consumes `alert_required`, writes `alerts`)
 - `Generate daily brief` (writes `briefings` from latest events/alerts)
+- `ASEAN daily brief` (region `scope_id=asean`; SOP-structured draft + pending proposal — see `docs/asean_desk.md`)
 - `Topic synthesis` (topic briefings from normalized events)
 - `Regional synthesis` (regional risk snapshots)
 - `Country risk snapshots` (per-country risk dimensions + watch levels)

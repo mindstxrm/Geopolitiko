@@ -28,6 +28,7 @@ from app.analyst_desk.generate import (
     run_weekly_country_deep_dive,
 )
 from app.analyst_desk.pipeline import (
+    generate_asean_daily_brief,
     generate_daily_brief,
     ingest_from_news_articles,
     process_alerts,
@@ -421,6 +422,10 @@ def pipeline_run_all():
     v = process_verification_checks(limit=240)
     a = process_alerts(limit=240)
     d = generate_daily_brief(limit_events=20)
+    try:
+        ad = generate_asean_daily_brief(limit_events=80, days=2)
+    except Exception:
+        ad = {}
     t = process_topic_synthesis(limit_events=180)
     r = process_regional_synthesis(limit_events=180)
     c = process_country_risk_snapshots(limit_events=220)
@@ -433,7 +438,8 @@ def pipeline_run_all():
             f"verify ok {v.get('verified', 0)} contradicted {v.get('contradicted', 0)}, "
             f"events {b.get('events_written', 0)}, alerts {a.get('alerts_created', 0)} "
             f"(delivered {a.get('alerts_delivered', 0)}, failed {a.get('alerts_failed', 0)}), "
-            f"briefing #{d.get('briefing_id')}, topics {t.get('topic_briefings_created', 0)}, "
+            f"briefing #{d.get('briefing_id')}, ASEAN desk #{ad.get('briefing_id')} "
+            f"(proposal #{ad.get('proposal_id')}), topics {t.get('topic_briefings_created', 0)}, "
             f"regional snaps {r.get('regional_snapshots_written', 0)}, country snaps {c.get('country_snapshots_written', 0)}, "
             f"movers {m.get('movers_created', 0)}, scenarios {s.get('scenarios_created', 0)}."
         ),
@@ -516,6 +522,25 @@ def pipeline_brief():
     out = generate_daily_brief(limit_events=25)
     flash(f"Daily brief generated (#{out.get('briefing_id')}).", "info")
     return redirect(url_for("analyst_desk.briefing_detail", bid=int(out.get("briefing_id"))))
+
+
+@bp.route("/pipeline/asean-brief", methods=["POST"])
+def pipeline_asean_brief():
+    out = generate_asean_daily_brief(limit_events=80, days=2)
+    pid = out.get("proposal_id")
+    flash(
+        (
+            f"ASEAN daily brief generated (briefing #{out.get('briefing_id')}, "
+            f"proposal #{pid}, pending_review)."
+        ),
+        "info",
+    )
+    if pid:
+        return redirect(url_for("analyst_desk.proposal_detail", pid=int(pid)))
+    bid = out.get("briefing_id")
+    if bid:
+        return redirect(url_for("analyst_desk.briefing_detail", bid=int(bid)))
+    return redirect(url_for("analyst_desk.index"))
 
 
 @bp.route("/pipeline/topics", methods=["POST"])
