@@ -183,25 +183,55 @@ def run_daily_volume(agent_id: str, days: int = 7) -> int | None:
         if not briefs.strip():
             briefs = "(No articles matched this region in the selected window.)"
 
-        system = f"""You are a senior geopolitical analyst for {agent['label']}.
+        if agent_id == "asean":
+            from app.analyst_desk.asean_desk import DAILY_SYSTEM_PROMPT, default_daily_window
+
+            start, end = default_daily_window()
+            system = DAILY_SYSTEM_PROMPT
+            user = f"""Region: {agent['label']}
+Countries (ISO3): {', '.join(agent['countries'])}
+Coverage window: {start.strftime('%Y-%m-%dT%H:%M:%SZ')} → {end.strftime('%Y-%m-%dT%H:%M:%SZ')} UTC
+
+Recent headlines and summaries:
+{briefs}
+"""
+            run_type = "asean.daily_brief"
+            title = f"ASEAN Daily Brief — {end.strftime('%Y-%m-%d')}"
+            max_tokens = 2800
+        else:
+            system = f"""You are a senior geopolitical analyst for {agent['label']}.
 Write a concise daily-style regional brief for internal clients.
 Use only the evidence in the article list; if evidence is thin, say so.
 Use clear markdown: ## Executive snapshot, ## Key developments (bullets), ## Watch items, ## Gaps / uncertainty.
 Stay neutral and analytic; no policy prescriptions unless framed as options others are debating."""
-        user = f"""Region: {agent['label']}
+            user = f"""Region: {agent['label']}
 Countries (ISO3): {', '.join(agent['countries'])}
 
 Recent headlines and summaries:
 {briefs}
 """
-        body, llm_err = _call_llm(system, user, max_tokens=2200)
+            run_type = "daily_volume"
+            title = f"Daily volume — {agent['label']}"
+            max_tokens = 2200
+        body, llm_err = _call_llm(system, user, max_tokens=max_tokens)
         if not body:
-            body = _fallback_daily_volume(agent, articles, days, llm_err)
+            if agent_id == "asean":
+                from app.analyst_desk.asean_desk import heuristic_daily_brief, default_daily_window
 
-        title = f"Daily volume — {agent['label']}"
+                start, end = default_daily_window()
+                body = heuristic_daily_brief(
+                    events=[],
+                    articles=articles,
+                    window_start=start,
+                    window_end=end,
+                    llm_note=llm_err,
+                )
+            else:
+                body = _fallback_daily_volume(agent, articles, days, llm_err)
+
         pid = insert_proposal(
             agent_id=agent_id,
-            run_type="daily_volume",
+            run_type=run_type,
             title=title,
             body=body,
             source_context=meta,
@@ -213,7 +243,7 @@ Recent headlines and summaries:
             from_agent_id=agent_id,
             entity_type="proposal",
             entity_id=pid,
-            payload={"run_type": "daily_volume", "article_count": meta.get("article_count", 0)},
+            payload={"run_type": run_type, "article_count": meta.get("article_count", 0)},
         )
         return pid
     except Exception as e:

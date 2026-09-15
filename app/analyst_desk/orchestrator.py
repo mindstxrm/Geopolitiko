@@ -12,6 +12,7 @@ def run_full_pipeline_tick() -> dict[str, Any]:
     Returns a flat dict of counters suitable for logging and Celery results.
     """
     from app.analyst_desk.pipeline import (
+        generate_asean_daily_brief,
         generate_daily_brief,
         ingest_from_news_articles,
         process_alerts,
@@ -33,6 +34,10 @@ def run_full_pipeline_tick() -> dict[str, Any]:
     v = process_verification_checks(limit=200)
     a = process_alerts(limit=200)
     d = generate_daily_brief(limit_events=20)
+    try:
+        ad = generate_asean_daily_brief(limit_events=80, days=2)
+    except Exception:
+        ad = {}
     t = r = c = m = {}
     if analyst_desk_phase2_enabled():
         t = process_topic_synthesis(limit_events=180)
@@ -54,6 +59,8 @@ def run_full_pipeline_tick() -> dict[str, Any]:
         "contradicted": v.get("contradicted", 0),
         "alerts_created": a.get("alerts_created", 0),
         "briefing_id": d.get("briefing_id"),
+        "asean_briefing_id": ad.get("briefing_id"),
+        "asean_proposal_id": ad.get("proposal_id"),
         "topic_briefings": t.get("topic_briefings_created", 0),
         "regional_snaps": r.get("regional_snapshots_written", 0),
         "country_snaps": c.get("country_snapshots_written", 0),

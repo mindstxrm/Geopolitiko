@@ -36,6 +36,32 @@ AGENTS: dict[str, dict] = {
         "countries": ["KHM", "LAO", "TLS"],
         "country_tiers": {"KHM": 3, "LAO": 3, "TLS": 3},
     },
+    # ASEAN workspace (union of SEA I/II/III + institutional ASEAN)
+    "asean": {
+        "label": "ASEAN Desk",
+        "description": (
+            "ASEAN-10 plus Timor-Leste; institutional ASEAN (Summit, AMM, ADMM/ARF/EAS), "
+            "maritime/SCS, Myanmar, Mekong, straits, macro and trade architecture."
+        ),
+        "countries": [
+            "BRN", "KHM", "IDN", "LAO", "MYS", "MMR", "PHL", "SGP", "THA", "VNM", "TLS",
+        ],
+        "country_tiers": {
+            "IDN": 1,
+            "THA": 2,
+            "VNM": 2,
+            "PHL": 2,
+            "MYS": 2,
+            "SGP": 2,
+            "MMR": 2,
+            "KHM": 3,
+            "LAO": 3,
+            "BRN": 3,
+            "TLS": 3,
+        },
+        "workspace": True,
+        "scope_ids": ["southeast_asia_i", "southeast_asia_ii", "southeast_asia_iii"],
+    },
 
     # SOUTH ASIA
     "south_asia_i": {
