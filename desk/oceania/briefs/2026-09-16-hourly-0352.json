@@ -1,0 +1,238 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-16T02:51:00Z",
+  "window_end_utc": "2026-09-16T03:52:00Z",
+  "generated_at_utc": "2026-09-16T04:25:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-16T02:51:00Z",
+  "countries_touched": ["PNG", "TON", "FJI", "VUT", "SLB", "AUS", "CHN", "MHL", "FSM", "NZL", "COK", "TUV", "TWN", "USA", "PLW"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PMMM-4 Matatoa slot in last ~8 minutes; sitting still unconfirmed",
+      "summary": "Tonga ~16:52 local at cutoff. If the programme held, Agenda Item 7 (Matatoa / ministerial declaration; 02:30–04:00 UTC) is 82 minutes in with ~8 minutes remaining. Closing programmed 04:00–04:10 UTC. pacificmet.net still programme-only; Matangi Tonga still has no sitting-open item. PACNEWS 16 Sep digest still treats PMMM-4 as forthcoming. No Chair, no adopted text. Not FLASH.",
+      "countries": ["TON"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/"
+      ]
+    },
+    {
+      "title": "Wale departs today for UNGA-81; AUS–SLB still unsigned",
+      "summary": "Solomon Islands PMO (Island Sun / PACNEWS) says PM Matthew Wale departs Wednesday 16 Sep for UNGA-81, with margin bilaterals. Contrast: Napat cancelled UNGA after Matui. DFAT pages still show 3 Jun “commence negotiations.” No signature this hour. East Makira copy unchanged. Not FLASH.",
+      "countries": ["SLB", "AUS", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/",
+        "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement"
+      ]
+    },
+    {
+      "title": "Bainivalu tuna-value restatement; GUAVA Palau leftover; WIM slot closed without text; residuals outstanding",
+      "summary": "PINA 16 Sep: Bainivalu at INFOFISH TUNA 2026 (Bangkok) demands greater retained tuna value; FiTI MoU is a 15 Sep leftover. PACNEWS/CNA: Taiwan Global UAV Academy first trainees from PLW/MHL/TUV under Palau PIF MoUs — training, not a base. WIM compounding-risks slot elapsed 03:00 UTC; no decision text. HIV gazette, Matui arrest, BPS SITREP, Funafuti MFA, PMNEC transcript still outstanding. Not FLASH.",
+      "countries": ["FJI", "TWN", "PLW", "MHL", "TUV", "PNG", "VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "sources": [
+        "https://pina.com.fj/2026/09/16/fijis-ocean-resources-must-create-greater-returns-for-our-people-fisheries/",
+        "https://www.cna.com.tw/news/aipl/202609150100.aspx",
+        "https://unfccc.int/event/WIM_ExCom25",
+        "https://www.pmnec.gov.pg/",
+        "https://www.fiji.gov.fj/Media-Centre/News",
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.vfsc.vu/public-notices/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "item7_last_minutes_sitting_unconfirmed",
+      "notes": "Programme listed Item 7 02:30–04:00 UTC; 82 minutes in at cutoff (~8 min remaining); closing 04:00–04:10 UTC; no official confirmation or adopted text."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel / margin bilaterals",
+      "parties": ["SLB", "UN"],
+      "status": "pmo_departs_2026-09-16",
+      "notes": "Travel notice only; not a treaty. Watch AUS–SLB language from New York margins."
+    },
+    {
+      "instrument": "FJI tuna-value restatement (INFOFISH TUNA 2026)",
+      "parties": ["FJI"],
+      "status": "political_restatement_bangkok",
+      "notes": "FiTI MoU already signed 15 Sep; no new legally binding fisheries instrument this hour."
+    },
+    {
+      "instrument": "TWN Global UAV Academy (GUAVA)",
+      "parties": ["TWN", "PLW", "MHL", "TUV"],
+      "status": "palau_mou_catchup_training_announced",
+      "notes": "First trainees late 2026/early 2027; up to 30; private-funded nonprofit; do not inflate into a base."
+    },
+    {
+      "instrument": "TUV-TWN diplomatic meeting (Panapa-Lai)",
+      "parties": ["TUV", "TWN"],
+      "status": "unchanged_reaffirmation_funafuti_mfa_silent",
+      "notes": "Kaitasi Treaty named as existing frame; 47th anniversary 19 Sep"
+    },
+    {
+      "instrument": "WIM ExCom 25 compounding-risks expert-group slot",
+      "parties": ["MHL", "WIM"],
+      "status": "slot_elapsed_no_decision",
+      "notes": "02:00–03:00 UTC 16 Sep closed; youth testimony already logged; no adopted text"
+    },
+    {
+      "instrument": "PNG 16 Sep Independence Hill speech",
+      "parties": ["PNG"],
+      "status": "unchanged_ceremony_confirmed_no_official_transcript",
+      "notes": "Independence afternoon; visible copy still omits Panguna/Lloyds; PMNEC still silent"
+    },
+    {
+      "instrument": "Fiji HIV national emergency",
+      "parties": ["FJI"],
+      "status": "unchanged_ministerial_2026-09-15_gazette_outstanding",
+      "notes": "Legal Notice still missing; needle-programme legislation flagged for next sitting / SO 51"
+    },
+    {
+      "instrument": "CHN-VUT dual-disaster cash grant",
+      "parties": ["CHN", "VUT"],
+      "status": "unchanged_handed_over_2026-09-15",
+      "notes": "US$100k / VT11m; Ambae wells/relief + Matui; not a security pact; no ANZ matching package this hour"
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "unchanged_complaint_lodged_arrest_unconfirmed",
+      "notes": "Shipping Act s.42 alleged; Penal Code s.108 arrest requested not confirmed; family-list 53 CLAIM"
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged_in_principle_unsigned",
+      "notes": "DFAT still 3 Jun commence-negotiations language; Wale UNGA travel does not equal signature"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "up_calendar",
+      "horizon": "0-20min through 04:10 UTC close",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "WIM ExCom 25 compounding-risks / dengue overlay",
+      "direction": "stable",
+      "horizon": "hours-18 Sep close",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; severe-dengue cluster among delegates; meeting disruption"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "up_calendar_treaty_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official treaty text from New York margins"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "stable",
+      "horizon": "days through 19 Sep anniversary",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change (FLASH) or a new legally binding security/access instrument"
+    },
+    {
+      "risk": "TWN UAV training (PLW/MHL/TUV)",
+      "direction": "stable",
+      "horizon": "months (late 2026 / early 2027 trainees)",
+      "confidence": "M",
+      "escalate_trigger": "Armed/ISR deployment or a defence-access instrument — do not FLASH on training MoUs"
+    },
+    {
+      "risk": "USA-PIF Taiwan precedent",
+      "direction": "stable",
+      "horizon": "Forum cycle / NZ 2027 host",
+      "confidence": "H",
+      "escalate_trigger": "Forum decision that changes observer/development-partner practice"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "stable",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill text; partner package implying capacity breach — not FLASH on a ministerial declaration"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges/arrest executed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "CHN-VUT disaster-aid optics",
+      "direction": "stable",
+      "horizon": "days",
+      "confidence": "H",
+      "escalate_trigger": "Follow-on security/police/port language; not FLASH on US$100k cash"
+    },
+    {
+      "risk": "SLB East Makira community arson",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "M",
+      "escalate_trigger": "Spread beyond Wainoni; Honiara unrest; RSIPF partner-force request; FLASH only if capital-scale"
+    },
+    {
+      "risk": "Penrhyn dual-use / access",
+      "direction": "stable",
+      "horizon": "months (design phase)",
+      "confidence": "M",
+      "escalate_trigger": "Published defence-access instrument or official confirmation of standing foreign security presence"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs the family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs the 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript (PMNEC) — unpublished remainder mention Bougainville/Panguna/Lloyds, or is visible work-ethic/anti-corruption/education copy complete?",
+    "First verified ABG 16 Sep remarks on Panguna? (BTC open day is not that.)",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)? RNZ still has no company reply after the relative-time rebump.",
+    "PMMM-4 sitting-open / Chair confirmation; Matatoa Declaration text (watch 2026-09-16T04:00Z–04:10Z close)?",
+    "WIM ExCom 25 compounding-risks slot readout after 03:00 UTC close; decision language on 18 Sep; any Majuro host-nation health note?",
+    "AUS–SLB: any DFAT/Honiara signature date from UNGA margins?",
+    "Yap SITREP #10 / Elato–Satawal; RMI dengue update during ExCom week.",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935? Next-sitting order paper for needle-programme / SO 51? Confirm RNZ “1 in 1667” vs FBC “1 in 167.”",
+    "East Makira: arrests/charges; displacement; RSIPF reinforcement from Honiara?",
+    "Any ANZ/other-partner Matui/Ambae package announced against the China US$100k?",
+    "Funafuti MFA confirmation of the Panapa–Lai readout; any labour-mobility instrument beyond political language?",
+    "COPMIN: date, venue, mandate, standing architecture vs one-off ministers’ conference?",
+    "GUAVA: court registration date; trainee numbers actually embarked; defence vs civilian-disaster use language in Palau MoUs?",
+    "Aguon/Blue Ocean Law: docketed DSM challenge in ASM/MNP/GUM, or interview-only?"
+  ]
+}
