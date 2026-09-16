@@ -1,0 +1,305 @@
+{
+  "product": "daily",
+  "task": "oceania.daily_brief",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T07:00:00Z",
+  "window_end_utc": "2026-09-16T08:51:00Z",
+  "generated_at_utc": "2026-09-16T09:12:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PMMM-4 reception closed; Matangi reports 15 Sep opening; Matatoa still unpublished",
+      "summary": "Programmed sitting and Likualofa reception (to 08:00 UTC) have elapsed. Matangi Tonga (21:25 TOT / 08:25 UTC) carries Crown Prince Tupoutoʻa ʻUlukalala’s 15 Sep opening call to sustain Pacific weather systems. pacificmet.net remains programme-plus-draft. PACNEWS 16 Sep still treats PMMM-4 as forthcoming. Not FLASH.",
+      "countries": ["TON"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["climate_security", "early_warning", "pif_linked"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/"
+      ]
+    },
+    {
+      "title": "PNG 51st Independence omits Panguna; Goroka 17-escape now dated; Enga 32 arrests",
+      "summary": "Independence Hill copy is work/discipline/education; PMNEC still has no transcript; visible speech still omits Panguna/Lloyds. NBC (14:51 PGT) confirms 17 escaped Goroka cells Monday 14 Sep; 8 recaptured, 9 at large. Enga Acting PPC (18:34 PGT / 08:34 UTC) reports 32 Independence-week summary arrests. Provincial L&O, not FLASH. Panguna fatalities remain PNG-media CLAIM; no BPS SITREP.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["independence", "bougainville", "law_and_order"],
+      "sources": [
+        "https://www.pmnec.gov.pg/",
+        "https://www.nbc.com.pg/post/39901/17-escape-in-goroka-cell-breach",
+        "https://www.nbc.com.pg/post/39936/police-arrest-32-in-enga-independence-crackdown",
+        "https://www.postcourier.com.pg/everyone-must-work-as-png-looks-forward-to-the-next-50-years1/"
+      ]
+    },
+    {
+      "title": "Vanuatu Matui SAR continues; complaint still request-only; China US$100k is cash not a pact",
+      "summary": "Confirmed toll band unchanged: 2 dead / 14 survivors / ~30+ missing. VMSA criminal complaint lodged; Napuati wants Master arrested under Penal Code s.108 — Daily Post still request-only. VFSC has no Tui extract. Banx 'captain in custody' is Tier C. China US$100k / VT11m handed over 15 Sep for Ambae + Matui. Napat cancelled UNGA. Not FLASH.",
+      "countries": ["VUT", "CHN"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["disaster", "maritime", "governance", "development_finance"],
+      "sources": [
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.vfsc.vu/public-notices/",
+        "https://www.rnz.co.nz/news/pacific"
+      ]
+    },
+    {
+      "title": "Fiji HIV national emergency still ministerial; gazette missing",
+      "summary": "Lalabalavu 15 Sep declared a national emergency (~1 in 60 adults vs 1 in 167 five years ago). fiji.gov.fj 16 Sep news list has no s.69 PHA 1935 Legal Notice. Needle-programme legislation flagged for next sitting under SO 51. Partners named: AUS, NZL, Global Fund, IND, UN. Not a security pact.",
+      "countries": ["FJI", "AUS", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["health", "non_traditional_security", "labour_mobility"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1411407/fiji-declares-hiv-emergency-as-1-in-60-fijian-adults-live-with-hiv",
+        "https://www.fiji.gov.fj/Media-Centre/News"
+      ]
+    },
+    {
+      "title": "Wale UNGA travel notice; AUS–SLB still unsigned; East Makira unchanged",
+      "summary": "PMO: PM Matthew Wale departs 16 Sep for UNGA-81. No SIBC/airport wheels-up (SIBC Cloudflare). DFAT pages still show 3 Jun 'commence negotiations.' East Makira RNZ copy unchanged. GREAT climate bills remain intent. Travel ≠ treaty signature.",
+      "countries": ["SLB", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["diplomacy", "security_compact", "unga"],
+      "sources": [
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+        "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+        "https://www.rnz.co.nz/news/pacific/1408416/solomon-islands-police-investigate-burning-of-13-homes-in-east-makira"
+      ]
+    },
+    {
+      "title": "Tuvalu–Taiwan Panapa–Lai meeting is a reaffirmation, not a switch",
+      "summary": "FM Panapa met President Lai in Taipei 15 Sep. Official readout names the Kaitasi Treaty, 47th anniversary on 19 Sep, and already-signed 2026 milkfish/clean-energy work. Funafuti MFA still silent. Pacific recognisers remain TUV, PLW, MHL. Not FLASH.",
+      "countries": ["TUV", "TWN"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["diplomatic_recognition", "climate"],
+      "sources": [
+        "https://english.president.gov.tw/NEWS/7212"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "PMMM-4 / Matatoa Ministerial Declaration",
+      "type": "climate",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "reception_closed_text_unpublished",
+      "date": "2026-09-16",
+      "venue": "Nuku'alofa",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Opening confirmed locally (15 Sep, Matangi 16 Sep 21:25 TOT). Programmed close and reception elapsed. No adopted PDF on pacificmet.net. PACNEWS still forthcoming."
+    },
+    {
+      "name": "PNG 51st Independence flag-raising",
+      "type": "political signalling",
+      "parties": ["PNG"],
+      "status": "confirmed_transcript_outstanding",
+      "date": "2026-09-16",
+      "venue": "Independence Hill",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Visible copy omits Panguna/Lloyds. Goroka escape now dated NBC. Enga 32 arrests in-window (08:34 UTC)."
+    },
+    {
+      "name": "Fiji HIV national emergency (s.69 PHA 1935 as reported)",
+      "type": "public-health / governance",
+      "parties": ["FJI"],
+      "status": "ministerial_gazette_outstanding",
+      "date": "2026-09-15",
+      "venue": "Suva",
+      "bindingness": "legal if gazetted",
+      "in_window": true,
+      "note": "fiji.gov.fj 16 Sep news list still has no Legal Notice."
+    },
+    {
+      "name": "CHN–VUT dual-disaster cash grant",
+      "type": "humanitarian / development",
+      "parties": ["CHN", "VUT"],
+      "status": "handed_over",
+      "date": "2026-09-15",
+      "venue": "Port Vila PMO",
+      "bindingness": "political (grant)",
+      "in_window": true,
+      "note": "US$100k / VT11m; not a security pact."
+    },
+    {
+      "name": "VMSA Matui criminal complaint",
+      "type": "domestic enforcement",
+      "parties": ["VUT"],
+      "status": "lodged_arrest_unconfirmed",
+      "date": "2026-09-14",
+      "venue": "Port Vila / Santo",
+      "bindingness": "legal (alleged)",
+      "in_window": true,
+      "note": "Daily Post still request-only at 16 Sep cutoff."
+    },
+    {
+      "name": "TUV–TWN Panapa–Lai meeting",
+      "type": "diplomatic recognition track",
+      "parties": ["TUV", "TWN"],
+      "status": "meeting_held",
+      "date": "2026-09-15",
+      "venue": "Taipei",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Reaffirmation of existing recognition; Kaitasi Treaty named; Funafuti MFA silent."
+    },
+    {
+      "name": "Wale UNGA-81 travel",
+      "type": "diplomatic / travel",
+      "parties": ["SLB"],
+      "status": "pmo_departs_16_sep_wheels_up_unconfirmed",
+      "date": "2026-09-16",
+      "venue": "Honiara / New York",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Travel ≠ AUS–SLB signature. DFAT still 3 Jun negotiations language."
+    },
+    {
+      "name": "Australia–Solomon Islands bilateral treaty",
+      "type": "security/development compact",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle / unsigned",
+      "date": "2026-09-07",
+      "venue": "ongoing / UNGA margins watch",
+      "bindingness": "mixed (unsigned)",
+      "in_window": false,
+      "note": "Carried. DFAT re-fetched 16 Sep still 'commence negotiations.'"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PMMM-4 / Matatoa unpublished after reception close",
+      "direction": "stable",
+      "horizon": "hours–48h",
+      "confidence": "H",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance mandates post-Matui"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "stable",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR implying capacity breach"
+    },
+    {
+      "risk": "Panguna security / ABG–Waigani split",
+      "direction": "stable",
+      "horizon": "48h–ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; extra-constitutional unrest"
+    },
+    {
+      "risk": "PNG provincial L&O (Goroka / Enga)",
+      "direction": "stable",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Capital-scale unrest — not FLASH on current copy"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "stable",
+      "horizon": "days–next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package implying capacity breach"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty unsigned",
+      "direction": "stable",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "stable",
+      "horizon": "through 19 Sep",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "stable",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    },
+    {
+      "risk": "El Niño / western-Pacific drought",
+      "direction": "stable",
+      "horizon": "months (peak Oct–Nov)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request"
+    },
+    {
+      "risk": "PPC-1 / Guam cable",
+      "direction": "watch",
+      "horizon": "days",
+      "confidence": "L",
+      "escalate_trigger": "Operator-confirmed cut"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency vs 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript — Panguna mention? K11bn vs K10bn?",
+    "First verified ABG 16 Sep Panguna remarks?",
+    "PMMM-4 Chair and adopted Matatoa PDF now that reception has closed?",
+    "WIM ExCom 25 decision language 18 Sep; Majuro host-nation health note?",
+    "AUS–SLB signature from UNGA margins? SIBC/airport wheels-up?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935? SO 51 order paper?",
+    "East Makira arrests/charges; RSIPF reinforcement from Honiara?",
+    "Funafuti MFA confirmation of Panapa–Lai; labour-mobility instrument?",
+    "COPMIN date, venue, mandate?",
+    "GUAVA court registration / trainee embarkation / defence vs civilian-disaster language?",
+    "Aguon/Blue Ocean Law: docketed DSM challenge in ASM/MNP/GUM, or interview-only?",
+    "Any ANZ matching Matui/Ambae package vs China US$100k?",
+    "Unpaywalled LPMEL ops line after 16 Sep?",
+    "Goroka: recapture of remaining nine?"
+  ],
+  "sources": [
+    {"title": "PMMM-4 programme", "publisher": "Pacific Met Desk", "url": "https://www.pacificmet.net/pmmm-4", "published_at": "2026-09-16", "tier": "A"},
+    {"title": "Tonga calls for sustainable and integrated Pacific weather services", "publisher": "Matangi Tonga", "url": "https://matangitonga.to/", "published_at": "2026-09-16T08:25:00Z", "tier": "B"},
+    {"title": "PACNEWS ONE, 16 September 2026", "publisher": "Islands Business", "url": "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/", "published_at": "2026-09-16", "tier": "B"},
+    {"title": "17 escape in Goroka cell breach", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/39901/17-escape-in-goroka-cell-breach", "published_at": "2026-09-16T04:51:00Z", "tier": "B"},
+    {"title": "Police arrest 32 in Enga independence crackdown", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/39936/police-arrest-32-in-enga-independence-crackdown", "published_at": "2026-09-16T08:34:00Z", "tier": "B"},
+    {"title": "Fiji declares HIV emergency as 1 in 60 Fijian adults live with HIV", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1411407/fiji-declares-hiv-emergency-as-1-in-60-fijian-adults-live-with-hiv", "published_at": "2026-09-16", "tier": "B"},
+    {"title": "PM Wale heads to UN General Assembly", "publisher": "Island Sun", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at": "2026-09-16", "tier": "B"},
+    {"title": "President Lai meets Panapa", "publisher": "Office of the President (Taiwan)", "url": "https://english.president.gov.tw/NEWS/7212", "published_at": "2026-09-15", "tier": "A"},
+    {"title": "Australia-Solomon Islands engagement", "publisher": "DFAT", "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement", "published_at": "2026-06-03", "tier": "A"},
+    {"title": "Criminal complaint lodged, VMSA wants MV Matui captain arrested", "publisher": "Vanuatu Daily Post", "url": "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html", "published_at": "2026-09-16", "tier": "B"}
+  ]
+}
