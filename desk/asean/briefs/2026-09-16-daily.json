@@ -1,0 +1,322 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-09-15T08:00:00Z",
+  "window_end_utc": "2026-09-16T08:00:00Z",
+  "generated_at_utc": "2026-09-16T08:49:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["IDN", "MYS", "SGP", "VNM", "PHL", "THA", "KHM", "MMR", "CHN"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "priority_items": [
+    {
+      "title": "Transboundary haze: SGP all-moderate at 16:00 SGT cutoff; MYS still ~40 unhealthy; IDN health print unchanged",
+      "summary": "NEA 16:00 SGT 16 Sep 24h PSI all moderate (N74/C91/W79/E76/S71) vs island-wide unhealthy 15 Sep. 1h PM2.5 all normal (C54 still <55). haze.gov.sg 11:44 AM: Unhealthy over Peninsular MYS and southern VNM; some Kalimantan–Sumatra Unhealthy-to-Hazardous. Star 10:00 MYT APIMS: 40 nationwide unhealthy, Johan Setia 187; Awani 12:40 MYT Johan Setia 185 / still 40. School-close API 200 not met. IDN Health Ministry last official: 12.5m exposed / ARI 113,336 by 9 Sep.",
+      "countries": ["IDN", "MYS", "SGP", "VNM"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "non_traditional_security", "AATHP"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi",
+        "https://www.haze.gov.sg/",
+        "https://www.thestar.com.my/news/nation/2026/09/16/haze-40-areas-register-unhealthy-levels-at-10am-wednesday",
+        "https://www.reuters.com/business/environment/indonesian-wildfires-cause-respiratory-infections-double-week-health-ministry-2026-09-10/"
+      ]
+    },
+    {
+      "title": "Thailand–Cambodia UNCLOS Annex V conciliation opens at PCA Singapore",
+      "summary": "First meeting 14–16 Sep. Fiery 15 Sep openings over collapse of the 2001 MOU. Process ~12 months; recommendations non-binding. No published Rules of Procedure or close note at 16:00 SGT cutoff. Not a binding delimitation and not a Koh Kood sovereignty award.",
+      "countries": ["THA", "KHM", "SGP"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["maritime", "diplomacy", "UNCLOS"],
+      "sources": [
+        "https://www.mfa.go.th/en/content/opening-statement-by-the-deputy-prime-minister-and?cate=5d5bcb4e15e39c306000683c",
+        "https://www.reuters.com/world/asia-pacific/cambodia-thailand-start-compulsory-conciliation-maritime-border-dispute-2026-09-15/",
+        "https://www.straitstimes.com/asia/se-asia/thailand-cambodia-maritime-conciliation-kicks-off"
+      ]
+    },
+    {
+      "title": "BARMM first elected parliament is hung: BFP 31 / UBJP 30, no 41-seat majority",
+      "summary": "RBOC party-seat allocation BFP 16 / UBJP 15 / BGC 8 / RDP 1. Rappler combined 80-seat tally BFP 31 / UBJP 30 / BGC 8 / SIAP 6 / others 5. Special term 30 Oct 2026–30 Jun 2031. Comelec.gov.ph combined proclamation text not retrieved. Comelec: 4 dead / 19 injured in Cotabato City.",
+      "countries": ["PHL"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "indirect",
+      "claim_type": "media_report",
+      "topics": ["elections", "domestic_politics", "BARMM"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/regions/1002520/list-representatives-who-won-seats-in-the-barmm-parliament/story/",
+        "https://www.rappler.com/philippines/elections/parties-most-parliament-seats-results-barmm-2026/",
+        "https://www.rappler.com/philippines/elections/death-toll-injuries-barmm-2026/"
+      ]
+    },
+    {
+      "title": "AMCDR day 2 in Manila: Manila Declaration text unpublished at cutoff",
+      "summary": "PH Chair flagship 15–16 Sep. Marcos five priorities + proposed Manila-ASPECT. AHA Centre warehouses already in PHL/THA/MYS/IDN. Philstar/Time.news still future-tense on the Manila Declaration. No OCD/PNA/ASEAN.org close text. No emergency AMM. No confirmed haze paragraph.",
+      "countries": ["PHL"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["disaster", "chair_track", "institutional"],
+      "sources": [
+        "https://www.philstar.com/headlines/2026/09/16/2556593/marcos-asean-strengthen-cooperation-disasters",
+        "https://asean.bernama.com/news.php?id=2607975"
+      ]
+    },
+    {
+      "title": "Indonesia Java Sea ferry SAR: 129 still missing; search area expanded",
+      "summary": "KM Virgo Transport 8, 243 aboard. Last Basarnas tally 22:00 WITA 15 Sep: 108 survivors, 6 dead, 129 missing. Day-4 expansion to 6,120 NM² / six sectors. National SAR, not FLASH.",
+      "countries": ["IDN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "peripheral",
+      "claim_type": "fact",
+      "topics": ["disaster", "maritime_safety"],
+      "sources": [
+        "https://jatim.antaranews.com/berita/1099129/basarnas-perluas-cari-korban-km-virgo-hingga-6120-mil-laut-persegi",
+        "https://www.viva.co.id/berita/nasional/1928955-basarnas-perluas-operasi-sar-km-virgo-transport-8-pada-hari-keempat-6-sektor-laut-jadi-sasaran"
+      ]
+    },
+    {
+      "title": "AFP: no confirmed Chinese drilling at Bajo de Masinloc after 28-day presence",
+      "summary": "RADM Trinidad 15 Sep 19:17 PHT: tracks consistent with surveillance/research, not stationary drilling. No shots-fired/collision in window. Secondary reprint: 48 CCG/PLAN vessels 8–14 Sep across four WPS features.",
+      "countries": ["PHL", "CHN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["SCS", "gray_zone", "maritime"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/nation/1002481/no-sign-of-drilling-from-chinese-ship-lurking-in-bajo-de-masinloc-afp/story/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "UNCLOS Annex V conciliation (Thailand–Cambodia)",
+      "type": "compulsory_conciliation",
+      "parties": ["THA", "KHM"],
+      "status": "underway",
+      "date": "2026-09-14",
+      "venue": "PCA Singapore",
+      "bindingness": "political",
+      "chair_year_relevance": "2027 SGP Chair continuity",
+      "in_window": true,
+      "note": "First meeting 14–16 Sep; openings 15 Sep; RoP unpublished at cutoff; recommendations non-binding."
+    },
+    {
+      "name": "ASEAN Ministerial Conference on Disaster Resilience / Manila Declaration",
+      "type": "asean_meeting",
+      "parties": ["ASEAN"],
+      "status": "convened",
+      "date": "2026-09-16",
+      "venue": "Manila",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Declaration title known; adopted text not published at 08:00 UTC cutoff."
+    },
+    {
+      "name": "Wang Yi–Kao Kim Hourn meeting",
+      "type": "bilateral_meeting",
+      "parties": ["CHN", "ASEAN Secretariat"],
+      "status": "held",
+      "date": "2026-09-15",
+      "venue": "Beijing",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "DOC implementation and CoC consultations restated; not a signed instrument."
+    },
+    {
+      "name": "OECD global-minimum-tax information-exchange agreement",
+      "type": "tax_information_exchange",
+      "parties": ["THA"],
+      "status": "signed",
+      "date": "2026-09-16",
+      "venue": "Thailand / OECD instrument",
+      "bindingness": "legal",
+      "in_window": true
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze",
+      "direction": "down_sgp_flat_mys_idn",
+      "horizon": "3-14d",
+      "confidence": "H",
+      "trigger": "Hazardous API/PSI >300 in a capital; Selangor API 200 school-close or 300 emergency; airport shutdowns"
+    },
+    {
+      "risk": "THA–KHM UNCLOS process rupture",
+      "direction": "flat_elevated",
+      "horizon": "12m",
+      "confidence": "M",
+      "trigger": "Walkout; refusal to adopt RoP; return to kinetic border"
+    },
+    {
+      "risk": "BARMM hung parliament / MILF elite split",
+      "direction": "up",
+      "horizon": "to 30 Oct 2026",
+      "confidence": "M",
+      "trigger": "Coalition collapse; election violence beyond Cotabato 4 dead / 19 injured"
+    },
+    {
+      "risk": "IDR / IDN fiscal credibility",
+      "direction": "flat",
+      "horizon": "1-8w",
+      "confidence": "M",
+      "trigger": "Deficit-path backtrack; capital controls; another MoF/BI shock"
+    },
+    {
+      "risk": "SCS gray-zone PHL–CHN",
+      "direction": "flat_elevated",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Shots fired or collision involving major-power assets"
+    },
+    {
+      "risk": "Myanmar 5PC vs bilateral normalisation",
+      "direction": "flat",
+      "horizon": "1-3m",
+      "confidence": "M",
+      "trigger": "Emergency AMM; change in Myanmar representation rule"
+    },
+    {
+      "risk": "MYS AirAsia funding stress",
+      "direction": "up",
+      "horizon": "weeks",
+      "confidence": "L",
+      "trigger": "Official MOF support/guarantee; payment freeze at MAHB"
+    }
+  ],
+  "open_questions": [
+    "AMCDR Manila Declaration PDF / haze paragraph",
+    "PCA or MFA note on UNCLOS Rules of Procedure",
+    "Comelec.gov.ph combined 80-seat BARMM proclamation",
+    "Next Basarnas casualty print vs 243/108/6/129",
+    "MYS 17 Sep 08:00 MYT APIMS after Malaysia Day",
+    "VNM MoF confirm/deny on USD bond",
+    "Suahasil first written circular / Decree 97/P full text",
+    "Live USD crosses for IDR MYR THB PHP VND SGD at 08:00 UTC",
+    "KLHK/BMKG enforcement vs 16 Sep ASMC hotspots"
+  ],
+  "sources": [
+    {
+      "title": "Singapore 24-hour PSI all-moderate at 16:00 SGT 16 Sep",
+      "publisher": "NEA / data.gov.sg",
+      "url": "https://api.data.gov.sg/v1/environment/psi",
+      "published_at": "2026-09-16T08:00:00Z",
+      "countries": ["SGP"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Latest weather and haze situation",
+      "publisher": "haze.gov.sg / ASMC",
+      "url": "https://www.haze.gov.sg/",
+      "published_at": "2026-09-16T03:44:00Z",
+      "countries": ["IDN", "MYS", "SGP", "VNM"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Haze: 40 areas register unhealthy levels at 10am Wednesday",
+      "publisher": "The Star",
+      "url": "https://www.thestar.com.my/news/nation/2026/09/16/haze-40-areas-register-unhealthy-levels-at-10am-wednesday",
+      "published_at": "2026-09-16T03:06:00Z",
+      "countries": ["MYS"],
+      "topics": ["haze"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Thailand opening statement at UNCLOS conciliation",
+      "publisher": "MFA Thailand",
+      "url": "https://www.mfa.go.th/en/content/opening-statement-by-the-deputy-prime-minister-and?cate=5d5bcb4e15e39c306000683c",
+      "published_at": "2026-09-15",
+      "countries": ["THA", "KHM"],
+      "topics": ["maritime"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Cambodia and Thailand start compulsory conciliation on maritime border dispute",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/cambodia-thailand-start-compulsory-conciliation-maritime-border-dispute-2026-09-15/",
+      "published_at": "2026-09-15",
+      "countries": ["THA", "KHM", "SGP"],
+      "topics": ["maritime"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "No single party gets majority of first-ever elected Bangsamoro Parliament",
+      "publisher": "Rappler",
+      "url": "https://www.rappler.com/philippines/elections/parties-most-parliament-seats-results-barmm-2026/",
+      "published_at": "2026-09-16T01:40:00Z",
+      "countries": ["PHL"],
+      "topics": ["elections"],
+      "claim_type": "media_report",
+      "confidence": "M",
+      "asean_relevance": "indirect"
+    },
+    {
+      "title": "Marcos to ASEAN: Strengthen cooperation on disasters",
+      "publisher": "Philstar",
+      "url": "https://www.philstar.com/headlines/2026/09/16/2556593/marcos-asean-strengthen-cooperation-disasters",
+      "published_at": "2026-09-15T16:00:00Z",
+      "countries": ["PHL"],
+      "topics": ["institutional"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "Basarnas expands Java Sea search to 6,120 NM²; tally still 129 missing",
+      "publisher": "ANTARA",
+      "url": "https://jatim.antaranews.com/berita/1099129/basarnas-perluas-cari-korban-km-virgo-hingga-6120-mil-laut-persegi",
+      "published_at": "2026-09-16",
+      "countries": ["IDN"],
+      "topics": ["disaster"],
+      "claim_type": "fact",
+      "confidence": "H",
+      "asean_relevance": "peripheral"
+    },
+    {
+      "title": "No sign of drilling from Chinese ship lurking in Bajo de Masinloc",
+      "publisher": "GMA",
+      "url": "https://www.gmanetwork.com/news/topstories/nation/1002481/no-sign-of-drilling-from-chinese-ship-lurking-in-bajo-de-masinloc-afp/story/",
+      "published_at": "2026-09-15T11:17:00Z",
+      "countries": ["PHL", "CHN"],
+      "topics": ["SCS"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    },
+    {
+      "title": "China ready to work with ASEAN; Wang Yi meets SG Kao",
+      "publisher": "CGTN",
+      "url": "https://news.cgtn.com/news/2026-09-16/China-to-work-with-ASEAN-for-closer-community-with-shared-future-1QtAYNW2XRe/p.html",
+      "published_at": "2026-09-16T01:05:00Z",
+      "countries": ["CHN"],
+      "topics": ["institutional", "SCS"],
+      "claim_type": "official_claim",
+      "confidence": "H",
+      "asean_relevance": "direct"
+    }
+  ]
+}
