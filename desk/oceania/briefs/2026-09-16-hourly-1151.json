@@ -1,0 +1,261 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-16T10:51:00Z",
+  "window_end_utc": "2026-09-16T11:51:00Z",
+  "generated_at_utc": "2026-09-16T12:25:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "parent_hourly": "2026-09-16T10:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "PMMM-4 still unpublished ~3h51 after reception close; Tonga holiday clock started",
+      "summary": "Likualofa reception closed 08:00 UTC. Local time at cutoff is 00:51 Thursday 17 Sep TOT (Crown Prince birthday public holiday). pacificmet.net remains programme-plus-draft; live HTML Item 7 still omits the Matatoa label. Matangi homepage still leads the 15 Sep opening. PACNEWS 16 Sep still treats PMMM-4 as forthcoming; one awards graf sloppily conflates PMC-8/PMMM-4. No Chair designation. Not FLASH.",
+      "countries": ["TON", "FJI"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["climate_security", "early_warning", "pif_linked"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/"
+      ]
+    },
+    {
+      "title": "PNG Independence evening still no PMNEC transcript; homepage colour rotation still omits Panguna",
+      "summary": "Independence evening (~21:51 PGT). PMNEC still has no 16 Sep transcript. Post Courier homepage rotated to UPNG/DAJAS Independence colour; still no Panguna/Lloyds. NBC Goroka: 17 escaped 14 Sep; 8 recaptured; 9 at large. ABG site HTTP 500 this hour. No BPS SITREP. Provincial, not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["independence", "bougainville", "law_and_order"],
+      "sources": [
+        "https://www.pmnec.gov.pg/",
+        "https://www.postcourier.com.pg/",
+        "https://www.nbc.com.pg/post/39901/17-escape-in-goroka-cell-breach",
+        "https://www.nbc.com.pg/post/39936/police-arrest-32-in-enga-independence-crackdown"
+      ]
+    },
+    {
+      "title": "Residuals outstanding; ABC El Niño frost copy is catch-up not a new emergency",
+      "summary": "Wale UNGA still travel-notice only; no SIBC/airport wheels-up. DFAT pages still show 3 Jun commence-negotiations language. fiji.gov.fj still has no s.69 PHA 1935 Legal Notice. Daily Post Matui complaint remains request-only; VFSC still has no Tui extract. Funafuti MFA still silent. ABC 15 Sep frost/food-shortage field report rebumped this hour (K500m June-vintage allocation; Pundari L&O instruction) — not an official drought emergency. Palau Malakal AFP feature remains daily-window leftover. Not FLASH.",
+      "countries": ["SLB", "AUS", "FJI", "VUT", "TUV", "PNG", "PLW", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["diplomacy", "health", "maritime", "climate_security", "alliances"],
+      "sources": [
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+        "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+        "https://www.fiji.gov.fj/Media-Centre/News",
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.vfsc.vu/public-notices/",
+        "https://www.abc.net.au/news/2026-09-16/frost-freezes-crops-in-png-as-el-nino-takes-hold/107134520"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC", "FJI"],
+      "status": "reception_closed_text_unpublished_3h51_tonga_holiday_on",
+      "notes": "Reception closed 08:00 UTC; ~3 h 51 min elapsed at cutoff. Local time 00:51 17 Sep TOT (Crown Prince birthday public holiday). Live HTML Item 7 still omits Matatoa label; PDF still uses Matatoa. PACNEWS 16 Sep still forthcoming; awards graf conflates PMC-8/PMMM-4. PMMM-3 Chair remains Fiji Minister Ro Filipe Tuisawau (handover watch)."
+    },
+    {
+      "instrument": "PNG 16 Sep Independence Hill speech",
+      "parties": ["PNG"],
+      "status": "evening_no_official_transcript_homepage_colour_rotation",
+      "notes": "Independence evening; Post Courier homepage rotated to UPNG/DAJAS colour; visible copy still omits Panguna/Lloyds; PMNEC still silent; Goroka 9 at large unchanged; ABG site HTTP 500"
+    },
+    {
+      "instrument": "ABC El Niño frost / food-shortage field report",
+      "parties": ["PNG", "VUT"],
+      "status": "catchup_15sep_homepage_rebump",
+      "notes": "Original dateline 15 Sep 15:36; URL dated 16 Sep; this-hour homepage circulation. June-vintage additional K500m El Niño allocation; Pundari L&O instruction. Not an official drought emergency. Not FLASH."
+    },
+    {
+      "instrument": "Malakal Port / harbour MILCON",
+      "parties": ["USA", "PLW"],
+      "status": "catchup_afp_feature_not_entering_force",
+      "notes": "Straits Times 16 Sep 11:22 SGT / 03:22 UTC leftover; ~US$500m dual-use; Whipps joint-use framing; 929 m2 Navy warehouse; not FLASH"
+    },
+    {
+      "instrument": "Wale UNGA-81 travel / margin bilaterals",
+      "parties": ["SLB", "UN"],
+      "status": "pmo_departs_2026-09-16_wheels_up_unconfirmed",
+      "notes": "Travel notice only; not a treaty. Island Sun homepage this hour is domestic colour. Watch AUS–SLB language from New York margins."
+    },
+    {
+      "instrument": "TUV-TWN diplomatic meeting (Panapa-Lai)",
+      "parties": ["TUV", "TWN"],
+      "status": "unchanged_reaffirmation_funafuti_mfa_silent",
+      "notes": "Kaitasi Treaty named as existing frame; 47th anniversary 19 Sep"
+    },
+    {
+      "instrument": "WIM ExCom 25",
+      "parties": ["MHL", "WIM"],
+      "status": "sitting_no_decision_this_hour",
+      "notes": "Through 18 Sep; dengue overlay; UNFCCC fetch timed out"
+    },
+    {
+      "instrument": "Fiji HIV national emergency",
+      "parties": ["FJI"],
+      "status": "unchanged_ministerial_2026-09-15_gazette_outstanding",
+      "notes": "Legal Notice still missing; Fiji Times recap is not a gazette; needle-programme legislation flagged for next sitting / SO 51"
+    },
+    {
+      "instrument": "CHN-VUT dual-disaster cash grant",
+      "parties": ["CHN", "VUT"],
+      "status": "unchanged_handed_over_2026-09-15",
+      "notes": "US$100k / VT11m; Ambae wells/relief + Matui; not a security pact; no ANZ matching package this hour"
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "unchanged_complaint_lodged_arrest_unconfirmed",
+      "notes": "Shipping Act s.42 alleged; Penal Code s.108 arrest requested not confirmed; family-list 53 CLAIM; Tier C in-custody blogs remain insufficient"
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged_in_principle_unsigned",
+      "notes": "DFAT still 3 Jun commence-negotiations language; Wale UNGA travel does not equal signature"
+    },
+    {
+      "instrument": "COP31 Pacific Senior Officials Taskforce (7th meeting)",
+      "parties": ["PIF"],
+      "status": "pina_copy_still_no_meeting_date",
+      "notes": "Landing-zones coordination; not a signed instrument"
+    },
+    {
+      "instrument": "Yap defense-site question",
+      "parties": ["USA", "FSM"],
+      "status": "unchanged_unanswered",
+      "notes": "Do not inflate into a base"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "stable_text_unpublished_3h51_tonga_holiday_on",
+      "horizon": "hours-48h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement/maintenance mandates"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges/arrest executed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "PNG provincial L&O (Goroka / Enga)",
+      "direction": "stable_dated_contained",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Spread to capital-scale unrest — then re-score; not FLASH on current copy"
+    },
+    {
+      "risk": "El Niño / western-Pacific drought (PNG 21/22 provinces + highland frost)",
+      "direction": "stable_abc_catchup_pmc8_leftover",
+      "horizon": "months (peak Oct-Nov; persist MAM 2027)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency or HADR request — not FLASH on field reporting or a June allocation"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "stable",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill text; partner package implying capacity breach — not FLASH on a ministerial declaration"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "stable_calendar_wheels_up_unconfirmed_treaty_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official treaty text from New York margins"
+    },
+    {
+      "risk": "PLW Malakal dual-use / local consent",
+      "direction": "stable_afp_catchup_eis_petition",
+      "horizon": "months (2026 dredge / 2027 MILCON peak)",
+      "confidence": "M",
+      "escalate_trigger": "Contract award or access text entering force — then re-score; not FLASH on a feature"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "stable",
+      "horizon": "days through 19 Sep anniversary",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change (FLASH) or a new legally binding security/access instrument"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "stable",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    },
+    {
+      "risk": "PPC-1 / Guam cable",
+      "direction": "stable_tier_c",
+      "horizon": "days",
+      "confidence": "L",
+      "escalate_trigger": "Operator-confirmed cut"
+    },
+    {
+      "risk": "Yap defense-site rumour",
+      "direction": "stable_unanswered",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_trigger": "Official confirmation of a new facility — then re-score; do not FLASH on the unanswered question"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs the family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs the 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript (PMNEC) — Panguna/Lloyds mention? Confirm Haus Bung K11bn vs NBC caption K10bn.",
+    "First verified ABG 16 Sep remarks on Panguna? (abg.gov.pg returned HTTP 500 this hour.)",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "PMMM-4 Chair (handover from Tuisawau); Matatoa Declaration PDF now ~3 h 51 min after reception close — or delayed through the 17 Sep Tonga holiday?",
+    "Does the live HTML drop of Matatoa from Item 7 reflect a retitle, or only a page-edit?",
+    "WIM ExCom 25 decision language on 18 Sep; any Majuro host-nation health note?",
+    "AUS–SLB: any DFAT/Honiara signature date from UNGA margins? SIBC/airport confirmation of Wale wheels-up?",
+    "Yap SITREP #10 / Elato–Satawal; RMI dengue update during ExCom week.",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935? Next-sitting order paper for needle-programme / SO 51?",
+    "East Makira: arrests/charges; displacement; RSIPF reinforcement from Honiara?",
+    "Any ANZ/other-partner Matui/Ambae package announced against the China US$100k?",
+    "Funafuti MFA confirmation of the Panapa–Lai readout; any labour-mobility instrument beyond political language?",
+    "COPMIN: date, venue, mandate, standing architecture vs one-off ministers’ conference?",
+    "GUAVA: court registration date; trainee numbers actually embarked; defence vs civilian-disaster use language in Palau MoUs?",
+    "Aguon/Blue Ocean Law: docketed DSM challenge in ASM/MNP/GUM, or interview-only?",
+    "Goroka: recapture of remaining nine; any link to Independence-week security plans beyond coincidence?",
+    "COP31 7th Senior Officials Taskforce: meeting date/venue still missing from PINA copy?",
+    "Malakal: contract award / EIS decision date vs AFP feature; Whipps dual-use language vs local petition?",
+    "PNG El Niño: is the ABC-cited additional K500m still the operative envelope, and has any province issued a drought-emergency gazette?"
+  ]
+}
