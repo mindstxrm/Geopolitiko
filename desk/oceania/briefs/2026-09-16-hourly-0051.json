@@ -1,0 +1,257 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-15T23:51:00Z",
+  "window_end_utc": "2026-09-16T00:51:00Z",
+  "generated_at_utc": "2026-09-16T01:05:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-15",
+  "parent_hourly": "2026-09-15T23:51:00Z",
+  "countries_touched": ["PNG", "TON", "FJI", "VUT", "SLB", "AUS", "CHN", "MHL", "FSM", "NZL", "COK"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "More of Marape 16 Sep flag-raising now visible: work/discipline, still no Panguna; PMNEC transcript outstanding",
+      "summary": "Catch-up: Post Courier (09:40 PGT / 23:40 UTC 15 Sep, 11 min before this window; missed in 23:51 scan) unpaywalls Marape Independence Hill quotes on work, discipline and anti-laziness. Visible copy still has no Panguna/Lloyds/Bougainville. PMNEC still has no official transcript. RNZ rebumped the 15 Sep Maru-warning piece to 00:26 UTC; still no Lloyds reply. No BPS SITREP. Not FLASH.",
+      "countries": ["PNG", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.postcourier.com.pg/everyone-must-work-as-png-looks-forward-to-the-next-50-years1/",
+        "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+        "https://www.pmnec.gov.pg/",
+        "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville"
+      ]
+    },
+    {
+      "title": "PMMM-4 clock into Item 5; sitting still unconfirmed; Matatoa adoption still 02:30–04:00 UTC",
+      "summary": "Tonga ~13:51 local at cutoff. If the programme held, ministers are in Agenda Item 5 (NMHS priorities) after lunch. pacificmet.net still programme-only; Matangi Tonga still has no sitting-open item. No Chair, no Matatoa text. Adoption still 02:30–04:00 UTC 16 Sep (~1.5–3 h). WIM compounding-risks slot 02:00–03:00 UTC overlaps. Not FLASH.",
+      "countries": ["TON"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://matangitonga.to/"
+      ]
+    },
+    {
+      "title": "Fiji HIV gazette still missing; Matui arrest still requested not executed",
+      "summary": "fiji.gov.fj 16 Sep list still rural housing/Tabuya — no s.69 PHA 1935 Legal Notice. Daily Post complaint piece remains the lead (Penal Code s.108 request); no arrest/charges story. VFSC still no Tui extract. Confirmed SAR band still 2 / 14 / ~30+. China US$100k already logged. Ignore uncorroborated custody blogs. Not FLASH.",
+      "countries": ["FJI", "VUT", "CHN"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.fiji.gov.fj/Media-Centre/News",
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.vfsc.vu/public-notices/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "PNG 16 Sep Independence Hill speech",
+      "parties": ["PNG"],
+      "status": "ceremony_confirmed_more_quotes_visible_no_official_transcript",
+      "notes": "Post Courier 09:40 PGT work/discipline quotes; no Panguna in visible copy; PMNEC still silent"
+    },
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "item5_on_clock_sitting_unconfirmed",
+      "notes": "Programme listed Item 5 00:30–01:30 UTC then Item 6; no official confirmation or adopted text. Adoption still 02:30–04:00 UTC 16 Sep."
+    },
+    {
+      "instrument": "Fiji HIV national emergency",
+      "parties": ["FJI"],
+      "status": "unchanged_ministerial_2026-09-15_gazette_outstanding",
+      "notes": "RNZ pickup last hour; Legal Notice still missing; needle-programme legislation flagged for next sitting / SO 51"
+    },
+    {
+      "instrument": "CHN-VUT dual-disaster cash grant",
+      "parties": ["CHN", "VUT"],
+      "status": "unchanged_handed_over_2026-09-15",
+      "notes": "US$100k / VT11m; Ambae wells/relief + Matui; not a security pact; no ANZ matching package this hour"
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "unchanged_complaint_lodged_arrest_unconfirmed",
+      "notes": "Shipping Act s.42 alleged; Penal Code s.108 arrest requested not confirmed; family-list 53 CLAIM"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "calendar",
+      "horizon": "0-3h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement mandates"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "stable",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill text; partner package implying capacity breach — not FLASH on a ministerial declaration"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges/arrest executed; VFSC gazette; SAR implying state-capacity breach"
+    },
+    {
+      "risk": "CHN-VUT disaster-aid optics",
+      "direction": "stable",
+      "horizon": "days",
+      "confidence": "H",
+      "escalate_trigger": "Follow-on security/police/port language; not FLASH on US$100k cash"
+    },
+    {
+      "risk": "SLB East Makira community arson",
+      "direction": "stable",
+      "horizon": "48-96h",
+      "confidence": "M",
+      "escalate_trigger": "Spread beyond Wainoni; Honiara unrest; RSIPF partner-force request; FLASH only if capital-scale"
+    },
+    {
+      "risk": "MHL dengue during WIM ExCom 25",
+      "direction": "stable",
+      "horizon": "days through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Severe-dengue cluster among delegates/host staff or meeting disruption; FLASH only if mass-casualty"
+    },
+    {
+      "risk": "Penrhyn dual-use / access",
+      "direction": "stable",
+      "horizon": "months (design phase)",
+      "confidence": "M",
+      "escalate_trigger": "Published defence-access instrument or official confirmation of standing foreign security presence"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs the family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs the 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript (PMNEC) — unpublished remainder mention Bougainville/Panguna/Lloyds, or is visible work-ethic/unity copy complete?",
+    "First verified ABG 16 Sep remarks on Panguna?",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)? RNZ still has no company reply after the 00:26 UTC rebump.",
+    "PMMM-4 sitting-open / Chair confirmation; Matatoa Declaration text (watch 2026-09-16T02:30Z–04:00Z)?",
+    "WIM ExCom 25 decision language on 18 Sep, and any Majuro host-nation health note? Compounding-risks slot 02:00–03:00 UTC 16 Sep.",
+    "AUS-SLB signature date?",
+    "Yap SITREP #10 / Elato-Satawal verification; RMI dengue update during ExCom week?",
+    "Fiji HIV gazette / Legal Notice under s.69 Public Health Act 1935? Next-sitting order paper for needle-programme / SO 51? Confirm RNZ 1-in-1667 vs FBC 1-in-167.",
+    "Penrhyn: any new official text beyond the 1 Sep joint statement / 5 Sep Novelly interview?",
+    "East Makira: arrests/charges; displacement numbers; any RSIPF reinforcement from Honiara?",
+    "Any ANZ/other-partner Matui/Ambae package announced against the China US$100k?"
+  ],
+  "sources": [
+    {
+      "title": "Everyone must work as PNG looks forward to the next 50 years",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/everyone-must-work-as-png-looks-forward-to-the-next-50-years1/",
+      "published_at": "2026-09-15T23:40:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "We are one people, one nation and one country",
+      "publisher": "Post Courier",
+      "url": "https://www.postcourier.com.pg/we-are-one-people-one-nation-and-one-country/",
+      "published_at": "2026-09-15T21:23:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Panguna attack: PNG minister claims Indian miner was warned against investing in Bougainville",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1393940/panguna-attack-png-minister-claims-indian-miner-was-warned-against-investing-in-bougainville",
+      "published_at": "2026-09-16T00:26:00Z",
+      "countries": ["PNG"],
+      "topics": ["governance", "resources", "security"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-15",
+      "countries": ["TON"],
+      "topics": ["climate", "institutions"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate"
+    },
+    {
+      "title": "Criminal complaint lodged, VMSA wants MV Matui captain arrested",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+      "published_at": "2026-09-15T21:51:00Z",
+      "countries": ["VUT"],
+      "topics": ["maritime", "governance", "humanitarian"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Solomon Islands police investigate burning of 13 homes in East Makira",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1408416/solomon-islands-police-investigate-burning-of-13-homes-in-east-makira",
+      "published_at": "2026-09-15T19:18:00Z",
+      "countries": ["SLB"],
+      "topics": ["governance", "security"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance"
+    },
+    {
+      "title": "Australia-Solomon Islands engagement",
+      "publisher": "DFAT",
+      "url": "https://www.dfat.gov.au/countries/solomon-islands/australia-solomon-islands-engagement",
+      "published_at": "2026-06-03",
+      "countries": ["AUS", "SLB"],
+      "topics": ["security", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic"
+    },
+    {
+      "title": "Fiji government news list",
+      "publisher": "fiji.gov.fj",
+      "url": "https://www.fiji.gov.fj/Media-Centre/News",
+      "published_at": "2026-09-16",
+      "countries": ["FJI"],
+      "topics": ["governance", "health"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian"
+    }
+  ]
+}
