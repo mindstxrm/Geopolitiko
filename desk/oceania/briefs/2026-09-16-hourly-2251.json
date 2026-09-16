@@ -1,0 +1,395 @@
+{
+  "product": "memo",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-16T21:51:00Z",
+  "window_end_utc": "2026-09-16T22:51:00Z",
+  "generated_at_utc": "2026-09-16T23:28:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "parent_hourly": "2026-09-16T21:51:00Z",
+  "countries_touched": [
+    "AUS",
+    "NZL",
+    "PNG",
+    "FJI",
+    "SLB",
+    "VUT",
+    "TON",
+    "WSM",
+    "KIR",
+    "TUV",
+    "NRU",
+    "MHL",
+    "FSM",
+    "PLW",
+    "USA",
+    "CHN",
+    "TWN",
+    "COK",
+    "NIU",
+    "KOR"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Lal: 24 Dec CRC in-force clock 'autogolpe' if it delays the GE; still not extra-constitutional",
+      "summary": "Near-cutoff FijiVillage homepage lead (dateline 17 Sep): Centre for Democracy and Dialogue CEO Nilesh Lal says the proposed 24 Dec 2026 in-force timetable raises serious constitutional/legal/democratic concerns; if electoral-system change makes an on-time GE impossible it would amount in substance to an autogolpe. Asks a public guarantee that the election is held in the legal window. Civil-society CLAIM, not an extra-constitutional act. CRC report unpublished; Referendum Bill unpassed; fiji.gov.fj news list still silent. Special sitting still 22 Sep 11:30. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["constitutional_review", "elections", "pic_agency", "civil_society"],
+      "sources": [
+        "https://www.fijivillage.com/news/rushed-constitution-process-risks-delaying-next-general-election-lal-8868a6/",
+        "https://www.fijivillage.com/news/constitution-review-commission-report-to-be-tabled-in-a-special-parliament-sitting-next-tuesday-53e69a/",
+        "https://www.fiji.gov.fj/news/"
+      ]
+    },
+    {
+      "title": "Matui: arrest still unconfirmed; homepage 200/429 flicker; 55/39 now sitting CLAIM; 10am stub",
+      "summary": "Daily Post homepage intermittent HTTP 200 then 429 this hour (was 429 last hour; last fetch 200). /news listing HTTP 200. Complaint article still request-only. VFSC still no Tui extract. Dual-status caveat remains. In-window RNZ 10am (17 Sep 10:00 NZST / 22:00 UTC) is an audio stub. Last hour's near-cutoff 55/39 is now sitting copy: unnamed Luganville source 55 aboard / 14 rescued / 2 bodies / 39 missing; families intend civil claims after SAR close. Toll CLAIM until VMSA/NDMO. Not FLASH.",
+      "countries": ["VUT", "AUS"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["maritime_safety", "disaster_response", "pic_agency"],
+      "sources": [
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html",
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.dailypost.vu/",
+        "https://www.dailypost.vu/news/",
+        "https://www.vfsc.vu/public-notices/",
+        "https://www.rnz.co.nz/international/programmes/worldandpacificnews/audio/2019052266/rnz-pacific-news-at-10am-for-17-september-2026"
+      ]
+    },
+    {
+      "title": "PMMM-4 still unpublished ~14h51 after reception close; Van-KIRAP leftover is not adoption",
+      "summary": "Likualofa reception closed 08:00 UTC. Local time at cutoff is 11:51 Thursday 17 Sep TOT (Crown Prince birthday public holiday). ~14 h 51 min after reception close. pacificmet.net remains programme-plus-draft and future tense; live HTML Item 7 still omits the Matatoa label. PACNEWS 16 Sep still forthcoming. Matangi/SPREP Cloudflare HTTP 403. Catch-up leftover: Daily Post Van-KIRAP / APCC Tonga colour (Jin Ho Yoo) is technical CIS commentary, not adopted Matatoa text. Not FLASH.",
+      "countries": ["TON", "VUT", "FJI", "KOR"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["climate_security", "early_warning", "pif_linked"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://www.dailypost.vu/news/van-kirap-model-could-be-replicated-across-pacific-says-apcc-researcher/article_f09b5b62-c22a-5831-8b48-44baffc68fa6.html",
+        "https://www.dailypost.vu/news/vanuatu-seeks-to-host-pacific-multi-hazard-early-warning-centre/article_ff399b84-96eb-5d95-a249-a2918d5de350.html",
+        "https://islandsbusiness.com/pacnews/pacnews-one-16-september-2026/"
+      ]
+    },
+    {
+      "title": "Penrhyn Novelly exclusive leftover; still no access text",
+      "summary": "Last hour's RNZ Pacific exclusive remains the RSS lead: Novelly says a military presence at Omoka/Penrhyn is 'all being negotiated,' then the project 'is not a [US] military base.' Open to a COK-requested security deal; no discussions yet. No COK Cabinet/PM request or NZ MFAT/US Embassy Wellington clarification this hour. Design-phase leftover (US$50m + NZ$17.5m). Not a signed access text. Not FLASH. Do not inflate.",
+      "countries": ["COK", "USA", "NZL", "NIU", "WSM"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["dual_use_infrastructure", "maritime_security", "pic_agency", "penrhyn"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1428407/us-military-presence-at-cook-islands-port-being-negotiated-ambassador-says",
+        "https://www.rnz.co.nz/rss/pacific.xml"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "near_cutoff_lal_autogolpe_overlay_still_media_only_22sep_tabling",
+      "notes": "FijiVillage homepage lead: Lal (Centre for Democracy and Dialogue) on 24 Dec in-force clock. Civil-society CLAIM. Report unpublished. Referendum Bill unpassed. fiji.gov.fj news list silent. Residual timetable unchanged. Not FLASH."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint / PMO independent inquiry",
+      "parties": ["VUT"],
+      "status": "charges_sought_not_confirmed_homepage_200_429_flicker_rnz_10am_stub_no_named_step",
+      "notes": "Homepage intermittent HTTP 200/429 this hour (was 429). Article still request-only. VFSC still no Tui extract. Dual-status caveat remains. In-window RNZ 10am audio stub adds no named legal step."
+    },
+    {
+      "instrument": "Matui operation-centre headcount (55/39)",
+      "parties": ["VUT"],
+      "status": "sitting_copy_of_last_hour_near_cutoff_claim_unnamed_luganville_source",
+      "notes": "Daily Post updated 08:57 VUT / 21:57 UTC now sitting on /news. 55 aboard / 14 rescued / 2 bodies / 39 missing. CLAIM until VMSA/NDMO. SAR still active. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port upgrade (Novelly RNZ exclusive)",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_last_hour_exclusive_still_rss_lead_no_access_text",
+      "notes": "RNZ 17 Sep 09:35 NZST leftover. Design-phase leftover (US$50m + NZ$17.5m). Security deal only if COK requests; no discussions yet. Not FLASH. Do not inflate."
+    },
+    {
+      "instrument": "PMMM-4 / Matatoa Ministerial Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC", "FJI"],
+      "status": "reception_closed_text_unpublished_14h51_tonga_holiday_on",
+      "notes": "Reception closed 08:00 UTC; ~14 h 51 min elapsed at cutoff. Local time 11:51 17 Sep TOT (Crown Prince birthday public holiday). Live HTML Item 7 still omits Matatoa label. Catch-up Van-KIRAP/APCC is not adoption. Matangi Cloudflare 403 this hour."
+    },
+    {
+      "instrument": "Van-KIRAP CIS model (APCC)",
+      "parties": ["VUT", "KOR"],
+      "status": "catchup_dailypost_tonga_bylined_technical_colour_not_a_pact",
+      "notes": "Daily Post 17 Sep Ezra Toara in Tonga. Jin Ho Yoo: Van-KIRAP as PIC CIS model (taro/cassava; trainer-of-trainers). Not Matatoa adoption. Not FLASH."
+    },
+    {
+      "instrument": "Vanuatu MHEWS host register (PMMM-4 floor)",
+      "parties": ["VUT", "SPREP", "PMC"],
+      "status": "unchanged_leftover_regenvanu_political_intent_pmc_2028",
+      "notes": "Daily Post 07:30 VUT leftover. Formal interest registered at PMMM-4; details flagged to PMC 2028. Not a host decision. Not FLASH."
+    },
+    {
+      "instrument": "AUS-VUT aviation equipment handover",
+      "parties": ["AUS", "VUT"],
+      "status": "leftover_16sep_ceremony_vt127m_partnerships_for_aviation",
+      "notes": "Daily Post 08:00 VUT leftover. Civil aviation, not a security pact. Not FLASH."
+    },
+    {
+      "instrument": "Fiji HIV national emergency",
+      "parties": ["FJI"],
+      "status": "unchanged_ministerial_2026-09-15_gazette_outstanding_fijisun_no_mandatory_testing_leftover",
+      "notes": "Legal Notice still missing. Fiji Sun 08:00 FJT leftover: Lalabalavu says mandatory testing not under HIV Act. RNZ 10am stub not a gazette. Save the Children 16 Sep leftover is not a gazette."
+    },
+    {
+      "instrument": "Fiji Employment Minister vacancy / funeral",
+      "parties": ["FJI"],
+      "status": "funeral_20sep_reguregu_now_local_seat_vacant_s64_portfolio_unannounced",
+      "notes": "Official funeral Sunday 20 Sep; reguregu 17–18 Sep Dilkusha now in local calendar (10:51 Thursday 17 Sep FJT). Electoral Commission: s.64(3) elapsed 24 Jun 2026; parliamentary seat vacant until next GE. Not FLASH."
+    },
+    {
+      "instrument": "PNG 16 Sep Independence Hill speech",
+      "parties": ["PNG"],
+      "status": "haus_bung_keynote_recap_still_omits_panguna_calendar_day_closed_abg_expired_tls",
+      "notes": "Haus Bung still quotes Marape Independence Hill keynote (K11bn education as spoken); PMNEC still silent after calendar day closed (08:51 17 Sep PGT); Goroka 9 at large re-extracted this hour (unchanged); NBC homepage still Enga 32 leftover; ABG still expired TLS (HTTP 200 insecure); news list still 13–14 Sep leftovers."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel / margin bilaterals",
+      "parties": ["SLB", "UN"],
+      "status": "pmo_departs_2026-09-16_wheels_up_unconfirmed_travel_day_closed_sibc_403_dfat_timeout",
+      "notes": "Travel notice only; not a treaty. Island Sun still 'will leave today' after Honiara travel day closed (09:51 Thursday 17 Sep SBT). Courtesy PNG congratulations leftover is not a treaty. SIBC Cloudflare HTTP 403. DFAT timed out; last confirmed language still 3 Jun commence-negotiations."
+    },
+    {
+      "instrument": "TUV-TWN diplomatic meeting (Panapa-Lai)",
+      "parties": ["TUV", "TWN"],
+      "status": "unchanged_reaffirmation_funafuti_mfa_unreachable",
+      "notes": "Kaitasi Treaty named as existing frame; 47th anniversary 19 Sep; foreign.gov.tv DNS-fail this hour"
+    },
+    {
+      "instrument": "WIM ExCom 25",
+      "parties": ["MHL", "WIM"],
+      "status": "sitting_no_decision_this_hour",
+      "notes": "Through 18 Sep; dengue overlay; UNFCCC page body empty this hour"
+    },
+    {
+      "instrument": "CHN-VUT dual-disaster cash grant",
+      "parties": ["CHN", "VUT"],
+      "status": "unchanged_handed_over_2026-09-15",
+      "notes": "US$100k / VT11m; Ambae wells/relief + Matui; not a security pact; no ANZ matching package this hour"
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged_in_principle_unsigned_dfat_timeout_this_hour",
+      "notes": "DFAT timed out this hour; last confirmed 3 Jun commence-negotiations language; Wale UNGA travel does not equal signature"
+    },
+    {
+      "instrument": "DAS Murray Palau briefing (PACNEWS pickup)",
+      "parties": ["USA", "PIF"],
+      "status": "leftover_postcourier_pickup_not_new_compact",
+      "notes": "Post Courier 17 Sep 05:59 PGT leftover. Palau restatement. Not FLASH."
+    },
+    {
+      "instrument": "East Makira arson (Naharahau)",
+      "parties": ["SLB"],
+      "status": "same_story_ib_past_tense_reinforcements_no_arrests",
+      "notes": "No arrests/charges. Provincial, not FLASH."
+    },
+    {
+      "instrument": "COP31 Pacific Senior Officials Taskforce (7th meeting)",
+      "parties": ["PIF"],
+      "status": "pina_copy_still_no_meeting_date",
+      "notes": "Landing-zones coordination; not a signed instrument"
+    },
+    {
+      "instrument": "Yap defense-site question",
+      "parties": ["USA", "FSM"],
+      "status": "unchanged_unanswered",
+      "notes": "Do not inflate into a base. Contrast with leftover Penrhyn interview (also do not inflate)."
+    },
+    {
+      "instrument": "Yasawa / maritime water shortage response",
+      "parties": ["FJI"],
+      "status": "assessment_vessel_sought",
+      "notes": "Bulitavu leftover: 23 villages, ~4,965 people. El Niño ops colour, not a gazette."
+    },
+    {
+      "instrument": "Labasa / Qelewaqa WAF outage",
+      "parties": ["FJI"],
+      "status": "leftover_resident_complaint_waf_self_signed_tls_fail",
+      "notes": "Three-day water outage; WAF self-signed TLS fail this hour. Distinct from Yasawa barge watch. Not FLASH."
+    },
+    {
+      "instrument": "Malakal Port / harbour MILCON",
+      "parties": ["USA", "PLW"],
+      "status": "catchup_afp_feature_not_entering_force",
+      "notes": "AFP-JIJI leftover; ~US$500m dual-use; not FLASH"
+    },
+    {
+      "instrument": "GUAVA UAV academy",
+      "parties": ["TWN", "PLW", "MHL", "TUV"],
+      "status": "unchanged_mfa_register_next_week_not_filed",
+      "notes": "Same MFA leftover; not a court filing; not a base"
+    },
+    {
+      "instrument": "PNG-VUT Kumul Vanua police training",
+      "parties": ["PNG", "VUT"],
+      "status": "catchup_manning_welcome_existing_mou_not_this_hour_signature",
+      "notes": "Existing Kumul Vanua track. Not a this-hour pact. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "up_colour_not_status_lal_autogolpe_overlay_still_no_tier_a_s64_seat_vacant_reguregu_local",
+      "horizon": "days-90d (through Feb 2027 election backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on a civil-society warning, a Cabinet timetable, a vacant seat, or mourning rites"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance shock",
+      "direction": "stable_homepage_200_429_flicker_arrest_unconfirmed_55_39_sitting_claim_rnz_10am_stub",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll well above band; charges/arrest executed; VFSC gazette; SAR implying state-capacity breach; extra-legal revenge violence on Ambae"
+    },
+    {
+      "risk": "COK Penrhyn dual-use / access",
+      "direction": "stable_leftover_ambassador_interview_still_design_phase_no_access_text",
+      "horizon": "months (design to build)",
+      "confidence": "H",
+      "escalate_trigger": "Signed defence-access / base text or COK request for a security deal that is then answered — then re-score; not FLASH on an interview leftover"
+    },
+    {
+      "risk": "PMMM-4 Matatoa Declaration",
+      "direction": "stable_text_unpublished_14h51_tonga_holiday_on_matangi_403_vankirap_not_adoption",
+      "horizon": "hours-48h",
+      "confidence": "H",
+      "escalate_trigger": "Ministerial text that changes NMHS/enforcement/maintenance mandates"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "stable_abg_expired_tls_reachable_still_no_16sep_remarks",
+      "horizon": "48h-independence ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; second raid; PNGDF deployment talk; extra-constitutional or capital unrest"
+    },
+    {
+      "risk": "PNG provincial L&O (Goroka / Enga)",
+      "direction": "stable_dated_contained_enga_homepage_leftover_goroka_9_at_large_reextracted_unchanged",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Spread to capital-scale unrest — then re-score; not FLASH on current copy"
+    },
+    {
+      "risk": "El Niño / western-Pacific drought (PNG 21/22 provinces + highland frost + Yasawa water + Labasa outage overlay)",
+      "direction": "stable_yasawa_leftover_labasa_resident_complaint_abc_pmc8_leftover",
+      "horizon": "months (peak Oct-Nov; persist MAM 2027)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency or HADR request — not FLASH on field reporting, a June allocation, a maritime water run, or a three-day WAF outage"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "stable_gazette_missing_fijisun_no_mandatory_testing_leftover_rnz_10am_stub_not_gazette",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill text; partner package implying capacity breach — not FLASH on a ministerial declaration or a traveller recap"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "stable_honiara_travel_day_closed_wheels_up_unconfirmed_sibc_403_dfat_timeout_treaty_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official treaty text from New York margins"
+    },
+    {
+      "risk": "PLW Malakal dual-use / local consent",
+      "direction": "stable_afp_catchup_eis_petition",
+      "horizon": "months (2026 dredge / 2027 MILCON peak)",
+      "confidence": "M",
+      "escalate_trigger": "Contract award or access text entering force — then re-score; not FLASH on a feature"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "stable_funafuti_mfa_unreachable",
+      "horizon": "days through 19 Sep anniversary",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change (FLASH) or a new legally binding security/access instrument"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "stable",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    },
+    {
+      "risk": "PPC-1 / Guam cable",
+      "direction": "stable_tier_c",
+      "horizon": "days",
+      "confidence": "L",
+      "escalate_trigger": "Operator-confirmed cut"
+    },
+    {
+      "risk": "Yap defense-site rumour",
+      "direction": "stable_unanswered",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_trigger": "Official confirmation of a new facility — then re-score; do not FLASH on the unanswered question"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request? (Daily Post homepage intermittent HTTP 200/429 this hour; article still request-only. In-window RNZ 10am stub has no named legal step.)",
+    "VMSA/NDMO verified passenger+crew figure vs sitting operation-centre 55/39 vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs the 2 Jun business-name strike-off?",
+    "PMO independent-investigation ToR / gazette vs RNZ paraphrase of a Wednesday statement? VCIR comment on the notification gap Napuati described?",
+    "Confirm cargo-only certificate and 10 Sep overflow warning in a Tier A VMSA/gazette instrument, not only the RNZ interview.",
+    "Will families file civil claims before SAR is formally closed, and in which court?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript (PMNEC) — Panguna/Lloyds mention? Haus Bung recap still quotes K11bn as spoken. Calendar day closed without a transcript.",
+    "First verified ABG 16 Sep remarks on Panguna? (abg.gov.pg still expired TLS; insecure HTTP 200; news list still 13–14 Sep leftovers.)",
+    "Unpaywalled LPMEL statement (operations pause/stay; security posture after 16 Sep)?",
+    "PMMM-4 Chair (handover from Tuisawau); Matatoa Declaration PDF now ~14 h 51 min after reception close — or delayed through the 17 Sep Tonga holiday? (Matangi Cloudflare 403 this hour.)",
+    "Does the live HTML drop of Matatoa from Item 7 reflect a retitle, or only a page-edit?",
+    "SPREP written note of Regenvanu’s MHEWS host register vs Daily Post only? Any other ministerial interventions from the sitting?",
+    "WIM ExCom 25 decision language on 18 Sep; any Majuro host-nation health note?",
+    "AUS–SLB: any DFAT/Honiara signature date from UNGA margins? SIBC/airport confirmation of Wale wheels-up now that the stated 16 Sep Honiara travel day has closed? (SIBC Cloudflare 403; DFAT timeout this hour.)",
+    "Yap SITREP #10 / Elato–Satawal; RMI dengue update during ExCom week.",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935? Next-sitting order paper for needle-programme / SO 51? Does the Fiji Sun no-mandatory-testing line appear in a ministry release?",
+    "East Makira: arrests/charges; is the IB past-tense reinforcements line RSIPF-confirmed vs Horomae’s earlier future-tense deploy?",
+    "Any ANZ/other-partner Matui/Ambae package announced against the China US$100k?",
+    "Funafuti MFA confirmation of the Panapa–Lai readout; any labour-mobility instrument beyond political language? (foreign.gov.tv DNS-fail this hour.)",
+    "COPMIN: date, venue, mandate, standing architecture vs one-off ministers’ conference? (Still no date.)",
+    "GUAVA: court registration date; trainee numbers actually embarked; defence vs civilian-disaster use language in Palau MoUs?",
+    "Aguon/Blue Ocean Law: docketed DSM challenge in ASM/MNP/GUM, or interview-only?",
+    "Goroka: recapture of remaining nine (body now re-extracts the figure); any link to Independence-week security plans beyond coincidence?",
+    "COP31 7th Senior Officials Taskforce: meeting date/venue still missing from PINA copy?",
+    "Malakal: contract award / EIS decision date vs AFP feature; Whipps dual-use language vs local petition?",
+    "PNG El Niño: is the ABC-cited additional K500m still the operative envelope, and has any province issued a drought-emergency gazette?",
+    "Fiji CRC: will the report be published on 22 Sep tabling? Does fiji.gov.fj / gazette carry the Cabinet statement? Referendum Bill text / order paper? Which CRC recommendations does the Cabinet subcommittee actually adopt? Does Suva answer Lal with a public GE-on-time guarantee?",
+    "PNG–VUT Kumul Vanua: first-intake embarkation (Nov 2026) vs Manning welcome leftover — any new legally binding text, or only implementation colour?",
+    "Fiji Employment portfolio: who acting/appointed after Singh, distinct from the vacant NFP parliamentary seat?",
+    "Labasa/Qelewaqa: WAF confirmation of the three-day outage, duration, and whether it is El Niño-linked vs a local network fault? (WAF self-signed TLS fail this hour.)",
+    "Does the Interfaith/TRC dialogue produce a written outcome that intersects CRC recommendations, or is it a standing social-cohesion track?",
+    "Does the in-window RNZ 10am audio contain any named legal/toll/Penrhyn/CRC step not on the converted page?",
+    "Penrhyn: any COK Cabinet minute or Brown comment on Novelly’s 'being negotiated' line? NZ MFAT vs US Embassy Wellington text that is actually new vs the 1 Sep joint statement?",
+    "Does the leftover RNZ 9am / Pacific Waves audio add cutter-size or berth-envelope detail beyond the written exclusive?"
+  ]
+}
