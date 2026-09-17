@@ -1,0 +1,390 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T07:51:00Z",
+  "window_end_utc": "2026-09-17T08:51:00Z",
+  "generated_at_utc": "2026-09-17T09:15:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T07:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "ABC universities + BBC name Pacific/SEA student exception; Guardian refresh still unnamed; transcript still 404",
+      "summary": "Catch-up ABC universities follow (16:32/16:54 AEST / 06:32/06:54 UTC; inside daily window; first converted this hourly) plus BBC (05:05 UTC): exemptions for Pacific and South-East Asian nationals (and PhDs). Guardian dateModified 07:52:10Z still has zero PALM/ASEAN/Pacific hits. Official Home Affairs transcript still HTTP 404. PALM/PEV still unnamed. Not a Pacific compact. Not FLASH.",
+      "countries": ["AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["burke", "npc", "migration", "palm", "student_dependants", "labour_mobility"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-17/universities-students-respond-to-move-to-bar-student-families/107163192",
+        "https://www.bbc.com/news/articles/cm986j81ky55o",
+        "https://www.theguardian.com/australia-news/2026/sep/17/labor-immigration-students-families-overstay-visa-tony-burke"
+      ]
+    },
+    {
+      "title": "PACNEWS THREE: Fiji Navy-RAN talks in Canberra this week; Veitacini implementation, not a new pact",
+      "summary": "PACNEWS THREE (Canberra, 17 Sep) reports Republic of Fiji Navy and RAN Navy-to-Navy Talks plus HQJOC/Maritime Border Command engagements, framed as translating Veitacini Treaty and Vuvale partnership into practical cooperation. Commander Fiji Navy inducted onto Australian Defence College Honour Roll. Staff talks, not a signature, not entry into force. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["veitacini", "vuvale", "navy", "mda"],
+      "sources": [
+        "https://islandsbusiness.com/pacnews/pacnews-three-17-september-2026/"
+      ]
+    },
+    {
+      "title": "Wale UNGA notice still future-tense into Thursday night; AUS-SLB unsigned",
+      "summary": "Island Sun/PMO still says Wale will leave Solomon Islands today. Local time 19:51 Thursday 17 Sep SBT. SIBC 403. DFAT Solomon Islands page failed. No New York signature. Not FLASH.",
+      "countries": ["SLB", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["unga", "wale", "aus_slb_treaty"],
+      "sources": [
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/"
+      ]
+    },
+    {
+      "title": "Official PMMM-4 PDF still unpublished ~24 h 51 min later; pacificmet.net still draft",
+      "summary": "pacificmet.net still draft/future tense; Matatoa and Siu-i-Alaimoana strings still absent. Tonga holiday in force (21:51 TOT). SPREP/Matangi 403. Not FLASH.",
+      "countries": ["TON"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["pmmm4", "sprep", "weather_ready", "mhews"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4"
+      ]
+    },
+    {
+      "title": "Still no ABG 16 Sep Panguna readout; still no CRC report / HIV gazette; BoM 403 regression",
+      "summary": "abg.gov.pg insecure HTTP 200 still up; news list still 13-14 Sep leftovers. Post Courier Panguna headline paywalled (03:35 UTC). fiji.gov.fj still silent on CRC/HIV (Radrodro school-leadership is new 17 Sep education colour). FBC Reuters HIV recap is not a gazette. BoM cyclone hub HTTP 403 this hour (was 200 JS landing last hourly). Not FLASH.",
+      "countries": ["PNG", "FJI", "AUS"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["panguna", "abg", "crc", "hiv_gazette", "bom"],
+      "sources": [
+        "https://abg.gov.pg/index.php/news",
+        "https://www.fiji.gov.fj/news/",
+        "https://www.fbcnews.com.fj/news/fiji-declares-national-crisis-as-hiv-cases-rise-27/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Burke NPC migration package",
+      "parties": ["AUS"],
+      "status": "abc_universities_plus_bbc_pacific_sea_student_dependant_exception_guardian_still_unnamed_transcript_404",
+      "notes": "Catch-up conversion of ABC universities follow plus BBC. Guardian dateModified 07:52 UTC still unnamed. PALM/PEV still unnamed. Not a Pacific compact. Not FLASH."
+    },
+    {
+      "instrument": "FJI-AUS Navy-to-Navy talks (PACNEWS THREE)",
+      "parties": ["FJI", "AUS"],
+      "status": "staff_talks_veitacini_vuvale_implementation_not_a_new_pact",
+      "notes": "Canberra this week; ADC Honour Roll induction. Not a signature. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu Declaration",
+      "parties": ["TON", "PIF"],
+      "status": "pdf_still_unpublished_24h51m_after_reception",
+      "notes": "pacificmet.net still draft/future tense; SPREP 403. Political, not FLASH."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel",
+      "parties": ["SLB"],
+      "status": "still_future_tense_thursday_night",
+      "notes": "Island Sun still 'will leave today'; 19:51 Thursday 17 Sep SBT without wheels-up. SIBC 403; DFAT failed."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "in_principle_unsigned",
+      "notes": "DFAT failed this hour; last confirmed 3 Jun commence-negotiations language."
+    },
+    {
+      "instrument": "ABG collection path / 16 Sep Panguna ceremony",
+      "parties": ["PNG"],
+      "status": "insecure_http_200_still_up_still_no_16_sep_readout",
+      "notes": "News list still 13-14 Sep leftovers. Post Courier paywalled. Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "unchanged_speaker_22_sep_prasad_brake_report_unpublished",
+      "notes": "fiji.gov.fj still silent. Radrodro school-leadership is education colour. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "instrument": "Fiji HIV emergency",
+      "parties": ["FJI"],
+      "status": "gazette_still_missing_reuters_recap_not_a_legal_notice",
+      "notes": "FBC Reuters pickup 17:11 FJT. Not FLASH."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "arrest_unconfirmed_5539_now_11hrs",
+      "notes": "VFSC no Tui extract. Relative clocks moving (scam 8 hrs). Not FLASH."
+    },
+    {
+      "instrument": "NZ Labour PIF NZeTA visa-waiver promise",
+      "parties": ["NZL"],
+      "status": "sitting_opposition_policy_rss_3",
+      "notes": "RNZ still RSS #3. Not a gazette. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port upgrade (Novelly exclusive)",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_rss_1_design_phase",
+      "notes": "No COK Cabinet/PM request. Do not inflate. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS at Five",
+      "parties": ["AUS", "GBR", "USA"],
+      "status": "still_forward_calendar_1200_utc",
+      "notes": "Not an operational milestone. Not FLASH."
+    },
+    {
+      "instrument": "BoM cyclone collection path",
+      "parties": ["AUS"],
+      "status": "http_403_regression_from_200_js_landing",
+      "notes": "Not a named-system warning and not an all-clear. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "AUS-Pacific labour-mobility / student-WHM settings",
+      "direction": "up_colour_pacific_sea_student_dependant_exception_now_abc_unis_plus_bbc_palm_still_unnamed",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item — not FLASH on an NPC speech or a student-family exception"
+    },
+    {
+      "risk": "FJI-AUS Veitacini / Vuvale implementation",
+      "direction": "up_colour_navy_to_navy_talks_not_in_force",
+      "horizon": "weeks-end-2026",
+      "confidence": "M",
+      "escalate_trigger": "Entry into force / gazetted access or SOFA text — not FLASH on staff talks"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_speaker_22_sep_prasad_brake_report_unpublished",
+      "horizon": "days-90d (through Feb 2027 election backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftovers or education-list colour"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "unchanged_arrest_unconfirmed_5539_now_11hrs",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR that implies capacity breach; extra-legal revenge violence on Ambae"
+    },
+    {
+      "risk": "PNG provincial L&O / health-worker safety (Kundiawa leftover)",
+      "direction": "unchanged_nbc_leftover_48h_petition_clock_running",
+      "horizon": "48h-Dec",
+      "confidence": "H",
+      "escalate_trigger": "Spread to capital-scale unrest or a multi-province clinician strike that becomes a state-capacity breach — not FLASH on current copy"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "abg_path_still_200_still_no_16_sep_readout_no_sitrep",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "unchanged_still_future_tense_thursday_night_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "pdf_still_missing_holiday_on",
+      "horizon": "hours-48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument — not FLASH on a still-missing PDF"
+    },
+    {
+      "risk": "El Nino / western-Pacific drought (FJI ops step)",
+      "direction": "unchanged_ndrmo_leftover",
+      "horizon": "days-months (peak Oct-Nov)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "unchanged_gazette_missing_reuters_recap_not_legal_notice",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package that implies capacity breach"
+    },
+    {
+      "risk": "NZ-Pacific labour-mobility politics",
+      "direction": "unchanged_nzeta_opposition_rss_3",
+      "horizon": "months (NZ election)",
+      "confidence": "H",
+      "escalate_trigger": "Gazette / NZeTA rule change, or PIC MFA rejection that becomes a Forum item"
+    },
+    {
+      "risk": "COK Penrhyn dual-use / access",
+      "direction": "unchanged_design_phase_novelly_rss_1",
+      "horizon": "months",
+      "confidence": "H",
+      "escalate_trigger": "Signed defence-access / base text or COK request that is then answered — not FLASH on an interview"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "unchanged_not_a_switch_funafuti_unreachable",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    }
+  ],
+  "open_questions": [
+    "Home Affairs transcript / fact sheet: exact text of the Pacific/ASEAN (Pacific / South-East Asia) student-dependant exception? Which nationalities? Student visas only?",
+    "Is PALM or the Pacific Engagement Visa carved in or out of the Burke package? Any PIC MFA reaction?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati's s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs aging 55/39 vs family-list 53?",
+    "First verified ABG 16 Sep Panguna remarks? (insecure HTTP 200 still up; list still 13-14 Sep leftovers; Post Courier body paywalled.)",
+    "PMMM-4: official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa? PIMS 2026-2037 vs 2027-2036?",
+    "AUS-SLB: DFAT/Honiara signature from UNGA margins? SIBC/airport/New York wheels-up now that Wednesday and Thursday night have passed?",
+    "Fiji HIV gazette / Legal Notice? Fiji CRC report publication on 22 Sep tabling? GE-on-time guarantee?",
+    "Funafuti MFA confirmation of Panapa-Lai? (foreign.gov.tv DNS-fail.)",
+    "COP31 7th SOT meeting date still missing. COPMIN date/venue/mandate?",
+    "CSIS AUKUS at Five after 12:00 UTC: any operational claim, or only analysis?",
+    "Fiji Navy / Australian Defence Tier A readout of this week's Canberra Navy-to-Navy talks (dates, names, any access language)?",
+    "BoM cyclone hub: is the HTTP 403 a scraper block only, or a genuine page-state change?"
+  ],
+  "sources": [
+    {
+      "title": "Australia's university sector and international students alarmed by immigration crackdown",
+      "publisher": "ABC",
+      "url": "https://www.abc.net.au/news/2026-09-17/universities-students-respond-to-move-to-bar-student-families/107163192",
+      "published_at": "2026-09-17T06:32:16Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "labour_mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Australia immigration crackdown: visas for international students and backpackers targeted",
+      "publisher": "BBC",
+      "url": "https://www.bbc.com/news/articles/cm986j81ky55o",
+      "published_at": "2026-09-17T05:05:09Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "labour_mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Labor targets backpackers, students and visa overstayers (Guardian refresh still unnamed)",
+      "publisher": "Guardian Aus",
+      "url": "https://www.theguardian.com/australia-news/2026/sep/17/labor-immigration-students-families-overstay-visa-tony-burke",
+      "published_at": "2026-09-17T07:52:10Z",
+      "countries": ["AUS"],
+      "topics": ["migration"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "PACNEWS THREE, 17 September 2026 (Fiji-Australia Navy-to-Navy talks)",
+      "publisher": "Islands Business / PACNEWS",
+      "url": "https://islandsbusiness.com/pacnews/pacnews-three-17-september-2026/",
+      "published_at": "2026-09-17T00:00:00Z",
+      "countries": ["FJI", "AUS"],
+      "topics": ["veitacini", "navy", "mda"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "PMMM-4 programme page (still draft)",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-17T08:51:00Z",
+      "countries": ["TON"],
+      "topics": ["pmmm4"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T00:00:00Z",
+      "countries": ["SLB"],
+      "topics": ["unga"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "Fiji declares national crisis as HIV cases rise 27%",
+      "publisher": "FBC / Reuters",
+      "url": "https://www.fbcnews.com.fj/news/fiji-declares-national-crisis-as-hiv-cases-rise-27/",
+      "published_at": "2026-09-17T05:11:00Z",
+      "countries": ["FJI"],
+      "topics": ["hiv"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "ABG news list (insecure HTTP 200 still up)",
+      "publisher": "Autonomous Bougainville Government",
+      "url": "https://abg.gov.pg/index.php/news",
+      "published_at": "2026-09-17T08:51:00Z",
+      "countries": ["PNG"],
+      "topics": ["panguna"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "A"
+    },
+    {
+      "title": "fiji.gov.fj news list",
+      "publisher": "Fiji Government",
+      "url": "https://www.fiji.gov.fj/news/",
+      "published_at": "2026-09-17T08:51:00Z",
+      "countries": ["FJI"],
+      "topics": ["crc", "hiv"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "A"
+    }
+  ]
+}
