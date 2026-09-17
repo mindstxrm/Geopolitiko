@@ -1,0 +1,299 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-16T23:51:00Z",
+  "window_end_utc": "2026-09-17T00:51:00Z",
+  "generated_at_utc": "2026-09-17T01:20:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "parent_hourly": "2026-09-16T23:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU", "KOR"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Speaker confirms 22 Sep 11:30 CRC special sitting; Lal still unanswered",
+      "summary": "In-window FBC (17 Sep 12:00 FJT / 00:00 UTC): Speaker Filimone Jitoko confirms a Government-requested special sitting Tuesday 22 Sep 11:30 to table the CRC report; sitting is additional and does not affect the 28 Sep–2 Oct session; Business Committee confirmation. FijiVillage still homepage-leads Lal CDD 'autogolpe' overlay. Fiji Sun CDD updated 12:14 FJT. fiji.gov.fj still silent on CRC/HIV. Report unpublished. Referendum Bill unpassed. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["constitutional_review", "elections", "pic_agency", "civil_society", "parliament"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/constitution-report-to-be-tabled-at-special-sitting/",
+        "https://www.fbcnews.com.fj/news/referendum-new-constitution-possible-by-year-end/",
+        "https://www.fijivillage.com/news/rushed-constitution-process-risks-delaying-next-general-election-lal-8868a6/",
+        "https://fijisun.com.fj/news/nation/proposed-constitution-timeline-risks-electoral-crisis-cdd",
+        "https://www.fiji.gov.fj/news/"
+      ]
+    },
+    {
+      "title": "Sogavare democracy statement; Wale UNGA still future-tense on Thursday",
+      "summary": "Island Sun (17 Sep) wires Opposition Leader Manasseh Sogavare's International Day of Democracy (15 Sep) statement: democracy must mean more than elections; Parliament without unnecessary interference; Opposition scrutiny is not an enemy of Government. Commemorative colour, not a no-confidence restart. Same outlet still says Wale 'will leave Solomon Islands today' for UNGA-81; local time 11:51 Thursday 17 Sep SBT — Wednesday travel day closed, Thursday morning still no wheels-up. SIBC 403; DFAT timeout. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["SLB", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["solomon_islands", "opposition", "unga", "aus_slb_treaty", "pic_agency"],
+      "sources": [
+        "https://theislandsun.com.sb/democracy-must-mean-more-than-elections-sogavare/",
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/"
+      ]
+    },
+    {
+      "title": "UNAIDS welcomes HIV declaration; staff-shortage colour; still no gazette",
+      "summary": "Fiji Times (~2 h) reports UNAIDS welcoming Fiji's HIV-crisis declaration and supporting a needle-and-syringe programme. FBC leftover (09:50 FJT): Dr Jason Mitchell says the response is constrained by a health-worker shortage; Cabinet subcommittee hoped to mobilise staff. fiji.gov.fj still has no Legal Notice. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["hiv", "public_health", "unaids", "needle_exchange"],
+      "sources": [
+        "https://www.fijitimes.com.fj/unaids-backs-fijis-hiv-crisis-declaration/",
+        "https://www.fbcnews.com.fj/news/hiv-response-faces-critical-staff-shortage/",
+        "https://www.fiji.gov.fj/news/"
+      ]
+    },
+    {
+      "title": "Daily Post homepage recovered from 429; Matui arrest still unconfirmed; 55/39 aging",
+      "summary": "Daily Post homepage HTTP 200 this hour (was 429 last hour). /news listing HTTP 200. Complaint article still request-only. VFSC still no Tui extract. 55/39 now 'Updated 3 hrs ago' (aging CLAIM until VMSA/NDMO). Confirmed band still 2 dead / 14 survivors. RNZ 11am and 12pm bulletins still unpublished. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["matui", "maritime_safety", "sar", "enforcement"],
+      "sources": [
+        "https://www.dailypost.vu/",
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html",
+        "https://www.vfsc.vu/public-notices/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "in_window_speaker_confirms_22sep_1130_sitting_still_no_report",
+      "notes": "FBC 17 Sep 12:00 FJT / 00:00 UTC: Speaker Jitoko confirms special sitting 22 Sep 11:30; additional to 28 Sep–2 Oct session; Business Committee. Lal/CDD still unanswered (FijiVillage lead; Fiji Sun updated 12:14 FJT). fiji.gov.fj silent. Not FLASH."
+    },
+    {
+      "instrument": "Fiji HIV emergency",
+      "parties": ["FJI", "UNAIDS"],
+      "status": "unaids_welcome_still_no_gazette",
+      "notes": "Fiji Times UNAIDS welcome (~2 h). FBC staff-shortage leftover. Still no Legal Notice on fiji.gov.fj. Not FLASH."
+    },
+    {
+      "instrument": "NZ Labour PIF NZeTA visa-waiver promise",
+      "parties": ["NZL"],
+      "status": "sitting_rnz_lead_fbc_pickup_not_gazette",
+      "notes": "RNZ still RSS lead. FBC 09:59 FJT leftover pickup into Fiji media. Opposition policy, not MFAT. Not FLASH."
+    },
+    {
+      "instrument": "Sogavare International Day of Democracy statement",
+      "parties": ["SLB"],
+      "status": "in_window_island_sun_17sep_commemorative_not_motion",
+      "notes": "Opposition colour marking 15 Sep. Not a no-confidence restart. Not FLASH."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel",
+      "parties": ["SLB"],
+      "status": "still_future_tense_thursday_1151_sbt_no_wheels_up",
+      "notes": "Island Sun still 'will leave today'. Wednesday travel day closed; Thursday morning unconfirmed. SIBC 403. Not a treaty."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint / PMO inquiry",
+      "parties": ["VUT"],
+      "status": "homepage_recovered_200_still_request_only",
+      "notes": "Homepage HTTP 200 (was 429). Article still request-only. VFSC still no Tui extract. RNZ 11am/12pm unpublished. 55/39 aging CLAIM. Not FLASH."
+    },
+    {
+      "instrument": "Matui operation-centre headcount (55/39)",
+      "parties": ["VUT"],
+      "status": "aging_updated_3hrs_ago_claim",
+      "notes": "Unnamed Luganville source. CLAIM until VMSA/NDMO. SAR still active."
+    },
+    {
+      "instrument": "Panguna landowner ceremony / LPMEL reconciliation",
+      "parties": ["PNG", "ABG", "LPMEL"],
+      "status": "sitting_nbc_homepage_lead_abg_still_silent",
+      "notes": "NBC still leads 16 Sep ceremony. ABG expired TLS; news list still 13–14 Sep leftovers. Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port upgrade (Novelly RNZ exclusive)",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_still_rss_2_no_cok_request",
+      "notes": "Design-phase leftover. Not FLASH. Do not inflate."
+    },
+    {
+      "instrument": "PMMM-4 / Matatoa Declaration",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "still_unpublished_16h51_after_reception_holiday_on",
+      "notes": "Tonga 17 Sep public holiday in force (13:51 TOT). Live HTML Item 7 still omits Matatoa. PACNEWS still forthcoming. Van-KIRAP leftover is not adoption."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged_in_principle_unsigned_dfat_timeout",
+      "notes": "DFAT timed out this hour; last confirmed language still 3 Jun 2026 commence negotiations. Wale UNGA wheels-up still unconfirmed at 11:51 Thursday 17 Sep SBT."
+    },
+    {
+      "instrument": "Fiji High Court cocaine-exhibit disappearance",
+      "parties": ["FJI"],
+      "status": "in_window_rnz_0001_utc_domestic_criminal",
+      "notes": "RNZ 12:01 NZST / 00:01 UTC. Criminal-process colour. Not a security pact. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "up_colour_speaker_confirms_22sep_sitting_lal_cdd_multi_outlet_still_no_tier_a_report",
+      "horizon": "days-90d (through Feb 2027 election backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on a Speaker confirmation, a civil-society warning, a Cabinet timetable, a vacant seat, or mourning rites"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty / opposition colour",
+      "direction": "sogavare_democracy_statement_travel_still_closed_into_thursday_morning_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion — not FLASH on a 15 Sep commemorative statement or a travel-day collection gap"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "unaids_welcome_staff_shortage_leftover_gazette_missing",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package that implies capacity breach"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "homepage_recovered_200_arrest_still_unconfirmed_55_39_aging",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR that implies capacity breach; extra-legal revenge violence on Ambae"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "sitting_nbc_still_leads_16sep_ceremony_still_no_sitrep_abg_expired_tls",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "NZ-Pacific labour-mobility politics",
+      "direction": "sitting_rnz_lead_fbc_pickup_not_gazette",
+      "horizon": "months (NZ election / next government)",
+      "confidence": "H",
+      "escalate_trigger": "Gazette / NZeTA rule change, or PIC MFA rejection that becomes a Forum item — not FLASH on an opposition promise or a PIC-outlet restatement"
+    },
+    {
+      "risk": "COK Penrhyn dual-use / access",
+      "direction": "leftover_ambassador_interview_still_rss_2_still_design_phase",
+      "horizon": "months (design to build)",
+      "confidence": "H",
+      "escalate_trigger": "Signed defence-access / base text or COK request for a security deal that is then answered — then re-score; not FLASH on an interview leftover"
+    },
+    {
+      "risk": "PMMM-4 / Matatoa Declaration",
+      "direction": "text_unpublished_16h51_tonga_holiday_on_matangi_403",
+      "horizon": "hours-48h (holiday may slip publication)",
+      "confidence": "H",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance mandates post-Matui"
+    },
+    {
+      "risk": "PNG provincial L&O (Goroka / Enga)",
+      "direction": "dated_contained_enga_still_nbc_2_goroka_9_at_large_still_in_body",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Spread to capital-scale unrest — then re-score; not FLASH on current copy"
+    },
+    {
+      "risk": "El Nino / western-Pacific drought",
+      "direction": "unchanged_plus_fbc_waterborne_wet_weather_leftover_not_gazette",
+      "horizon": "months (peak Oct-Nov)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request — not FLASH on field reporting, a three-day WAF outage, a Met Service drought-plan comment, or a case-by-case waterborne warning"
+    },
+    {
+      "risk": "PLW Malakal dual-use / local consent",
+      "direction": "afp_catchup_eis_petition_track",
+      "horizon": "months (2026 dredge / 2027 MILCON peak)",
+      "confidence": "M",
+      "escalate_trigger": "Contract award or access text entering force — then re-score; not FLASH on a feature"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "not_a_switch_funafuti_mfa_unreachable",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "unchanged_no_decision_language",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    },
+    {
+      "risk": "PPC-1 / Guam cable",
+      "direction": "watch",
+      "horizon": "days",
+      "confidence": "L",
+      "escalate_trigger": "Operator-confirmed cut"
+    },
+    {
+      "risk": "Yap defense site rumour",
+      "direction": "unanswered",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_trigger": "Official confirmation of a new facility — then re-score; do not FLASH on the unanswered question"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs aging operation-centre 55/39 vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs 2 Jun business-name strike-off?",
+    "PMO independent-investigation ToR / gazette vs RNZ paraphrase of a Wednesday statement?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "Full official 16 Sep Marape Independence transcript (PMNEC) — Panguna/Lloyds mention?",
+    "First verified ABG 16 Sep Panguna remarks / written readout of the landowner ceremony?",
+    "PMMM-4 Chair and adopted Matatoa PDF now ~16h51 after reception close, or delayed through the 17 Sep Tonga holiday?",
+    "AUS–SLB: DFAT/Honiara signature date from UNGA margins? SIBC/airport wheels-up now that Wednesday and Thursday morning have passed?",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935? UNAIDS envelope beyond the Fiji Times welcome?",
+    "Fiji CRC: will the report be published on 22 Sep tabling now that the Speaker has confirmed the sitting? PM/AG GE-on-time guarantee answering Lal?",
+    "Labour NZeTA: PIC MFA reactions now that FBC has restated the promise?",
+    "Sogavare 15 Sep statement: any follow-on motion language, or does it remain commemorative?",
+    "COP31 7th Senior Officials Taskforce: meeting date/venue still missing from PINA copy.",
+    "Funafuti MFA confirmation of Panapa–Lai (foreign.gov.tv DNS-fail this hour)."
+  ],
+  "sources": [
+    {"title": "Constitution report to be tabled at special sitting", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/constitution-report-to-be-tabled-at-special-sitting/", "published_at": "2026-09-17T00:00:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Referendum, new Constitution possible by year end", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/referendum-new-constitution-possible-by-year-end/", "published_at": "2026-09-16T22:00:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Rushed Constitution process risks delaying next general election - Lal", "publisher": "FijiVillage", "url": "https://www.fijivillage.com/news/rushed-constitution-process-risks-delaying-next-general-election-lal-8868a6/", "published_at": "2026-09-16T23:49:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Proposed Constitution timeline risks electoral crisis: CDD", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/proposed-constitution-timeline-risks-electoral-crisis-cdd", "published_at": "2026-09-17T00:14:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Democracy must mean more than elections: Sogavare", "publisher": "Island Sun", "url": "https://theislandsun.com.sb/democracy-must-mean-more-than-elections-sogavare/", "published_at": "2026-09-17T00:00:00Z", "countries": ["SLB"], "tier": "B", "confidence": "H"},
+    {"title": "PM Wale heads to UN General Assembly", "publisher": "Island Sun", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at": "2026-09-16T00:00:00Z", "countries": ["SLB"], "tier": "B", "confidence": "H"},
+    {"title": "UNAIDS backs Fiji’s HIV crisis declaration", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/unaids-backs-fijis-hiv-crisis-declaration/", "published_at": "2026-09-16T22:51:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "HIV response faces critical staff shortage", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/hiv-response-faces-critical-staff-shortage/", "published_at": "2026-09-16T21:50:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "New Zealand’s Labour proposes visa-free Pacific travel", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/new-zealands-labour-proposes-visa-free-pacific-travel/", "published_at": "2026-09-16T21:59:00Z", "countries": ["NZL", "FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Labour promises visa-free travel for Pacific as overstayer rates rise", "publisher": "RNZ Pacific", "url": "https://www.rnz.co.nz/news/pacific/1431059/labour-promises-visa-free-travel-for-pacific-as-overstayer-rates-rise", "published_at": "2026-09-16T23:49:00Z", "countries": ["NZL"], "tier": "B", "confidence": "H"},
+    {"title": "Seven cocaine bars disappear from Suva High Court exhibit room - Fiji Police", "publisher": "RNZ Pacific", "url": "https://www.rnz.co.nz/news/pacific/1432330/seven-cocaine-bars-disappear-from-suva-high-court-exhibit-room-fiji-police", "published_at": "2026-09-17T00:01:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-09-17T00:51:00Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PMMM-4 programme", "publisher": "Pacific Meteorological Desk", "url": "https://www.pacificmet.net/pmmm-4", "published_at": "2026-09-17T00:51:00Z", "countries": ["TON"], "tier": "A", "confidence": "H"},
+    {"title": "NBC homepage / Panguna landowners", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/", "published_at": "2026-09-16T23:20:00Z", "countries": ["PNG"], "tier": "B", "confidence": "H"}
+  ]
+}
