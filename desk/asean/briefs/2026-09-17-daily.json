@@ -1,0 +1,230 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-09-16T08:00:00Z",
+  "window_end_utc": "2026-09-17T08:00:00Z",
+  "generated_at_utc": "2026-09-17T08:20:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["IDN", "MYS", "SGP", "PHL", "THA", "KHM", "MMR", "VNM", "CHN", "JPN", "USA"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "priority_items": [
+    {
+      "title": "Transboundary haze: SGP still all-moderate but west 24h PSI 79→87; MYS 31 unhealthy, peak Tasek Ipoh 186, Sarawak cluster; Prabowo 'ecological terrorism'",
+      "summary": "NEA 16:00 SGT 17 Sep 24h PSI all moderate (N67/C92/W87/E77/S66). Vs 16 Sep cutoff west 79→87, central 91→92. 1h PM2.5 only central Elevated (C76). ASMC Alert Level 3 still 11:00 SGT sitrep. DOE APIMS last complete 15:00 MYT 68/68: 31 unhealthy, Tasek Ipoh 186, Kuching 172 (vs 70 at 16 Sep 16:00); 16:00 MYT dump incomplete 43/68. Setneg 16 Sep: Prabowo asks DPR to class slash-and-burn as terorisme ekologi and revoke fire-clearing Perda. Zahid–Gibran haze meeting scheduled 17 Sep, no readout at cutoff. IDN health print still 12.5m / 113,336 ARI by 9 Sep.",
+      "countries": ["IDN", "MYS", "SGP", "THA", "VNM"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "non_traditional_security", "AATHP", "karhutla"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi",
+        "https://www.haze.gov.sg/",
+        "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+        "https://www.setneg.go.id/baca/index/presiden_prabowo_tegaskan_sanksi_terhadap_karhutla_dorong_pelaku_dijerat_terorisme_ekologi",
+        "https://www.reuters.com/business/environment/indonesia-president-calls-stricter-sanctions-against-forest-fire-perpetrators-2026-09-17/"
+      ]
+    },
+    {
+      "title": "Thailand–Cambodia UNCLOS first meeting closes; TOA and Rules of Procedure adopted 14 Sep",
+      "summary": "Thai MFA close: first meeting 14–16 Sep PCA Singapore; TOA and RoP adopted 14 Sep with PCA as Registry; next meeting tentatively October 2026; report non-legally binding. AKP Prak close CLAIM: three-tier (single maritime boundary / joint development / Commission report); second meeting The Hague October. PCA HTML still 403. No walkout. Not a Koh Kood sovereignty award.",
+      "countries": ["THA", "KHM", "SGP"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["maritime", "diplomacy", "UNCLOS"],
+      "sources": [
+        "https://www.mfa.go.th/en/content/dpm-fm-conciliation-commission-thai-cambodia-eng",
+        "https://www.akp.gov.kh/post/detail/381374",
+        "https://www.akp.gov.kh/post/detail/381372"
+      ]
+    },
+    {
+      "title": "Anwar will invite Min Aung Hlaing for official visit tied to Rohingya repatriation",
+      "summary": "Anwar (16 Sep podcast, Reuters original): will invite MAH; Malaysia like ASEAN is not ready to recognise Myanmar's new government but needs an authority to negotiate returns. CLAIM fifth AMS host after LAO/THA/KHM/VNM; Myanmar agreed 5,000 with ~1,500 in 1–2 weeks. Invitation ≠ visit. No Home Ministry/MFA invitation text. 5PC political-representation stress test.",
+      "countries": ["MYS", "MMR"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["Myanmar", "Five_Point_Consensus", "refugees", "hedging"],
+      "sources": [
+        "https://www.reuters.com/world/asia-pacific/malaysia-pm-offer-host-myanmars-min-aung-hlaing-deal-for-rohingya-return-2026-09-16/",
+        "https://www.malaysiakini.com/news/885145-rohingya-anwar-points-fingers-at-najib-and-hadi-says-solution-being-resolved-diplomatically",
+        "https://www.straitstimes.com/asia/se-asia/malaysia-pm-to-offer-to-host-myanmars-min-aung-hlaing-deal-for-rohingya-return"
+      ]
+    },
+    {
+      "title": "Fed +25 bp to 3.75–4.00% prints through ASEAN cash; modest gap, PHL FXTN cancelled",
+      "summary": "FOMC 12–0, first hike since 2023. Named opens: MYR 08:00 MYT 4.0855/0910; IDR Bisnis 09:05 WIB Rp17,763 (−0.38%); IHSG iNews 09:18 WIB +0.61% to 6,476. PHL BTr cancelled 22 Sep five-year FXTN (memo 15 Sep). No capital controls, bank holiday, or default shock.",
+      "countries": ["USA", "MYS", "IDN", "PHL", "THA", "SGP", "VNM"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["macro", "FX", "Fed", "duration"],
+      "sources": [
+        "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+        "https://www.malaymail.com/news/money/2026/09/17/malaysian-ringgit-falls-to-4085-versus-us-dollar-after-first-fed-rate-hike-since-2023/235461",
+        "https://finansial.bisnis.com/read/20260917/90/2004923/kurs-dolar-as-di-bca-bri-mandiri-dan-bni-hari-ini-17-september-2026",
+        "https://bworldonline.com/top-stories/2026/09/17/778001/govt-cancels-five-year-fxtn-offering/"
+      ]
+    },
+    {
+      "title": "AMCDR Manila Declaration announced adopted; primary text still unpublished",
+      "summary": "Teodoro closing (Bernama-PNA/Star 8:39 PM MYT 16 Sep) CLAIM: formal adoption of Manila Declaration as living document; AADMER WP 2026–2030; accountability; 2030+ agenda; 49th Summit Nov notation subject to AMS concurrence. ASEAN.org 307; OCD/PNA 403 this cutoff. No emergency AMM. 58th AEM 14–22 Sep still calendar.",
+      "countries": ["PHL"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["ASEAN_institutional", "disaster", "Chair"],
+      "sources": [
+        "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/16/asean-adopts-manila-declaration-to-strengthen-disaster-preparedness"
+      ]
+    },
+    {
+      "title": "BARMM hung parliament: Comelec chair confirms all 80 proclaimed; BIO combined still BFP 31 / UBJP 30 with district split contradiction",
+      "summary": "BIO official: party 16/15/8/1; district 15/9/6/1/1; NMIP 2; turnout 84.34% / 2,018,478; seating 30 Oct. Rappler combined BFP 31 / UBJP 30. Garcia to GMA 12:59 PHT 17 Sep: all 80 proclaimed Tuesday evening. GMA district BFP 17 / UBJP 7 vs BIO 15/9 — prefer BIO until Comelec HTML. Comelec homepage 200, no proclamation body.",
+      "countries": ["PHL"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["elections", "domestic_politics", "BARMM"],
+      "sources": [
+        "https://bangsamoro.gov.ph/news/latest-news/barmms-first-elected-parliament-proclaimed-to-assume-office-oct-30/",
+        "https://www.gmanetwork.com/news/topstories/regions/1002689/all-winners-of-first-barmm-parliamentary-polls-proclaimed-comelec/story/",
+        "https://www.rappler.com/philippines/elections/parties-most-parliament-seats-results-barmm-2026/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "UNCLOS Annex V Terms of Appointment and Rules of Procedure",
+      "type": "compulsory_conciliation",
+      "parties": ["THA", "KHM"],
+      "status": "adopted",
+      "date": "2026-09-14",
+      "venue": "PCA Singapore",
+      "bindingness": "political",
+      "chair_year_relevance": "2027 SGP Chair continuity; next meeting tentatively Oct 2026",
+      "in_window": true,
+      "note": "Delta vs 16 Sep daily: Thai MFA now dates TOA/RoP adoption to 14 Sep; PCA HTML still unpublished; AKP adds three-tier ask and Hague October."
+    },
+    {
+      "name": "ASEAN Ministerial Conference on Disaster Resilience / Manila Declaration",
+      "type": "asean_meeting",
+      "parties": ["ASEAN"],
+      "status": "adopted_claim_text_unpublished",
+      "date": "2026-09-16",
+      "venue": "Manila",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Teodoro announced formal adoption; 49th Summit Nov notation subject to AMS concurrence; ASEAN.org/OCD/PNA primary still unpublished."
+    },
+    {
+      "name": "Anwar invitation to Min Aung Hlaing",
+      "type": "bilateral_visit_invitation",
+      "parties": ["MYS", "MMR"],
+      "status": "announced",
+      "date": "2026-09-16",
+      "venue": "Kuala Lumpur (proposed)",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Invitation ≠ visit; no MFA/Home Ministry text; 5PC hedging."
+    },
+    {
+      "name": "Zahid–Gibran haze coordination meeting",
+      "type": "bilateral_meeting",
+      "parties": ["MYS", "IDN"],
+      "status": "scheduled_no_readout",
+      "date": "2026-09-17",
+      "venue": "Jakarta",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Prevention over compensation; no Gibran readout at 08:00 UTC cutoff."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze",
+      "direction": "up_mys_sarawak_flat_to_up_sgp_west",
+      "horizon": "3-14d",
+      "confidence": "H",
+      "trigger": "Hazardous API/PSI >300 in a capital; Perak/Selangor/Sarawak API 200 school-close or 300 emergency; airport shutdowns"
+    },
+    {
+      "risk": "Myanmar 5PC vs bilateral hosting (Anwar–MAH)",
+      "direction": "up",
+      "horizon": "1-3m",
+      "confidence": "M",
+      "trigger": "MFA invitation text; MAH landing in KL; emergency AMM; change in Myanmar representation rule"
+    },
+    {
+      "risk": "THA–KHM UNCLOS process rupture",
+      "direction": "down_near_term_walkout",
+      "horizon": "12m",
+      "confidence": "M",
+      "trigger": "Collapse of October meeting; return to kinetic border"
+    },
+    {
+      "risk": "BARMM hung parliament / MILF elite split",
+      "direction": "flat",
+      "horizon": "to 30 Oct 2026",
+      "confidence": "M",
+      "trigger": "Coalition collapse; election violence beyond Cotabato 4 dead / 19 injured"
+    },
+    {
+      "risk": "IDR / IDN fiscal credibility",
+      "direction": "flat_post_fed",
+      "horizon": "1-8w",
+      "confidence": "M",
+      "trigger": "Deficit-path backtrack; capital controls; another MoF/BI shock"
+    },
+    {
+      "risk": "SCS gray-zone PHL–CHN",
+      "direction": "flat_elevated",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Shots fired or collision involving major-power assets"
+    },
+    {
+      "risk": "PHL 21 Sep protest / flood-control politics",
+      "direction": "calendar",
+      "horizon": "21 Sep 2026",
+      "confidence": "L",
+      "trigger": "Extra-constitutional move; mass-casualty state violence"
+    }
+  ],
+  "open_questions": [
+    "AMCDR Manila Declaration PDF / haze paragraph",
+    "PCA-published TOA/RoP (Thai MFA dates adoption to 14 Sep; PCA HTML 403)",
+    "Comelec.gov.ph combined 80-seat HTML — resolve GMA district 17/7 vs BIO 15/9",
+    "Zahid–Gibran meeting readout (window open locally past cutoff)",
+    "Next Basarnas casualty print vs 243/108/6/129; HK/US salvage-expert arrival",
+    "VNM MoF confirm/deny on USD bond",
+    "Suahasil first written circular / Decree 97/P full text",
+    "Home Ministry/MFA text of any MAH invitation; Naypyidaw confirmation of 5,000/1,500",
+    "Anutin–Trump 17–18 Sep confirmation (call vs meeting)",
+    "Complete 16:00–18:00 MYT APIMS (16:00 dump was 43/68 at cutoff)"
+  ],
+  "sources": [
+    {"title": "NEA/data.gov.sg 24h PSI 16:00 SGT 17 Sep", "publisher": "NEA", "url": "https://api.data.gov.sg/v1/environment/psi", "published_at_utc": "2026-09-17T08:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "NEA/data.gov.sg 1h PM2.5 16:00 SGT", "publisher": "NEA", "url": "https://api.data.gov.sg/v1/environment/pm25", "published_at_utc": "2026-09-17T08:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "haze.gov.sg situation 11:00 AM 17 Sep", "publisher": "MSS/ASMC", "url": "https://www.haze.gov.sg/", "published_at_utc": "2026-09-17T03:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "DOE APIMS hourly (15:00 MYT complete)", "publisher": "DOE Malaysia", "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly", "published_at_utc": "2026-09-17T07:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Prabowo terorisme ekologi cabinet", "publisher": "Setneg", "url": "https://www.setneg.go.id/baca/index/presiden_prabowo_tegaskan_sanksi_terhadap_karhutla_dorong_pelaku_dijerat_terorisme_ekologi", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Indonesia president calls for stricter fire sanctions", "publisher": "Reuters", "url": "https://www.reuters.com/business/environment/indonesia-president-calls-stricter-sanctions-against-forest-fire-perpetrators-2026-09-17/", "published_at_utc": "2026-09-17T04:15:00Z", "tier": "B", "confidence": "H"},
+    {"title": "Thai MFA UNCLOS first-meeting close", "publisher": "MFA Thailand", "url": "https://www.mfa.go.th/en/content/dpm-fm-conciliation-commission-thai-cambodia-eng", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Prak three-tier maritime options", "publisher": "AKP", "url": "https://www.akp.gov.kh/post/detail/381374", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Malaysia PM to offer to host MAH", "publisher": "Reuters", "url": "https://www.reuters.com/world/asia-pacific/malaysia-pm-offer-host-myanmars-min-aung-hlaing-deal-for-rohingya-return-2026-09-16/", "published_at_utc": "2026-09-16T14:29:00Z", "tier": "B", "confidence": "H"},
+    {"title": "FOMC statement 16 Sep", "publisher": "Federal Reserve", "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm", "published_at_utc": "2026-09-16T18:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Teodoro Manila Declaration adopted", "publisher": "The Star / Bernama-PNA", "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/16/asean-adopts-manila-declaration-to-strengthen-disaster-preparedness", "published_at_utc": "2026-09-16T12:39:00Z", "tier": "B", "confidence": "M"},
+    {"title": "BIO BARMM proclamation", "publisher": "Bangsamoro Information Office", "url": "https://bangsamoro.gov.ph/news/latest-news/barmms-first-elected-parliament-proclaimed-to-assume-office-oct-30/", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "A", "confidence": "H"}
+  ]
+}
