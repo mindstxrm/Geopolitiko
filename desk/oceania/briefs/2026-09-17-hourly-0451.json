@@ -1,0 +1,375 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T03:51:00Z",
+  "window_end_utc": "2026-09-17T04:51:00Z",
+  "generated_at_utc": "2026-09-17T05:02:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "parent_hourly": "2026-09-17T03:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NDRMO: meteorological drought now; El Niño contingency plans heading to Cabinet",
+      "summary": "FijiVillage homepage now leads NDRMO Director Napolioni Boseiwaqa: humanitarian clusters collating El Niño contingency plans for Cabinet; Fiji currently experiencing meteorological drought as stated; below-normal rainfall until early February; Taveuni water-carting via Government Shipping expected by the weekend. Not a drought-emergency gazette. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["el_nino", "drought", "ndrmo", "water", "taveuni"],
+      "sources": [
+        "https://www.fijivillage.com/news/contingency-plans-being-prepared-as-el-ni-o-threatens-water-supply-2c5e45/"
+      ]
+    },
+    {
+      "title": "Hela 30-gun surrender (NBC 14:31 PGT) plus Nipa 19 (Haus Bung)",
+      "summary": "In-window NBC 14:31 PGT / 04:31 UTC now homepage lead: 30 high-powered illegal firearms surrendered in Hela and displayed in Tari during Independence celebrations. Governor Undialu cites ~500 factory-made illegal guns remaining and credits amnesty through December; Dec 7 ward-councillor assembly. Haus Bung: 19 firearms surrendered yesterday at Nipa Station, SHP. Provincial L&O. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["firearms", "amnesty", "hela", "nipa", "law_and_order"],
+      "sources": [
+        "https://www.nbc.com.pg/post/39946/30-illegal-guns-surrendered-in-hela",
+        "https://pnghausbung.com/illegal-guns-surrended-on-independence-day/"
+      ]
+    },
+    {
+      "title": "SEEP: 2–3 months not enough to implement Electoral Amendment Bill 2026",
+      "summary": "FijiVillage homepage #2: SEEP Research and Policy Officer Metuisela Gauna told the Justice committee in Labasa that two to three months may not be enough to implement Electoral Amendment Bill 2026 reforms before the next GE, despite supporting several changes. Says the election cannot be delayed; suggests introducing the bill next year. Distinct from the unpublished CRC Constitution path. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["elections", "electoral_amendment", "seep", "crc_adjacent"],
+      "sources": [
+        "https://www.fijivillage.com/news/2-to-3-months-not-enough-to-implement-electoral-reforms-seep-c74f7d/"
+      ]
+    },
+    {
+      "title": "PINA 17 Sep roll: WIM ExCom Myazoe testimony; Talia fossil-fuel leftover",
+      "summary": "PINA homepage rolled to a 17 Sep set. In-window from 16:38 FJT / 04:38 UTC: Jerolynn Myazoe (RMI CCD) tells WIM ExCom 25 in Majuro that 1.5°C is survival, not a metric. Still no ExCom decision language. Adjacent Talia restatement that AUS fossil-fuel subsidies since 2020 were almost six times Pacific aid is PACNEWS/Australia Institute leftover, not a Forum instrument. Not FLASH.",
+      "countries": ["MHL", "TUV", "AUS"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["wim_excom", "loss_and_damage", "1.5c", "talia", "fossil_fuels"],
+      "sources": [
+        "https://pina.com.fj/2026/09/17/1-5c-is-not-just-a-number-for-the-marshall-islands/",
+        "https://pina.com.fj/2026/09/17/pacific-aid-doesnt-really-matter-next-to-australias-fossil-fuel-subsidies-tuvalu-climate-minister-says/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "FJI NDRMO El Niño / meteorological drought",
+      "parties": ["FJI"],
+      "status": "ndrmo_director_met_drought_cluster_plans_for_cabinet_not_gazette",
+      "notes": "Taveuni water-carting via GSS expected by weekend. Not FLASH."
+    },
+    {
+      "instrument": "PNG Hela firearms surrender (30)",
+      "parties": ["PNG"],
+      "status": "nbc_1431_pgt_homepage_lead_independence_week_ceremony",
+      "notes": "Undialu ~500 remaining CLAIM; Dec 7 assembly. Provincial. Not FLASH."
+    },
+    {
+      "instrument": "PNG Nipa/SHP firearms surrender (19)",
+      "parties": ["PNG"],
+      "status": "haus_bung_19_yesterday_nipa_station_awareness_18_21_22_sep",
+      "notes": "Complements amnesty-to-25-Dec leftover. Not FLASH."
+    },
+    {
+      "instrument": "Fiji Electoral Amendment Bill 2026 (SEEP submission)",
+      "parties": ["FJI"],
+      "status": "committee_submission_implementation_clock_not_crc",
+      "notes": "Distinct from CRC Constitution path. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "instrument": "WIM ExCom 25 / Myazoe 1.5°C testimony",
+      "parties": ["MHL"],
+      "status": "pina_in_window_sitting_evidence_no_decision",
+      "notes": "UNFCCC page Incapsula/empty. Not FLASH."
+    },
+    {
+      "instrument": "Talia AUS fossil-fuel subsidies vs Pacific aid",
+      "parties": ["TUV", "AUS"],
+      "status": "pina_17_sep_restatement_of_pacnews_leftover",
+      "notes": "Think-tank ratio. Not a Forum instrument. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu Declaration",
+      "parties": ["TON", "PIF"],
+      "status": "pdf_still_unpublished_20h51_after_reception",
+      "notes": "pacificmet.net still draft/future tense; SPREP 403. Political, not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "in_principle_unsigned",
+      "notes": "DFAT timed out this hour; last confirmed 3 Jun commence-negotiations language."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel",
+      "parties": ["SLB"],
+      "status": "still_future_tense_thursday_afternoon",
+      "notes": "Island Sun still 'will leave today'; 15:51 Thursday 17 Sep SBT without wheels-up. SIBC 403; DFAT timeout."
+    },
+    {
+      "instrument": "Burke NPC migration package",
+      "parties": ["AUS"],
+      "status": "smh_still_palm_unnamed_transcript_404",
+      "notes": "Not a Pacific compact. Not FLASH."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "homepage_429_arrest_unconfirmed_5539_still_6hrs_complaint_429",
+      "notes": "VFSC no Tui extract. Not FLASH."
+    },
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "leftover_fbc_cdd_lal_still_no_report_seep_is_different_bill",
+      "notes": "Speaker 22 Sep 11:30 leftover. fiji.gov.fj silent. Not FLASH."
+    },
+    {
+      "instrument": "NZ Labour PIF NZeTA visa-waiver promise",
+      "parties": ["NZL"],
+      "status": "sitting_opposition_policy_rss_3",
+      "notes": "RNZ still RSS #3. Not a gazette. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port upgrade (Novelly exclusive)",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_rss_1_design_phase",
+      "notes": "No COK Cabinet/PM request. Do not inflate. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "El Niño / western-Pacific drought (FJI ops step)",
+      "direction": "up_colour_ndrmo_met_drought_cabinet_cluster_plans",
+      "horizon": "days-months (peak Oct-Nov / into Feb as stated)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request — not FLASH on an NDRMO interview, farmer warning, or water-cart"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_fbc_cdd_lal_leftover_seep_is_separate_electoral_bill",
+      "horizon": "days-90d (through Feb 2027 election backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftover civil-society warning, Speaker confirmation, Cabinet timetable, vacant seat, mourning rites, or a committee submission"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty / opposition colour",
+      "direction": "unchanged_still_future_tense_thursday_afternoon_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion — not FLASH on a commemorative statement or travel-day collection gap"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "unchanged_gazette_missing",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package that implies capacity breach"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "homepage_429_arrest_unconfirmed_5539_still_6hrs_complaint_429",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR that implies capacity breach; extra-legal revenge violence on Ambae"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "unchanged_pmnec_omits_panguna_nbc_now_3",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "PNG provincial L&O (Hela/Nipa amnesty / Goroka / Enga / ENB)",
+      "direction": "up_colour_named_30_and_19_surrenders",
+      "horizon": "48h-Dec",
+      "confidence": "H",
+      "escalate_trigger": "Spread to capital-scale unrest — then re-score; not FLASH on current copy"
+    },
+    {
+      "risk": "AUS-Pacific labour-mobility / student-WHM settings",
+      "direction": "unchanged_burke_npc_palm_still_unnamed",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item — not FLASH on an NPC speech without Pacific-scheme text"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "unchanged_pdf_still_missing_20h51",
+      "horizon": "hours-48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance mandates as a legal instrument — not FLASH on a political ministerial declaration reprint"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs aging operation-centre 55/39 vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency vs 2 Jun business-name strike-off?",
+    "Does the PMNEC Nogat lesman recap substitute for a verbatim 16 Sep Independence Hill transcript, and where is the Haus Bung K11bn line?",
+    "First verified ABG 16 Sep Panguna remarks vs 14 Sep PLIC apology leftover?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa after the Tonga holiday?",
+    "AUS-SLB: DFAT/Honiara signature date; SIBC/airport wheels-up now that Thursday afternoon has passed?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935?",
+    "Burke NPC: Home Affairs transcript; is PALM or PEV carved in or out?",
+    "Criminal Records Regulations 2026 gazette date; any PALM/RSE processing note from DFAT/MBIE?",
+    "Daily Post scam: VPF/MFA confirmation; concert date; any named sending-state?",
+    "COP31 7th SOT meeting date still missing?",
+    "Funafuti MFA confirmation of Panapa-Lai (foreign.gov.tv DNS-fail)?",
+    "NDRMO meteorological-drought line vs Funaki drought-plan leftover: same un-gazetted ops track, or a Cabinet paper this week?",
+    "RPNGC confirmation of Hela 30 + Nipa 19 vs NBC/Haus Bung only; ~500 remaining CLAIM; Dec 7 Hulukumaiya assembly ToR?",
+    "SEEP / Electoral Amendment Bill 2026 Hansard vs CRC Constitution path — sequential or separate?",
+    "Taveuni weekend GSS water arrival confirmed; WAF on-the-record on the local system fault?",
+    "WIM ExCom 25 decision language 18 Sep; does Myazoe testimony appear in an official ExCom document?"
+  ],
+  "sources": [
+    {
+      "title": "Contingency plans being prepared as El Niño threatens water supply",
+      "publisher": "FijiVillage",
+      "url": "https://www.fijivillage.com/news/contingency-plans-being-prepared-as-el-ni-o-threatens-water-supply-2c5e45/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["FJI"],
+      "tier": "B",
+      "confidence": "M"
+    },
+    {
+      "title": "30 illegal guns surrendered in Hela",
+      "publisher": "NBC PNG",
+      "url": "https://www.nbc.com.pg/post/39946/30-illegal-guns-surrendered-in-hela",
+      "published_at": "2026-09-17T04:31:00Z",
+      "countries": ["PNG"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Illegal guns surrendered on Independence Day",
+      "publisher": "PNG Haus Bung",
+      "url": "https://pnghausbung.com/illegal-guns-surrended-on-independence-day/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["PNG"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "2 to 3 months not enough to implement electoral reforms - SEEP",
+      "publisher": "FijiVillage",
+      "url": "https://www.fijivillage.com/news/2-to-3-months-not-enough-to-implement-electoral-reforms-seep-c74f7d/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["FJI"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "1.5°C is not just a number for the Marshall Islands",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/17/1-5c-is-not-just-a-number-for-the-marshall-islands/",
+      "published_at": "2026-09-17T04:38:00Z",
+      "countries": ["MHL"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Pacific aid doesn’t really matter next to Australia’s fossil fuel subsidies, Tuvalu climate minister says",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/17/pacific-aid-doesnt-really-matter-next-to-australias-fossil-fuel-subsidies-tuvalu-climate-minister-says/",
+      "published_at": "2026-09-17T04:47:00Z",
+      "countries": ["TUV", "AUS"],
+      "tier": "B",
+      "confidence": "M"
+    },
+    {
+      "title": "Labor migration plan revealed: Burke to ramp up deportations and bring in backpacker ballot",
+      "publisher": "Sydney Morning Herald",
+      "url": "https://www.smh.com.au/politics/federal/labor-migration-plan-revealed-burke-to-ramp-up-deportations-and-bring-in-backpacker-ballot-20260917-p60y39.html",
+      "published_at": "2026-09-17T02:30:00Z",
+      "countries": ["AUS"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Council / SPREP",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["TON"],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T00:00:00Z",
+      "countries": ["SLB"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "RNZ Pacific RSS",
+      "publisher": "RNZ",
+      "url": "https://www.rnz.co.nz/rss/pacific.xml",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["NZL", "COK", "WSM"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "ABG news",
+      "publisher": "Autonomous Bougainville Government",
+      "url": "https://abg.gov.pg/index.php/news",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["PNG"],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "Forumsec homepage",
+      "publisher": "Pacific Islands Forum Secretariat",
+      "url": "https://forumsec.org/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": [],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "Daily Post /news listing",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["VUT"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "BoM /cyclone/",
+      "publisher": "Bureau of Meteorology",
+      "url": "https://www.bom.gov.au/cyclone/",
+      "published_at": "2026-09-17T04:51:00Z",
+      "countries": ["AUS"],
+      "tier": "A",
+      "confidence": "M"
+    }
+  ]
+}
