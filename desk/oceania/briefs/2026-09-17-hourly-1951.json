@@ -1,0 +1,548 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T18:51:00Z",
+  "window_end_utc": "2026-09-17T19:51:00Z",
+  "generated_at_utc": "2026-09-17T20:10:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T18:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Vavaʻu whale-watching boat mishap; no fatality reported; licensing unconfirmed",
+      "summary": "In-window RNZ Pacific pubDate 19:31:47Z is now RSS #1, wiring Kaniva Tonga: a passenger-carrying whale-watching boat was involved in an accident in Vavaʻu. Neiafu Town Officer Vava Lapota reports no loss of life. Passenger count, cause, police response, and licensing status remain unconfirmed. Distinct from the 21 Aug Tongatapu Anglican capsize (later unlicensed) and the earlier-September Siokapesi Hefa fatality. No Tonga Tourism/Marine statement located. Not FLASH.",
+      "countries": ["TON", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["maritime_safety", "whale_watch", "tourism_licensing", "vavau"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1447903/another-whale-watching-boat-mishap-reported-in-tonga",
+        "https://kanivatonga.co.nz/2026/09/vava%ca%bbu-whale-watching-boat-in-accident-after-two-recent-boating-incidents/"
+      ]
+    },
+    {
+      "title": "Vuvale committee asks whether climate finance is accessible; TSLS grant phase-out is domestic",
+      "summary": "In-window FBC 18 Sep 7:03 am FJT / 19:03 UTC: Standing Committee on Foreign Affairs and Defence, Vuvale Union / Ocean of Peace. Aliki Bia asks whether the treaty turns climate commitments into practical, accessible funding. No new dollar figure, not a signed instrument. Distinct FBC 7:00 am FJT / 19:00 UTC: TSLS Graduate Business Start-Up Grant being phased out pending review — domestic, not PALM. fiji.gov.fj and laws.gov.fj still silent on CRC report and HIV gazette. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["vuvale", "climate_finance", "committee", "tsls"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/climate-funding-process-under-scrutiny/",
+        "https://www.fbcnews.com.fj/news/grant-program-phased-out-amid-review/",
+        "https://www.fiji.gov.fj/Media-Centre/News",
+        "https://www.laws.gov.fj/"
+      ]
+    },
+    {
+      "title": "Friday ABC Burke follows still omit PALM; 7.30 catch-up names PALM as underutilised",
+      "summary": "ABC farmers/NFF McIntyre still datePublished/dateModified 18:44:39Z with zero PALM hits. Transcript still HTTP 200; PALM named once as NOM-accounting argument rejected; Pacific/ASEAN student-family exception confirmed; PEV unnamed. Catch-up residual: ABC 7.30 (og:updated_time 12:02:22Z) Burke tells Greber PALM is 'really important' and 'still underutilised' as a Pacific-relationship / agricultural-workforce tool — a PALM defence, not a cut. NFF 'low blow' leftover 03:26:06Z also zero PALM. Not a PALM cut. Not a Pacific compact. Not FLASH.",
+      "countries": ["AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["burke", "npc", "migration", "palm", "whm", "nff", "labour_mobility"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-18/business-groups-and-miners-welcome-labors-migration-policies/107163600",
+        "https://www.abc.net.au/news/2026-09-17/labor-reveals-overhaul-to-migration-policy/107165916",
+        "https://minister.homeaffairs.gov.au/TonyBurke/Pages/speech-national-press-club-17092026.aspx",
+        "https://nff.org.au/media-release/nff-backpacker-crackdown-a-low-blow-that-risks-food-security-regional-economies/"
+      ]
+    },
+    {
+      "title": "Daily Post desk-UA recovered 200; 55/39 clock 21 hrs; BoM no named system; CSIS still no recap",
+      "summary": "Daily Post /news HTTP 200 on desk-UA (recovered from last hourly 429) and browser-UA; Last-Modified 19:52:42Z. Matui 55/39 CLAIM relative clock now 21 hrs (was 20); scam now 18 hrs; figure unchanged; arrest still unconfirmed. BoM specialised hub HTTP 200 on browser-UA (desk-UA 403); Last-Modified still 06:58:14 UTC; no named Category-level system. CSIS AUKUS at Five still elapsed; Last-Modified 19:46:36 GMT; oembed still 3atxhexzf2k; /analysis listing bump; still no recap/transcript. Not FLASH.",
+      "countries": ["AUS", "VUT", "USA", "GBR"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["bom", "cyclone", "collection_path", "matui", "daily_post", "aukus", "csis"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "http://www.bom.gov.au/cyclone/tropical-cyclone.shtml",
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward"
+      ]
+    },
+    {
+      "title": "Official PMMM-4 PDF still unpublished ~35 h 51 min later; Friday TOT office hours open",
+      "summary": "pacificmet.net /pmmm-4 still draft/future tense; Matatoa and Siu-i-Alaimoana strings still absent from the programme page. Local time 08:51 Friday 18 Sep TOT — ordinary office hours open. SPREP/Matangi 403. PACNEWS FOUR 404. PINA homepage lead still MHEWS leftover; /2026/09/18/ 404. PINA SPREP syndication leftover is not a substitute PDF. Not FLASH.",
+      "countries": ["TON", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["pmmm4", "sprep", "weather_ready", "mhews"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://pina.com.fj/2026/09/17/vanuatu-seeks-to-host-pacific-multi-hazard-early-warning-centre/",
+        "https://pina.com.fj/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Vavaʻu whale-watching mishap",
+      "parties": ["TON"],
+      "status": "in_window_rnz_1931utc_no_fatality_licensing_unconfirmed",
+      "notes": "Maritime-safety colour. Not FLASH."
+    },
+    {
+      "instrument": "Vuvale / Ocean of Peace standing committee",
+      "parties": ["FJI", "AUS"],
+      "status": "in_window_fbc_1903utc_bia_climate_finance_access_question",
+      "notes": "Committee process, not a new envelope. Not FLASH."
+    },
+    {
+      "instrument": "TSLS Graduate Business Start-Up Grant phase-out",
+      "parties": ["FJI"],
+      "status": "in_window_fbc_1900utc_phased_out_pending_review",
+      "notes": "Domestic education/enterprise. Not PALM. Not a compact."
+    },
+    {
+      "instrument": "ABC Friday Burke / NFF McIntyre follow",
+      "parties": ["AUS"],
+      "status": "unchanged_184439z_zero_palm",
+      "notes": "WHM/food-security follow. Not a PALM cut. Not a compact. Not FLASH."
+    },
+    {
+      "instrument": "ABC 7.30 Burke PALM defence",
+      "parties": ["AUS"],
+      "status": "catchup_730_og_updated_1202utc_palm_important_underutilised",
+      "notes": "PALM defence, not a cut. Not a compact. Not FLASH."
+    },
+    {
+      "instrument": "NFF backpacker crackdown 'low blow' release",
+      "parties": ["AUS"],
+      "status": "leftover_032606z_zero_palm_pacific_hits",
+      "notes": "Distinct from 05:37 Horticulture Council release. Not a PALM instrument."
+    },
+    {
+      "instrument": "AUS–SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged_in_principle_unsigned",
+      "notes": "DFAT failed; last confirmed language still commence negotiations (3 Jun)."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel",
+      "parties": ["SLB", "UN"],
+      "status": "islandsun_still_future_tense_0651_friday_sbt",
+      "notes": "Travel ≠ wheels-down ≠ AUS–SLB signature. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": ["VUT"],
+      "status": "desk_ua_recovered_200_55_39_clock_21hrs",
+      "notes": "Arrest still unconfirmed. Clock tick ≠ SITREP. Not FLASH."
+    },
+    {
+      "instrument": "BoM cyclone collection path",
+      "parties": ["AUS"],
+      "status": "desk_403_browser_200_last_modified_still_065814utc_no_named_system",
+      "notes": "UA/WAF noise ≠ warning ≠ all-clear. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS at Five",
+      "parties": ["AUS", "GBR", "USA"],
+      "status": "elapsed_lm_194636gmt_oembed_still_3atxhexzf2k_still_no_recap",
+      "notes": "Not an operational milestone. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": ["TON", "SPREP"],
+      "status": "official_pdf_still_unpublished_35h51m_friday_tot_hours_open",
+      "notes": "Political ministerial text. pacificmet.net still draft. Not FLASH."
+    },
+    {
+      "instrument": "Burke NPC migration package",
+      "parties": ["AUS"],
+      "status": "unchanged_transcript_200_palm_named_once_as_rejected_nom_argument",
+      "notes": "Pacific/ASEAN student-family exception confirmed. PEV unnamed. Not a compact. Not FLASH."
+    },
+    {
+      "instrument": "FJI–GBR Kamikamica / Lysaght courtesy",
+      "parties": ["FJI", "GBR"],
+      "status": "unchanged_1759utc_potential_uk_waf_finance_conversation",
+      "notes": "Conversation, not a signed envelope. Not FLASH."
+    },
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "unchanged_speaker_22sep_1130_report_unpublished",
+      "notes": "Not FLASH."
+    },
+    {
+      "instrument": "Fiji HIV emergency",
+      "parties": ["FJI"],
+      "status": "unchanged_gazette_missing",
+      "notes": "Not a Legal Notice."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "arrest_unconfirmed_55_39_claim_now_21hrs",
+      "notes": "Charges sought, not executed. Not FLASH."
+    },
+    {
+      "instrument": "ABG collection path",
+      "parties": ["PNG"],
+      "status": "http_000_301_this_scan_last_confirmed_no_16sep_readout",
+      "notes": "Paywalled Post Courier headline is not an ABG readout. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_rnz_rss_2_no_cok_request",
+      "notes": "Design-phase leftover. Do not inflate."
+    },
+    {
+      "instrument": "NZ Labour PIF NZeTA promise",
+      "parties": ["NZL"],
+      "status": "sitting_rnz_rss_4",
+      "notes": "Opposition policy, not a gazette."
+    },
+    {
+      "instrument": "WIM ExCom 25",
+      "parties": ["MHL"],
+      "status": "convened_through_18sep_212byte_empty_page",
+      "notes": "No decision language."
+    },
+    {
+      "instrument": "AUS–KIR / AUS–NRU air services",
+      "parties": ["AUS", "KIR", "NRU"],
+      "status": "unchanged_jscot_recommendation",
+      "notes": "Not in force."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TON small-vessel / whale-watch licensing",
+      "direction": "up_in_window_vavau_mishap_no_fatality_licensing_unconfirmed",
+      "horizon": "hours–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Confirmed mass-casualty, or a Tourism/Marine statement that implies a licensed-operator failure at scale — not FLASH on a no-fatality Kaniva/RNZ wire"
+    },
+    {
+      "risk": "AUS-Pacific labour-mobility / student-WHM settings",
+      "direction": "unchanged_friday_abc_omits_palm_730_is_palm_defence_nff_low_blow_omits_palm",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item — not FLASH on an NPC speech, a 7.30 interview that defends PALM, a student-family exception, a NOM-accounting paragraph, a WHM industry follow, or an NFF media release that does not name PALM"
+    },
+    {
+      "risk": "BoM / Daily Post collection path",
+      "direction": "desk_dailypost_recovered_200_5539_clock_21hrs_bom_specialised_200_desk_403_lm_unchanged",
+      "horizon": "hours",
+      "confidence": "H",
+      "escalate_trigger": "Named Category-level system on a BoM product, or a Matui SITREP that revises fatalities well above the CLAIM band — not FLASH on HTTP codes or a relative-clock tick"
+    },
+    {
+      "risk": "FJI–AUS Vuvale climate-finance access",
+      "direction": "in_window_committee_question_no_new_envelope",
+      "horizon": "weeks–months",
+      "confidence": "M",
+      "escalate_trigger": "Signed/gazetted AUS appropriation answering the access question — not FLASH on a standing-committee sitting"
+    },
+    {
+      "risk": "FJI–GBR WAF finance talk",
+      "direction": "leftover_courtesy_names_potential_uk_backed_waf_finance",
+      "horizon": "weeks–months",
+      "confidence": "M",
+      "escalate_trigger": "Signed envelope / FCDO figure — not FLASH on a courtesy meeting"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_speaker_22sep_prasad_brake_report_unpublished",
+      "horizon": "days–90d (through Feb 2027 GE backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftovers or a committee sitting"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "arrest_unconfirmed_5539_now_21hrs_claim",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR that implies capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "Panguna security / ABG–Waigani split",
+      "direction": "abg_path_failed_this_scan_last_confirmed_no_16sep_readout",
+      "horizon": "48h–ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "islandsun_still_future_tense_0651_friday_sbt_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "official_pdf_missing_friday_tot_office_hours_open",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument — not FLASH on a still-missing PDF"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "gazette_missing",
+      "horizon": "days–next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package that implies capacity breach"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "elapsed_lm_tick_still_no_recap",
+      "horizon": "hours–days",
+      "confidence": "M",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a think-tank panel, a Last-Modified tick, or a missing recap"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "not_a_switch_funafuti_mfa_unreachable_19sep_anniversary_tomorrow",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "COK Penrhyn dual-use / access",
+      "direction": "design_phase_novelly_leftover_rss_2",
+      "horizon": "months",
+      "confidence": "H",
+      "escalate_trigger": "Signed defence-access / base text or COK request that is then answered — not FLASH on an interview"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "still_no_decision_sitting_through_18sep",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    }
+  ],
+  "open_questions": [
+    "Tonga Vavaʻu mishap: passenger+crew figure; injuries; Tourism vs Marine & Ports licensing status; any NZ MFAT consular note?",
+    "Home Affairs fact sheet / regulations: exact nationality list for the Pacific/ASEAN student-dependant exception? Student visas only?",
+    "Does any PIC MFA treat Burke’s PALM-as-NOM-stock line, the 7.30 underutilised defence, or Citrus Australia’s PALM-out-of-NOM ask as a PALM setting? Any DFAT labour-mobility note?",
+    "Is there a separate NFF letter to the PM/Home Affairs (as distinct from the 05:37 Horticulture Council release, the 03:26 low-blow release, and McIntyre’s Friday ABC quote, all of which have zero PALM hits)? Does any such letter name PALM volumes vs WHM?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs unstalled 55/39 (now 21 hrs on Daily Post /news) vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency (22 Jun 2026) vs 2 Jun business-name strike-off?",
+    "BPS written SITREP: fatalities, arrests, Buin attribution, weapons recovered?",
+    "First verified ABG 16 Sep Panguna remarks? (path failed this scan; last confirmed list still 13–14 Sep leftovers.)",
+    "PMMM-4: official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa now that Friday TOT office hours are open (08:51 TOT)?",
+    "WIM ExCom 25 decision language 18 Sep; does Myazoe appear in official docs?",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? New York wheels-down? Island Sun still future-tense at 06:51 Friday SBT.",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935? Next-sitting SO 51 order paper?",
+    "Fiji CRC: will the report be published on 22 Sep tabling? GE-on-time guarantee answering Lal and Prasad?",
+    "Funafuti MFA confirmation of Panapa–Lai? 19 Sep anniversary events tomorrow.",
+    "COP31 7th SOT: meeting date/venue still missing. COPMIN: date, venue, mandate?",
+    "Labour NZeTA: which Forum members in scope? MFAT/INZ paper? PIC MFA reactions?",
+    "Penrhyn: any COK Cabinet minute or Brown comment on Novelly’s being-negotiated line?",
+    "Any ANZ matching Matui/Ambae package vs China US$100k?",
+    "CSIS AUKUS at Five: recap/transcript of 3atxhexzf2k? Any operational claim?",
+    "Fiji Navy / Australian Defence Tier A readout of this week’s Canberra Navy-to-Navy talks?",
+    "British High Commission / FCDO readout of the Kamikamica–Lysaght courtesy: is WAF finance a pipeline project with a figure, or talking-point only?",
+    "Vuvale committee: any AUS DFAT answer to Bia’s climate-finance access question?",
+    "Fiji ILI 1,780 / 75%: MoH written SITREP vs FBC/FijiVillage only?"
+  ],
+  "sources": [
+    {
+      "title": "Another whale-watching boat mishap reported in Tonga (no fatality reported)",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1447903/another-whale-watching-boat-mishap-reported-in-tonga",
+      "published_at": "2026-09-17T19:31:47Z",
+      "countries": ["TON", "NZL"],
+      "topics": ["maritime_safety", "whale_watch", "vavau"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "Vavaʻu whale-watching boat in accident after two recent boating incidents",
+      "publisher": "Kaniva Tonga",
+      "url": "https://kanivatonga.co.nz/2026/09/vava%ca%bbu-whale-watching-boat-in-accident-after-two-recent-boating-incidents/",
+      "published_at": "2026-09-17T19:00:00Z",
+      "countries": ["TON"],
+      "topics": ["maritime_safety", "whale_watch", "tourism_licensing"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "Climate funding process under scrutiny (Vuvale committee)",
+      "publisher": "FBC News",
+      "url": "https://www.fbcnews.com.fj/news/climate-funding-process-under-scrutiny/",
+      "published_at": "2026-09-17T19:03:00Z",
+      "countries": ["FJI", "AUS"],
+      "topics": ["vuvale", "climate_finance", "committee"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Grant program phased out amid review (TSLS start-up grant)",
+      "publisher": "FBC News",
+      "url": "https://www.fbcnews.com.fj/news/grant-program-phased-out-amid-review/",
+      "published_at": "2026-09-17T19:00:00Z",
+      "countries": ["FJI"],
+      "topics": ["education", "tsls"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Business and miners back Labor's migration policies, but farmers angry (zero PALM hits)",
+      "publisher": "ABC News",
+      "url": "https://www.abc.net.au/news/2026-09-18/business-groups-and-miners-welcome-labors-migration-policies/107163600",
+      "published_at": "2026-09-17T18:44:39Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "whm", "nff", "labour_mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Labor reveals overhaul to migration policy (7.30; PALM important / underutilised)",
+      "publisher": "ABC 7.30",
+      "url": "https://www.abc.net.au/news/2026-09-17/labor-reveals-overhaul-to-migration-policy/107165916",
+      "published_at": "2026-09-17T12:02:22Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "palm", "whm"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Speech, National Press Club (transcript still live)",
+      "publisher": "Australian Home Affairs",
+      "url": "https://minister.homeaffairs.gov.au/TonyBurke/Pages/speech-national-press-club-17092026.aspx",
+      "published_at": "2026-09-17T02:30:00Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "palm", "npc"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "A"
+    },
+    {
+      "title": "NFF: Backpacker crackdown a ‘low blow’ that risks food security, regional economies (zero PALM)",
+      "publisher": "National Farmers' Federation",
+      "url": "https://nff.org.au/media-release/nff-backpacker-crackdown-a-low-blow-that-risks-food-security-regional-economies/",
+      "published_at": "2026-09-17T03:26:06Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "whm", "labour_mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly (still future-tense)",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T00:00:00Z",
+      "countries": ["SLB"],
+      "topics": ["unga", "wale"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "Daily Post /news listing (55/39 now 21 hrs; desk-UA recovered 200)",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/",
+      "published_at": "2026-09-17T19:52:42Z",
+      "countries": ["VUT"],
+      "topics": ["matui", "sar", "collection_path"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "BoM specialised tropical cyclone (Last-Modified still 06:58:14 UTC; no named system)",
+      "publisher": "Bureau of Meteorology",
+      "url": "http://www.bom.gov.au/cyclone/tropical-cyclone.shtml",
+      "published_at": "2026-09-17T06:58:14Z",
+      "countries": ["AUS"],
+      "topics": ["cyclone", "collection_path"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "AUKUS at Five: Progress, Challenges, and the Way Forward (elapsed; oembed 3atxhexzf2k; no recap)",
+      "publisher": "CSIS",
+      "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+      "published_at": "2026-09-17T19:46:36Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["aukus", "analysis"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "PMMM-4 programme page (still draft; no adopted PDF)",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-16T02:24:04Z",
+      "countries": ["TON"],
+      "topics": ["pmmm4", "weather_ready"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "Vanuatu seeks to host Pacific Multi-Hazard Early Warning Centre (PINA lead leftover)",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/17/vanuatu-seeks-to-host-pacific-multi-hazard-early-warning-centre/",
+      "published_at": "2026-09-17T00:00:00Z",
+      "countries": ["VUT"],
+      "topics": ["mhews", "pmmm4"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "B"
+    },
+    {
+      "title": "Migration changes fail the housing availability and food affordability tests (zero PALM hits)",
+      "publisher": "National Farmers' Federation Horticulture Council",
+      "url": "https://nff.org.au/media-release/migration-changes-fail-the-housing-availability-and-food-affordability-tests/",
+      "published_at": "2026-09-17T05:37:21Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "whm", "labour_mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    }
+  ]
+}
