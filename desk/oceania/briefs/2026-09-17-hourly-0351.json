@@ -1,0 +1,356 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T02:51:00Z",
+  "window_end_utc": "2026-09-17T03:51:00Z",
+  "generated_at_utc": "2026-09-17T04:25:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "parent_hourly": "2026-09-17T02:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Daily Post scam warning now readable: fake official-aid / commemorative-coin schemes",
+      "summary": "Last hour's Daily Post listing (CMS 12:00 VUT / 01:00 UTC) returned HTTP 429. This hour the article is HTTP 200. Body: overseas individuals posing as representatives of senior foreign officials running three schemes (shoddy commemorative coins; fake foundations; planned concert as publicity). Verify with VPF and MFA. No named sending-state. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 2,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["cyber", "scams", "governance", "matui"],
+      "sources": [
+        "https://www.dailypost.vu/news/warning-foreign-based-political-scammers-impersonating-senior-level-officials-target-vanuatu/article_9a64c6e7-061b-513d-b5a4-76a476f8f686.html",
+        "https://www.dailypost.vu/news/"
+      ]
+    },
+    {
+      "title": "Cabinet endorses Criminal Records Regulations 2026; seasonal-worker clearances still destination-law",
+      "summary": "In-window FBC 15:04 FJT / 03:04 UTC: Cabinet endorsed Criminal Records Regulations 2026 to implement the Criminal Records Act 2026. Police clearances will account for spent/expunged records; prior adverse applicants must re-apply. Seasonal-worker travel still must comply with destination-country employment and immigration law. Separate in-window FBC 15:00 FJT: consultant-led NMW/10-sector wage review approved. Not a compact. Not FLASH.",
+      "countries": ["FJI", "AUS", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["labour_mobility", "criminal_records", "wages", "cabinet"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/cabinet-endorses-new-criminal-records-regulations/",
+        "https://www.fbcnews.com.fj/news/national-minimum-wage-review-approved/"
+      ]
+    },
+    {
+      "title": "PMNEC posts Independence Address recap (Nogat lesman); still omits Panguna",
+      "summary": "First PMNEC 17 Sep recap of Marape's Independence Address: Nogat lesman; economic independence; three-generation work/education split. No Panguna, Lloyds, Bougainville, or K11bn education earmark in the official recap. NBC still leads Saroa; Panguna ceremony still #2; ABG still 13-14 Sep leftovers. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["independence", "panguna", "pmnec", "waigani"],
+      "sources": [
+        "https://www.pmnec.gov.pg/pm-marape-nogat-lesman-every-papua-new-guinean-must-work-to-build-the-next-50-years/",
+        "https://www.nbc.com.pg/post/39939/paguna-landowners-commit-to-lloyds-metals"
+      ]
+    },
+    {
+      "title": "Burke National Press Club migration package unfolding; PALM unnamed",
+      "summary": "Home Affairs Minister Tony Burke NPC address from ~12:30 AEST / 02:30 UTC (coverage 12:36 AEST). NOM toward 245k then 225k; student visa-hopping and dependents restricted; No Further Stay on visitor visas; WHM ballot years 2-3. PALM / PEV not named in converted AAP copy. Official transcript not retrieved. AUS-domestic with labour-mobility watch. Not FLASH.",
+      "countries": ["AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["migration", "labour_mobility", "students", "working_holiday"],
+      "sources": [
+        "https://www.canberratimes.com.au/story/9351893/labor-to-crack-down-on-foreign-students-family-visas/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "VUT political-scam warning",
+      "parties": ["VUT"],
+      "status": "body_now_http_200_three_schemes",
+      "notes": "Origin CMS 01:00 UTC leftover; first readable body this hour. VPF/MFA verify. Not FLASH."
+    },
+    {
+      "instrument": "Fiji Criminal Records Regulations 2026",
+      "parties": ["FJI"],
+      "status": "cabinet_endorsed_fbc_1504_fjt_gazette_outstanding",
+      "notes": "Implements existing Act. Seasonal-worker destination-law clause. Not a compact. Not FLASH."
+    },
+    {
+      "instrument": "Fiji National Minimum Wage / sectoral review",
+      "parties": ["FJI"],
+      "status": "cabinet_approved_consultant_review_not_new_rates",
+      "notes": "FBC 15:00 FJT. Process colour. Not FLASH."
+    },
+    {
+      "instrument": "PNG Independence Address (PMNEC Nogat lesman)",
+      "parties": ["PNG"],
+      "status": "first_pmnec_17_sep_recap_omits_panguna",
+      "notes": "Civic signalling. Not a security instrument. Not FLASH."
+    },
+    {
+      "instrument": "PNG firearms amnesty extension",
+      "parties": ["PNG"],
+      "status": "haus_bung_extended_to_25_dec_2026",
+      "notes": "Provincial L&O. Not FLASH."
+    },
+    {
+      "instrument": "AUS migration integrity package (Burke NPC)",
+      "parties": ["AUS"],
+      "status": "npc_speech_palm_unnamed",
+      "notes": "No new legislation. Not a Pacific compact. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu Declaration",
+      "parties": ["TON", "PIF"],
+      "status": "pdf_still_unpublished_19h51_after_reception",
+      "notes": "pacificmet.net still draft/future tense; SPREP 403. Political, not FLASH."
+    },
+    {
+      "instrument": "Wale UNGA-81 travel",
+      "parties": ["SLB"],
+      "status": "still_future_tense_thursday_mid_afternoon",
+      "notes": "Island Sun still 'will leave today'; 14:51 Thursday 17 Sep SBT without wheels-up. SIBC 403; DFAT timeout."
+    },
+    {
+      "instrument": "VMSA Matui criminal complaint",
+      "parties": ["VUT"],
+      "status": "arrest_still_unconfirmed_5539_now_6hrs_complaint_429",
+      "notes": "Homepage HTTP 200; VFSC no Tui extract. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": ["AUS", "SLB"],
+      "status": "in_principle_unsigned",
+      "notes": "DFAT timed out this hour; last confirmed 3 Jun commence-negotiations language."
+    },
+    {
+      "instrument": "Fiji CRC / Constitution Amendment path",
+      "parties": ["FJI"],
+      "status": "leftover_fbc_cdd_lal_still_no_report",
+      "notes": "Speaker 22 Sep 11:30 leftover. fiji.gov.fj silent. Not FLASH."
+    },
+    {
+      "instrument": "NZ Labour PIF NZeTA visa-waiver promise",
+      "parties": ["NZL"],
+      "status": "sitting_opposition_policy_rss_3",
+      "notes": "RNZ still RSS #3. Not a gazette. Not FLASH."
+    },
+    {
+      "instrument": "Penrhyn / Omoka port upgrade (Novelly exclusive)",
+      "parties": ["USA", "NZL", "COK"],
+      "status": "leftover_rss_1_design_phase",
+      "notes": "No COK Cabinet/PM request. Do not inflate. Not FLASH."
+    },
+    {
+      "instrument": "AUS-KIR / AUS-NRU air-services agreements",
+      "parties": ["AUS", "KIR", "NRU"],
+      "status": "jscot_recommends_binding_treaty_action_not_in_force",
+      "notes": "PACNEWS BIZ leftover. Recommendation ≠ ratification. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_fbc_cdd_lal_leftover_still_no_tier_a_report",
+      "horizon": "days-90d (through Feb 2027 election backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftover civil-society warning, Speaker confirmation, Cabinet timetable, vacant seat, or mourning rites"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty / opposition colour",
+      "direction": "unchanged_still_future_tense_thursday_mid_afternoon_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion — not FLASH on a commemorative statement or travel-day collection gap"
+    },
+    {
+      "risk": "FJI HIV emergency / needle-programme politics",
+      "direction": "unchanged_gazette_missing",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package that implies capacity breach"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "unchanged_arrest_unconfirmed_5539_now_6hrs_complaint_429",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR that implies capacity breach; extra-legal revenge violence on Ambae"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "unchanged_pmnec_address_omits_panguna_nbc_still_2",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "AUS-Pacific labour-mobility / student-WHM settings",
+      "direction": "up_colour_burke_npc_palm_unnamed",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item — not FLASH on an NPC speech without Pacific-scheme text"
+    },
+    {
+      "risk": "VUT political impersonation scams",
+      "direction": "up_colour_body_now_readable_single_outlet",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_trigger": "Named extra-legal capture of a state office, or FLASH-class unrest overlay — not FLASH on a warning article"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "unchanged_pdf_still_missing_19h51",
+      "horizon": "hours-48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance mandates as a legal instrument — not FLASH on a political ministerial declaration reprint"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs aging operation-centre 55/39 vs family-list 53?",
+    "VFSC partnership-register extract for Tui Shipping Agency vs 2 Jun business-name strike-off?",
+    "Does the PMNEC Nogat lesman recap substitute for a verbatim 16 Sep Independence Hill transcript, and where is the Haus Bung K11bn line?",
+    "First verified ABG 16 Sep Panguna remarks vs 14 Sep PLIC apology leftover?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa after the Tonga holiday?",
+    "AUS-SLB: DFAT/Honiara signature date; SIBC/airport wheels-up now that Thursday mid-afternoon has passed?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935?",
+    "Burke NPC: Home Affairs transcript; is PALM or PEV carved in or out?",
+    "Criminal Records Regulations 2026 gazette date; any PALM/RSE processing note from DFAT/MBIE?",
+    "Daily Post scam: VPF/MFA confirmation; concert date; any named sending-state?",
+    "COP31 7th SOT meeting date still missing?",
+    "Funafuti MFA confirmation of Panapa-Lai (foreign.gov.tv DNS-fail)?",
+    "PNG amnesty to 25 Dec: RPNGC confirmation vs Haus Bung only?"
+  ],
+  "sources": [
+    {
+      "title": "Warning: Foreign-based Political Scammers Impersonating Senior-level Officials Target Vanuatu",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/warning-foreign-based-political-scammers-impersonating-senior-level-officials-target-vanuatu/article_9a64c6e7-061b-513d-b5a4-76a476f8f686.html",
+      "published_at": "2026-09-17T01:00:00Z",
+      "countries": ["VUT"],
+      "tier": "B",
+      "confidence": "M"
+    },
+    {
+      "title": "Cabinet endorses new criminal records regulations",
+      "publisher": "FBC",
+      "url": "https://www.fbcnews.com.fj/news/cabinet-endorses-new-criminal-records-regulations/",
+      "published_at": "2026-09-17T03:04:00Z",
+      "countries": ["FJI"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "National minimum wage review approved",
+      "publisher": "FBC",
+      "url": "https://www.fbcnews.com.fj/news/national-minimum-wage-review-approved/",
+      "published_at": "2026-09-17T03:00:00Z",
+      "countries": ["FJI"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "PM MARAPE: NOGAT LESMAN — EVERY PAPUA NEW GUINEAN MUST WORK TO BUILD THE NEXT 50 YEARS",
+      "publisher": "PMNEC",
+      "url": "https://www.pmnec.gov.pg/pm-marape-nogat-lesman-every-papua-new-guinean-must-work-to-build-the-next-50-years/",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": ["PNG"],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "PM applauds guns surrender efforts in the Highlands",
+      "publisher": "PNG Haus Bung",
+      "url": "https://pnghausbung.com/pm-applauds-guns-surrender-efforts-in-the-highlands/",
+      "published_at": "2026-09-17T00:00:00Z",
+      "countries": ["PNG"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Labor to crack down on foreign students, family visas",
+      "publisher": "Canberra Times / AAP",
+      "url": "https://www.canberratimes.com.au/story/9351893/labor-to-crack-down-on-foreign-students-family-visas/",
+      "published_at": "2026-09-17T02:36:00Z",
+      "countries": ["AUS"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "PACNEWS ONE, 17 SEPTEMBER 2026",
+      "publisher": "Islands Business / PINA",
+      "url": "https://islandsbusiness.com/pacnews/pacnews-one-17-september-2026/",
+      "published_at": "2026-09-17T00:00:00Z",
+      "countries": ["TON", "AUS", "KIR", "NRU"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "PMMM-4 programme",
+      "publisher": "Pacific Meteorological Council / SPREP",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": ["TON"],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T00:00:00Z",
+      "countries": ["SLB"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "RNZ Pacific RSS",
+      "publisher": "RNZ",
+      "url": "https://www.rnz.co.nz/rss/pacific.xml",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": ["NZL", "COK", "WSM"],
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "ABG news",
+      "publisher": "Autonomous Bougainville Government",
+      "url": "https://abg.gov.pg/index.php/news",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": ["PNG"],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "Forumsec homepage",
+      "publisher": "Pacific Islands Forum Secretariat",
+      "url": "https://forumsec.org/",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": [],
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "BoM /cyclone/",
+      "publisher": "Bureau of Meteorology",
+      "url": "https://www.bom.gov.au/cyclone/",
+      "published_at": "2026-09-17T03:51:00Z",
+      "countries": ["AUS"],
+      "tier": "A",
+      "confidence": "M"
+    }
+  ]
+}
