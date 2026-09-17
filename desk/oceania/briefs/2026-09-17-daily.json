@@ -1,0 +1,257 @@
+{
+  "product": "daily",
+  "task": "oceania.daily_brief",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-16T08:51:00Z",
+  "window_end_utc": "2026-09-17T07:00:00Z",
+  "generated_at_utc": "2026-09-17T07:25:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-16",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Fiji CRC tabling clock set; NFP will not rush; report still unpublished",
+      "summary": "Speaker Jitoko confirmed a 22 Sep 11:30 special sitting to table the CRC Report 2026. NFP leader Prasad (FBC 17:08 FJT) will not support a rushed amendment of the 2013 Constitution; draft Bill feedback from NFP Cabinet reps still outstanding; GE-by-6 Feb 2027 clock should not accelerate reform. Lal/CDD autogolpe line remains conditional on electoral-system change delaying the GE. fiji.gov.fj still has no CRC item and no HIV Legal Notice. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "constitution", "nfp", "prasad", "elections", "coalition"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/dont-rush-constitutional-reform-professor-prasad/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-17-september-2026/",
+        "https://www.fiji.gov.fj/news/"
+      ]
+    },
+    {
+      "title": "PMMM-4 named close-out; official PDF still unpublished ~23 h later",
+      "summary": "PACNEWS 17 Sep SPREP reprint: PMMM-4 concluded Wednesday with the Siu-i-Alaimoana Ki Likutapu Declaration; Fakafanua named Chair and Weather Ready Champion. pacificmet.net remains programme-plus-draft and future tense. PINA now leads with Regenvanu MHEWS host-bid leftover (details flagged to PMC 2028). Tonga 17 Sep holiday in force. Not FLASH.",
+      "countries": ["TON", "VUT"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["climate_security", "early_warning", "pmmm4", "mhews", "weather_ready"],
+      "sources": [
+        "https://islandsbusiness.com/pacnews/pacnews-one-17-september-2026/",
+        "https://www.pacificmet.net/pmmm-4",
+        "https://pina.com.fj/2026/09/17/vanuatu-seeks-to-host-pacific-multi-hazard-early-warning-centre/"
+      ]
+    },
+    {
+      "title": "PNG Independence omits Panguna; Kundiawa clinician killing; 50 VUT recruits at Bomana",
+      "summary": "PMNEC Nogat lesman recap still omits Panguna/K11bn. NBC carries a 16 Sep Panguna landowner ceremony (not a licence). Near-cutoff: Dr Robert Waiye dies after alleged Kundiawa assault; seven in custody; 48h petition; hospital emergency-only two days. Vice ministers Kumura/Karipe sworn. NBC 16:00 PGT: 50 Vanuatu recruits, six months at Bomana — Kumul Vanua implementation, not a new pact. Goroka 9 at large still in body. Not FLASH.",
+      "countries": ["PNG", "VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["independence", "bougainville", "kundiawa", "kumul_vanua", "law_and_order"],
+      "sources": [
+        "https://www.pmnec.gov.pg/pm-marape-nogat-lesman-every-papua-new-guinean-must-work-to-build-the-next-50-years/",
+        "https://www.nbc.com.pg/post/39952/doctor-dies-after-alleged-assault-in-kundiawa",
+        "https://www.nbc.com.pg/post/39965/vanuatu-police-to-train-at-png-center-of-excellence",
+        "https://www.nbc.com.pg/post/39961/2-vice-ministries-added-to-current-cabinet"
+      ]
+    },
+    {
+      "title": "Vanuatu Matui still request-only; cargo-only CLAIM; 55/39 is not a SITREP",
+      "summary": "Confirmed band unchanged: 2 dead / 14 survivors. VMSA complaint still seeks Master arrest under s.108 — Daily Post request-only, HTTP 200. RNZ: Napuati says cargo-only, 10 Sep overflow warning; charges sought not executed. Daily Post 55/39 still '8 hrs ago' CLAIM. VFSC no Tui extract. China US$100k remains cash not a pact. Not FLASH.",
+      "countries": ["VUT", "CHN", "AUS"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["disaster", "maritime", "governance", "matui"],
+      "sources": [
+        "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html",
+        "https://www.dailypost.vu/news/",
+        "https://www.rnz.co.nz/news/pacific",
+        "https://www.vfsc.vu/public-notices/"
+      ]
+    },
+    {
+      "title": "Wale UNGA notice aging without wheels-up; AUS–SLB still unsigned",
+      "summary": "PMO via Island Sun: Wale departs Wednesday 16 Sep for UNGA-81. Article still future-tense at 18:00 Thursday 17 Sep SBT. SIBC 403. DFAT pages timed out; last confirmed language still 3 Jun 'commence negotiations.' No New York signature copy. Not FLASH.",
+      "countries": ["SLB", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["unga", "aus_slb_treaty", "diplomacy"],
+      "sources": [
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/"
+      ]
+    },
+    {
+      "title": "Burke migration package still PALM-unnamed; Labour NZeTA is opposition policy",
+      "summary": "Burke NPC (~12:30 AEST) NOM/integrity package; Guardian/SMH do not name PALM/PEV; Home Affairs speeches URL 404. RNZ: Sepuloni promises three-month NZeTA for Forum countries if government changes — opposition policy, not a gazette. Penrhyn Novelly exclusive remains RSS #1; not a base. CSIS AUKUS at Five panel is after this cutoff (12:00 UTC). Not FLASH.",
+      "countries": ["AUS", "NZL", "COK"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["labour_mobility", "palm", "nzeta", "migration", "penrhyn"],
+      "sources": [
+        "https://www.theguardian.com/australia-news/2026/sep/17/labor-immigration-students-families-overstay-visa-tony-burke",
+        "https://www.rnz.co.nz/news/pacific/1431059/labour-promises-visa-free-travel-for-pacific-as-overstayer-rates-rise",
+        "https://www.rnz.co.nz/news/pacific/1428407/us-military-presence-at-cook-islands-port-being-negotiated-ambassador-says"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Fiji CRC / Constitution Amendment path",
+      "type": "constitutional",
+      "parties": ["FJI"],
+      "status": "announced",
+      "bindingness": "political until enacted",
+      "delta": "Speaker-confirmed 22 Sep 11:30 tabling; Prasad/NFP will-not-rush overlay; report unpublished"
+    },
+    {
+      "name": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu Declaration",
+      "type": "climate",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "status": "announced",
+      "bindingness": "political",
+      "delta": "PACNEWS/SPREP close-out named; official PDF unpublished ~23 h after reception close"
+    },
+    {
+      "name": "PNG–VUT Bomana recruit training (Kumul Vanua)",
+      "type": "police",
+      "parties": ["PNG", "VUT"],
+      "status": "announced",
+      "bindingness": "political (existing MoU implementation)",
+      "delta": "NBC 50 recruits / 6 months / joint instructors"
+    },
+    {
+      "name": "AUS–SLB bilateral treaty",
+      "type": "security",
+      "parties": ["AUS", "SLB"],
+      "status": "announced",
+      "bindingness": "unsigned",
+      "delta": "No signature; DFAT timeout; Wale wheels-up still unconfirmed at 18:00 Thursday SBT"
+    },
+    {
+      "name": "Fiji HIV national emergency",
+      "type": "public-health",
+      "parties": ["FJI"],
+      "status": "announced",
+      "bindingness": "political until gazetted",
+      "delta": "Still no s.69 PHA 1935 Legal Notice on fiji.gov.fj"
+    },
+    {
+      "name": "NZ Labour PIF NZeTA visa-waiver promise",
+      "type": "labour",
+      "parties": ["NZL"],
+      "status": "announced",
+      "bindingness": "opposition policy",
+      "delta": "Sepuloni three-month NZeTA for Forum countries if government changes"
+    },
+    {
+      "name": "AUS–KIR / AUS–NRU air-services agreements",
+      "type": "aviation",
+      "parties": ["AUS", "KIR", "NRU"],
+      "status": "under review",
+      "bindingness": "JSCOT recommend; not in force",
+      "delta": "PACNEWS BIZ pickup of JSCOT recommendation"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "up",
+      "horizon": "days–90d",
+      "confidence": "M",
+      "escalate_on": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "stable",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_on": "Death toll >> band; charges executed; foreign SAR that implies capacity breach"
+    },
+    {
+      "risk": "PNG provincial L&O / health-worker safety",
+      "direction": "up",
+      "horizon": "48h–Dec",
+      "confidence": "H",
+      "escalate_on": "Capital-scale unrest or multi-province clinician strike that becomes a state-capacity breach"
+    },
+    {
+      "risk": "Panguna security / ABG–Waigani split",
+      "direction": "stable",
+      "horizon": "48h–ratification",
+      "confidence": "M",
+      "escalate_on": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; extra-constitutional dynamics"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "stable",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Signature or official text from New York margins; new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "stable",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_on": "Text that binds NMHS/enforcement/maintenance as a legal instrument"
+    },
+    {
+      "risk": "El Niño / western-Pacific drought",
+      "direction": "stable",
+      "horizon": "days–months",
+      "confidence": "M",
+      "escalate_on": "Official drought emergency / HADR request"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "stable",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_on": "Actual recognition change — then FLASH"
+    }
+  ],
+  "open_questions": [
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs aging 55/39 vs family-list 53?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa; PIMS 2026–2037 vs 2027–2036?",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? SIBC/airport/New York wheels-up?",
+    "Fiji CRC: report published on 22 Sep tabling? GE-on-time guarantee answering Lal and Prasad?",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935?",
+    "BPS written SITREP and first verified ABG 16 Sep Panguna remarks?",
+    "Burke NPC: Home Affairs transcript; is PALM or PEV carved in or out?",
+    "Funafuti MFA confirmation of Panapa–Lai? (foreign.gov.tv DNS-fail)",
+    "COP31 7th SOT meeting date still missing; COPMIN date/venue/mandate?"
+  ],
+  "sources": [
+    {"title": "FBC — Don’t rush constitutional reform: Professor Prasad", "url": "https://www.fbcnews.com.fj/news/dont-rush-constitutional-reform-professor-prasad/", "published_at_utc": "2026-09-17T05:08:00Z", "publisher": "FBC", "tier": "B"},
+    {"title": "PACNEWS ONE, 17 September 2026", "url": "https://islandsbusiness.com/pacnews/pacnews-one-17-september-2026/", "published_at_utc": "2026-09-17T00:00:00Z", "publisher": "Islands Business / PACNEWS", "tier": "B"},
+    {"title": "PMMM-4 programme", "url": "https://www.pacificmet.net/pmmm-4", "published_at_utc": "2026-09-17T07:00:00Z", "publisher": "Pacific Met Desk", "tier": "A"},
+    {"title": "PINA — Vanuatu seeks to host Pacific Multi-Hazard Early Warning Centre", "url": "https://pina.com.fj/2026/09/17/vanuatu-seeks-to-host-pacific-multi-hazard-early-warning-centre/", "published_at_utc": "2026-09-17T00:00:00Z", "publisher": "PINA", "tier": "B"},
+    {"title": "NBC — Vanuatu police to train at PNG Center of Excellence", "url": "https://www.nbc.com.pg/post/39965/vanuatu-police-to-train-at-png-center-of-excellence", "published_at_utc": "2026-09-17T06:00:00Z", "publisher": "NBC", "tier": "B"},
+    {"title": "NBC — Doctor dies after alleged assault in Kundiawa", "url": "https://www.nbc.com.pg/post/39952/doctor-dies-after-alleged-assault-in-kundiawa", "published_at_utc": "2026-09-17T05:02:00Z", "publisher": "NBC", "tier": "B"},
+    {"title": "PMNEC — Nogat lesman Independence Address recap", "url": "https://www.pmnec.gov.pg/pm-marape-nogat-lesman-every-papua-new-guinean-must-work-to-build-the-next-50-years/", "published_at_utc": "2026-09-17T00:00:00Z", "publisher": "PMNEC", "tier": "A"},
+    {"title": "Daily Post — VMSA wants captain arrested", "url": "https://www.dailypost.vu/news/criminal-complaint-lodged-vmsa-wants-mv-matui-captain-arrested/article_4c4c6235-1c9e-57d7-af48-9903b2b22ce5.html", "published_at_utc": "2026-09-16T00:00:00Z", "publisher": "Daily Post", "tier": "B"},
+    {"title": "Island Sun — PM Wale heads to UNGA", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at_utc": "2026-09-16T00:00:00Z", "publisher": "Island Sun", "tier": "B"},
+    {"title": "Guardian Aus — Labor unveils plans to trim immigration", "url": "https://www.theguardian.com/australia-news/2026/sep/17/labor-immigration-students-families-overstay-visa-tony-burke", "published_at_utc": "2026-09-17T02:30:00Z", "publisher": "Guardian Australia", "tier": "B"},
+    {"title": "RNZ — Labour promises visa-free travel for Pacific", "url": "https://www.rnz.co.nz/news/pacific/1431059/labour-promises-visa-free-travel-for-pacific-as-overstayer-rates-rise", "published_at_utc": "2026-09-16T23:49:00Z", "publisher": "RNZ", "tier": "B"},
+    {"title": "fiji.gov.fj news", "url": "https://www.fiji.gov.fj/news/", "published_at_utc": "2026-09-17T07:00:00Z", "publisher": "Fiji Government", "tier": "A"},
+    {"title": "Forumsec homepage", "url": "https://forumsec.org/", "published_at_utc": "2026-09-04T00:00:00Z", "publisher": "PIF Secretariat", "tier": "A"},
+    {"title": "BoM tropical cyclone", "url": "https://www.bom.gov.au/cyclone/", "published_at_utc": "2026-09-17T07:00:00Z", "publisher": "BoM", "tier": "A"}
+  ]
+}
