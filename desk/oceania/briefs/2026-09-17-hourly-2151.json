@@ -1,0 +1,373 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T20:51:00Z",
+  "window_end_utc": "2026-09-17T21:51:00Z",
+  "generated_at_utc": "2026-09-17T22:10:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T20:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Vanuatu weighs vessel-category marine warnings after Matui (PMMM-4 floor)",
+      "summary": "In-window Daily Post 21:00 UTC: Climate Change/VMHS/NDMO Minister Regenvanu, speaking at PMMM-4 in Tonga, said Vanuatu is considering linking marine weather warnings to vessel categories following the MV Matui disaster, and asked PMC/SPC to help meet SOLAS V/5. Political intent, not gazetted. Not FLASH.",
+      "countries": ["VUT", "TON"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["Matui", "PMMM-4", "maritime safety", "SOLAS"],
+      "sources": [
+        "https://www.dailypost.vu/news/vanuatu-weighs-vessel-specific-weather-rules/article_57d24dca-50ea-5f63-8666-a2f4b23343d5.html"
+      ]
+    },
+    {
+      "title": "Ati to deliver Vanuatu UNGA statement after Napat cancel; Napat to Luganville",
+      "summary": "Catch-up residual Daily Post published_time 20:45 UTC (missed last hourly): Foreign Minister Marc Ati leaves Friday local to deliver Vanuatu’s UNGA-81 statement, return 3 Oct. First Ati UNGA representation following Napat’s Matui-driven cancel. Napat expected in Luganville this morning. Travel notice, not a treaty. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["UNGA", "Matui", "diplomacy"],
+      "sources": [
+        "https://www.dailypost.vu/news/minister-ati-to-deliver-vanuatu-statement-at-unga/article_f7fe874c-badb-55c5-8e40-cf717dc3c767.html"
+      ]
+    },
+    {
+      "title": "China VT5m Ambae drilling machine via Tokatara chiefs (implementation colour)",
+      "summary": "Catch-up residual Daily Post 20:45 UTC: China purchased a VT5 million water-well drilling machine after a Tokatara Council of Chiefs letter on West Ambae volcanic-ash water contamination. ASSESS: in-kind slice of leftover 15 Sep VT11m/US$100k dual-disaster grant unless a second envelope is stated. Not a security pact. Not FLASH.",
+      "countries": ["VUT", "CHN"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["China", "Ambae", "disaster finance", "water"],
+      "sources": [
+        "https://www.dailypost.vu/news/china-responds-to-ambae-chiefs-water-plea-with-vt5m-drilling-machine/article_af6498a0-e809-5186-a9f1-07abfa7b4259.html"
+      ]
+    },
+    {
+      "title": "NBC recovers; 16 Sep Panguna ceremony now readable (not a licence)",
+      "summary": "NBC homepage HTTP 200 (was 500). First desk-readable copy of Wednesday 16 Sep Panguna gathering: PLIC/chiefs from Guava, Dapera, Moroni, Pirurari apologised to ABG and LPMEL; Guava Chief Titus Miri pledged full support; Tokome cited millions of kina lost. Witnesses include Veterans Minister Dake Jr, Ioro MP Miringtoro, BPS Tokura. Not a mining licence. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["Panguna", "Bougainville", "Lloyds"],
+      "sources": [
+        "https://www.nbc.com.pg/post/39939/paguna-landowners-commit-to-lloyds-metals",
+        "https://www.postcourier.com.pg/panguna-landowners-renew-mine-commitment/"
+      ]
+    },
+    {
+      "title": "PINA 18 Sep lead flips to Pacifika-AI interview; Palau Principles restated",
+      "summary": "In-window PINA 21:06:35 UTC interview with Kanak/Auckland Pasifika AI creator Kevyn Wahuzue. Homepage lead flipped off CDD leftover. Restates 55th PIFLM Palau Digital and AI Technology Principles and 2027 governance-framework tasking. Not a new Forum instrument. Not FLASH.",
+      "countries": ["NCL", "NZL", "FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["PIF", "AI", "digital sovereignty"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/pacific-ai-creator-says-ai-must-know-when-to-stop/"
+      ]
+    },
+    {
+      "title": "ABC AUKUS recap modify-tick; CSIS still no native recap",
+      "summary": "ABC AUKUS-at-Five recap dateModified 21:22:11Z; RSS title now quotes Campbell ‘too hard’. CSIS event Last-Modified 21:13:43 GMT; commentary 21:20:36 GMT; oembed still 3atxhexzf2k; still zero recap/transcript language. Analysis, not a Pillar I/II operational shift. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["AUKUS", "alliance", "analysis"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-18/aukus-on-track-but-faces-challenges-five-years-in/107166564",
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "VUT vessel-category marine warnings (PMMM-4 floor)",
+      "parties": "VUT; PMC/SPC/WMO",
+      "status": "in-window Daily Post 21:00 UTC; Regenvanu proposal after Matui; not gazetted",
+      "notes": "Political intent. SOLAS V/5 ask. Not FLASH."
+    },
+    {
+      "instrument": "Ati UNGA-81 national statement",
+      "parties": "VUT-UN",
+      "status": "catch-up published_time 20:45 UTC; MFA delivers after Napat cancel; return 3 Oct",
+      "notes": "Travel notice, not a treaty. Not FLASH."
+    },
+    {
+      "instrument": "CHN-VUT Ambae VT5m drilling machine",
+      "parties": "CHN-VUT (Tokatara chiefs channel)",
+      "status": "catch-up 20:45 UTC; in-kind machine purchase",
+      "notes": "ASSESS: implementation slice of leftover VT11m/US$100k unless a second envelope is stated. Not a security pact."
+    },
+    {
+      "instrument": "NBC 16 Sep Panguna ceremony readout",
+      "parties": "PNG-ABG-LPMEL",
+      "status": "NBC homepage 200 (was 500); first desk-readable PLIC/Miri/Tokome copy",
+      "notes": "Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "PINA Pacifika-AI interview / Palau Principles restatement",
+      "parties": "PIF Principles leftover; NCL-NZL",
+      "status": "in-window 21:06:35 UTC; homepage lead flip off CDD",
+      "notes": "Restates Palau communiqué. Not a new instrument."
+    },
+    {
+      "instrument": "ABC CSIS AUKUS-at-Five recap",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "dateModified 21:22:11Z; CSIS event page still no native recap; oembed still 3atxhexzf2k",
+      "notes": "Modify tick, not an operational milestone. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "both UAs still 429; homepage 200; 55/39 CLAIM off lead",
+      "notes": "Arrest still unconfirmed. Off-lead ≠ SITREP. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~37 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 10:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT failed; Island Sun still future-tense at 08:51 Friday SBT."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; gazette of vessel-category rules implying capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "VUT UNGA representation / Matui politics",
+      "direction": "↑",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Statement that reopens extra-legal or foreign-security tracks — not FLASH on a travel notice"
+    },
+    {
+      "risk": "CHN–VUT disaster finance optics",
+      "direction": "→",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_trigger": "Second envelope, dual-use language, or ANZ matching package — not FLASH on a borehole rig"
+    },
+    {
+      "risk": "Panguna security / ABG–Waigani split",
+      "direction": "→",
+      "horizon": "48h–ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a think-tank panel recap"
+    },
+    {
+      "risk": "AUS–Pacific labour-mobility / student-WHM settings",
+      "direction": "→",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "VUT teachers’ strike (VTU/TSC)",
+      "direction": "↑",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_trigger": "Nationwide strike that becomes a state-capacity breach — not FLASH on a union warning"
+    }
+  ],
+  "open_questions": [
+    "VMHS/NDMO: draft instrument for vessel-category marine warnings, or only Regenvanu’s PMMM-4 floor ask?",
+    "Does the forthcoming PMMM-4 PDF name vessel-category warnings or Vanuatu’s MHEWS host bid?",
+    "Ati UNGA: wheels-up vs Daily Post future tense? Text of the national statement?",
+    "Is Napat actually in Luganville this morning? Any survivor-meeting readout that changes Matui legal track?",
+    "CHN–VUT: is the VT5m machine a line-item inside the 15 Sep VT11m/US$100k cash, or a second envelope?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs 55/39 (now off homepage lead; /news 429) vs family-list 53?",
+    "First verified ABG 16 Sep Panguna remarks? (NBC ceremony copy now in hand; ABG site failed.)",
+    "PMMM-4: official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa, now that 10:51 TOT Friday hours have passed?",
+    "CSIS AUKUS at Five: native recap/transcript of 3atxhexzf2k?",
+    "Does any PIC MFA treat Burke’s PALM pathway lines as a PALM setting?",
+    "Tonga Vavaʻu mishap: Tourism vs Marine & Ports licensing status? (gov.to still silent.)",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? New York wheels-down? (Island Sun still future-tense at 08:51 Friday SBT.)",
+    "Fiji HIV gazette / CRC 22 Sep tabling?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events tomorrow?",
+    "Any ANZ matching Matui/Ambae package vs China US$100k / VT5m machine?",
+    "VTU/TSC: does the MoC dispute produce a strike date, or only a warning?"
+  ],
+  "sources": [
+    {
+      "title": "Vanuatu weighs vessel-specific weather rules",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/vanuatu-weighs-vessel-specific-weather-rules/article_57d24dca-50ea-5f63-8666-a2f4b23343d5.html",
+      "published_at": "2026-09-17T21:00:00Z",
+      "countries": ["VUT", "TON"],
+      "topics": ["Matui", "PMMM-4", "maritime safety"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "B"
+    },
+    {
+      "title": "Minister Ati to deliver Vanuatu statement at UNGA",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/minister-ati-to-deliver-vanuatu-statement-at-unga/article_f7fe874c-badb-55c5-8e40-cf717dc3c767.html",
+      "published_at": "2026-09-17T20:45:00Z",
+      "countries": ["VUT"],
+      "topics": ["UNGA", "Matui"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "China responds to Ambae chiefs' water plea with VT5M drilling machine",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/china-responds-to-ambae-chiefs-water-plea-with-vt5m-drilling-machine/article_af6498a0-e809-5186-a9f1-07abfa7b4259.html",
+      "published_at": "2026-09-17T20:45:00Z",
+      "countries": ["VUT", "CHN"],
+      "topics": ["China", "Ambae", "disaster finance"],
+      "claim_type": "FACT",
+      "confidence": "M",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "Panguna landowner’s commit to Lloyd’s Metals",
+      "publisher": "NBC PNG",
+      "url": "https://www.nbc.com.pg/post/39939/paguna-landowners-commit-to-lloyds-metals",
+      "published_at": "2026-09-16T23:20:00Z",
+      "countries": ["PNG"],
+      "topics": ["Panguna", "Bougainville"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "Pacific AI creator says AI must know when to stop",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/18/pacific-ai-creator-says-ai-must-know-when-to-stop/",
+      "published_at": "2026-09-17T21:06:35Z",
+      "countries": ["NCL", "NZL", "FJI"],
+      "topics": ["PIF", "AI"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "AUKUS on track but faces big challenges at five-year mark, its architects say",
+      "publisher": "ABC",
+      "url": "https://www.abc.net.au/news/2026-09-18/aukus-on-track-but-faces-challenges-five-years-in/107166564",
+      "published_at": "2026-09-17T20:44:11Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["AUKUS", "alliance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "AUKUS at Five: Progress, Challenges, and the Way Forward",
+      "publisher": "CSIS",
+      "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+      "published_at": "2026-09-17T21:13:43Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["AUKUS", "analysis"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "Migrant battle shifts to food prices",
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/australia-news/2026/sep/18/morning-mail-friday-ntwnfb",
+      "published_at": "2026-09-17T20:35:38Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "WHM"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "PMMM-4 programme page",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-16T02:24:04Z",
+      "countries": ["TON"],
+      "topics": ["PMMM-4", "early warning"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "Daily Post homepage / Matui 55/39 CLAIM off lead",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/",
+      "published_at": "2026-09-17T21:53:53Z",
+      "countries": ["VUT"],
+      "topics": ["Matui", "SAR"],
+      "claim_type": "CLAIM",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    }
+  ]
+}
