@@ -1,0 +1,342 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T19:51:00Z",
+  "window_end_utc": "2026-09-17T20:51:00Z",
+  "generated_at_utc": "2026-09-17T21:05:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T19:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "ABC recaps CSIS AUKUS-at-Five panel; still not an operational milestone",
+      "summary": "In-window ABC article:published_time 20:44:11Z is the first journalistic recap of the elapsed CSIS AUKUS at Five panel. Campbell, Moriarty and Lovegrove say the pact is on track but workforce shortages and Virginia-class production remain the constraints. CSIS event page still has no recap/transcript language; oembed still 3atxhexzf2k. Analysis, not a Pillar I/II operational shift. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["AUKUS", "alliance", "analysis"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-18/aukus-on-track-but-faces-challenges-five-years-in/107166564",
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward"
+      ]
+    },
+    {
+      "title": "Guardian food-prices follow names PALM as agriculture pathway; Friday ABC and Morning Mail still omit it",
+      "summary": "In-window Guardian Morning Mail 20:35:38Z has zero PALM/Pacific hits. Catch-up residual: Guardian Burke food-prices piece published 15:00:53Z (missed by 18:51 catch-up and 19:51 hourly) names the Pacific Australia labour mobility scheme as the agriculture pathway. ABC Friday farmers/NFF still 18:44:39Z with zero PALM hits. Transcript still live; PEV still unnamed. PALM defence/substitution, not a cut. Not FLASH.",
+      "countries": ["AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["PALM", "labour mobility", "migration"],
+      "sources": [
+        "https://www.theguardian.com/australia-news/2026/sep/18/morning-mail-friday-ntwnfb",
+        "https://www.theguardian.com/australia-news/2026/sep/18/tony-burke-rejects-farmers-claims-immigration-changes-will-increase-food-prices-ntwnfb"
+      ]
+    },
+    {
+      "title": "PINA 18 Sep archive opens; homepage lead flips to CRC leftovers",
+      "summary": "PINA /2026/09/18/ recovered HTTP 200 (was 404). Homepage lead flipped from MHEWS leftover to CDD constitution-timeline leftover. Same-day slot syndications of Prasad/NFP, WIM sitting, F$10b climate-plan costing, and POPCCC climate journal are date-line leftovers, not a CRC report or WIM decision. fiji.gov.fj still silent on CRC/HIV. Not FLASH.",
+      "countries": ["FJI", "MHL", "VUT"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["PIF media", "CRC", "climate"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/",
+        "https://pina.com.fj/2026/09/18/proposed-fiji-constitution-timeline-risks-electoral-crisis-cdd/"
+      ]
+    },
+    {
+      "title": "Daily Post /news 429 regression; 55/39 clock 22 hrs; BoM unnamed; Tonga official silent",
+      "summary": "Daily Post /news HTTP 429 both UAs (was dual-200). Homepage 200 with 55/39 CLAIM now 22 hrs (was 21) and scam 19 hrs (was 18); figure unchanged; arrest still unconfirmed. BoM specialised Last-Modified still 06:58:14 UTC; no named cyclone. RNZ Tonga mishap still RSS #1; gov.to silent. Not FLASH.",
+      "countries": ["VUT", "AUS", "TON"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["Matui", "cyclone watch", "maritime safety"],
+      "sources": [
+        "https://www.dailypost.vu/",
+        "http://www.bom.gov.au/cyclone/tropical-cyclone.shtml"
+      ]
+    },
+    {
+      "title": "PMMM-4 official PDF still unpublished ~36 h 51 min later",
+      "summary": "pacificmet.net still draft/future tense (Last-Modified Wed 16 Sep 02:24:04 GMT). PACNEWS FOUR 18 Sep still 404. Friday TOT office hours open at 09:51 TOT. WIM ExCom 25 page still 212 bytes/empty. Funafuti MFA still DNS-fail; 19 Sep TUV-TWN anniversary tomorrow. Not FLASH.",
+      "countries": ["TON", "MHL", "TUV"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["PMMM-4", "WIM", "early warning"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://unfccc.int/event/WIM-ExCom-25"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "ABC CSIS AUKUS-at-Five recap",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "in-window ABC 20:44:11Z; CSIS event page still no native recap",
+      "notes": "Analysis recap, not an operational milestone. Not FLASH."
+    },
+    {
+      "instrument": "Guardian Burke PALM-as-agriculture-pathway",
+      "parties": "AUS domestic (PIC labour-mobility watch)",
+      "status": "catch-up residual published 15:00:53Z; Morning Mail in-window omits PALM",
+      "notes": "PALM defence/substitution line, not a cut. Not FLASH."
+    },
+    {
+      "instrument": "PINA 18 Sep archive / homepage lead",
+      "parties": "FJI leftovers (CRC/CDD/WIM/F$10b)",
+      "status": "/2026/09/18/ recovered 200; lead flipped off MHEWS to CDD leftover",
+      "notes": "Date-line syndications. Not CRC tabling. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "both UAs 429 (were 200); 55/39 CLAIM now 22 hrs",
+      "notes": "Arrest still unconfirmed. Clock tick ≠ SITREP. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~36 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 09:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT failed; Island Sun still future-tense at 07:51 Friday SBT."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a think-tank panel recap"
+    },
+    {
+      "risk": "AUS–Pacific labour-mobility / student-WHM settings",
+      "direction": "→",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item"
+    },
+    {
+      "risk": "TON small-vessel / whale-watch licensing",
+      "direction": "→",
+      "horizon": "hours–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Confirmed mass-casualty or Tourism/Marine statement implying licensed-operator failure at scale"
+    },
+    {
+      "risk": "BoM / Daily Post collection path",
+      "direction": "↓ then →",
+      "horizon": "hours",
+      "confidence": "H",
+      "escalate_trigger": "Named Category-level BoM product or Matui SITREP revising fatalities well above CLAIM band"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "→",
+      "horizon": "days–90d",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system"
+    },
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; foreign SAR implying capacity breach"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue",
+      "direction": "→",
+      "horizon": "through 18 Sep",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue"
+    }
+  ],
+  "open_questions": [
+    "CSIS AUKUS at Five: native recap/transcript of 3atxhexzf2k? Any operational claim beyond the ABC recap?",
+    "Home Affairs fact sheet / regulations: exact nationality list for the Pacific/ASEAN student-dependant exception? Student visas only?",
+    "Does any PIC MFA treat Burke’s PALM-as-NOM-stock line, the 7.30 underutilised defence, or the Guardian utilise-PALM agriculture-pathway line as a PALM setting?",
+    "Is there a separate NFF letter to the PM/Home Affairs that names PALM volumes vs WHM?",
+    "Tonga Vavaʻu mishap: passenger+crew figure; injuries; Tourism vs Marine & Ports licensing status; any NZ MFAT consular note?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs unstalled 55/39 (now 22 hrs on Daily Post homepage; /news 429) vs family-list 53?",
+    "First verified ABG 16 Sep Panguna remarks?",
+    "PMMM-4: official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa, now that 09:51 TOT Friday hours have passed?",
+    "WIM ExCom 25 decision language 18 Sep; does Myazoe appear in official docs?",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? New York wheels-down? (Island Sun still future-tense at 07:51 Friday SBT.)",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935?",
+    "Fiji CRC: will the report be published on 22 Sep tabling?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events tomorrow?",
+    "FBC RBF just-above-$120-million FY profit vs leftover F$117.98m transfer: same instrument, or two figures?"
+  ],
+  "sources": [
+    {
+      "title": "AUKUS on track but faces big challenges at five-year mark, its architects say",
+      "publisher": "ABC",
+      "url": "https://www.abc.net.au/news/2026-09-18/aukus-on-track-but-faces-challenges-five-years-in/107166564",
+      "published_at": "2026-09-17T20:44:11Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["AUKUS", "alliance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "AUKUS at Five: Progress, Challenges, and the Way Forward",
+      "publisher": "CSIS",
+      "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+      "published_at": "2026-09-17T20:13:21Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["AUKUS", "analysis"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "Migrant battle shifts to food prices",
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/australia-news/2026/sep/18/morning-mail-friday-ntwnfb",
+      "published_at": "2026-09-17T20:35:38Z",
+      "countries": ["AUS"],
+      "topics": ["migration", "WHM"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Tony Burke rejects farmers’ claims that immigration changes will increase food prices",
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/australia-news/2026/sep/18/tony-burke-rejects-farmers-claims-immigration-changes-will-increase-food-prices-ntwnfb",
+      "published_at": "2026-09-17T15:00:53Z",
+      "countries": ["AUS"],
+      "topics": ["PALM", "labour mobility"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "PINA 18 September 2026 daily archive",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/18/",
+      "published_at": "2026-09-17T20:45:07Z",
+      "countries": ["FJI", "MHL"],
+      "topics": ["CRC", "climate"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "RBF warns of profit pressure",
+      "publisher": "FBC",
+      "url": "https://www.fbcnews.com.fj/news/rbf-warns-of-profit-pressure/",
+      "published_at": "2026-09-17T19:06:13Z",
+      "countries": ["FJI"],
+      "topics": ["macro", "central bank"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "economic",
+      "tier": "B"
+    },
+    {
+      "title": "Daily Post homepage / Matui 55/39 CLAIM",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/",
+      "published_at": "2026-09-17T20:54:15Z",
+      "countries": ["VUT"],
+      "topics": ["Matui", "SAR"],
+      "claim_type": "CLAIM",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "PMMM-4 programme page",
+      "publisher": "Pacific Meteorological Desk",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-16T02:24:04Z",
+      "countries": ["TON"],
+      "topics": ["PMMM-4", "early warning"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "Another whale-watching boat mishap reported in Tonga",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1447903/another-whale-watching-boat-mishap-reported-in-tonga",
+      "published_at": "2026-09-17T19:31:47Z",
+      "countries": ["TON", "NZL"],
+      "topics": ["maritime safety"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T09:21:15+11:00",
+      "countries": ["SLB"],
+      "topics": ["UNGA", "diplomacy"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    }
+  ]
+}
