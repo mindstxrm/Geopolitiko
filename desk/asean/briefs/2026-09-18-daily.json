@@ -1,0 +1,215 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-09-17T08:00:00Z",
+  "window_end_utc": "2026-09-18T08:00:00Z",
+  "generated_at_utc": "2026-09-18T08:12:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["PHL", "CHN", "IDN", "MYS", "SGP", "THA", "KHM", "MMR", "VNM", "JPN", "USA"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": true,
+  "flash_id": "2026-09-18-ccg-bfar-abad-santos",
+  "priority_items": [
+    {
+      "title": "FLASH: CCG-21585 rammed BFAR BRP Datu Magat Salamat off Palawan; no injuries; Chair silent",
+      "summary": "PCG: contact at 11:13 PHT (03:13 UTC) ~6.36 NM NNW Abad Santos Shoal / ~54 NM Palawan EEZ during fuel-subsidy run. Starboard railings/stanchions/deck damage; no injuries (ST/Reuters). PCG: deliberately rammed. CCG counter-claim: law enforcement near Sabina Shoal; PH altered course and cut across bow. Same hull grounded Thursday at Hasa-Hasa and refloated. No DFA protest, Palace, or emergency AMM at 08:00 UTC. Do not recycle 2025 Scarborough/DFA-protest items.",
+      "countries": ["PHL", "CHN"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["SCS", "gray_zone", "maritime", "Chair"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/nation/1002818/chinese-vessel-rams-ph-ship-on-fuel-subsidy-mission-near-palawan/story/",
+        "https://www.straitstimes.com/asia/china-vessel-rams-and-damages-philippine-fishing-boat-coast-guard-says",
+        "https://www.reuters.com/world/china/china-vessel-rams-damages-philippine-fishing-boat-coast-guard-says-2026-09-18/",
+        "https://www.gmanetwork.com/news/topstories/nation/1002806/bfar-vessel-runs-aground-at-hasa-hasa-shoal-in-west-ph-sea-pcg/story/"
+      ]
+    },
+    {
+      "title": "Transboundary haze: SGP Unhealthy overnight then all-moderate at 16:00 SGT; MYS 34 unhealthy, Johan Setia 190; Zahid offer pending Prabowo",
+      "summary": "NEA 16:00 SGT 18 Sep 24h PSI all moderate N69/C87/W80/E71/S65 (vs 17 Sep cutoff C92/W87). Central Unhealthy 21:00–00:00 SGT peak C103; off from 01:00 C100. 1h PM2.5 only central Elevated (C58). haze.gov 11:11 AM 18 Sep / Alert Level 3; sitrep does not name Singapore. DOE APIMS last complete 15:00 MYT 68/68: 34 unhealthy, Johan Setia 190, Nilai 178, Kuching 176; 16:00 dump not in. School-close 200 not met. Zahid offered CL-415MP + 3 helos + 52 personnel, referred to Prabowo; no consent print. H20 opening no readout at cutoff.",
+      "countries": ["IDN", "MYS", "SGP", "THA"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "non_traditional_security", "AATHP"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi",
+        "https://api.data.gov.sg/v1/environment/pm25",
+        "https://www.haze.gov.sg/",
+        "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+        "https://www.thestar.com.my/news/nation/2026/09/18/malaysia-offers-firefighting-help"
+      ]
+    },
+    {
+      "title": "MYS CPI 1.9% / core 1.7%; BoJ 7–2 to 1.25%; Friday ASEAN cash orderly",
+      "summary": "DOSM Aug 2026 headline 1.9% YoY (July 1.8%), index 137.5, MoM +0.3%, core 1.7%. BoJ 7–2 overnight call around 1.25% effective 24 Sep; Ueda: policy phase changed. Named Friday opens: IHSG 6,512.57; MYR 4.0955/1015; IDR 17,731. CNBC/IDX Mobile sesi I 6,439.74 (aggregator). Sessions still open at 08:00 UTC. No capital-control shock.",
+      "countries": ["MYS", "IDN", "SGP", "THA", "PHL", "VNM", "JPN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["macro", "CPI", "FX", "BoJ"],
+      "sources": [
+        "https://www.thestar.com.my/business/business-news/2026/09/18/malaysias-inflation-rises-to-19-in-august",
+        "https://theedgemalaysia.com/node/818497",
+        "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf",
+        "https://www.reuters.com/world/asia-pacific/boj-raises-interest-rates-31-year-high-widely-expected-move-2026-09-18/",
+        "https://kl.antaranews.com/berita/45561/ihsg-jumat-dibuka-menguat-5014-poin-ke-posisi-6512"
+      ]
+    },
+    {
+      "title": "PH Chair week: AEM 19–22 Sep; no 18th CLMV JMS; AMCDR text still unpublished",
+      "summary": "58th AEM 19–22 Sep PICC. IDN Wamendag attending. Gepty: plans-to-action colour. 18th CLMV EMM on 18 Sep calendar but no joint media statement retrieved — do not use 2024 Vientiane PDFs. AMCDR Manila Declaration still CLAIM adopted; ASEAN.org unreachable; OCD/PNA 403. No emergency AMM after the ramming.",
+      "countries": ["PHL", "IDN", "KHM", "LAO", "MMR", "VNM"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["ASEAN_institutional", "AEM", "CLMV", "Chair"],
+      "sources": [
+        "https://www.antaranews.com/berita/5746908/wamendag-bawa-agenda-integrasi-ekonomi-asean-di-aem-manila",
+        "https://context.ph/2026/09/18/philippines-pushes-asean-from-plans-to-action/",
+        "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/16/asean-adopts-manila-declaration-to-strengthen-disaster-preparedness"
+      ]
+    },
+    {
+      "title": "Yandri–Zahid rural-development MoU signed; haze consent still missing",
+      "summary": "17 Sep (after prior daily cutoff): Kemendes Yandri and Zahid signed an 8-field rural MoU plus working group at Kemendes PDT. Political, not AATHP. Zahid firefighting offer remains pending Prabowo approval. H20 opening produced no MoU-MRA/haze signing print by 08:00 UTC.",
+      "countries": ["IDN", "MYS"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["diplomacy", "MoU", "haze"],
+      "sources": [
+        "https://en.antaranews.com/news/431729/indonesia-malaysia-ink-agreement-to-advance-rural-development",
+        "https://www.bernama.com/en/general/news.php?id=2608544"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Yandri–Zahid rural-development MoU",
+      "type": "MoU",
+      "parties": ["IDN", "MYS"],
+      "status": "signed",
+      "date": "2026-09-17",
+      "venue": "Kemendes PDT, Jakarta",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Eight fields + working group; signed after 17 Sep 08:00 UTC cutoff."
+    },
+    {
+      "name": "Zahid haze-assistance offer (CL-415MP + 3 helos + 52 personnel)",
+      "type": "operational_offer",
+      "parties": ["MYS", "IDN"],
+      "status": "announced_pending_prabowo",
+      "date": "2026-09-17",
+      "venue": "Jakarta",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Conveyed to Gibran; referred to Prabowo; no consent / joint haze statement at cutoff."
+    },
+    {
+      "name": "18th CLMV Economic Ministers Meeting",
+      "type": "ministerial",
+      "parties": ["KHM", "LAO", "MMR", "VNM"],
+      "status": "calendar_no_jms",
+      "date": "2026-09-18",
+      "venue": "Manila",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "On 2026 notional calendar; no 18th joint media statement retrieved. Do not use 2024 16th PDFs."
+    },
+    {
+      "name": "THA–US ART / Anutin–Trump leaders’ touch",
+      "type": "trade",
+      "parties": ["THA", "USA"],
+      "status": "no_appointment",
+      "date": "2026-09-18",
+      "venue": "AEM Philippines / UNGA window",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Suphajee: no call appointment; meets Deputy USTR Switzer 19 Sep at AEM; remaining ART text a little."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "SCS gray-zone PHL–CHN",
+      "direction": "up_flash_collision",
+      "horizon": "hours-days",
+      "confidence": "M",
+      "trigger": "Shots fired; second hull contact; injuries; emergency AMM"
+    },
+    {
+      "risk": "Transboundary haze",
+      "direction": "flat_sgp_eased_mys_still_unhealthy",
+      "horizon": "3-14d",
+      "confidence": "H",
+      "trigger": "Hazardous API/PSI >300 in a capital; Johan Setia/Perak/Sarawak API 200 school-close or 300 emergency; airport shutdowns"
+    },
+    {
+      "risk": "Myanmar 5PC vs bilateral hosting (Anwar–MAH)",
+      "direction": "flat",
+      "horizon": "1-3m",
+      "confidence": "M",
+      "trigger": "MFA invitation text; MAH landing in KL; emergency AMM; change in Myanmar representation rule"
+    },
+    {
+      "risk": "THA–KHM UNCLOS process rupture",
+      "direction": "flat_rop_locked",
+      "horizon": "12m",
+      "confidence": "M",
+      "trigger": "Collapse of October meeting; return to kinetic border"
+    },
+    {
+      "risk": "IDR / IDN fiscal credibility",
+      "direction": "flat",
+      "horizon": "1-8w",
+      "confidence": "M",
+      "trigger": "Deficit-path backtrack; capital controls; another MoF/BI shock"
+    },
+    {
+      "risk": "BARMM hung parliament / MILF elite split",
+      "direction": "flat",
+      "horizon": "to 30 Oct 2026",
+      "confidence": "M",
+      "trigger": "Coalition collapse; election violence beyond Cotabato 4 dead / 19 injured"
+    },
+    {
+      "risk": "PHL 21 Sep protest / flood-control politics",
+      "direction": "calendar",
+      "horizon": "21 Sep 2026",
+      "confidence": "L",
+      "trigger": "Extra-constitutional move; mass-casualty state violence"
+    }
+  ],
+  "open_questions": [
+    "DFA/Palace/PH Chair primary text on the ramming; CCG/MFA statement beyond ST paraphrase",
+    "Abad Santos (PCG) vs Sabina (CCG): same feature or two locations?",
+    "AMCDR Manila Declaration PDF / haze paragraph",
+    "PCA-published TOA/RoP (AKP 200 this cutoff; PCA HTML still unpublished)",
+    "Comelec combined 80-seat HTML — resolve GMA district 17/7 vs BIO 15/9",
+    "Prabowo consent on Zahid firefighting offer; any H20 haze/MoU-MRA readout after cutoff",
+    "Next Basarnas tally vs 243/108/6/129; KN Grantin arrival; HK/US salvage-expert arrival",
+    "18th CLMV joint media statement (do not substitute 2024/2025 PDFs)",
+    "Home Ministry/MFA text of any MAH invitation",
+    "Complete 16:00 MYT APIMS; named Friday cash closes after 09:00 UTC"
+  ],
+  "sources": [
+    {"title": "CCG rams BRP Datu Magat Salamat", "publisher": "GMA", "url": "https://www.gmanetwork.com/news/topstories/nation/1002818/chinese-vessel-rams-ph-ship-on-fuel-subsidy-mission-near-palawan/story/", "published_at_utc": "2026-09-18T05:56:00Z", "tier": "B", "confidence": "M"},
+    {"title": "China vessel rams Philippine boat; CCG Sabina claim; no injuries", "publisher": "The Straits Times / Reuters", "url": "https://www.straitstimes.com/asia/china-vessel-rams-and-damages-philippine-fishing-boat-coast-guard-says", "published_at_utc": "2026-09-18T06:33:00Z", "tier": "B", "confidence": "M"},
+    {"title": "NEA/data.gov.sg 24h PSI 16:00 SGT 18 Sep", "publisher": "NEA", "url": "https://api.data.gov.sg/v1/environment/psi", "published_at_utc": "2026-09-18T08:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "DOE APIMS hourly (15:00 MYT complete)", "publisher": "DOE Malaysia", "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly", "published_at_utc": "2026-09-18T07:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "haze.gov.sg situation 11:11 AM 18 Sep", "publisher": "MSS/ASMC", "url": "https://www.haze.gov.sg/", "published_at_utc": "2026-09-18T03:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Malaysia inflation 1.9% August", "publisher": "The Star / DOSM", "url": "https://www.thestar.com.my/business/business-news/2026/09/18/malaysias-inflation-rises-to-19-in-august", "published_at_utc": "2026-09-18T04:11:00Z", "tier": "B", "confidence": "H"},
+    {"title": "BoJ Statement on Monetary Policy", "publisher": "Bank of Japan", "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf", "published_at_utc": "2026-09-18T02:54:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Yandri–Zahid rural MoU signed", "publisher": "ANTARA", "url": "https://en.antaranews.com/news/431729/indonesia-malaysia-ink-agreement-to-advance-rural-development", "published_at_utc": "2026-09-17T10:02:00Z", "tier": "B", "confidence": "H"},
+    {"title": "No Anutin–Trump appointment; Suphajee–Switzer 19 Sep", "publisher": "Kaohoon", "url": "https://www.kaohoon.com/news/local/864240", "published_at_utc": "2026-09-18T00:00:00Z", "tier": "B", "confidence": "M"}
+  ]
+}
