@@ -1,0 +1,287 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-18T14:51:00Z",
+  "window_end_utc": "2026-09-18T15:51:00Z",
+  "generated_at_utc": "2026-09-18T16:32:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-18",
+  "parent_hourly": "2026-09-18T14:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Daily Post LM tick + mixed WAF 429; VBTC LM unchanged with no search-ended headline",
+      "summary": "Daily Post homepage LM 16:12:49 GMT and /news LM 16:10:39 GMT (parent 15:09 / 15:03–15:13). Leads unchanged. 55/39 CLAIM still listed; article both UAs 200. First-probe homepage desk 429 / browser 200; /news both 200; retries mixed 200/429. AP timestamps unmodified. RNZ unconverted. VBTC homepage LM unchanged at 14:32:15 GMT; still no dedicated search-ended headline. Ati still leave-today at ~02:51 Saturday VUT. Arrest still unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["matui", "sar", "daily_post", "vbtc", "toll_accounting", "collection_path"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/",
+        "https://vbtc.vu/",
+        "https://abcnews.go.com/International/wireStory/vanuatu-ends-search-37-people-missing-ferry-sinking-136550109"
+      ]
+    },
+    {
+      "title": "ASPI still 403; CSIS AUKUS-at-Five LM ticks still have no native recap; BoM desk 403",
+      "summary": "ASPI both UAs HTTP 403 (unchanged from parent). CSIS event Last-Modified 16:15:21 GMT (parent 15:12:04; later scan-time 16:17:21); analysis LM 16:15:13 GMT (later recovered 16:18:34 after a mid-scan HEAD 403). Still zero recap/transcript language; oembed still 3atxhexzf2k. ABC AUKUS/HIV unmodified. Home Affairs transcript desk 403 / browser 200; browser LM 16:15:23 GMT; PALM still named. BoM desk 403 / browser 200; LM still 07:26:27 GMT; no named cyclone. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["aukus", "csis", "aspi", "palm", "bom"],
+      "sources": [
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.aspi.org.au/",
+        "https://www.bom.gov.au/cyclone/",
+        "https://minister.homeaffairs.gov.au/TonyBurke/Pages/speech-national-press-club-17092026.aspx"
+      ]
+    },
+    {
+      "title": "PMMM-4 official PDF still unpublished ~56 h later; Wale still future-tense into Saturday SBT; Funafuti still silent on anniversary day",
+      "summary": "pacificmet.net still draft/future tense; Last-Modified still 05:07:15 GMT; Siu-i-Alaimoana strings still absent. Official PDF unpublished ~55 h 51 min after reception close at slot (~56 h 18 min at scan). Tonga remains Saturday 19 Sep TOT without a PDF. Island Sun still says Wale will leave Solomon Islands today at ~02:51 Saturday 19 Sep SBT. Funafuti MFA 000; 19 Sep TUV-TWN 47th anniversary remains the local calendar day. AUS-SLB unsigned. PINA 18 Sep no new slot after leftover 01:40:08 UTC; 19 Sep archive 404. Not FLASH.",
+      "countries": ["TON", "SLB", "AUS", "TUV", "TWN"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["pmmm4", "wale", "unga", "aus_slb_treaty", "tuv_twn"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+        "https://pina.com.fj/2026/09/18/"
+      ]
+    },
+    {
+      "title": "Fiji: no new political RSS slot; HIV gazette and CRC report still missing; Lau tomorrow-copy into Saturday FJT",
+      "summary": "FBC RSS newest political cluster remains leftover COG/Prasad/ILI; #1 still Springboks 07:43:24Z (sports). FijiVillage leftovers only (Lau grounding Saturday run still listed as tomorrow at 03:51 Saturday FJT; Prasad 22 Sep; CRC/CSO). fiji.gov.fj DNS 000. laws.gov.fj LM still 04 Sep 2026. HIV Legal Notice and CRC report still unpublished. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["hiv_gazette", "crc", "fijigov_dns", "lau_grounding"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fijivillage.com/",
+        "https://www.laws.gov.fj/"
+      ]
+    },
+    {
+      "title": "NBC still 40004; 39939 still off homepage; Funafuti still 000 on anniversary day",
+      "summary": "NBC still leads leftover Igam DCP 40004; Panguna 39939 still off homepage (article 200). ABG still no 16 Sep readout (scan-time LM 16:17:09 GMT). Funafuti MFA HTTP 000. 19 Sep TUV-TWN 47th anniversary remains the local calendar day in Funafuti. Not a recognition switch. WIM ExCom last sitting day locally closed; still empty. Not FLASH.",
+      "countries": ["PNG", "TUV", "TWN", "MHL"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["panguna", "nbc", "tuv_twn", "wim_excom"],
+      "sources": [
+        "https://www.nbc.com.pg/",
+        "https://www.nbc.com.pg/post/39939/paguna-landowners-commit-to-lloyds-metals",
+        "https://unfccc.int/event/WIM-ExCom-25"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Daily Post listing/home LM tick + mixed WAF 429",
+      "parties": ["VUT"],
+      "this_hour_delta": "Homepage LM 16:12:49 GMT; /news LM 16:10:39 GMT; leads unchanged; 55/39 still listed (article both UAs 200); first-probe homepage desk 429 / browser 200; /news both 200; retries mixed 200/429.",
+      "status": "collection_path",
+      "bindingness": "none (media listing)",
+      "flash": false
+    },
+    {
+      "instrument": "VBTC homepage LM",
+      "parties": ["VUT"],
+      "this_hour_delta": "LM still 14:32:15 GMT (unchanged from parent); leads unchanged; still no dedicated search-ended headline.",
+      "status": "collection_path",
+      "bindingness": "none (media listing)",
+      "flash": false
+    },
+    {
+      "instrument": "ASPI homepage collection-path hold",
+      "parties": ["AUS"],
+      "this_hour_delta": "HTTP 403 both UAs (unchanged from parent 403).",
+      "status": "collection_path",
+      "bindingness": "none",
+      "flash": false
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five",
+      "parties": ["AUS", "GBR", "USA"],
+      "this_hour_delta": "Event LM 16:15:21 GMT (parent 15:12:04; later scan-time 16:17:21); analysis LM 16:15:13 GMT (later recovered 16:18:34); still no native recap; oembed 3atxhexzf2k.",
+      "status": "analysis",
+      "bindingness": "analysis (not operational)",
+      "flash": false
+    },
+    {
+      "instrument": "Home Affairs NPC transcript LM tick",
+      "parties": ["AUS"],
+      "this_hour_delta": "Desk 403; browser 200; browser LM 16:15:23 GMT; PALM still named; PEV unnamed.",
+      "status": "collection_path",
+      "bindingness": "political (no new legislation as reported)",
+      "flash": false
+    },
+    {
+      "instrument": "BoM cyclone collection-path desk 403",
+      "parties": ["AUS"],
+      "this_hour_delta": "Desk 403 / browser 200; LM still 07:26:27 GMT; no named system.",
+      "status": "collection_path",
+      "bindingness": "none",
+      "flash": false
+    },
+    {
+      "instrument": "AUS-SLB treaty",
+      "parties": ["AUS", "SLB"],
+      "this_hour_delta": "Unchanged: in-principle, unsigned; Island Sun still future-tense at ~02:51 Saturday SBT.",
+      "status": "announced",
+      "bindingness": "political",
+      "flash": false
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "this_hour_delta": "Official PDF still unpublished ~56 h after reception close; LM still 05:07:15 GMT; Tonga remains Saturday 19 Sep TOT without a PDF.",
+      "status": "convened",
+      "bindingness": "political (ministerial declaration reprint)",
+      "flash": false
+    },
+    {
+      "instrument": "TUV-TWN diplomatic track",
+      "parties": ["TUV", "TWN"],
+      "this_hour_delta": "Funafuti MFA 000; 47th anniversary remains the local calendar day in Funafuti. Not a switch.",
+      "status": "in_force",
+      "bindingness": "political (existing recognition)",
+      "flash": false
+    },
+    {
+      "instrument": "HIV Legal Notice / CRC report",
+      "parties": ["FJI"],
+      "this_hour_delta": "Still missing; fiji.gov.fj DNS 000; FBC/FijiVillage no new political slot.",
+      "status": "unpublished",
+      "bindingness": "legal (gazette still absent)",
+      "flash": false
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "unchanged_ap_closeout_unconverted_locally_5539_still_listed_first_probe_homepage_desk_429_vbtc_lm_unchanged",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> either band; charges executed; gazette of vessel-category rules or a VMSA-under-PMO instrument that implies a capacity breach; extra-legal revenge on Ambae — not FLASH on an AP close-out, a Wantok conversion, or a WAF/LM tick"
+    },
+    {
+      "risk": "FJI-AUS Vuvale climate-finance CLAIM granularity",
+      "direction": "unchanged_pina_10bn_grant_loan_split_dfat_000",
+      "horizon": "weeks-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "DFAT table that locks the split, or a committee report that blocks ratification — not FLASH on a ministry CLAIM"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_cog_leftover_22_sep_overlay_report_unpublished",
+      "horizon": "days-90d (through Feb 2027 GE backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftovers"
+    },
+    {
+      "risk": "FJI outer-island vessel grounding (Namuka/Lau)",
+      "direction": "unchanged_fijivillage_msaf_passengers_safe_saturday_run_still_tomorrow_after_fjt_roll",
+      "horizon": "48h",
+      "confidence": "H",
+      "escalate_trigger": "Casualties, or a second Matui-scale failure — not FLASH on a safe grounding"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "unchanged_island_sun_future_tense_0251_saturday_sbt_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "unchanged_official_pdf_missing_56h_tonga_remains_saturday_tot",
+      "horizon": "hours-48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement as a legal instrument"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "unchanged_lm_161521_still_no_native_recap",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a Last-Modified tick"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "unchanged_not_a_switch_funafuti_000_anniversary_local_day",
+      "horizon": "hours-days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "unchanged_39939_still_off_nbc_homepage_abg_still_no_16_sep",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "FJI HIV emergency / implementation",
+      "direction": "unchanged_abc_unmodified_gazette_missing_dns_000",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package or travel-advisory cascade that implies capacity breach"
+    }
+  ],
+  "open_questions": [
+    "VMSA/NDMO vs still-listed 55/39 vs AP/Fikiasi 53/37/39 vs family-list 53 vs NCL 37 vs Wantok ~39 missing: which figure is official now that AP and a VBTC broadcast say the at-sea search has ended?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati's s.108 line still a request?",
+    "Napat Friday Santo/Ambae survivor visits: Daily Post/PMO/VBTC pool vs AP-only? Independent-investigation TOR? 27 Sep memorial gazette?",
+    "VMSA under PMO: is Manassah's Wantok / leftover Pacific Beat line a gazetteable reorg, a reporting-line tweak, or a PRO paraphrase? Any PMO/VMSA instrument?",
+    "Wale New York wheels-down now that Island Sun is still future-tense at ~02:51 Saturday 19 Sep SBT?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu now that Tonga remains Saturday 19 Sep TOT without a PDF?",
+    "CSIS native recap of 3atxhexzf2k?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935 once fiji.gov.fj DNS recovers?",
+    "Fiji CRC: will the report be published on 22 Sep tabling? GE-on-time guarantee answering Lal, Prasad, Seruiratu, and the seven-org list?",
+    "Vuvale: DFAT confirm Sivendra $10bn / $1.05bn grants / $550m loans vs leftover >$1.5bn?",
+    "Funafuti MFA confirmation of Panapa-Lai; 19 Sep anniversary events remain the local calendar day in Funafuti.",
+    "Home Affairs fact sheet vs NPC transcript: any PALM operational change? PIC MFA PALM reaction?",
+    "ABG 16 Sep Panguna readout vs NBC 39939 still off the homepage?",
+    "AUS-SLB: DFAT/Honiara signature from UNGA margins?",
+    "Namuka/Lau: named vessel / owner; Saturday Bai ni Takali departure confirmation now that FJT remains 19 Sep at scan?",
+    "Ati actually wheels-up for UNGA, or is Daily Post still leave-today after VUT remains Saturday 19 Sep at scan?"
+  ],
+  "sources": [
+    {"title": "Daily Post /news listing", "url": "https://www.dailypost.vu/news/", "published_at_utc": "2026-09-18T16:10:39Z", "tier": "B", "note": "first-probe both UAs 200; 55/39 still listed"},
+    {"title": "Daily Post homepage", "url": "https://www.dailypost.vu/", "published_at_utc": "2026-09-18T16:12:49Z", "tier": "B", "note": "LM tick; first-probe homepage desk 429 / browser 200; retries mixed 200/429; leads unchanged"},
+    {"title": "VBTC homepage", "url": "https://vbtc.vu/", "published_at_utc": "2026-09-18T14:32:15Z", "tier": "B", "note": "LM unchanged from parent 14:32:15 GMT; no dedicated search-ended headline"},
+    {"title": "AP via ABC News — Vanuatu ends search for 37 people missing in ferry sinking", "url": "https://abcnews.go.com/International/wireStory/vanuatu-ends-search-37-people-missing-ferry-sinking-136550109", "published_at_utc": "2026-09-18T06:04:37Z", "tier": "B", "note": "timestamps unmodified this hour"},
+    {"title": "CSIS — AUKUS at Five event", "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward", "published_at_utc": "2026-09-18T16:15:21Z", "tier": "B", "note": "LM tick; still no native recap"},
+    {"title": "ASPI homepage", "url": "https://www.aspi.org.au/", "published_at_utc": "2026-09-18T15:51:00Z", "tier": "B", "note": "HTTP 403 both UAs (unchanged from parent)"},
+    {"title": "Home Affairs — Speech, National Press Club", "url": "https://minister.homeaffairs.gov.au/TonyBurke/Pages/speech-national-press-club-17092026.aspx", "published_at_utc": "2026-09-18T16:15:23Z", "tier": "A", "note": "desk 403 / browser 200; PALM still named"},
+    {"title": "pacificmet.net — PMMM-4", "url": "https://www.pacificmet.net/pmmm-4", "published_at_utc": "2026-09-18T05:07:15Z", "tier": "A", "note": "still draft; PDF unpublished ~56 h"},
+    {"title": "Island Sun — PM Wale heads to UNGA", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "B", "note": "still future-tense ~02:51 Saturday SBT"},
+    {"title": "NBC homepage", "url": "https://www.nbc.com.pg/", "published_at_utc": "2026-09-18T15:51:00Z", "tier": "B", "note": "still leads 40004; 39939 still off homepage"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "published_at_utc": "2026-09-18T07:43:24Z", "tier": "B", "note": "newest still Springboks sports; no new political item"},
+    {"title": "PINA — 18 Sep archive", "url": "https://pina.com.fj/2026/09/18/", "published_at_utc": "2026-09-18T01:40:08Z", "tier": "B", "note": "no new page-1 slot this hour"},
+    {"title": "BoM tropical cyclone", "url": "https://www.bom.gov.au/cyclone/", "published_at_utc": "2026-09-18T07:26:27Z", "tier": "A", "note": "desk 403 / browser 200; no named system"}
+  ]
+}
