@@ -1,0 +1,416 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T22:51:00Z",
+  "window_end_utc": "2026-09-17T23:51:00Z",
+  "generated_at_utc": "2026-09-17T23:57:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T22:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Gavoka says Fiji HIV emergency should not deter visitors; FCOSS asks for resource priority",
+      "summary": "In-window RNZ pubDate 23:10:57 UTC: Tourism Minister/DPM Viliame Gavoka says Fiji is 'very open' about the HIV crisis and that ANZ-origin visitors should not be deterred. FCOSS CEO Vani Catanasiga says public statements are not enough and that the constitutional clock is crowding HIV resources. Overlay: ABC recap published 23:45:05Z restates 1-in-60 / 2,016 / 27%. Gazette still missing. Not FLASH.",
+      "countries": ["FJI", "NZL", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["HIV", "tourism", "public health"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1451515/we-are-very-open-fiji-s-tourism-minister-says-hiv-emergency-should-not-deter-visitors",
+        "https://www.abc.net.au/news/2026-09-18/fiji-declares-national-hiv-emergency-as-cases-soar/107167382"
+      ]
+    },
+    {
+      "title": "UN Special Rapporteur concludes first official RMI visit (nuclear + climate)",
+      "summary": "In-window PINA datePublished 23:22:08 UTC: Andrea Bolaños Vargas concludes a first official country visit to the Marshall Islands (Majuro/Kwajalein from 7 Sep). Links US nuclear-testing legacy and sea-level rise to pressure on rights defenders; calls on the United States for truth, justice and reparation; full report to HRC March 2027. Overlaps WIM ExCom 25. Not a Compact amendment. Not FLASH.",
+      "countries": ["MHL", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["COFA", "nuclear legacy", "WIM", "human rights"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/un-rapporteur-flags-nuclear-legacy-climate-threats-to-marshallese-rights-defenders/"
+      ]
+    },
+    {
+      "title": "Daily Post listing still 200; Ati UNGA article recovered; 55/39 still off lead",
+      "summary": "Collection-path: Daily Post /news still HTTP 200 both UAs; listing Last-Modified 23:50:06Z. 55/39 CLAIM still listed and still off homepage lead. Ati UNGA article recovered 200 (was 429). Arrest unconfirmed. LM/e-edition tick is not a VMSA/NDMO SITREP. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["Matui", "SAR", "collection path", "UNGA"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html",
+        "https://www.dailypost.vu/news/minister-ati-to-deliver-vanuatu-statement-at-unga/article_f7fe874c-badb-55c5-8e40-cf717dc3c767.html"
+      ]
+    },
+    {
+      "title": "AUS–NZ POPCCC climate-finance dialogue; Wale UNGA copy still future-tense",
+      "summary": "In-window PINA 23:14:51 UTC: Pickering (AUS) and Paki (NZ DHCom) in Honiara argue transformative climate finance is what remains after the funding cycle, not project size. No dollar envelope extracted. Island Sun still says Wale 'will leave today' at 10:51 Friday 18 Sep SBT. AUS–SLB unsigned. Not FLASH.",
+      "countries": ["SLB", "AUS", "NZL"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["POPCCC", "climate finance", "UNGA", "AUS-SLB"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/climate-finance-must-leave-stronger-pacific-communities-and-institutions-beyond-the-funding-cycle/",
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/"
+      ]
+    },
+    {
+      "title": "CSIS AUKUS Last-Modified ticks; PMMM-4 PDF still unpublished ~39 h 51 min later",
+      "summary": "CSIS event Last-Modified 23:15:27 GMT; commentary 23:13:56 GMT; oembed still 3atxhexzf2k; still zero recap/transcript language. ABC recap dateModified unchanged at 21:22:11Z. pacificmet.net still draft/future tense. PACNEWS FOUR 18 Sep still 404. Analysis / missing PDF, not operational. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR", "TON"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["AUKUS", "PMMM-4", "alliance", "early warning"],
+      "sources": [
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.abc.net.au/news/2026-09-18/aukus-on-track-but-faces-challenges-five-years-in/107166564",
+        "https://www.pacificmet.net/pmmm-4"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "Fiji HIV emergency / tourism-confidence overlay",
+      "parties": "FJI domestic (NZL/AUS media transmission)",
+      "status": "in-window RNZ Gavoka/FCOSS pubDate 23:10:57 UTC; ABC recap 23:45:05Z; gazette still missing",
+      "notes": "Tourism-minister interview and international recap are not a Legal Notice. Not FLASH."
+    },
+    {
+      "instrument": "UN SR RMI country visit",
+      "parties": "MHL-UN (USA nuclear-legacy overlay)",
+      "status": "in-window PINA 23:22:08 UTC; report due HRC Mar 2027",
+      "notes": "Visit readout, not a Compact amendment. Not FLASH."
+    },
+    {
+      "instrument": "AUS-NZ POPCCC climate-finance dialogue",
+      "parties": "AUS-NZL in SLB",
+      "status": "in-window PINA 23:14:51 UTC; no dollar envelope extracted",
+      "notes": "Method talk, not a new appropriation. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "still 200 both UAs; LM 23:50:06Z; 55/39 still listed, still off lead; Ati article recovered 200 (was 429)",
+      "notes": "Arrest still unconfirmed. LM tick ≠ SITREP. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five event / commentary",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "event LM 23:15:27 GMT; commentary LM 23:13:56 GMT; still no native recap; oembed still 3atxhexzf2k",
+      "notes": "LM tick ≠ recap. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~39 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 12:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT failed; Island Sun still future-tense at 10:51 Friday SBT."
+    },
+    {
+      "instrument": "Counter Narcotics Bill 2026",
+      "parties": "FJI domestic",
+      "status": "catch-up residual FBC pubDate 21:30:56 UTC: Cabinet endorsed; not gazetted",
+      "notes": "Endorse ≠ in force. Transnational-crime colour. Not FLASH."
+    },
+    {
+      "instrument": "Home Affairs NPC transcript",
+      "parties": "AUS domestic (PIC labour-mobility watch)",
+      "status": "LM 23:51:25 GMT; PALM still named once; PEV unnamed",
+      "notes": "CDN tick, not a PALM cut. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; gazette of vessel-category rules implying capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "FJI HIV emergency / tourism-confidence / implementation",
+      "direction": "↑",
+      "horizon": "days–next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package or travel-advisory cascade that implies capacity breach — not FLASH on a tourism-minister interview"
+    },
+    {
+      "risk": "FJI El Niño / food-price / drought ops",
+      "direction": "→",
+      "horizon": "days–months (peak Oct–Nov)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request — not FLASH on an FCCC price warning"
+    },
+    {
+      "risk": "VUT UNGA representation / Matui politics",
+      "direction": "→",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Statement that reopens extra-legal or foreign-security tracks — not FLASH on a travel notice"
+    },
+    {
+      "risk": "Panguna security / ABG–Waigani split",
+      "direction": "→",
+      "horizon": "48h–ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a think-tank panel recap"
+    },
+    {
+      "risk": "AUS–Pacific labour-mobility / student-WHM settings",
+      "direction": "→",
+      "horizon": "months (implementation)",
+      "confidence": "M",
+      "escalate_trigger": "Gazette or PALM/PEV cut that PIC MFAs treat as a Forum item"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument"
+    },
+    {
+      "risk": "WIM ExCom 25 / Majuro dengue / UN SR visit",
+      "direction": "→",
+      "horizon": "through 18 Sep / HRC Mar 2027",
+      "confidence": "M",
+      "escalate_trigger": "Adopted decision language; meeting disruption from dengue; Compact crisis — not FLASH on a visit readout"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "BoM / Daily Post collection path",
+      "direction": "→",
+      "horizon": "hours",
+      "confidence": "H",
+      "escalate_trigger": "Named Category-level system, or a Matui SITREP that revises fatalities well above the CLAIM band"
+    }
+  ],
+  "open_questions": [
+    "VMHS/NDMO: draft instrument for vessel-category marine warnings, or only Regenvanu’s PMMM-4 floor ask?",
+    "Does the forthcoming PMMM-4 PDF name vessel-category warnings or Vanuatu’s MHEWS host bid?",
+    "Ati UNGA: wheels-up vs Daily Post future tense? Text of the national statement? (article URL recovered 200 this hour.)",
+    "Is Napat actually in Luganville this morning? Any survivor-meeting readout that changes Matui legal track?",
+    "CHN–VUT: is the VT5m machine a line-item inside the 15 Sep VT11m/US$100k cash, or a second envelope?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati’s s.108 line still a request?",
+    "VMSA/NDMO verified passenger+crew figure vs 55/39 (still listed, still off homepage lead; /news still 200) vs family-list 53?",
+    "First verified ABG 16 Sep Panguna remarks? (NBC ceremony copy in hand; ABG SSL expired this hour.)",
+    "PMMM-4: official PDF of Siu-i-Alaimoana Ki Likutapu vs working-title Matatoa, now that 12:51 TOT Friday hours have passed?",
+    "CSIS AUKUS at Five: native recap/transcript of 3atxhexzf2k after the 23:15 GMT LM tick?",
+    "Does any PIC MFA treat Burke’s PALM pathway lines as a PALM setting?",
+    "Tonga Vavaʻu mishap: Tourism vs Marine & Ports licensing status? (gov.to still silent.)",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? New York wheels-down? (Island Sun still future-tense at 10:51 Friday SBT.)",
+    "Fiji HIV gazette / CRC 22 Sep tabling? Any Tourism Fiji advisory answering Gavoka?",
+    "OHCHR Tier A text of the Bolaños Vargas RMI end-of-mission? WIM ExCom 25 decision language?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events tomorrow?",
+    "Any ANZ matching Matui/Ambae package vs China US$100k / VT5m machine?",
+    "VTU/TSC: does the MoC dispute produce a strike date, or only a warning?",
+    "FCCC El Niño: any named enforcement action, or only a Master Price List reminder?",
+    "Counter Narcotics Bill 2026: gazette date, bureau standing-up, any foreign-police/training annex?"
+  ],
+  "sources": [
+    {
+      "title": "‘We are very open’: Fiji's tourism minister says HIV emergency should not deter visitors",
+      "publisher": "RNZ Pacific",
+      "url": "https://www.rnz.co.nz/news/pacific/1451515/we-are-very-open-fiji-s-tourism-minister-says-hiv-emergency-should-not-deter-visitors",
+      "published_at": "2026-09-17T23:10:57Z",
+      "countries": ["FJI", "NZL", "AUS"],
+      "topics": ["HIV", "tourism"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "Fijian government declares national HIV emergency as cases soar",
+      "publisher": "ABC News",
+      "url": "https://www.abc.net.au/news/2026-09-18/fiji-declares-national-hiv-emergency-as-cases-soar/107167382",
+      "published_at": "2026-09-17T23:45:05Z",
+      "countries": ["FJI"],
+      "topics": ["HIV", "public health"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "UN rapporteur flags nuclear legacy, climate threats to Marshallese rights defenders",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/18/un-rapporteur-flags-nuclear-legacy-climate-threats-to-marshallese-rights-defenders/",
+      "published_at": "2026-09-17T23:22:08Z",
+      "countries": ["MHL", "USA"],
+      "topics": ["nuclear legacy", "climate", "COFA"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "B"
+    },
+    {
+      "title": "Climate finance must leave stronger Pacific communities and institutions beyond the funding cycle",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/18/climate-finance-must-leave-stronger-pacific-communities-and-institutions-beyond-the-funding-cycle/",
+      "published_at": "2026-09-17T23:14:51Z",
+      "countries": ["SLB", "AUS", "NZL"],
+      "topics": ["climate finance", "POPCCC"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "B"
+    },
+    {
+      "title": "Pasifika AI creator warns AI cannot speak for Pacific communities without a mandate",
+      "publisher": "PINA",
+      "url": "https://pina.com.fj/2026/09/18/pasifika-ai-creator-warns-ai-cannot-speak-for-pacific-communities-without-a-mandate/",
+      "published_at": "2026-09-17T23:25:46Z",
+      "countries": ["NCL"],
+      "topics": ["AI", "digital sovereignty", "PIF"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "Daily Post /news listing still 200",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/",
+      "published_at": "2026-09-17T23:50:06Z",
+      "countries": ["VUT"],
+      "topics": ["Matui", "collection path"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "Operation centre records 55 aboard MV Matui, 39 still missing",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html",
+      "published_at": "2026-09-16T21:57:16Z",
+      "countries": ["VUT"],
+      "topics": ["Matui", "SAR"],
+      "claim_type": "CLAIM",
+      "confidence": "H",
+      "oceania_relevance": "humanitarian",
+      "tier": "B"
+    },
+    {
+      "title": "Minister Ati to deliver Vanuatu statement at UNGA",
+      "publisher": "Vanuatu Daily Post",
+      "url": "https://www.dailypost.vu/news/minister-ati-to-deliver-vanuatu-statement-at-unga/article_f7fe874c-badb-55c5-8e40-cf717dc3c767.html",
+      "published_at": "2026-09-17T20:45:00Z",
+      "countries": ["VUT"],
+      "topics": ["UNGA", "collection path"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "AUKUS at Five: Progress, Challenges, and the Way Forward",
+      "publisher": "CSIS",
+      "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+      "published_at": "2026-09-17T23:15:27Z",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["AUKUS", "alliance"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "PMMM-4 programme page (official PDF still unpublished)",
+      "publisher": "Pacific Meteorological Desk & Partnership",
+      "url": "https://www.pacificmet.net/pmmm-4",
+      "published_at": "2026-09-16T02:24:04Z",
+      "countries": ["TON"],
+      "topics": ["PMMM-4", "early warning"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "A"
+    },
+    {
+      "title": "PM Wale heads to UN General Assembly",
+      "publisher": "Island Sun",
+      "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+      "published_at": "2026-09-16T00:00:00Z",
+      "countries": ["SLB"],
+      "topics": ["UNGA", "AUS-SLB"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "strategic",
+      "tier": "B"
+    },
+    {
+      "title": "Old drug laws replaced (Counter Narcotics Bill 2026 Cabinet endorse)",
+      "publisher": "FBC News",
+      "url": "https://www.fbcnews.com.fj/news/old-drug-laws-replaced/",
+      "published_at": "2026-09-17T21:30:56Z",
+      "countries": ["FJI"],
+      "topics": ["transnational crime", "legislation"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "governance",
+      "tier": "B"
+    },
+    {
+      "title": "Fijians urged to watch food prices as El Niño brings drier conditions",
+      "publisher": "FijiVillage",
+      "url": "https://www.fijivillage.com/news/fijians-urged-to-watch-food-prices-as-el-ni-o-brings-drier-conditions-5201f7/",
+      "published_at": "2026-09-17T22:31:27Z",
+      "countries": ["FJI"],
+      "topics": ["El Niño", "food prices", "FCCC"],
+      "claim_type": "FACT",
+      "confidence": "H",
+      "oceania_relevance": "climate",
+      "tier": "B"
+    }
+  ]
+}
