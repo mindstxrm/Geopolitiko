@@ -1,0 +1,242 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-17T23:51:00Z",
+  "window_end_utc": "2026-09-18T00:51:00Z",
+  "generated_at_utc": "2026-09-18T01:08:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-17T23:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND", "IRL"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "FCEF asks for wage-setting rules on leftover NMW review",
+      "summary": "FijiVillage datePublished 23:52:35 UTC and FBC pubDate 00:05:21 UTC: FCEF CEO Edward Bernard asks for ERA s.264(W) criteria, a tripartite wage council, and ILO C131 technical work on the leftover Cabinet NMW / 10-sector review. Remittances named as an input. Not a gazette of new rates. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["labour", "remittances", "ILO", "governance"],
+      "sources": [
+        "https://www.fijivillage.com/news/fcef-calls-for-stronger-wage-setting-framework-ahead-of-minimum-wage-review-8b0c65/",
+        "https://www.fbcnews.com.fj/news/fcef-demands-wage-setting-rules/"
+      ]
+    },
+    {
+      "title": "World Bamboo Day handover of GGGI research and draft harvesting guidelines",
+      "summary": "FijiVillage datePublished 00:48:47 UTC: Fisheries and Forestry received six bamboo research reports plus draft Management and Harvesting Guidelines from the GGGI Fiji Bamboo for Adaptation and Mitigation Project, with NZ MFAT and Ireland DFAT LECRD phase-2 support. Construction guidelines still being finalised. Research handover is not a gazetted building code and not a compact. Not FLASH.",
+      "countries": ["FJI", "NZL", "IRL"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["climate adaptation", "development finance", "construction"],
+      "sources": [
+        "https://www.fijivillage.com/news/six-bamboo-research-reports-handed-over-to-forestry-ministry-to-guide-sector-development-39b0ba/"
+      ]
+    },
+    {
+      "title": "ABC HIV recap modify-tick; gazette still missing",
+      "summary": "ABC Fiji HIV emergency recap dateModified 23:55:34Z (was 23:45:05Z). Copy still restates 1-in-60 / 2,016 / 27 percent. fiji.gov.fj and laws.gov.fj still silent. Not a Legal Notice. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["HIV", "public health", "tourism overlay leftover"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-09-18/fiji-declares-national-hiv-emergency-as-cases-soar/107167382"
+      ]
+    },
+    {
+      "title": "Daily Post /news still 200; homepage 429 then 200; 55/39 still off lead",
+      "summary": "Listing HTTP 200 both UAs, Last-Modified 00:55:00Z. Homepage first-probe 429, retry 200 LM 01:02:54Z. 55/39 CLAIM still listed off homepage lead. VTU listing-title variant is the leftover nationwide-strike warning. Arrest still unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["Matui SAR", "collection path", "VTU leftover"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html"
+      ]
+    },
+    {
+      "title": "CSIS AUKUS Last-Modified ticks; PMMM-4 PDF still unpublished",
+      "summary": "CSIS event Last-Modified 00:15:36 GMT; commentary 00:53:52 GMT scan-time. Oembed still 3atxhexzf2k; still no native recap. ABC AUKUS recap unmodified. pacificmet.net still draft; official PMMM-4 PDF unpublished ~40 h 51 min after reception close. Not FLASH.",
+      "countries": ["AUS", "GBR", "USA", "TON"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["AUKUS analysis", "PMMM-4", "collection gap"],
+      "sources": [
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.csis.org/analysis/aukus-turns-five-real-progress-hard-challenges-ahead",
+        "https://www.pacificmet.net/pmmm-4"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "FCEF wage-setting / NMW review ask",
+      "parties": "FJI domestic (ILO overlay)",
+      "status": "in-window FijiVillage 23:52:35 UTC; FBC 00:05:21 UTC; leftover Cabinet review; not gazetted",
+      "notes": "Employer ask for ERA s.264(W) criteria and ILO C131 work. Not a rate gazette. Not FLASH."
+    },
+    {
+      "instrument": "Fiji Bamboo for Adaptation and Mitigation handover",
+      "parties": "FJI-GGGI (NZL MFAT / IRL DFAT LECRD)",
+      "status": "in-window FijiVillage 00:48:47 UTC; six reports plus draft harvesting guidelines; construction guidelines still being finalised",
+      "notes": "Research handover is not a gazetted building code and not a compact. Not FLASH."
+    },
+    {
+      "instrument": "ABC HIV recap modify-tick",
+      "parties": "FJI (AUS media transmission)",
+      "status": "dateModified 23:55:34Z; gazette still missing",
+      "notes": "Recap tick is not a Legal Notice. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "still 200 both UAs; listing LM 00:55:00Z; homepage 429 then 200; 55/39 still listed, still off lead",
+      "notes": "Arrest still unconfirmed. LM/WAF tick is not a SITREP. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five event / commentary",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "event LM 00:15:36 GMT; commentary LM 00:53:52 GMT scan-time; still no native recap; oembed still 3atxhexzf2k",
+      "notes": "LM tick is not a recap. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~40 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 13:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT timed out; Island Sun still future-tense at 11:51 Friday SBT."
+    },
+    {
+      "instrument": "ABG HTTPS collection path",
+      "parties": "PNG-ABG",
+      "status": "HTTPS 200 recovered (was SSL expired); still 13-14 Sep leftovers; no 16 Sep Panguna readout",
+      "notes": "Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "Home Affairs NPC transcript",
+      "parties": "AUS domestic (PIC labour-mobility watch)",
+      "status": "LM 01:01:34 GMT scan-time; PALM still named once; PEV unnamed",
+      "notes": "CDN tick, not a PALM cut. Not FLASH."
+    },
+    {
+      "instrument": "Guangdong product roadshow",
+      "parties": "FJI-CHN commercial",
+      "status": "scan-time FBC pubDate 01:00:58 UTC",
+      "notes": "Trade-fair colour. Not a compact. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> band; charges executed; gazette of vessel-category rules implying capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "FJI HIV emergency / tourism-confidence / implementation",
+      "direction": "→",
+      "horizon": "days–next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package or travel-advisory cascade that implies capacity breach — not FLASH on an ABC recap modify"
+    },
+    {
+      "risk": "FJI wage review / ERA criteria / remittance overlay",
+      "direction": "↑",
+      "horizon": "weeks–next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazetted NMW cut or spike that PIC labour-mobility partners treat as a Forum item — not FLASH on an FCEF letter"
+    },
+    {
+      "risk": "FJI El Niño / food-price / drought ops",
+      "direction": "→",
+      "horizon": "days–months (peak Oct–Nov)",
+      "confidence": "M",
+      "escalate_trigger": "Official drought emergency / HADR request — not FLASH on an FCCC price warning"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement/maintenance as a legal instrument — not FLASH on a still-missing PDF"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a Last-Modified tick"
+    }
+  ],
+  "open_questions": [
+    "VMHS/NDMO: draft instrument for vessel-category marine warnings, or only Regenvanu’s PMMM-4 floor ask?",
+    "Does the forthcoming PMMM-4 PDF name vessel-category warnings or Vanuatu’s MHEWS host bid?",
+    "Ati UNGA: wheels-up vs Daily Post future tense? Text of the national statement?",
+    "Is Napat actually in Luganville this morning (Friday 18 Sep VUT)?",
+    "Has the Matui Master actually been arrested/charged?",
+    "VMSA/NDMO verified passenger+crew figure vs unstalled 55/39 vs family-list 53?",
+    "First verified ABG 16 Sep Panguna remarks? (HTTPS recovered; still 13–14 Sep leftovers.)",
+    "CSIS AUKUS at Five: native recap/transcript of 3atxhexzf2k after the 00:15 GMT LM tick?",
+    "AUS–SLB: DFAT/Honiara signature from UNGA margins? (Island Sun still future-tense at 11:51 Friday SBT.)",
+    "Fiji HIV: gazette / Legal Notice under s.69 PHA 1935?",
+    "Fiji CRC: will the report be published on 22 Sep tabling?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events tomorrow.",
+    "WIM ExCom 25 decision language 18 Sep; OHCHR Tier A Bolaños Vargas end-of-mission?",
+    "FCEF / ERA s.264(W): will Employment publish wage-setting criteria before the consultant review reports?",
+    "Bamboo guidelines: gazette/procurement date vs still-draft construction text?",
+    "Madang Sisiak 2: RPNGC confirmation of Wewak POI attribution; any fatality?"
+  ],
+  "sources": [
+    {"title": "FijiVillage FCEF wage-setting", "url": "https://www.fijivillage.com/news/fcef-calls-for-stronger-wage-setting-framework-ahead-of-minimum-wage-review-8b0c65/", "published_at": "2026-09-17T23:52:35Z", "tier": "B"},
+    {"title": "FBC FCEF wage-setting", "url": "https://www.fbcnews.com.fj/news/fcef-demands-wage-setting-rules/", "published_at": "2026-09-18T00:05:21Z", "tier": "B"},
+    {"title": "FijiVillage bamboo handover", "url": "https://www.fijivillage.com/news/six-bamboo-research-reports-handed-over-to-forestry-ministry-to-guide-sector-development-39b0ba/", "published_at": "2026-09-18T00:48:47Z", "tier": "B"},
+    {"title": "ABC Fiji HIV recap", "url": "https://www.abc.net.au/news/2026-09-18/fiji-declares-national-hiv-emergency-as-cases-soar/107167382", "published_at": "2026-09-17T23:45:05Z", "modified_at": "2026-09-17T23:55:34Z", "tier": "B"},
+    {"title": "Daily Post /news listing", "url": "https://www.dailypost.vu/news/", "last_modified": "2026-09-18T00:55:00Z", "tier": "B"},
+    {"title": "CSIS AUKUS at Five event", "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward", "last_modified": "2026-09-18T00:15:36Z", "tier": "B"},
+    {"title": "NBC Luan 40 years", "url": "https://www.nbc.com.pg/post/39972/luan-hits-40-years-of-policing-in-lae", "published_at": "2026-09-18T00:15:00Z", "tier": "B"},
+    {"title": "NBC Madang PPC Baim", "url": "https://www.nbc.com.pg/post/39978/madang-is-no-place-for-harbouring-criminals-says-ppc-baim", "published_at": "2026-09-18T00:57:00Z", "tier": "B"},
+    {"title": "pacificmet.net PMMM-4", "url": "https://www.pacificmet.net/pmmm-4", "last_modified": "2026-09-16T02:24:04Z", "tier": "A"},
+    {"title": "Island Sun Wale UNGA", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at": "2026-09-16", "tier": "B"}
+  ]
+}
