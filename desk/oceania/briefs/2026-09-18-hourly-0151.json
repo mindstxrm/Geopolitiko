@@ -1,0 +1,242 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-18T00:51:00Z",
+  "window_end_utc": "2026-09-18T01:51:00Z",
+  "generated_at_utc": "2026-09-18T02:18:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-18T00:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND", "IRL", "ASM"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Seruiratu tells government not to rush a 24 Dec Constitution",
+      "summary": "PINA datetime 01:33:57 UTC: Opposition Leader Inia Seruiratu calls the leftover 24 Dec 2026 in-force path an extraordinarily compressed timetable, CLAIMS <1 percent participation, and warns of GE-timing risk. Complements leftover Prasad/Lal. Report still unpublished. Legal amendment path, not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["CRC", "constitution", "elections"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/government-must-not-rush-fiji-into-new-constitution-opposition-leader-seruiratu/"
+      ]
+    },
+    {
+      "title": "Sivendra names >$1.5bn Australian support at leftover Vuvale committee",
+      "summary": "FBC pubDate 01:06:39 UTC: Climate PS Sivendra Michael tells the Vuvale / Ocean of Peace standing committee that more than $1.5 billion in new Australian support must reach communities and that AIFFP met this week on a Nadi flood project. Complements leftover Bia access question. Figure is a ministry CLAIM until DFAT repeats it. Not a this-hour signature. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "climate",
+      "topics": ["Vuvale", "climate finance", "AIFFP"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/climate-funding-must-deliver-results/"
+      ]
+    },
+    {
+      "title": "Catch-up PMNEC Papua LNG FID restatement",
+      "summary": "PMNEC datetime 00:40:54 UTC (missed last hourly): Marape restates Papua LNG FID sunset 15 Dec 2026, wants landowner/provincial agreements before November, and cites additional 2.5 percent PNG equity as spoken plus K60bn/K40bn Papua/P’nyang sequencing. Not a this-hour FID. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["Papua LNG", "FID", "petroleum"],
+      "sources": [
+        "https://www.pmnec.gov.pg/pm-marape-papua-lng-moving-towards-fid-as-png-enters-major-petroleum-investment-period/"
+      ]
+    },
+    {
+      "title": "Daily Post /news 429 regression; 55/39 still listed off lead",
+      "summary": "Listing first-probe HTTP 429 both UAs (was 200). Retry 200 LM 02:00:10Z scan-time; later 429. 55/39 CLAIM still listed off homepage lead. Arrest still unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["Matui SAR", "collection path"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html"
+      ]
+    },
+    {
+      "title": "Catch-up ASM DSM governor letter; CSIS LM ticks; PMMM-4 PDF still unpublished",
+      "summary": "Samoa Observer ~23:54 UTC 17 Sep (missed last hourly): Governor Pula 15 Sep letter says no commercial extraction now on BOEM PACM-1; 19 Nov sale leftover. CSIS event LM 01:15:52 GMT / commentary 01:32:44 GMT; oembed still 3atxhexzf2k; still no native recap. Official PMMM-4 PDF unpublished ~41 h 51 min after reception close. Not FLASH.",
+      "countries": ["ASM", "USA", "AUS", "GBR", "TON"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["DSM", "AUKUS analysis", "PMMM-4"],
+      "sources": [
+        "https://www.samoaobserver.ws/category/samoa/122089",
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.pacificmet.net/pmmm-4"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "CRC / 2013 amendment path",
+      "parties": "FJI domestic",
+      "status": "in-window PINA Seruiratu 01:33:57 UTC joins leftover Prasad/Lal against 24 Dec clock; report still unpublished",
+      "notes": "Opposition leader now on the compressed-timetable line. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "instrument": "Vuvale / Ocean of Peace climate-finance access",
+      "parties": "FJI-AUS",
+      "status": "in-window FBC Sivendra 01:06:39 UTC names >$1.5bn new Australian support plus AIFFP Nadi meeting this week",
+      "notes": "Figure is a ministry CLAIM until DFAT repeats it. Not a this-hour signature. Not FLASH."
+    },
+    {
+      "instrument": "Papua LNG FID sunset",
+      "parties": "PNG-project partners",
+      "status": "catch-up PMNEC 00:40:54 UTC; 15 Dec 2026 sunset restated; +2.5% equity as spoken; not FID",
+      "notes": "Sequencing speech, not a take-or-pay. Not FLASH."
+    },
+    {
+      "instrument": "PACM-1 BOEM lease (ASM DSM)",
+      "parties": "USA-ASM",
+      "status": "catch-up Observer ~23:54 UTC 17 Sep; Pula 15 Sep letter: no commercial extraction now; sale 19 Nov leftover",
+      "notes": "Precautionary territorial comment. Not a PIC EEZ licence. Not FLASH."
+    },
+    {
+      "instrument": "Guangdong product roadshow",
+      "parties": "FJI-CHN commercial",
+      "status": "now in-window FBC 01:00:58 UTC (was scan-time last hourly)",
+      "notes": "Product fair plus CdA talking points. Not a compact. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT timed out; Island Sun still future-tense at 12:51 Friday SBT."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~41 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 14:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five event / commentary",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "event LM 01:15:52 GMT; commentary LM 01:32:44 GMT; still no native recap; oembed still 3atxhexzf2k",
+      "notes": "LM tick is not a recap. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "first-probe 429 (was 200); retry 200 LM 02:00:10Z scan-time; 55/39 still listed, still off lead",
+      "notes": "Arrest still unconfirmed. WAF tick is not a SITREP. Not FLASH."
+    },
+    {
+      "instrument": "ABG HTTPS collection path",
+      "parties": "PNG-ABG",
+      "status": "HTTPS 000 (was 200); insecure -k 200; still 13-14 Sep leftovers; no 16 Sep Panguna readout",
+      "notes": "Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "Home Affairs NPC transcript",
+      "parties": "AUS domestic (PIC labour-mobility watch)",
+      "status": "LM 02:06:27 GMT scan-time; PALM still named once; PEV unnamed",
+      "notes": "CDN tick, not a PALM cut. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "trigger": "Death toll >> band; charges executed; gazette of vessel-category rules that implies a capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "↑",
+      "horizon": "days–90d",
+      "confidence": "M",
+      "trigger": "Extra-parliamentary rupture or gazetted electoral-system reset — not FLASH on a PINA opposition interview"
+    },
+    {
+      "risk": "FJI–AUS Vuvale climate-finance access",
+      "direction": "↑",
+      "horizon": "weeks–months",
+      "confidence": "M",
+      "trigger": "Signed/gazetted AUS appropriation that is actually new vs restated — not FLASH on a standing-committee figure"
+    },
+    {
+      "risk": "PNG Papua LNG FID / landowner consent",
+      "direction": "↑",
+      "horizon": "days–15 Dec",
+      "confidence": "M",
+      "trigger": "FID taken, or a landowner rupture that stops the November agreement track"
+    },
+    {
+      "risk": "ASM / US DSM (PACM-1)",
+      "direction": "↑",
+      "horizon": "weeks–19 Nov",
+      "confidence": "M",
+      "trigger": "Lease sale proceeds into commercial extraction, or a PIC EEZ copycat licence"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "trigger": "Text that binds NMHS/enforcement as a legal instrument — not FLASH on a still-missing PDF"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "trigger": "Actual recognition change — then FLASH"
+    }
+  ],
+  "open_questions": [
+    "Will the CRC report be published on 22 Sep tabling, and will a GE-on-time guarantee answer Lal, Prasad, and Seruiratu?",
+    "Does DFAT/AIFFP confirm Sivendra’s >$1.5bn line, and what is the official Nadi flood project name?",
+    "Papua LNG: is the 2.5% equity an instrument or speech, and do November landowner/provincial agreements move?",
+    "BOEM docket text of Pula’s 15 Sep PACM-1 letter; is the 19 Nov sale still on calendar?",
+    "Has the Matui Master been arrested/charged, and which passenger figure is official vs 55/39?",
+    "Wale New York wheels-down vs Island Sun still future-tense at 12:51 Friday SBT?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu?",
+    "CSIS native recap of 3atxhexzf2k?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events?"
+  ],
+  "sources": [
+    {"title": "PINA Seruiratu CRC", "url": "https://pina.com.fj/2026/09/18/government-must-not-rush-fiji-into-new-constitution-opposition-leader-seruiratu/", "published_at": "2026-09-18T01:33:57Z", "tier": "B"},
+    {"title": "FBC climate funding / Vuvale committee", "url": "https://www.fbcnews.com.fj/news/climate-funding-must-deliver-results/", "published_at": "2026-09-18T01:06:39Z", "tier": "B"},
+    {"title": "FBC RBF profits", "url": "https://www.fbcnews.com.fj/news/government-ready-for-lower-rbf-profits/", "published_at": "2026-09-18T01:12:01Z", "tier": "B"},
+    {"title": "FBC Guangdong roadshow", "url": "https://www.fbcnews.com.fj/news/guangdong-roadshow-strengthens-business-links/", "published_at": "2026-09-18T01:00:58Z", "tier": "B"},
+    {"title": "PMNEC Papua LNG FID", "url": "https://www.pmnec.gov.pg/pm-marape-papua-lng-moving-towards-fid-as-png-enters-major-petroleum-investment-period/", "published_at": "2026-09-18T00:40:54Z", "tier": "A"},
+    {"title": "NBC Dr Daoni NIPHA", "url": "https://www.nbc.com.pg/post/39983/dr-daoni-sworn-into-new-ireland-pha-board", "published_at": "2026-09-18T01:30:00Z", "tier": "B"},
+    {"title": "NBC Madang Sisiak 2", "url": "https://www.nbc.com.pg/post/39978/madang-is-no-place-for-harbouring-criminals-says-ppc-baim", "published_at": "2026-09-18T00:57:00Z", "tier": "B"},
+    {"title": "Samoa Observer ASM DSM", "url": "https://www.samoaobserver.ws/category/samoa/122089", "published_at": "2026-09-17T23:54:00Z", "tier": "B"},
+    {"title": "Daily Post /news", "url": "https://www.dailypost.vu/news/", "published_at": "2026-09-18T02:00:10Z", "tier": "B"},
+    {"title": "CSIS AUKUS at Five event", "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward", "published_at": "2026-09-18T01:15:52Z", "tier": "B"},
+    {"title": "pacificmet.net PMMM-4", "url": "https://www.pacificmet.net/pmmm-4", "published_at": "2026-09-16T02:24:04Z", "tier": "A"}
+  ]
+}
