@@ -1,0 +1,47 @@
+{
+  "product": "flash",
+  "desk": "asean",
+  "window_start_utc": "2026-09-18T05:50:00Z",
+  "window_end_utc": "2026-09-18T06:50:00Z",
+  "generated_at_utc": "2026-09-18T06:55:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["PHL", "CHN"],
+  "asean_institutional": false,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": true,
+  "flash_trigger": "collision_major_power_asset",
+  "priority_items": [
+    {
+      "title": "FLASH: CCG-21585 rammed BFAR BRP Datu Magat Salamat near Palawan; hull damage, no injuries; CCG blames PH course change",
+      "summary": "PCG (Tarriela via GMA 13:56 PHT; Reuters/ST): CCG hull 21585 made a ~10 m stern pass at 11:04 PHT then rammed BRP Datu Magat Salamat at 11:13 PHT (03:13 UTC) ~6.36 NM NNW of Abad Santos Shoal, ~54 NM off Palawan, during a fuel-subsidy mission. Starboard railings/stanchions/deck fixtures damaged; debris on deck; no injuries. PCG: 'deliberately rammed a civilian government vessel.' Commandant Gavan ordered surface/air assets to assist. CCG (ST 14:33 SGT update): law enforcement near Sabina Shoal; PH vessel ignored warnings, altered course, cut across CCG bow; China 'professional.' Same BFAR hull grounded Thursday at Hasa-Hasa and was refloated — context, not a second FLASH. No shots fired. No emergency AMM printed.",
+      "countries": ["PHL", "CHN"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["SCS", "WPS", "gray_zone", "coast_guard", "maritime"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/nation/1002818/chinese-vessel-rams-ph-ship-on-fuel-subsidy-mission-near-palawan/story/",
+        "https://www.gmanetwork.com/news/topstories/nation/1002806/bfar-vessel-runs-aground-at-hasa-hasa-shoal-in-west-ph-sea-pcg/story/",
+        "https://www.straitstimes.com/asia/china-vessel-rams-and-damages-philippine-fishing-boat-coast-guard-says",
+        "https://www.reuters.com/world/china/china-vessel-rams-damages-philippine-fishing-boat-coast-guard-says-2026-09-18/"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "WPS gray-zone collision cycle (CCG–BFAR) with Chair-year political spillover",
+      "direction": "up",
+      "horizon": "24-72h",
+      "confidence": "M",
+      "trigger_to_escalate": "shots fired, injuries/casualties, second hull contact, water cannon, or emergency AMM/ARF statement"
+    }
+  ],
+  "open_questions": [
+    "PCG Abad Santos Shoal vs CCG Sabina Shoal — same feature or two locations?",
+    "PCG/BFAR and CCG/MFA primary HTML or video still not retrieved this hour",
+    "Any later injury report, CCG hull-damage claim, or US/ally operational reaction"
+  ]
+}
