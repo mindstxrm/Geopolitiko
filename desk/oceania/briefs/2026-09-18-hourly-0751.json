@@ -1,0 +1,259 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-18T07:00:00Z",
+  "window_end_utc": "2026-09-18T07:51:00Z",
+  "generated_at_utc": "2026-09-18T08:20:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-18",
+  "parent_hourly": "2026-09-18T05:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Catch-up AP Matui SAR close-out; Daily Post still lists 55/39; arrest unconfirmed",
+      "summary": "AP via ABC News (datePublished 06:04:37Z, inside the daily window; first ingested this hourly): VMSA deputy commissioner Fikiasi says the at-sea search ended Thursday; 53 aboard as spoken; 2 bodies last weekend; 37 still missing / 39 presumed dead. Napat Friday Santo/Ambae survivor visits and a 27 Sep national memorial are AP-only. Daily Post listing still holds the 55/39 CLAIM (article LM still 16 Sep 21:57:16 GMT). Arrest still unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 4,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["matui", "sar", "vmsa", "napat", "toll_accounting"],
+      "sources": [
+        "https://abcnews.go.com/International/wireStory/vanuatu-ends-search-37-people-missing-ferry-sinking-136550109",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html"
+      ]
+    },
+    {
+      "title": "Catch-up PINA/Fiji Sun Sivendra $10bn NDC vs leftover $1.5bn Vuvale package",
+      "summary": "PINA (datePublished 20:48 UTC 17 Sep; 18 Sep archive page 2; SOURCE FIJI SUN): Climate PS Michael told the Foreign Affairs standing committee Fiji needs about $10bn to deliver its national climate plan. Leftover >$1.5bn Australian-support CLAIM now split as ~$1.05bn grants / $550m loans; exact flow not yet determined. DFAT still HTTP 000. Not a signature. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "economic",
+      "topics": ["vuvale", "climate_finance", "ndc", "sivendra"],
+      "sources": [
+        "https://pina.com.fj/2026/09/18/fiji-needs-10b-for-national-climate-plan/"
+      ]
+    },
+    {
+      "title": "Catch-up Lau grounding; passengers safe; Bai ni Takali Saturday run",
+      "summary": "FijiVillage (datePublished 06:42:05 UTC, 18 min before daily cutoff; first ingested this hourly): MSAF says an unnamed vessel ran aground at Namuka boat passage, Lau, ~06:30 Wednesday; all passengers safe; government vessel MV Bai ni Takali scheduled to depart Suva Saturday 19 Sep FJT. Distinct from Matui. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["msaf", "lau", "grounding", "bai_ni_takali"],
+      "sources": [
+        "https://www.fijivillage.com/news/vessel-grounded-in-lau-mv-bai-ni-takali-to-depart-suva-tomorrow-0f1751/"
+      ]
+    },
+    {
+      "title": "CSIS AUKUS-at-Five LM tick still has no native recap; ASPI recovered 200",
+      "summary": "CSIS event Last-Modified 07:18:54 GMT (daily was 06:35:21). Still zero recap/transcript language; oembed still 3atxhexzf2k. ABC AUKUS/HIV unmodified. Home Affairs transcript 200; PALM named once. ASPI homepage recovered 200 (daily was 403). No named cyclone. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["aukus", "csis", "aspi", "palm"],
+      "sources": [
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.aspi.org.au/"
+      ]
+    },
+    {
+      "title": "PMMM-4 official PDF still unpublished ~48 h later; Wale still future-tense Friday evening",
+      "summary": "pacificmet.net still draft/future tense; Last-Modified still 05:07:15 GMT; Siu-i-Alaimoana strings still absent. Island Sun still says Wale will leave Solomon Islands today at ~19:04 Friday 18 Sep SBT. AUS-SLB unsigned. Catch-up PINA POPCCC climate journal launch (20:45 UTC 17 Sep) is not a Forum communiqué. Not FLASH.",
+      "countries": ["TON", "SLB", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["pmmm4", "wale", "unga", "aus_slb_treaty", "popccc"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/",
+        "https://pina.com.fj/2026/09/18/pacific-climate-change-journal-launched-at-popccc-strengthens-pacific-climate-science-and-policy/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "MV Matui SAR close-out (AP/Fikiasi)",
+      "parties": ["VUT"],
+      "this_hour_delta": "Catch-up AP 06:04:37Z: at-sea search ended Thursday; 37 missing / 39 presumed dead; 53 aboard as spoken. Daily Post still lists 55/39. Arrest unconfirmed.",
+      "status": "operational_closeout_unreconciled_toll",
+      "bindingness": "operational (not a gazette)",
+      "flash": false
+    },
+    {
+      "instrument": "Vuvale climate-finance figures (Sivendra)",
+      "parties": ["FJI", "AUS"],
+      "this_hour_delta": "Catch-up PINA 20:48 UTC 17 Sep: ~$10bn NDC-plan CLAIM vs >$1.5bn package split ~$1.05bn grants / $550m loans. Exact flow undetermined. DFAT 000.",
+      "status": "committee_claim",
+      "bindingness": "political (not a this-hour signature)",
+      "flash": false
+    },
+    {
+      "instrument": "Namuka/Lau grounding + Bai ni Takali run",
+      "parties": ["FJI"],
+      "this_hour_delta": "Catch-up FijiVillage 06:42 UTC: MSAF passengers safe; Bai ni Takali Saturday 19 Sep.",
+      "status": "operational",
+      "bindingness": "operational (not a compact)",
+      "flash": false
+    },
+    {
+      "instrument": "POPCCC Pacific Climate Change Journal",
+      "parties": ["SLB", "SINU"],
+      "this_hour_delta": "Catch-up PINA 20:45 UTC 17 Sep: launched POPCCC day one; first edition 2027.",
+      "status": "announced",
+      "bindingness": "research platform (not a Forum communiqué)",
+      "flash": false
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five",
+      "parties": ["AUS", "GBR", "USA"],
+      "this_hour_delta": "Event LM 07:18:54 GMT; still no native recap; oembed 3atxhexzf2k.",
+      "status": "analysis",
+      "bindingness": "analysis (not operational)",
+      "flash": false
+    },
+    {
+      "instrument": "AUS-SLB treaty",
+      "parties": ["AUS", "SLB"],
+      "this_hour_delta": "Unchanged: in-principle, unsigned; Island Sun still future-tense at ~19:04 Friday SBT.",
+      "status": "announced",
+      "bindingness": "political",
+      "flash": false
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": ["TON", "SPREP", "WMO", "PMC"],
+      "this_hour_delta": "Official PDF still unpublished ~48 h after reception close; LM still 05:07:15 GMT.",
+      "status": "convened",
+      "bindingness": "political (ministerial declaration reprint)",
+      "flash": false
+    },
+    {
+      "instrument": "TUV-TWN diplomatic track",
+      "parties": ["TUV", "TWN"],
+      "this_hour_delta": "Funafuti MFA 000; 47th anniversary tomorrow 19 Sep. Not a switch.",
+      "status": "in_force",
+      "bindingness": "political (existing recognition)",
+      "flash": false
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "up_colour_ap_sar_closeout_unreconciled_5539",
+      "horizon": "48-96h",
+      "confidence": "H",
+      "escalate_trigger": "Death toll >> either band; charges executed; gazette of vessel-category rules that implies a capacity breach; extra-legal revenge on Ambae — not FLASH on an AP close-out or a WAF tick"
+    },
+    {
+      "risk": "FJI-AUS Vuvale climate-finance CLAIM granularity",
+      "direction": "up_colour_pina_10bn_grant_loan_split",
+      "horizon": "weeks-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "DFAT table that locks the split, or a committee report that blocks ratification — not FLASH on a ministry CLAIM"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "unchanged_cog_leftover_22_sep_overlay_report_unpublished",
+      "horizon": "days-90d (through Feb 2027 GE backstop)",
+      "confidence": "M",
+      "escalate_trigger": "Extra-parliamentary rupture, extra-constitutional act, or gazetted text that resets the electoral system — not FLASH on leftovers"
+    },
+    {
+      "risk": "FJI outer-island vessel grounding (Namuka/Lau)",
+      "direction": "up_fijivillage_msaf_passengers_safe",
+      "horizon": "48h",
+      "confidence": "H",
+      "escalate_trigger": "Casualties, or a second Matui-scale failure — not FLASH on a safe grounding"
+    },
+    {
+      "risk": "SLB UNGA / AUS-SLB treaty",
+      "direction": "unchanged_island_sun_future_tense_friday_evening_unsigned",
+      "horizon": "days (UNGA week)",
+      "confidence": "M",
+      "escalate_trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "unchanged_official_pdf_missing_48h",
+      "horizon": "hours-48h",
+      "confidence": "M",
+      "escalate_trigger": "Text that binds NMHS/enforcement as a legal instrument"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "unchanged_lm_071854_still_no_native_recap",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "escalate_trigger": "Official Pillar I/II operational shift — not FLASH on a Last-Modified tick"
+    },
+    {
+      "risk": "TUV-TWN diplomatic track",
+      "direction": "unchanged_not_a_switch_funafuti_000_anniversary_tomorrow",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "escalate_trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "Panguna security / ABG-Waigani split",
+      "direction": "unchanged_39939_off_nbc_homepage_abg_still_no_16_sep",
+      "horizon": "48h-ratification",
+      "confidence": "M",
+      "escalate_trigger": "BPS-confirmed fatalities well above CLAIM; PNGDF deployment talk; FLASH only if extra-constitutional"
+    },
+    {
+      "risk": "FJI HIV emergency / implementation",
+      "direction": "unchanged_abc_unmodified_gazette_missing_dns_000",
+      "horizon": "days-next sitting",
+      "confidence": "M",
+      "escalate_trigger": "Gazette; SO 51 bill; partner package or travel-advisory cascade that implies capacity breach"
+    }
+  ],
+  "open_questions": [
+    "VMSA/NDMO vs still-listed 55/39 vs AP/Fikiasi 53/37/39 vs family-list 53 vs NCL 37: which figure is official now that AP says the at-sea search has ended?",
+    "Has the Matui Master actually been arrested/charged, or is Napuati's s.108 line still a request?",
+    "Napat Friday Santo/Ambae survivor visits: Daily Post/PMO pool vs AP-only? Independent-investigation TOR? 27 Sep memorial gazette?",
+    "Wale New York wheels-down now that Island Sun is still future-tense at ~19:04 Friday 18 Sep SBT?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu?",
+    "CSIS native recap of 3atxhexzf2k?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935 once fiji.gov.fj DNS recovers?",
+    "Fiji CRC: will the report be published on 22 Sep tabling? GE-on-time guarantee answering Lal, Prasad, Seruiratu, and the seven-org list?",
+    "Vuvale: DFAT confirm Sivendra $10bn / $1.05bn grants / $550m loans vs leftover >$1.5bn?",
+    "Funafuti MFA confirmation of Panapa-Lai; 19 Sep anniversary events tomorrow.",
+    "Home Affairs fact sheet vs NPC transcript: any PALM operational change? PIC MFA PALM reaction?",
+    "ABG 16 Sep Panguna readout vs NBC 39939 now off the homepage?",
+    "AUS-SLB: DFAT/Honiara signature from UNGA margins?",
+    "Namuka/Lau: named vessel / owner; Saturday Bai ni Takali departure confirmation?",
+    "Ati actually wheels-up for UNGA, or is Daily Post still leave-today into Friday evening VUT?"
+  ],
+  "sources": [
+    {"title": "AP via ABC News — Vanuatu ends search for 37 people missing in ferry sinking", "url": "https://abcnews.go.com/International/wireStory/vanuatu-ends-search-37-people-missing-ferry-sinking-136550109", "published_at_utc": "2026-09-18T06:04:37Z", "tier": "B", "note": "catch-up; inside daily window"},
+    {"title": "PINA — Fiji needs $10b for national climate plan", "url": "https://pina.com.fj/2026/09/18/fiji-needs-10b-for-national-climate-plan/", "published_at_utc": "2026-09-17T20:48:41Z", "tier": "B", "note": "catch-up; SOURCE FIJI SUN"},
+    {"title": "PINA — Pacific Climate Change Journal launched at POPCCC", "url": "https://pina.com.fj/2026/09/18/pacific-climate-change-journal-launched-at-popccc-strengthens-pacific-climate-science-and-policy/", "published_at_utc": "2026-09-17T20:45:07Z", "tier": "B", "note": "catch-up"},
+    {"title": "FijiVillage — Vessel grounded in Lau, MV Bai ni Takali to depart Suva tomorrow", "url": "https://www.fijivillage.com/news/vessel-grounded-in-lau-mv-bai-ni-takali-to-depart-suva-tomorrow-0f1751/", "published_at_utc": "2026-09-18T06:42:05Z", "tier": "B", "note": "catch-up; 18 min before daily cutoff"},
+    {"title": "Island Sun — Strong wind warning for Solomon waters", "url": "https://theislandsun.com.sb/strong-wind-warning-for-solomon-waters/", "published_at_utc": "2026-09-17T20:00:00Z", "tier": "B", "note": "catch-up SIMS warning 210"},
+    {"title": "Island Sun — PM Wale heads to UNGA", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at_utc": "2026-09-16T00:00:00Z", "tier": "B", "note": "still future-tense ~19:04 Friday SBT"},
+    {"title": "Daily Post /news listing", "url": "https://www.dailypost.vu/news/", "published_at_utc": "2026-09-18T08:04:32Z", "tier": "B", "note": "WAF 429 then 200; 55/39 still listed"},
+    {"title": "CSIS — AUKUS at Five event", "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward", "published_at_utc": "2026-09-18T07:18:54Z", "tier": "B", "note": "LM tick; still no native recap"},
+    {"title": "ASPI homepage", "url": "https://www.aspi.org.au/", "published_at_utc": "2026-09-18T07:49:52Z", "tier": "B", "note": "recovered 200 from daily 403"},
+    {"title": "pacificmet.net — PMMM-4", "url": "https://www.pacificmet.net/pmmm-4", "published_at_utc": "2026-09-18T05:07:15Z", "tier": "A", "note": "still draft; PDF unpublished ~48 h"}
+  ]
+}
