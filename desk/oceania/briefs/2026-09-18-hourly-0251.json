@@ -1,0 +1,235 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-09-18T01:51:00Z",
+  "window_end_utc": "2026-09-18T02:51:00Z",
+  "generated_at_utc": "2026-09-18T03:25:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-09-17",
+  "parent_hourly": "2026-09-18T01:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "COK", "NIU", "NCL", "FRA", "JPN", "IND", "IRL", "ASM"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "RNZ packages Seruiratu with leftover CDD autogolpe CLAIM",
+      "summary": "RNZ Pacific datetime 02:42:21 UTC (RSS pubDate 03:00:02 UTC scan-time): wrap restates leftover 24 Dec 2026 in-force path, Lal/CDD autogolpe CLAIM, Prasad/NFP will-not-rush, and Friday Seruiratu compressed-timetable line. Complements leftover PINA 01:33:57 UTC. Report still unpublished. Legal amendment path, not extra-constitutional. Not FLASH.",
+      "countries": ["FJI", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["CRC", "constitution", "elections"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1457071/fiji-targets-new-constitution-by-christmas-eve-as-watchdog-warns-of-self-coup-risk"
+      ]
+    },
+    {
+      "title": "Daily Post /news recovered 200 both UAs; 55/39 still listed off lead",
+      "summary": "Listing first-probe HTTP 200 both UAs (was 429). LM 03:03:58Z scan-time. Homepage desk 429 / browser 200. 55/39 CLAIM still listed off homepage lead. Arrest still unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "topics": ["Matui SAR", "collection path"],
+      "sources": [
+        "https://www.dailypost.vu/news/",
+        "https://www.dailypost.vu/news/operation-centre-records-55-aboard-mv-matui-39-still-missing/article_3f62b1ec-9419-5e9f-9dc0-d0cd8e90b5b1.html"
+      ]
+    },
+    {
+      "title": "CSIS AUKUS LM ticks 02:16/02:44; still no native recap",
+      "summary": "Event Last-Modified 02:16:06 GMT; commentary 02:44:18 GMT; oembed still 3atxhexzf2k; still no native recap. ABC dateModified still 21:22:11Z. Analysis, not an AUKUS milestone. Not FLASH.",
+      "countries": ["AUS", "GBR", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "indirect",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["AUKUS analysis"],
+      "sources": [
+        "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward",
+        "https://www.csis.org/analysis/aukus-turns-five-real-progress-hard-challenges-ahead"
+      ]
+    },
+    {
+      "title": "BoM desk-UA recovered 200; no named cyclone",
+      "summary": "Specialised cyclone page desk-UA recovered HTTP 200 (was 403). Last-Modified 02:19:34 GMT. No named Category-level system extracted. Collection-path recovery, not a warning. Not FLASH.",
+      "countries": ["AUS"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["cyclone watch", "collection path"],
+      "sources": [
+        "https://www.bom.gov.au/cyclone/"
+      ]
+    },
+    {
+      "title": "PMMM-4 PDF still unpublished ~42 h 51 min later; Island Sun still future-tense; fiji.gov.fj DNS 000",
+      "summary": "Official PMMM-4 PDF unpublished ~42 h 51 min after reception close; pacificmet.net still draft. Island Sun still says Wale will leave today at 13:51 Friday SBT. fiji.gov.fj DNS 000. ABG HTTPS SSL-expired 000; -k 200; still no 16 Sep Panguna readout. Not FLASH.",
+      "countries": ["TON", "SLB", "FJI", "PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["PMMM-4", "UNGA travel", "collection path"],
+      "sources": [
+        "https://www.pacificmet.net/pmmm-4",
+        "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "instrument": "CRC / 2013 amendment path",
+      "parties": "FJI domestic",
+      "status": "in-window RNZ wrap datetime 02:42:21 UTC packages leftover Seruiratu/Prasad/Lal; report still unpublished",
+      "notes": "NZ transmission of leftover compressed-timetable line. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "instrument": "Daily Post /news collection path",
+      "parties": "VUT",
+      "status": "first-probe 200 both UAs (was 429); listing LM 03:03:58Z scan-time; 55/39 still listed, still off lead; homepage desk 429 / browser 200",
+      "notes": "Arrest still unconfirmed. Recovery is not a SITREP. Not FLASH."
+    },
+    {
+      "instrument": "CSIS AUKUS-at-Five event / commentary",
+      "parties": "AUS-GBR-USA (analysis)",
+      "status": "event LM 02:16:06 GMT; commentary LM 02:44:18 GMT; still no native recap; oembed still 3atxhexzf2k",
+      "notes": "LM tick is not a recap. Not FLASH."
+    },
+    {
+      "instrument": "BoM cyclone collection path",
+      "parties": "AUS / regional watch",
+      "status": "desk-UA recovered 200 (was 403); specialised LM 02:19:34 GMT; no named system",
+      "notes": "Recovery is not a warning and not an all-clear. Not FLASH."
+    },
+    {
+      "instrument": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "parties": "TON host; SPREP/WMO/PMC",
+      "status": "official PDF still unpublished ~42 h 51 min after reception close",
+      "notes": "Friday TOT office hours open at 15:51 TOT. Not FLASH."
+    },
+    {
+      "instrument": "AUS-SLB bilateral treaty",
+      "parties": "AUS-SLB",
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT 000; Island Sun still future-tense at 13:51 Friday SBT."
+    },
+    {
+      "instrument": "ABG HTTPS collection path",
+      "parties": "PNG-ABG",
+      "status": "HTTPS SSL-expired 000; insecure -k 200; still 14 Sep leftovers; no 16 Sep Panguna readout",
+      "notes": "Not a licence. Not FLASH."
+    },
+    {
+      "instrument": "fiji.gov.fj collection path",
+      "parties": "FJI",
+      "status": "DNS fail / HTTP 000 this hour (was reachable last hourly); HIV gazette and CRC report still missing",
+      "notes": "Official-site DNS gap is collection, not a gazette event. Not FLASH."
+    },
+    {
+      "instrument": "Home Affairs NPC transcript",
+      "parties": "AUS domestic (PIC labour-mobility watch)",
+      "status": "LM 03:12:07 GMT scan-time; PALM still named once; PEV unnamed",
+      "notes": "CDN tick, not a PALM cut. Not FLASH."
+    },
+    {
+      "instrument": "FBOS services-imports print",
+      "parties": "FJI domestic",
+      "status": "scan-time FBC byline 03:05 UTC; +$97.7m / 17.7% June-quarter services imports; transportation +$75.5m on sea-transport costs",
+      "notes": "Statistical colour, not a compact. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "VUT maritime mass-casualty / legal-governance",
+      "direction": "→",
+      "horizon": "48–96h",
+      "confidence": "H",
+      "trigger": "Death toll >> band; charges executed; gazette of vessel-category rules that implies a capacity breach; extra-legal revenge on Ambae"
+    },
+    {
+      "risk": "FJI constitutional amendment / referendum clock",
+      "direction": "↑",
+      "horizon": "days–90d",
+      "confidence": "M",
+      "trigger": "Extra-parliamentary rupture or gazetted electoral-system reset — not FLASH on an RNZ wrap of leftover interviews"
+    },
+    {
+      "risk": "BoM / Daily Post / fiji.gov.fj collection path",
+      "direction": "↑",
+      "horizon": "hours",
+      "confidence": "H",
+      "trigger": "Named Category-level system, Matui SITREP well above CLAIM band, or gazetted HIV/CRC text once official site recovers — not FLASH on HTTP codes"
+    },
+    {
+      "risk": "SLB UNGA / AUS–SLB treaty",
+      "direction": "→",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Signature or official text from New York margins; a new no-confidence motion"
+    },
+    {
+      "risk": "PMMM-4 / Siu-i-Alaimoana Ki Likutapu",
+      "direction": "→",
+      "horizon": "hours–48h",
+      "confidence": "M",
+      "trigger": "Text that binds NMHS/enforcement as a legal instrument — not FLASH on a still-missing PDF"
+    },
+    {
+      "risk": "TUV–TWN diplomatic track",
+      "direction": "→",
+      "horizon": "days (through 19 Sep)",
+      "confidence": "H",
+      "trigger": "Actual recognition change — then FLASH"
+    },
+    {
+      "risk": "AUKUS political sustainability / CSIS panel",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H",
+      "trigger": "Official Pillar I/II operational shift — not FLASH on a Last-Modified tick"
+    },
+    {
+      "risk": "FJI services-import / freight-cost overlay",
+      "direction": "↑",
+      "horizon": "quarter",
+      "confidence": "M",
+      "trigger": "Official drought-emergency gazette or partner HADR request — not FLASH on a June-quarter statistical release"
+    }
+  ],
+  "open_questions": [
+    "Will the CRC report be published on 22 Sep tabling, and will a GE-on-time guarantee answer Lal, Prasad, and Seruiratu?",
+    "Does DFAT/AIFFP confirm Sivendra’s >$1.5bn line, and what is the official Nadi flood project name?",
+    "Has the Matui Master been arrested/charged, and which passenger figure is official vs 55/39?",
+    "Wale New York wheels-down vs Island Sun still future-tense at 13:51 Friday SBT?",
+    "Official PDF of Siu-i-Alaimoana Ki Likutapu?",
+    "CSIS native recap of 3atxhexzf2k?",
+    "Fiji HIV gazette / Legal Notice under s.69 PHA 1935 once fiji.gov.fj DNS recovers?",
+    "Funafuti MFA confirmation of Panapa–Lai; 19 Sep anniversary events?",
+    "Is the FBOS sea-transport import spike already in the FCCC El Niño freight narrative, or a distinct June-quarter print?",
+    "Papua LNG: is the 2.5% equity an instrument or speech, and do November landowner/provincial agreements move?"
+  ],
+  "sources": [
+    {"title": "RNZ Pacific CRC/CDD/Seruiratu wrap", "url": "https://www.rnz.co.nz/news/pacific/1457071/fiji-targets-new-constitution-by-christmas-eve-as-watchdog-warns-of-self-coup-risk", "published_at": "2026-09-18T02:42:21Z", "tier": "B"},
+    {"title": "RNZ Pacific RSS", "url": "https://www.rnz.co.nz/rss/pacific.xml", "published_at": "2026-09-18T03:00:02Z", "tier": "B"},
+    {"title": "Daily Post /news", "url": "https://www.dailypost.vu/news/", "published_at": "2026-09-18T03:03:58Z", "tier": "B"},
+    {"title": "CSIS AUKUS at Five event", "url": "https://www.csis.org/events/aukus-five-progress-challenges-and-way-forward", "published_at": "2026-09-18T02:16:06Z", "tier": "B"},
+    {"title": "CSIS AUKUS Turns Five commentary", "url": "https://www.csis.org/analysis/aukus-turns-five-real-progress-hard-challenges-ahead", "published_at": "2026-09-18T02:44:18Z", "tier": "B"},
+    {"title": "BoM tropical cyclone specialised", "url": "https://www.bom.gov.au/cyclone/", "published_at": "2026-09-18T02:19:34Z", "tier": "A"},
+    {"title": "pacificmet.net PMMM-4", "url": "https://www.pacificmet.net/pmmm-4", "published_at": "2026-09-16T02:24:04Z", "tier": "A"},
+    {"title": "FBC FBOS services imports", "url": "https://www.fbcnews.com.fj/news/98-million-jump-in-services-imports/", "published_at": "2026-09-18T03:05:00Z", "tier": "B"},
+    {"title": "Island Sun Wale UNGA", "url": "https://theislandsun.com.sb/pm-wale-heads-to-un-general-assembly/", "published_at": "2026-09-16T00:00:00Z", "tier": "B"},
+    {"title": "Home Affairs NPC transcript", "url": "https://minister.homeaffairs.gov.au/TonyBurke/Pages/speech-national-press-club-17092026.aspx", "published_at": "2026-09-18T03:12:07Z", "tier": "A"}
+  ]
+}
