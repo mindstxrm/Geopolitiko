@@ -1,0 +1,225 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-09-28T08:00:00Z",
+  "window_end_utc": "2026-09-29T08:00:00Z",
+  "generated_at_utc": "2026-09-29T21:12:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["MYS", "MMR", "SGP", "IDN", "PHL", "CHN", "THA", "VNM", "KHM", "LAO", "TLS"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "coverage_gap_note": "Last filed daily 2026-09-18 PR #70. This packet does not backfill 19-28 Sep dailies or 21/28 Sep weeklies.",
+  "priority_items": [
+    {
+      "title": "MYS begins first-tranche repatriation of 1,476 Myanmar nationals from Lumut",
+      "summary": "FACT: Home Ministry/Bernama 1,476 (1,370 men, 79 women, 20 boys, 7 girls), ages 8-60, names via 13 Aug diplomatic note; two Myanmar navy ships + hospital ship at Lumut. Reuters witnesses: buses Tuesday morning. UNHCR: no role; conditions for safe return do not exist. Home Ministry did not publish ethnicity of Tuesday cohort. Anwar July CLAIM of 5,000 Rohingya and MAH visit invitation remain invitation ≠ visit. Importance 4.",
+      "countries": ["MYS", "MMR"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["Myanmar", "5PC", "migration", "hedging"],
+      "sources": [
+        "https://www.yahoo.com/news/articles/malaysia-begins-sending-home-myanmar-042253986.html",
+        "https://www.malaysiakini.com/news/885957-malaysia-repatriates-1476-myanmar-refugees-amid-safety-concerns",
+        "https://www.aljazeera.com/news/2026/9/29/malaysia-begins-returning-myanmar-nationals-despite-safety-warnings"
+      ]
+    },
+    {
+      "title": "SGP all-five regions Unhealthy at 16:00 SGT (C161); MYS 31 unhealthy at 10:00 MYT",
+      "summary": "FACT NEA API 16:00 SGT: N108/C161/W145/E137/S126 all Unhealthy. 1-hr PM2.5 at cutoff Normal-Elevated (S64/E59); overnight 01:00 central 1-hr 159 High then eased. haze.gov 5:13 PM sitrep (0900 UTC cycle, 1h13 post-cutoff) names Singapore. Star/Bernama 10:00 MYT APIMS 31 unhealthy, IPD Serian 175 / Johan Setia 164. eqms API HTTP 500. Post-cutoff 16:30 MYT 36 / Johan Setia 176 still <200. Not FLASH.",
+      "countries": ["SGP", "MYS", "IDN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "non_traditional"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-09-29",
+        "https://api.data.gov.sg/v1/environment/pm25?date=2026-09-29",
+        "https://www.haze.gov.sg/",
+        "https://www.weather.gov.sg/haze-situation-update-29-september-2026/",
+        "https://www.thestar.com.my/news/nation/2026/09/29/haze-31-areas-with-unhealthy-api-readings-as-at-10am"
+      ]
+    },
+    {
+      "title": "Kyauktaw market airstrike: AP 33 in-window; AFP aid workers 50 post-cutoff",
+      "summary": "CLAIM AA/AP: fighter jet ~05:30 UTC 28 Sep on Kyauktaw market/Kissapanadi Bridge in AA-held Rakhine; 33 dead / 36 wounded. Strike 2.5h before unfiled 28 Sep cutoff; AP afternoon print in this window. AFP 18:59 UTC 29 Sep (post-cutoff): aid workers + AA 50 dead / 58 injured. Junta not reached. No Chair/5PC text. Do not treat 50 as junta-confirmed FACT.",
+      "countries": ["MMR"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "media_report",
+      "topics": ["Myanmar", "conflict", "5PC"],
+      "sources": [
+        "https://www.cbc.ca/news/world/myanmar-rakhine-arakan-airstrike-9.7361108",
+        "https://www.aljazeera.com/news/2026/9/28/myanmar-army-air-strike-kills-dozens-in-rakhine-state",
+        "https://www.afp.com/en/myanmar-airstrike-death-toll-hits-50-families-gather-bodies"
+      ]
+    },
+    {
+      "title": "PCG drives off CMMV 9622 + 24 sampans at Kota Island; AFP counts 42 Chinese hulls",
+      "summary": "CLAIM PCG: 28 Sep 10:00 PHT CMMV 9622 1.2 NM NW Kota Island launched 24 sampans; radio ignored; withdrew on hand signals; no injuries. Not shots-fired, not a second FLASH on 18 Sep Datu Magat. AFP WPS 22-28 Sep: 42 PLAN/CCG vs 35 prior week. Magbanua vs CCG-3303 off Cabra; Jia Hai Ke 7 off Itbayat. DFA HTML 403. No emergency AMM.",
+      "countries": ["PHL", "CHN"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "official_claim",
+      "topics": ["SCS", "gray_zone", "maritime", "Chair"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/nation/1004066/pcg-drives-away-chinese-militia-vessel-24-fishing-boats-off-kota-island-in-kalayaan-island-group/story/",
+        "https://www.gmanetwork.com/news/topstories/nation/1004116/afp-chinese-vessels-in-wps-rise-to-42-in-past-week/story/",
+        "https://qa.philstar.com/headlines/2026/09/29/2559694/pcg-challenges-china-ships-mindoro-batanes"
+      ]
+    },
+    {
+      "title": "USDIDR 18,000 in-window; BI NDF/spot/DNDF/SBN; IHSG 6,121.70",
+      "summary": "FACT CNBC/Refinitiv 09:55 WIB: IDR 18,000. BI Erwin: continue offshore NDF, domestic spot+DNDF, SBN buys; reserves USD 146.5 bn end-Aug; qtd -0.67%. Named IHSG ANTARA 6,121.70. MYR 4.0790/0850; S&P A- stable. SBV 25,630. No capital controls/bank holiday/default.",
+      "countries": ["IDN", "MYS", "SGP", "VNM"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["macro", "FX", "BI"],
+      "sources": [
+        "https://www.cnbcindonesia.com/market/20260929113217-17-771712/bi-tak-tinggal-diam-rupiah-anjlok-masuk-ke-pasar-langsung-intervensi",
+        "https://jambi.antaranews.com/berita/668469/ihsg-ditutup-melemah-ikuti-bursa-kawasan-asia",
+        "https://www.malaymail.com/news/money/2026/09/29/ringgit-ends-slightly-higher-against-us-dollar-after-sp-reaffirms-malaysias-a-rating/237026"
+      ]
+    },
+    {
+      "title": "Thai Constitutional Court upholds February election (QR 9-0; barcodes 8-1)",
+      "summary": "FACT court statement: QR codes unanimous constitutional; party-list barcodes 8-1. Tracing would need ballot+stub+roll stored separately; no evidence of matching. Recommends future ballots without identifying marks. Feb 8 poll stands; Anutin/Bhumjaithai 192/500 continues.",
+      "countries": ["THA"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["domestic_politics", "elections"],
+      "sources": [
+        "https://english.news.cn/20260928/97ae7855211f4ccc9af5f158d51b568b/c.html",
+        "https://www.bangkokpost.com/thailand/politics/3327599/constitutional-court-dismisses-petition-challenging-february-election-legality"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "MYS-MMR first-tranche repatriation (~1,476)",
+      "type": "returns",
+      "parties": ["MYS", "MMR"],
+      "status": "operational",
+      "date": "2026-09-29",
+      "venue": "Lumut Naval Base, Perak",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Ships at Lumut; UNHCR not involved. Ethnicity of cohort unpublished. Not a 5PC instrument."
+    },
+    {
+      "name": "Anwar invitation to Min Aung Hlaing",
+      "type": "bilateral visit invitation",
+      "parties": ["MYS", "MMR"],
+      "status": "announced",
+      "date": "2026-09-16",
+      "venue": "Kuala Lumpur",
+      "bindingness": "political",
+      "in_window": false,
+      "note": "Invitation ≠ visit; still no MFA hosting text this window."
+    },
+    {
+      "name": "ASEAN DEFA",
+      "type": "digital economy agreement",
+      "parties": ["ASEAN"],
+      "status": "calendar_signing",
+      "date": "2026-11",
+      "venue": "49th ASEAN Summit, Manila",
+      "bindingness": "legal_once_signed",
+      "in_window": false,
+      "note": "AEM-58 JMS (19 Sep) keeps November signing; no new signature this window."
+    },
+    {
+      "name": "CLV civilian-protection / disaster-response exercise",
+      "type": "trilateral drill",
+      "parties": ["KHM", "LAO", "VNM"],
+      "status": "convened",
+      "date": "2026-09-29",
+      "venue": "Hanoi, Engineering Brigade 249",
+      "bindingness": "operational",
+      "in_window": true,
+      "note": "29 Sep-15 Oct; ~80 Cambodian personnel."
+    },
+    {
+      "name": "Zahid haze-assistance offer (CL-415MP + 3 helos + 52)",
+      "type": "operational_offer",
+      "parties": ["MYS", "IDN"],
+      "status": "welcomed_no_MoU",
+      "date": "2026-09-18",
+      "venue": "Hambalang / Jakarta",
+      "bindingness": "political",
+      "in_window": false,
+      "note": "Prabowo welcome 18 Sep; no new signed AATHP instrument 28-29 Sep."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "MYS-MMR returns vs 5PC / non-refoulement",
+      "direction": "up",
+      "horizon": "days-weeks",
+      "confidence": "H",
+      "trigger": "Forced-conscription evidence; ship incident; Chair split on 5PC"
+    },
+    {
+      "risk": "Transboundary haze SGP/MYS",
+      "direction": "up",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger": "PSI >=201 or MYS API >=200 school-close; AATHP emergency"
+    },
+    {
+      "risk": "SCS gray-zone PHL-CHN",
+      "direction": "steady_elevated",
+      "horizon": "hours-days",
+      "confidence": "M",
+      "trigger": "Shots fired; ramming with injuries; emergency AMM"
+    },
+    {
+      "risk": "IDR / EM FX",
+      "direction": "up",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Capital controls; BI FX-reserve plunge; bank holiday"
+    },
+    {
+      "risk": "MMR air campaign / Rakhine",
+      "direction": "up",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger": "Independent 50+ confirmation with junta admission; refugee surge"
+    }
+  ],
+  "open_questions": [
+    "Ethnicity and UNHCR status of the 1,476; ship AIS departure/arrival.",
+    "Junta primary on Kyauktaw; independent casualty list.",
+    "DFA note on Kota/Batanes; CCG primary on CMMV 9622.",
+    "Restore DOE APIMS eqms 15:00 68/68 dump (HTTP 500 this scan).",
+    "Named JISDOR Tuesday close; BI HTML.",
+    "AMCDR PDF; 18th CLMV JMS (do not use 2024 16th PDFs)."
+  ],
+  "sources": [
+    {"title": "Reuters via Yahoo — MYS repatriation Lumut", "publisher": "Reuters", "url": "https://www.yahoo.com/news/articles/malaysia-begins-sending-home-myanmar-042253986.html", "published_at": "2026-09-29T09:55:00Z", "countries": ["MYS", "MMR"], "topics": ["migration"], "claim_type": "fact", "confidence": "H", "tier": "B"},
+    {"title": "Malaysiakini — Home Ministry 1,476", "publisher": "Malaysiakini/Bernama", "url": "https://www.malaysiakini.com/news/885957-malaysia-repatriates-1476-myanmar-refugees-amid-safety-concerns", "published_at": "2026-09-29T09:51:00Z", "countries": ["MYS", "MMR"], "topics": ["migration"], "claim_type": "official_claim", "confidence": "H", "tier": "B"},
+    {"title": "NEA PSI API 29 Sep", "publisher": "NEA", "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-09-29", "published_at": "2026-09-29T08:15:47Z", "countries": ["SGP"], "topics": ["haze"], "claim_type": "fact", "confidence": "H", "tier": "A"},
+    {"title": "haze.gov.sg 5:13 PM sitrep", "publisher": "MSS/NEA", "url": "https://www.haze.gov.sg/", "published_at": "2026-09-29T09:13:00Z", "countries": ["SGP", "MYS", "IDN"], "topics": ["haze"], "claim_type": "fact", "confidence": "H", "tier": "A"},
+    {"title": "Star — APIMS 10:00 MYT", "publisher": "The Star/Bernama", "url": "https://www.thestar.com.my/news/nation/2026/09/29/haze-31-areas-with-unhealthy-api-readings-as-at-10am", "published_at": "2026-09-29T02:15:00Z", "countries": ["MYS"], "topics": ["haze"], "claim_type": "fact", "confidence": "H", "tier": "B"},
+    {"title": "GMA — Kota Island CMMV 9622", "publisher": "GMA", "url": "https://www.gmanetwork.com/news/topstories/nation/1004066/pcg-drives-away-chinese-militia-vessel-24-fishing-boats-off-kota-island-in-kalayaan-island-group/story/", "published_at": "2026-09-29T01:00:00Z", "countries": ["PHL", "CHN"], "topics": ["SCS"], "claim_type": "official_claim", "confidence": "M", "tier": "B"},
+    {"title": "GMA — AFP 42 vessels", "publisher": "GMA", "url": "https://www.gmanetwork.com/news/topstories/nation/1004116/afp-chinese-vessels-in-wps-rise-to-42-in-past-week/story/", "published_at": "2026-09-29T07:12:00Z", "countries": ["PHL", "CHN"], "topics": ["SCS"], "claim_type": "official_claim", "confidence": "M", "tier": "B"},
+    {"title": "AP via CBC — Kyauktaw 33", "publisher": "AP", "url": "https://www.cbc.ca/news/world/myanmar-rakhine-arakan-airstrike-9.7361108", "published_at": "2026-09-28T17:06:00Z", "countries": ["MMR"], "topics": ["conflict"], "claim_type": "media_report", "confidence": "M", "tier": "B"},
+    {"title": "AFP — Kyauktaw 50", "publisher": "AFP", "url": "https://www.afp.com/en/myanmar-airstrike-death-toll-hits-50-families-gather-bodies", "published_at": "2026-09-29T18:59:00Z", "countries": ["MMR"], "topics": ["conflict"], "claim_type": "media_report", "confidence": "M", "tier": "B"},
+    {"title": "Xinhua — Thai Constitutional Court", "publisher": "Xinhua", "url": "https://english.news.cn/20260928/97ae7855211f4ccc9af5f158d51b568b/c.html", "published_at": "2026-09-28T19:19:15Z", "countries": ["THA"], "topics": ["elections"], "claim_type": "fact", "confidence": "H", "tier": "B"},
+    {"title": "CNBC Indonesia — BI IDR 18000", "publisher": "CNBC Indonesia", "url": "https://www.cnbcindonesia.com/market/20260929113217-17-771712/bi-tak-tinggal-diam-rupiah-anjlok-masuk-ke-pasar-langsung-intervensi", "published_at": "2026-09-29T04:35:00Z", "countries": ["IDN"], "topics": ["macro"], "claim_type": "fact", "confidence": "H", "tier": "B"},
+    {"title": "ANTARA — IHSG 6121.70", "publisher": "ANTARA", "url": "https://jambi.antaranews.com/berita/668469/ihsg-ditutup-melemah-ikuti-bursa-kawasan-asia", "published_at": "2026-09-29T10:05:00Z", "countries": ["IDN"], "topics": ["macro"], "claim_type": "fact", "confidence": "H", "tier": "B"},
+    {"title": "AEM-58 JMS PDF", "publisher": "ASEAN", "url": "https://asean.org/wp-content/uploads/2026/09/AEM-58-JMS-Adopted.pdf", "published_at": "2026-09-19T00:00:00Z", "countries": [], "topics": ["ASEAN", "trade"], "claim_type": "fact", "confidence": "H", "tier": "A"}
+  ]
+}
