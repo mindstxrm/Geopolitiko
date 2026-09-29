@@ -1,0 +1,238 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "task": "oceania.daily_brief",
+  "window_start_utc": "2026-09-28T07:00:00Z",
+  "window_end_utc": "2026-09-29T21:07:00Z",
+  "generated_at_utc": "2026-09-29T21:25:00Z",
+  "overall_confidence": "M",
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "pif_institutional": true,
+  "collection_gap": "2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z",
+  "parent_daily": "2026-09-18",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "ISR", "ASM"],
+  "priority_items": [
+    {
+      "title": "FJI — G11 vote CLAIM for Constitution Amendment Bill; First Reading listed 30 Sep; HIV Bill fast-tracked same local day",
+      "summary": "Fiji Sun (20:00 UTC 29 Sep) reports G11 leader Naivalurua committing the 11-member bloc to Rabuka on the Constitution Bill. Paper coalition 38; two-thirds 36 or 37 pending Speaker ruling. Prasad says NFP may vote differently. First Reading listed 30 Sep FJT; Second Reading 2 Oct. Distinct FBC item (19:32:12Z): HIV-AIDS Amendment Bill 2026 harm-reduction clauses, vote listed 30 Sep FJT. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "topics": ["governance", "strategic"],
+      "importance": 4,
+      "confidence": "M",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://fijisun.com.fj/news/nation/g11-commits-votes-to-rabukas-constitution-push",
+        "https://www.fbcnews.com.fj/news/hiv-law-change-fast-tracked/",
+        "https://www.fbcnews.com.fj/news/special-committee-gets-constitution-bill/"
+      ]
+    },
+    {
+      "title": "PIF/UNGA-81 close — PRF/sea-level diplomacy; West Papua OHCHR call; Tevi ICJ ask to France",
+      "summary": "UNGA-81 high-level week ended 29 Sep NZDT. Friday PIF–Guterres dialogue (Whipps/Waqa) pressed PRF capitalisation and maritime-zone permanence. Wale/Heine/Tevi renewed the Forum OHCHR-visit call on West Papua while Wale restated Indonesian sovereignty. Tevi (28 Sep) invited France to consent to ICJ jurisdiction on Umaenupne/Umaeneg (Matthew and Hunter). Heine warned on DSM. Teo cited Funafuti reclamation 15.3 ha. Not a recognition switch. Not FLASH.",
+      "countries": ["PLW", "SLB", "MHL", "VUT", "TUV", "TON", "PNG", "KIR", "IDN", "FRA", "NCL"],
+      "topics": ["climate", "strategic", "governance"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://pmn.co.nz/read/environment/pacific-islands-forum-presses-un-chief-on-climate-finance-and-rising-seas-concerns",
+        "https://www.rnz.co.nz/news/pacific/1630219/pacific-leaders-urge-jakarta-to-allow-un-visit-to-west-papua",
+        "https://pina.com.fj/2026/09/29/vanuatu-raises-west-papua-rights-kanaky-decolonisation-matthew-and-hunter-dispute-at-un/",
+        "https://islandsbusiness.com/pacnews/pacnews-one-28-september-2026/"
+      ]
+    },
+    {
+      "title": "SLB–CHN National Day reception; AUS–SLB treaty still unsigned",
+      "summary": "Island Sun 29 Sep: Acting PM Francis Sade and PRC Chargé Yang Jie at Heritage Park (28 Sep SBT). One-China restated; Yang CLAIM to elevate the comprehensive strategic partnership; police-training CLAIM; trade approaching US$4.3bn CLAIM; Auki Road handover November. Not a new security pact. AUS–SLB remains in-principle unsigned. Not FLASH.",
+      "countries": ["SLB", "CHN", "AUS"],
+      "topics": ["strategic", "economic"],
+      "importance": 4,
+      "confidence": "M",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://theislandsun.com.sb/china-ready-to-take-solomon-islands-partnership-to-a-new-level/",
+        "https://theislandsun.com.sb/acting-pm-congratulates-china-on-77th-anniversary/"
+      ]
+    },
+    {
+      "title": "SPDMM residual — SOFA negotiations tasked; PRG phased; PIF standing invite",
+      "summary": "FBC 29 Sep wrap of 22–24 Sep Nadi SPDMM (gap residual). Formal SOFA negotiations tasked to IWG; PRG HADR-first then possible stabilisation; Waqa Moana exploration; PIF Secretariat standing invitation; AUS hosts 2027. ABC 24 Sep: Hammond requires absolute consensus. Negotiations ≠ in-force SOFA. Not FLASH.",
+      "countries": ["FJI", "AUS", "NZL", "PNG", "TON", "FRA"],
+      "topics": ["strategic"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.fbcnews.com.fj/news/pacific-defence-ministers-unite-on-regional-security/",
+        "https://www.abc.net.au/news/2026-09-24/pacific-defence-ministers-call-for-consensus-military-response/107193088"
+      ]
+    },
+    {
+      "title": "RBA lifts cash rate 25 bp to 4.60%",
+      "summary": "Tier A RBA MR-26-27 (29 Sep): unanimous increase to 4.60%, highest since 2011. Inflation, energy, AI-goods, domestic capacity. Further hikes if needed. Next decision 3 Nov leftover. AUD transmission into PIC imports/remittances/labour mobility. Not FLASH.",
+      "countries": ["AUS"],
+      "topics": ["economic"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "sources": [
+        "https://www.rba.gov.au/media-releases/2026/mr-26-27.html",
+        "https://www.abc.net.au/news/2026-09-29/rba-lifts-rates-highest-level-in-15-years-september-2026/107206640"
+      ]
+    },
+    {
+      "title": "VUT — 27 Sep national mourning for 45 lives; Daily Post no longer leads 55/39",
+      "summary": "RNZ 28 Sep: Sunday memorial at Feiawa Park for Matui (11 Sep) plus Erromango–Tanna (7 Aug); 14 survived, 2 dead, 39 missing as reported. Daily Post /news LM 21:09:11 GMT listing no longer leads the 18 Sep 55/39 card. VBTC converted Tevi UNGA. Arrest unconfirmed. Not FLASH.",
+      "countries": ["VUT"],
+      "topics": ["humanitarian", "governance"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1627211/we-will-not-forget-vanuatu-comes-together-to-honour-45-lives-lost-at-sea-in-recent-weeks"
+      ]
+    },
+    {
+      "title": "NRU — ICC withdrawal intent; US congratulations",
+      "summary": "Adeang told UNGA Naoero would deposit Rome-Statute withdrawal instruments. US A/S DeSombre congratulated DFM Kun (RNZ 28 Sep). Not a Taiwan/PRC switch. Confirm UN deposit. Not FLASH.",
+      "countries": ["NRU", "USA"],
+      "topics": ["governance", "strategic"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1629208/us-congratulates-naoero-on-icc-withdrawal-decision"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Fiji Constitution Amendment Bill",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "announced / First Reading listed 30 Sep 2026",
+      "bindingness": "political until passed and referendum path completed",
+      "strategic_read": "ASSESS: coalition arithmetic, not extra-constitutional"
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health statute",
+      "parties": ["FJI"],
+      "status": "fast-tracked; vote listed 30 Sep 2026 FJT",
+      "bindingness": "legal if passed; commencement by gazette",
+      "strategic_read": "ASSESS: converts missing-gazette watch; not a security pact"
+    },
+    {
+      "name": "SPDMM Status of Forces Agreement",
+      "type": "security",
+      "parties": ["AUS", "CHL", "FJI", "FRA", "NZL", "PNG", "TON"],
+      "status": "negotiations commenced (22–24 Sep 2026 meeting)",
+      "bindingness": "political tasking; legal if concluded",
+      "strategic_read": "ASSESS: access-relevant; negotiations ≠ in force; not FLASH"
+    },
+    {
+      "name": "Plan Tasman",
+      "type": "security (navy-to-navy guidance)",
+      "parties": ["AUS", "NZL"],
+      "status": "signed this month (NZDF 21 Sep; syndicated 29 Sep)",
+      "bindingness": "service-level / political",
+      "strategic_read": "ASSESS: integration-by-design; not AUKUS Pillar I"
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned",
+      "bindingness": "political",
+      "strategic_read": "ASSESS: National Day colour does not substitute a signature"
+    },
+    {
+      "name": "VUT–FRA ICJ Matthew and Hunter",
+      "type": "diplomatic / legal",
+      "parties": ["VUT", "FRA"],
+      "status": "application filed end-August; France asked 28 Sep to consent",
+      "bindingness": "legal if France consents",
+      "strategic_read": "ASSESS: jurisdiction still open"
+    },
+    {
+      "name": "NRU Rome Statute withdrawal",
+      "type": "diplomatic / legal",
+      "parties": ["NRU"],
+      "status": "UNGA intent; US congratulations 28 Sep; deposit unconfirmed",
+      "bindingness": "legal upon deposit",
+      "strategic_read": "ASSESS: alignment with Washington; not a recognition switch"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "FJI constitutional process vs GE clock",
+      "direction": "up",
+      "horizon": "48h–November",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional GE delay or sitting violence — not FLASH on First Reading or G11 quote"
+    },
+    {
+      "risk": "SLB dual-track (unsigned AUS treaty / PRC National Day + police-training CLAIM)",
+      "direction": "steady",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_on": "Signed AUS–SLB text or a new China security instrument — not FLASH on a reception"
+    },
+    {
+      "risk": "VUT maritime governance after Matui",
+      "direction": "down_live_SAR / reform",
+      "horizon": "48h–weeks",
+      "confidence": "H",
+      "escalate_on": "Death toll >> both bands; charges; vessel-category gazette; extra-legal revenge — not FLASH on memorial or listing conversion"
+    },
+    {
+      "risk": "SPDMM SOFA / PRG stabilisation",
+      "direction": "steady",
+      "horizon": "months",
+      "confidence": "M",
+      "escalate_on": "Signed SOFA or a stabilisation deployment — not FLASH on tasking language"
+    },
+    {
+      "risk": "PNG El Niño food-water stress",
+      "direction": "up",
+      "horizon": "weeks–November",
+      "confidence": "M",
+      "escalate_on": "National drought gazette or HADR request — not FLASH on provincial K25m"
+    }
+  ],
+  "open_questions": [
+    "Speaker ruling: two-thirds of 53 sitting MPs vs 55 seats for the Fiji Constitution Bill?",
+    "Did the HIV-AIDS Amendment Bill pass 30 Sep FJT, and is there a gazette?",
+    "Tier A SPDMM joint communiqué PDF (defence.gov.au HTTP 000 this scan)?",
+    "UN treaty-section confirmation of NRU Rome-Statute withdrawal deposit?",
+    "AUS–SLB signature date, or still negotiations-underway?",
+    "Bougainville Constituent Assembly 22–24 Sep outcome (collection gap)?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "Daily Post/VMSA arrest or vessel-category gazette after 27 Sep memorial?",
+    "PMMM-4 official PDF still unpublished from 16–17 Sep sitting?",
+    "PRF pledge table vs Fakafānua US$328m gap as spoken?"
+  ],
+  "sources": [
+    {"title": "G11 commits votes to Rabuka’s Constitution push", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/g11-commits-votes-to-rabukas-constitution-push", "published_at": "2026-09-29T20:00:00Z", "countries": ["FJI"], "topics": ["governance"], "claim_type": "FACT/CLAIM", "confidence": "M", "oceania_relevance": "governance"},
+    {"title": "HIV law change fast-tracked", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/hiv-law-change-fast-tracked/", "published_at": "2026-09-29T19:32:12Z", "countries": ["FJI"], "topics": ["governance"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "governance"},
+    {"title": "Pacific defence ministers unite on regional security", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/pacific-defence-ministers-unite-on-regional-security/", "published_at": "2026-09-28T22:47:00Z", "countries": ["FJI", "AUS", "NZL", "PNG", "TON", "FRA"], "topics": ["strategic"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "strategic"},
+    {"title": "Pacific defence ministers call for consensus on military response group", "publisher": "ABC", "url": "https://www.abc.net.au/news/2026-09-24/pacific-defence-ministers-call-for-consensus-military-response/107193088", "published_at": "2026-09-24T09:59:00Z", "countries": ["FJI", "AUS"], "topics": ["strategic"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "strategic"},
+    {"title": "Monetary Policy Decision MR-26-27", "publisher": "RBA", "url": "https://www.rba.gov.au/media-releases/2026/mr-26-27.html", "published_at": "2026-09-29T04:30:00Z", "countries": ["AUS"], "topics": ["economic"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "economic"},
+    {"title": "Pacific leaders urge Jakarta to allow UN visit to West Papua", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1630219/pacific-leaders-urge-jakarta-to-allow-un-visit-to-west-papua", "published_at": "2026-09-28T00:20:00Z", "countries": ["SLB", "MHL", "IDN"], "topics": ["governance"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "strategic"},
+    {"title": "Vanuatu raises West Papua rights, Kanaky decolonisation, Matthew and Hunter dispute at UN", "publisher": "PINA", "url": "https://pina.com.fj/2026/09/29/vanuatu-raises-west-papua-rights-kanaky-decolonisation-matthew-and-hunter-dispute-at-un/", "published_at": "2026-09-29T00:00:00Z", "countries": ["VUT", "FRA", "NCL", "IDN"], "topics": ["strategic"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "strategic"},
+    {"title": "Pacific Islands Forum presses UN chief on climate finance and rising seas concerns", "publisher": "PMN", "url": "https://pmn.co.nz/read/environment/pacific-islands-forum-presses-un-chief-on-climate-finance-and-rising-seas-concerns", "published_at": "2026-09-27T16:00:00Z", "countries": ["PLW", "TON", "TUV"], "topics": ["climate"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "climate"},
+    {"title": "China ready to take Solomon Islands partnership to a new level", "publisher": "Island Sun", "url": "https://theislandsun.com.sb/china-ready-to-take-solomon-islands-partnership-to-a-new-level/", "published_at": "2026-09-29T00:00:00Z", "countries": ["SLB", "CHN"], "topics": ["strategic"], "claim_type": "FACT/CLAIM", "confidence": "M", "oceania_relevance": "strategic"},
+    {"title": "We will not forget: Vanuatu comes together to honour 45 lives lost at sea", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1627211/we-will-not-forget-vanuatu-comes-together-to-honour-45-lives-lost-at-sea-in-recent-weeks", "published_at": "2026-09-27T22:47:00Z", "countries": ["VUT"], "topics": ["humanitarian"], "claim_type": "FACT", "confidence": "H", "oceania_relevance": "humanitarian"},
+    {"title": "US congratulates Naoero on ICC withdrawal decision", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1629208/us-congratulates-naoero-on-icc-withdrawal-decision", "published_at": "2026-09-28T00:04:00Z", "countries": ["NRU", "USA"], "topics": ["governance"], "claim_type": "CLAIM", "confidence": "M", "oceania_relevance": "strategic"},
+    {"title": "New Zealand, Australia sign pact to deepen naval cooperation", "publisher": "Defense News", "url": "https://www.defensenews.com/global/asia-pacific/2026/09/29/new-zealand-australia-sign-pact-to-deepen-naval-cooperation/", "published_at": "2026-09-29T10:25:20Z", "countries": ["AUS", "NZL"], "topics": ["strategic"], "claim_type": "FACT", "confidence": "M", "oceania_relevance": "strategic"}
+  ]
+}
