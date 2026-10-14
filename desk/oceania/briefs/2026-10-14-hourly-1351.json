@@ -1,0 +1,253 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-14T12:51:00Z",
+  "window_end_utc": "2026-10-14T13:51:00Z",
+  "generated_at_utc": "2026-10-14T14:10:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-14",
+  "parent_hourly": "2026-10-14T12:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Invest 96W HIGH / 92P LOW products unmodified; Stripes CDN LM 13:12 UTC is not a new warning; FMS no warnings",
+      "summary": "No this-hour origin URL. JTWC ABPW still 140600Z–150600Z, LM 05:55:14 GMT: Invest 96W HIGH next 24h near 9.0N 160.4E (~180 nm NE of Pohnpei), winds 18–23 kt; Invest 92P LOW near 7.3S 166.3W (~487 nm NNE of Pago Pago). Stars and Stripes CDN Last-Modified 13:12:15 GMT but article published/modified still 11:56:27Z leftover. NWS Guam TWD still 1123 AM ChST / 01:23 UTC. NWS AFD LM 09:44:33 GMT. Post Guam NWS Cat-1 article LM 09:26:16 GMT. FMS: no weather warnings currently in effect. No named SW Pacific cyclone. Not Category landfall. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "ASM", "WSM", "USA", "FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["invest_96w", "invest_92p", "jtwc", "cofa", "cyclone", "collection_path"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.stripes.com/theaters/asia_pacific/storm_tracker/2026-10-14/96w-invest:-marianas-might-be-in-the-crosshairs-23151384.html",
+        "https://ghs.guam.gov/tropical-cyclone-formation-alert-issued-invest-96w-heavy-rain-increasing-winds-and-high-surf",
+        "https://forecast.weather.gov/product.php?issuedby=PQ&product=TWD&site=gum",
+        "https://www.met.gov.fj/"
+      ]
+    },
+    {
+      "title": "Collection path: Daily Post LM 13:51/13:55 GMT; PINA denial 13:54 UTC; Post Courier RSS rebuild 13:52 UTC; wires/NBC unmodified; no FLASH meteorology or security signature",
+      "summary": "RNZ Pacific RSS newest still Bainivalu 05:16 UTC. FBC RSS newest still 06:30 UTC Harris AI (out of scope). NBC newest still 41287; 41288–41310 404; 41279 still homepage lead. BoM specialised LM unchanged 03:01:24 GMT; NIWA outlook LM still 08:41:35 GMT. Daily Post home/news LM 13:55:20/13:51:37 GMT with VUT-morning article datetimes still 21:00–21:43 UTC 13 Oct. Post Courier RSS LM 13:52:37 GMT, newest item still 10:35:49Z. The National and ASPI still HEAD 403 / GET 200. Island Sun/SIBC/Solomon Star 403. DFAT/Defence HTTP 000. PINA RSS still blocked; pubDate 13:54:06 UTC; stub path /2026/10/15/. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["AUS", "NZL", "PNG", "FJI", "VUT", "SLB"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["collection_path", "cyclone", "aus_slb_treaty"],
+      "sources": [
+        "https://www.rnz.co.nz/rss/pacific.xml",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.nbc.com.pg/",
+        "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.postcourier.com.pg/feed/"
+      ]
+    },
+    {
+      "title": "PNG leftovers unchanged: Bougainville still 20–21 Oct; 41287 still process language; Poroma C-4 distinct from Gerehu",
+      "summary": "National Bougainville listing article still GET 200, LM still 02:56:05 GMT; no division this hour. NBC max still 41287 (Haley Tue 20 Oct leftover). PNG Bulletin Marape 04:34 UTC is daily-window corroboration, not this-hour origin. Poroma SHP C-4 still datePublished 08:14 UTC with paywalled inventory. Tkatchenko K50m Western Province border post and CLRC King/head-of-state recommendation unchanged. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["bougainville", "poroma", "ge27", "boundaries_commission"],
+      "sources": [
+        "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/",
+        "https://www.nbc.com.pg/post/41287/pm-says-boundaries-commission-submission-being-processed",
+        "https://www.postcourier.com.pg/police-seize-military-grade-weapons-and-c-4-explosives-in-raid/",
+        "https://thepngbulletin.com/news/pngnews/politics-pngnews/marape-assures-parliament-electoral-boundary-discrepancies-will-be-fixed-before-2027-polls/"
+      ]
+    },
+    {
+      "title": "FJI CRC still starts 15 Oct 09:00 FJT (~7h); NFP Clause 1 card is 07:33 UTC leftover; no this-hour gazette or committee slot",
+      "summary": "Face-to-face still Thursday 15 Oct Suva Civic Centre 09:00 FJT / 21:00 UTC 14 Oct. Local clock already Thursday FJT (01:51); no overnight SO.129 extension located. Fiji Times Thursday-programme card published 13 Oct 05:44 UTC leftover. Fiji Times NFP Christianity/Clause 1 published 07:33 UTC leftover. FBC RSS no newer CRC slot. laws.gov.fj LM still 12 Oct 11:42:40 GMT. Rabuka sufficient-time leftover vs NFP mid-December ask stands. Parliamentary. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "rabuka", "nfp", "referendum"],
+      "sources": [
+        "https://www.fijitimes.com.fj/public-consultations-on-constitution-bill-begin-on-thursday/",
+        "https://www.fijitimes.com.fj/nfp-wants-christianity-removed-as-founding-constitutional-value/",
+        "https://laws.gov.fj/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "JTWC Invest 96W TCFA / Invest 92P disturbance",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "ASM", "USA"],
+      "status": "no this-hour product update; ABPW still 140600Z, 96W HIGH unnamed 18–23 kt, 92P LOW unnamed; Stripes content timestamps still 11:56:27Z (CDN LM 13:12:15Z); FMS no warnings; no named SW Pacific cyclone",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. CDN Last-Modified ≠ naming or tropical-cyclone watch. Do not fuse preparedness Cat-1 language with current intensity."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; listing still live on National GET; no this-hour division",
+      "bindingness": "constitutional if passed",
+      "assess": "Unchanged vs 12:51. Still collides with Haley Tuesday briefing. Not FLASH."
+    },
+    {
+      "name": "PNG electoral boundaries / GE27",
+      "type": "domestic electoral",
+      "parties": ["PNG"],
+      "status": "no newer NBC than 41287; Marape submission-being-processed leftover; Haley briefing next Tuesday (20 Oct arithmetic)",
+      "bindingness": "Organic Law / possible Supreme Court interpretation; process language until gazetted",
+      "assess": "Not extra-constitutional. Calendar collision with Bougainville 20–21 Oct. Not FLASH."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "face-to-face still starts 15 Oct 09:00 FJT / 21:00 UTC 14 Oct (~7h); Rabuka sufficient-time CLAIM leftover; written submissions to 23 Oct 16:00; NFP asks mid-December; Clause 1 Christianity card is 07:33 UTC leftover; no overnight SO.129 extension",
+      "bindingness": "statute + referendum path",
+      "assess": "Parliamentary bargaining. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned; DFAT/Defence HTTP 000; Island Sun/Solomon Star 403",
+      "bindingness": "political",
+      "assess": "Collection-path ≠ signature."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct; gazette still unconfirmed; laws.gov.fj LM 12 Oct 11:42:40 GMT",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "Unchanged."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Invest 96W (FSM now; GUM/MNP weekend corridor) — HIGH 24h potential, unnamed, 18–23 kt; no this-hour product upgrade",
+      "direction": "unchanged",
+      "horizon": "hours–3 days",
+      "confidence": "M",
+      "escalate_trigger": "Named system plus Category-level landfall with mass-casualty or state-capacity breach on GUM/MNP/FSM — not FLASH on a TCFA, CDN tick, or preparedness recap"
+    },
+    {
+      "risk": "Invest 92P (NNE Pago Pago) — LOW 24h potential, unnamed; FMS no warnings",
+      "direction": "unchanged",
+      "horizon": "1–3 days",
+      "confidence": "M",
+      "escalate_trigger": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on a LOW-potential disturbance"
+    },
+    {
+      "risk": "PNG GE27 60-seat Organic Law / possible Supreme Court path",
+      "direction": "unchanged",
+      "horizon": "days–GE27",
+      "confidence": "M",
+      "escalate_trigger": "Court process that unseats writs, or violence around boundary disputes — not FLASH on a submission-being-processed answer"
+    },
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "6 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "PNG highland / NCD firearms (Poroma C-4 + Gerehu leftover)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Mass-casualty attack, capital-scale unrest, or confirmed C-4 use against critical infrastructure — not FLASH on a seizure teaser"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (NFP mid-December ask; 15 Oct consultations in ~7h; Rabuka sufficient-time)",
+      "direction": "unchanged",
+      "horizon": "hours–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on party conditions"
+    },
+    {
+      "risk": "PNG El Niño implementation (K304m spoken vs North Fly no-lift; K50m border post approved)",
+      "direction": "unchanged",
+      "horizon": "weeks–2027 season",
+      "confidence": "M",
+      "escalate_trigger": "Provincial famine/health collapse or state-capacity breach — not FLASH on a budget figure"
+    },
+    {
+      "risk": "Suva regional-org cyber CLAIM (org unnamed)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "L",
+      "escalate_trigger": "Named org plus Tier A confirmation of a capacity-breaching compromise, or a cable cut"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    },
+    {
+      "risk": "El Niño cyclone season; no named SW Pacific system this hour; 92P LOW; FMS negative",
+      "direction": "unchanged",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    }
+  ],
+  "open_questions": [
+    "96W: next JTWC warning / naming as 29W? NWS Guam watch issuance Thu 15 Oct ChST?",
+    "92P: does any RSMC Nadi / FMS / NIWA product pick it up, or does it remain JTWC-only LOW? (FMS this hour: no warnings.)",
+    "Haley next-Tuesday briefing: confirm 20 Oct 2026 date, venue, public vs closed-door?",
+    "Bird’s 12-month NEC-Secretary CLAIM: gazettal, NEC decision number, or Chief Secretary instrument?",
+    "Will PNG Parliament divide on 20–21 Oct, and in what form, given the Haley briefing the same Tuesday?",
+    "Bird’s 60 seats: PNGEC list vs Supreme Court filing vs Boundaries Commission instrument?",
+    "Poroma SHP C-4: RPNGC inventory, arrests, charges? Keep separate from Gerehu.",
+    "RPNGC Gerehu suspect: charges filed? Named international partner?",
+    "K50m Western Province border post: gazettal / contractor / opening date vs North Fly 500t still without lift?",
+    "Does Turaga remain a formal CRC special-committee member, or only an attendee?",
+    "Will Rabuka extend CRC consultation past 23 Oct 16:00 toward NFP’s mid-December ask, or hold the sufficient-time line?",
+    "NGOCHR s.160 challenge: Speaker/President/Electoral Commission response vs 9 Dec?",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date? DFAT/Defence still HTTP 000.",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM; Fiji-CERT confirmation?",
+    "NEMA bill text / gazettal vs Joseph final-stages CLAIM?",
+    "Porgera 23 Sep coronial or RPNGC SITREP vs 8-dead CLAIM?",
+    "Island Sun / SIBC / Solomon Star CF-403 workaround?",
+    "PMMM-4 official PDF still uncollected?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "1.812 million drought-critical: Tier A situation report vs PNG Bulletin leftover?",
+    "CLRC King/head-of-state recommendation listed for debate, or parked behind 20–21 Oct Bougainville?"
+  ],
+  "sources": [
+    {"title": "Significant Tropical Weather Advisory ABPW10 PGTW 140600", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-14T06:00:00Z", "countries": ["FSM", "GUM", "ASM"], "tier": "A", "confidence": "H"},
+    {"title": "96W Invest: Guam and the Marianas might be in the crosshairs", "publisher": "Stars and Stripes", "url": "https://www.stripes.com/theaters/asia_pacific/storm_tracker/2026-10-14/96w-invest:-marianas-might-be-in-the-crosshairs-23151384.html", "published_at": "2026-10-14T11:56:27Z", "countries": ["GUM", "MNP", "FSM"], "tier": "B", "confidence": "H"},
+    {"title": "Tropical Cyclone Formation Alert Issued for Invest 96W", "publisher": "Guam GHS/OCD", "url": "https://ghs.guam.gov/tropical-cyclone-formation-alert-issued-invest-96w-heavy-rain-increasing-winds-and-high-surf", "published_at": "2026-10-14T01:45:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam Tropical Weather Discussion", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?issuedby=PQ&product=TWD&site=gum", "published_at": "2026-10-14T01:23:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "Fiji Meteorological Service homepage — no warnings in effect", "publisher": "FMS / RSMC Nadi", "url": "https://www.met.gov.fj/", "published_at": "2026-10-14T13:59:48Z", "countries": ["FJI"], "tier": "A", "confidence": "H"},
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-10-14T13:55:20Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "Daily Post /news", "publisher": "Daily Post", "url": "https://www.dailypost.vu/news/", "published_at": "2026-10-14T13:51:37Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PINA feed No Feed Access", "publisher": "PINA", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-14T13:54:06Z", "countries": [], "tier": "C", "confidence": "H"},
+    {"title": "RNZ Pacific RSS", "publisher": "RNZ", "url": "https://www.rnz.co.nz/rss/pacific.xml", "published_at": "2026-10-14T05:16:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Southwest Pacific Tropical Cyclone Outlook - October 2026", "publisher": "NIWA / Earth Sciences NZ", "url": "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026", "published_at": "2026-10-14T08:41:35Z", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "PM says Boundaries Commission submission being processed", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41287/pm-says-boundaries-commission-submission-being-processed", "published_at": "2026-10-14T08:30:00Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-14T02:56:05Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "Police seize Military-Grade weapons and C-4 explosives in raid", "publisher": "Post Courier", "url": "https://www.postcourier.com.pg/police-seize-military-grade-weapons-and-c-4-explosives-in-raid/", "published_at": "2026-10-14T08:14:40Z", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "NFP wants Christianity removed as founding constitutional value", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/nfp-wants-christianity-removed-as-founding-constitutional-value/", "published_at": "2026-10-14T07:33:34Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Public consultations on Constitution Bill begin on Thursday", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/public-consultations-on-constitution-bill-begin-on-thursday/", "published_at": "2026-10-13T05:44:29Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "ASPI homepage", "publisher": "ASPI", "url": "https://www.aspi.org.au/", "published_at": "2026-10-14T04:58:28Z", "countries": ["AUS"], "tier": "B", "confidence": "M"}
+  ]
+}
