@@ -1,0 +1,341 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-14T17:51:00Z",
+  "window_end_utc": "2026-10-14T18:51:00Z",
+  "generated_at_utc": "2026-10-14T19:05:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-14",
+  "parent_hourly": "2026-10-14T17:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "ABPW 141800 reissue; TD 29W still Warning NR 001A CORRECTED; 92P relocated still LOW; Thursday ChST NWS watch window still empty",
+      "summary": "JTWC WTPN32 PGTW 141500 COR Warning NR 001A CORRECTED LM still 17:13:15 GMT. Position/intensity unchanged: 30 kt at 9.6N 161.2E (~989 nm ESE of Andersen AFB). Not NR 002. Next warning still 142100Z (~2h). ABPW10 PGTW 141800 reissued, LM 18:38:16 GMT (parent 14:19:14 / 141500Z). 92P now 6.9S 164.9W (~558 nm NE of Pago Pago), still 22–27 kt, still LOW. Reissue justification is administrative (removed leftover Koguma final-warning line; added subtropical 27W). NWS TCV, TCP, and TCM: none issued recently. CAP still 13 Oct Hydrologic Outlook (GU and MP). TWD issuedby=PQ still 1123 AM ChST leftover (still labels 96W a TCFA). GHS/OCD still the leftover TCFA bulletin. A GHS slug titled Tropical Storm Warning/29W is a 26 Nov 2019 archive (Invest 94W) — do not fuse. FMS: no warnings. Not Category now. Not landfall. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "ASM", "WSM", "USA", "FJI"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td_29w", "invest_96w", "invest_92p", "jtwc", "cofa", "cyclone"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCM&format=CI&version=1",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://api.weather.gov/alerts/active?area=MP",
+        "https://www.met.gov.fj/",
+        "https://ghs.guam.gov/tropical-storm-warning-effect-guam-tropical-depression-29w-forms-north-chuuk"
+      ]
+    },
+    {
+      "title": "Chaudhry warns of “constitutional coup”; CRC face-to-face still ~2h",
+      "summary": "This-hour Fiji Times origin. Chaudhry warns of constitutional coup, article:published_time 2026-10-15T06:00:19+12:00 / 18:00:19Z. FLP leader Mahendra Chaudhry CLAIMS Chapter 16 transitional clauses (211(2)/(3), 219(3), 221, 220) could let the Rabuka government extend its term without a GE; calls consultations a charade; questions 9 Dec referendum authority. No gazette, no SO.129 extension. Fiji Sun today card still 15:30 UTC leftover. Suva Civic Centre still 09:00–12:00 FJT / 21:00 UTC 14 Oct (~2h). Parliamentary opposition CLAIM. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "chaudhry", "rabuka", "chapter_16", "referendum"],
+      "sources": [
+        "https://www.fijitimes.com.fj/chaudhry-warns-of-constitutional-coup/",
+        "https://fijisun.com.fj/news/nation/constitution-bill-consultations-begin-in-suva-today",
+        "https://fijisun.com.fj/news/nation/how-the-constitution-bill-would-reshape-parliament",
+        "https://www.fijitimes.com.fj/nfp-wants-christianity-removed-as-founding-constitutional-value/",
+        "https://laws.gov.fj/"
+      ]
+    },
+    {
+      "title": "Post Courier editorial PNGDF SAGA NOT OVER is the HTML body parent hour lacked",
+      "summary": "This-hour editorial origin. PNGDF SAGA NOT OVER datePublished 18:33:11Z; RSS lastBuildDate 18:33:15Z. Tagged Editorial. Free lede restates PNGDF sent home about 300 new recruits from the 2026 intake on 9 April. Body paywalled; no Defence Minister spelling, no confirmed re-entry count. Thursday 15 Oct print fronts (POM 17:48:57Z / Lae 17:47:12Z) remain leftover. NBC max still 41287; Bougainville listing still 20–21 Oct with no division. Not extra-constitutional. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["pngdf", "recruits", "editorial", "civil_military"],
+      "sources": [
+        "https://www.postcourier.com.pg/pngdf-saga-not-over/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.postcourier.com.pg/front-and-back-pages-184/",
+        "https://www.nbc.com.pg/",
+        "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/"
+      ]
+    },
+    {
+      "title": "FBC: Cabinet-endorsed Lautoka shipbuilding feasibility ($792m as spoken); not a signed yard",
+      "summary": "This-hour FBC origin, pubDate 18:10:40Z. Lautoka identified as preferred site for a $792 million shipbuilding and ship-repair facility after Cabinet endorsement of a feasibility study. Projected $2.7bn revenue vs $2.4bn opex over 30 years; PPP; repair-first then build. Australia indicated support for the next phase (technical, legal, financial); AIFFP engagement continues. Dollar figures CLAIM until Cabinet paper/AIFFP. Not construction start. Not a security pact. Not FLASH.",
+      "countries": ["FJI", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["lautoka", "shipbuilding", "aiffp", "vuvale", "ppp"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/lautoka-identified-for-shipbuilding-facility/",
+        "https://www.fbcnews.com.fj/feed/"
+      ]
+    },
+    {
+      "title": "Collection path: ABPW + Chaudhry + PNGDF editorial + FBC Lautoka are this-hour origins; RNZ CNMI nuclear first-seen; ABC RSS 500 fourth hourly; no FLASH meteorology and no security signature",
+      "summary": "RNZ Pacific RSS first-seen this scan: three items pubDate 17:50:42Z (CNMI Apatang SMR study, no site; cyclone-season travel leftover; South Auckland Pasifika foodbanks). Bainivalu leftover 05:16 UTC. FBC newest now Lautoka 18:10:40Z, not Harris AI 06:30. NBC newest still 41287. BoM specialised LM unchanged 03:01:24 GMT. NIWA outlook LM 14:43:13 GMT. Daily Post home/news LM 18:55:35/18:53:46 GMT with /news article datetimes still ≤21:43 UTC 13 Oct. The National and ASPI GET 200. Island Sun/SIBC/Solomon Star 403. DFAT/Defence HTTP 000 (HTTP/1.1 12s timeout). PINA RSS still blocked; pubDate 18:22:17 UTC; stub path /2026/10/15/. ABC /news/pacific 404; ABC News RSS HTTP 500 fourth consecutive hourly. BenarNews Pacific LM 18:48:22 GMT still 2025 archive. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["AUS", "NZL", "PNG", "FJI", "VUT", "SLB", "MNP"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["collection_path", "cyclone", "aus_slb_treaty", "cnmi_nuclear"],
+      "sources": [
+        "https://www.rnz.co.nz/rss/pacific.xml",
+        "https://www.rnz.co.nz/news/pacific/1915559/northern-marianas-governor-backs-nuclear-power-for-the-us-territory",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.nbc.com.pg/",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "JTWC Tropical Depression 29W Warning NR 001A CORRECTED (ex-Invest 96W) / Invest 92P disturbance",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "ASM", "USA"],
+      "status": "this-hour ABPW reissue: WTPN32 Warning NR 001A CORRECTED still in force (30 kt at 9.6N 161.2E, LM 17:13:15 GMT); not NR 002; ABPW now 141800Z LM 18:38:16 GMT; 92P relocated 6.9S 164.9W still LOW unnamed; NWS TCV/TCP/TCM none-issued ~5h into Thursday ChST; FMS no warnings; no named SW Pacific cyclone",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. 18:38 GMT is an ABPW housekeeping reissue, not Category landfall. Do not fuse a 2019 GHS 29W slug with the 2026 system."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill / Chaudhry Chapter 16 CLAIM",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "this-hour media origin: Fiji Times Chaudhry constitutional-coup CLAIM published 18:00:19Z; face-to-face still starts 15 Oct 09:00 FJT / 21:00 UTC 14 Oct (~2h); Fiji Sun today card still 15:30 UTC leftover; written submissions to 23 Oct 16:00; NFP asks mid-December; no SO.129 extension",
+      "bindingness": "statute + referendum path",
+      "assess": "Opposition CLAIM about continuity clauses, not evidence a GE has been cancelled. Newspaper committee list ≠ Speaker instrument. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "PNGDF 2026 recruitment recall (Post Courier Thursday print + this-hour editorial)",
+      "type": "domestic civil-military / force generation",
+      "parties": ["PNG"],
+      "status": "this-hour editorial origin 18:33:11Z PNGDF SAGA NOT OVER; paywalled after April 9 300-recruit lede; Thursday print 17:47–17:49Z leftover; no gazette",
+      "bindingness": "political / administrative until a gazetted instrument",
+      "assess": "Not extra-constitutional. Not a foreign security presence. Pukpuk overlay is ASSESS only. Not FLASH."
+    },
+    {
+      "name": "Lautoka shipbuilding and repair facility (Cabinet feasibility)",
+      "type": "development / maritime industry / connectivity",
+      "parties": ["FJI", "AUS"],
+      "status": "this-hour FBC origin 18:10:40Z; Cabinet-endorsed feasibility; $792m as spoken; Australia indicated next-phase technical/legal/financial support; AIFFP engagement continues; not a construction contract",
+      "bindingness": "political / programme until a signed construction or PPP contract",
+      "assess": "PIC industrial agency with an observable Australian finance/technical channel. Dual-use optics are ASSESS only. Not a security pact. Not FLASH."
+    },
+    {
+      "name": "Australia Awards PNG 2027 cohort (Post Courier lede)",
+      "type": "development / labour mobility / human capital",
+      "parties": ["AUS", "PNG"],
+      "status": "no this-hour origin: Post Courier datePublished still 15:26:14Z; RSS lastBuildDate 18:33:15Z is the PNGDF editorial, not a new cohort; 103 PNGeans to Australian universities in 2027; paywalled after lede; DFAT HTTP 000",
+      "bindingness": "programme announcement as spoken; not a treaty",
+      "assess": "Single-outlet headcount until DFAT list. Editorial drop ≠ new cohort. Not a security pact. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "CNMI small modular reactor study (Apatang presser / RNZ syndication)",
+      "type": "territory energy / infrastructure",
+      "parties": ["MNP", "USA"],
+      "status": "RNZ first-seen this scan pubDate 17:50:42Z; 13 Oct Marianas Press presser leftover; SMR study, no site, no compact-cash instrument",
+      "bindingness": "political / study; not a construction licence",
+      "assess": "Study ≠ plant ≠ FLASH. OLDC overlay is infrastructure, not a new base."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; listing still live on National GET; no this-hour division",
+      "bindingness": "constitutional if passed",
+      "assess": "Unchanged vs 17:51. Still collides with Haley Tuesday briefing. Not FLASH."
+    },
+    {
+      "name": "PNG electoral boundaries / GE27",
+      "type": "domestic electoral",
+      "parties": ["PNG"],
+      "status": "no newer NBC than 41287; Marape submission-being-processed leftover; Haley briefing next Tuesday (20 Oct arithmetic)",
+      "bindingness": "Organic Law / possible Supreme Court interpretation; process language until gazetted",
+      "assess": "Not extra-constitutional. Calendar collision with Bougainville 20–21 Oct. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned; DFAT/Defence HTTP 000; Island Sun/Solomon Star 403",
+      "bindingness": "political",
+      "assess": "Collection-path ≠ signature."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct; gazette still unconfirmed; laws.gov.fj LM 12 Oct 11:42:40 GMT",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "Unchanged."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD 29W (ex-96W; FSM now; GUM/MNP weekend forecast corridor) — named, Warning NR 001A CORRECTED (LM 17:13 GMT, not NR 002), ABPW reissued 141800Z, 30 kt; no NWS watch ~5h into Thursday ChST; no landfall",
+      "direction": "unchanged",
+      "horizon": "hours–4 days",
+      "confidence": "H",
+      "escalate_trigger": "Named system plus Category-level landfall with mass-casualty or state-capacity breach on GUM/MNP/FSM — not FLASH on an ABPW reissue, a forecast cone, leftover preparedness recaps, or a 2019 CMS slug"
+    },
+    {
+      "risk": "Invest 92P (NE Pago Pago) — position tick to 6.9S 164.9W; still LOW 24h potential, unnamed; FMS no warnings",
+      "direction": "unchanged",
+      "horizon": "1–3 days",
+      "confidence": "M",
+      "escalate_trigger": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on a LOW-potential disturbance or a position tick"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (Chaudhry Chapter 16 CLAIM this hour; NFP mid-December ask; 15 Oct consultations in ~2h)",
+      "direction": "up",
+      "horizon": "hours–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on an opposition newspaper CLAIM or a leftover consultation-day recap"
+    },
+    {
+      "risk": "PNGDF 2026 recruitment recall (Thursday print + this-hour editorial; paywalled)",
+      "direction": "up",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional seizure, capital-scale unrest, or a gazetted force-structure rupture — not FLASH on an editorial lede"
+    },
+    {
+      "risk": "PNG GE27 60-seat Organic Law / possible Supreme Court path",
+      "direction": "unchanged",
+      "horizon": "days–GE27",
+      "confidence": "M",
+      "escalate_trigger": "Court process that unseats writs, or violence around boundary disputes — not FLASH on a submission-being-processed answer"
+    },
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "6 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "PNG highland / NCD firearms (Poroma C-4 + Gerehu leftover)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Mass-casualty attack, capital-scale unrest, or confirmed C-4 use against critical infrastructure — not FLASH on a seizure teaser or a front-page reprint"
+    },
+    {
+      "risk": "Lautoka shipbuilding dual-use optics — FBC feasibility this hour; not a yard, not a base",
+      "direction": "up",
+      "horizon": "months–years",
+      "confidence": "M",
+      "escalate_trigger": "Official confirmation of a radically expanded foreign security presence or a signed naval-exclusive access deal — not FLASH on a Cabinet feasibility recap"
+    },
+    {
+      "risk": "PNG El Niño implementation (K304m spoken vs North Fly no-lift; K50m border post approved)",
+      "direction": "unchanged",
+      "horizon": "weeks–2027 season",
+      "confidence": "M",
+      "escalate_trigger": "Provincial famine/health collapse or state-capacity breach — not FLASH on a budget figure"
+    },
+    {
+      "risk": "Suva regional-org cyber CLAIM (org unnamed)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "L",
+      "escalate_trigger": "Named org plus Tier A confirmation of a capacity-breaching compromise, or a cable cut"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    },
+    {
+      "risk": "El Niño cyclone season; no named SW Pacific system this hour; 92P LOW; FMS negative; 29W is NW Pacific",
+      "direction": "unchanged",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    }
+  ],
+  "open_questions": [
+    "29W Warning NR 002 at 142100Z (~2h): intensity/track change vs 001A? Upgrade past 34 kt?",
+    "NWS Guam: tropical-cyclone watch vs leftover Hydrologic Outlook vs leftover TWD still calling it 96W/TCFA? Thursday ChST morning window is now ~5h local and still empty.",
+    "GHS/OCD: replacement of the TCFA special bulletin with a 29W product?",
+    "US bases TCCOR: still 4, or a this-morning change not collected here?",
+    "92P: does any RSMC Nadi / FMS / NIWA product pick up the 6.9S 164.9W relocation, or does it remain JTWC-only LOW? (FMS this hour: no warnings.)",
+    "JTWC ABPW justification names 29W (KOGUMA) in the housekeeping line — confirm this is a product-text error for 27W Koguma, not a 29W rename.",
+    "Post Courier PNGDF editorial jump: unpaywalled text, Defence Minister spelling, number of recruits, whether they actually re-enter training?",
+    "Chaudhry Chapter 16 CLAIM: CRC/Solicitor-General explainer of Clauses 211/219/221/220 vs Bill text? Rabuka response before 09:00 FJT?",
+    "Haley next-Tuesday briefing: confirm 20 Oct 2026 date, venue, public vs closed-door?",
+    "Bird’s 12-month NEC-Secretary CLAIM: gazettal, NEC decision number, or Chief Secretary instrument?",
+    "Will PNG Parliament divide on 20–21 Oct, and in what form, given the Haley briefing the same Tuesday?",
+    "Bird’s 60 seats: PNGEC list vs Supreme Court filing vs Boundaries Commission instrument?",
+    "Poroma SHP C-4: RPNGC inventory, arrests, charges? Keep separate from Gerehu.",
+    "RPNGC Gerehu suspect: charges filed? Thursday POM front is not a charge sheet.",
+    "K50m Western Province border post: gazettal / contractor / opening date vs North Fly 500t still without lift?",
+    "Fiji Sun still lists Turaga as a government CRC special-committee member. Formal member, or only an attendee?",
+    "Will Rabuka extend CRC consultation past 23 Oct 16:00 toward NFP’s mid-December ask, or hold the sufficient-time line through 15 Oct face-to-face (~2h)?",
+    "NGOCHR s.160 challenge + Chaudhry 9 Dec authority ask: Speaker/President/Electoral Commission response?",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date? DFAT/Defence still HTTP 000.",
+    "DFAT Australia Awards 2027 PNG list: corroborate Post Courier 103 headcount?",
+    "Lautoka $792m / $2.7bn / $2.4bn: Cabinet paper or AIFFP release vs FBC single-source?",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM; Fiji-CERT confirmation?",
+    "NEMA bill text / gazettal vs Joseph final-stages CLAIM vs Bulletin MP-ask leftover?",
+    "Porgera 23 Sep coronial or RPNGC SITREP vs 8-dead CLAIM?",
+    "Island Sun / SIBC / Solomon Star CF-403 workaround?",
+    "PMMM-4 official PDF still uncollected?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "1.812 million drought-critical: Tier A situation report vs PNG Bulletin leftover?",
+    "CLRC King/head-of-state recommendation listed for debate, or parked behind 20–21 Oct Bougainville?",
+    "ABC News RSS HTTP 500 fourth consecutive hourly: transient, or a standing collection-path break?",
+    "CNMI SMR: Hofschneider SJR 24-05 status vs Apatang presser vs any DoE/DoD feasibility funding instrument?"
+  ],
+  "sources": [
+    {"title": "Tropical Depression 29W (TWENTYNINE) Warning NR 001A CORRECTED WTPN32 PGTW 141500 COR", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at": "2026-10-14T17:13:15Z", "countries": ["FSM", "GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "Significant Tropical Weather Advisory ABPW10 PGTW 141800 reissued", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-14T18:38:16Z", "countries": ["FSM", "GUM", "ASM"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam TCV — none issued recently", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1", "published_at": "2026-10-14T18:55:43Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam TCP — none issued recently", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCP&format=CI&version=1", "published_at": "2026-10-14T18:55:43Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam TCM — none issued recently", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCM&format=CI&version=1", "published_at": "2026-10-14T18:55:43Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS API active alerts Guam", "publisher": "NWS", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at": "2026-10-14T18:58:10Z", "countries": ["GUM"], "tier": "A", "confidence": "H"},
+    {"title": "NWS API active alerts CNMI", "publisher": "NWS", "url": "https://api.weather.gov/alerts/active?area=MP", "published_at": "2026-10-14T18:58:10Z", "countries": ["MNP"], "tier": "A", "confidence": "H"},
+    {"title": "Tropical Cyclone Formation Alert Issued for Invest 96W", "publisher": "Guam GHS/OCD", "url": "https://ghs.guam.gov/tropical-cyclone-formation-alert-issued-invest-96w-heavy-rain-increasing-winds-and-high-surf", "published_at": "2026-10-14T01:45:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "Tropical Storm Warning in Effect for Guam; Tropical Depression 29W Forms North of Chuuk (2019 archive)", "publisher": "Guam GHS/OCD", "url": "https://ghs.guam.gov/tropical-storm-warning-effect-guam-tropical-depression-29w-forms-north-chuuk", "published_at": "2019-11-26T00:00:00Z", "countries": ["GUM"], "tier": "A", "confidence": "H"},
+    {"title": "Chaudhry warns of constitutional coup", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/chaudhry-warns-of-constitutional-coup/", "published_at": "2026-10-14T18:00:19Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "PNGDF SAGA NOT OVER", "publisher": "Post Courier", "url": "https://www.postcourier.com.pg/pngdf-saga-not-over/", "published_at": "2026-10-14T18:33:11Z", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "Lautoka identified for shipbuilding facility", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/lautoka-identified-for-shipbuilding-facility/", "published_at": "2026-10-14T18:10:40Z", "countries": ["FJI", "AUS"], "tier": "B", "confidence": "M"},
+    {"title": "Northern Marianas governor backs nuclear power for the US territory", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1915559/northern-marianas-governor-backs-nuclear-power-for-the-us-territory", "published_at": "2026-10-14T17:50:42Z", "countries": ["MNP", "USA"], "tier": "B", "confidence": "H"},
+    {"title": "Kiwi holidaymakers urged to plan ahead as Pacific cyclone season looms", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1915560/kiwi-holidaymakers-urged-to-plan-ahead-as-pacific-cyclone-season-looms", "published_at": "2026-10-14T17:50:42Z", "countries": ["NZL", "FJI", "WSM", "KIR"], "tier": "B", "confidence": "H"},
+    {"title": "Constitution Bill consultations begin in Suva today", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/constitution-bill-consultations-begin-in-suva-today", "published_at": "2026-10-14T15:30:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Australia Awards open new opportunities for 103 Papua New Guineans", "publisher": "Post Courier", "url": "https://www.postcourier.com.pg/australia-awards-open-new-opportunities-for-103-papua-new-guineans/", "published_at": "2026-10-14T15:26:14Z", "countries": ["PNG", "AUS"], "tier": "B", "confidence": "M"},
+    {"title": "Fiji Meteorological Service homepage — no warnings in effect", "publisher": "FMS / RSMC Nadi", "url": "https://www.met.gov.fj/", "published_at": "2026-10-14T18:55:48Z", "countries": ["FJI"], "tier": "A", "confidence": "H"},
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-10-14T18:55:35Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "Daily Post /news", "publisher": "Daily Post", "url": "https://www.dailypost.vu/news/", "published_at": "2026-10-14T18:53:46Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PINA feed No Feed Access", "publisher": "PINA", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-14T18:22:17Z", "countries": [], "tier": "C", "confidence": "H"},
+    {"title": "RNZ Pacific RSS", "publisher": "RNZ", "url": "https://www.rnz.co.nz/rss/pacific.xml", "published_at": "2026-10-14T17:50:42Z", "countries": ["MNP", "NZL", "FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Southwest Pacific Tropical Cyclone Outlook - October 2026", "publisher": "NIWA / Earth Sciences NZ", "url": "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026", "published_at": "2026-10-14T14:43:13Z", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "PM says Boundaries Commission submission being processed", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41287/pm-says-boundaries-commission-submission-being-processed", "published_at": "2026-10-14T08:30:00Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-14T02:56:05Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "NFP wants Christianity removed as founding constitutional value", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/nfp-wants-christianity-removed-as-founding-constitutional-value/", "published_at": "2026-10-14T07:33:34Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "ASPI homepage", "publisher": "ASPI", "url": "https://www.aspi.org.au/", "published_at": "2026-10-14T04:58:28Z", "countries": ["AUS"], "tier": "B", "confidence": "M"}
+  ]
+}
