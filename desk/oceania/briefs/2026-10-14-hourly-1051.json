@@ -1,0 +1,227 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-14T09:51:00Z",
+  "window_end_utc": "2026-10-14T10:51:00Z",
+  "generated_at_utc": "2026-10-14T11:10:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-14",
+  "parent_hourly": "2026-10-14T09:51:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Collection path: Daily Post LM tick; PINA RSS denial timestamp ticked; wires/TC unmodified; no FLASH meteorology or security signature",
+      "summary": "RNZ Pacific RSS newest still Bainivalu 05:16 UTC. FBC RSS newest still 06:30 UTC Harris AI (out of scope). BoM specialised GET 200, LM unchanged 03:01:24 GMT; no named SW Pacific cyclone. NIWA outlook LM still 08:41:35 GMT. Daily Post home/news LM 10:44:26/10:48:07 GMT with VUT-morning article datetimes still 21:00–21:44 UTC 13 Oct. The National and ASPI still HEAD 403 / GET 200. Island Sun/SIBC 403. DFAT/Defence HTTP 000. PINA RSS still blocked; pubDate 10:47:18 UTC. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["AUS", "NZL", "PNG", "FJI", "VUT", "SLB"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["collection_path", "cyclone", "aus_slb_treaty"],
+      "sources": [
+        "https://www.rnz.co.nz/rss/pacific.xml",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.aspi.org.au/"
+      ]
+    },
+    {
+      "title": "PNG Poroma SHP military-grade + C-4 cache (parent-hourly miss); distinct from Gerehu 8 Oct",
+      "summary": "Post Courier datePublished 2026-10-14T08:14:40Z (inside the 08:51 hourly window, missed as a body): PTG / Manning targeted highlands operation in Poroma, Southern Highlands, uncovered military-grade weapons and C-4. Inventory, arrests and charges paywalled. Distinct geography from the 8 Oct Gerehu (NCD) leftover. Not extra-constitutional. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["law_and_order", "poroma", "c4", "gerehu"],
+      "sources": [
+        "https://www.postcourier.com.pg/police-seize-military-grade-weapons-and-c-4-explosives-in-raid/"
+      ]
+    },
+    {
+      "title": "PNG Parliament leftovers: K50m Western Province border post; CLRC King/head-of-state report presented; morning quorum delay did not kill the sitting",
+      "summary": "Tkatchenko (Post Courier 02:00 UTC): NEC approved a K50 million Western Province border facility for urgent Indonesia trade amid El Niño — climate-security logistics, not a security pact. National CLRC report (LM 02:57:43 GMT) recommends replacing the King as Head of State with a Papua New Guinean; presented, not voted. Morning 10:00 PGT quorum halt (00:13 UTC) was temporary; Bird still spoke 19:00 PGT. Bougainville still listed 20–21 Oct. Not FLASH.",
+      "countries": ["PNG", "IDN"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["el_nino", "border", "clrc", "bougainville"],
+      "sources": [
+        "https://www.postcourier.com.pg/government-approves-k50m-border-post-as-el-nino-drought-paralyzes-western-province/",
+        "https://www.thenational.com.pg/foreign-king-or-local-president-for-head-of-state/",
+        "https://www.postcourier.com.pg/parliament-delayed-opposition-takes-seats-early-as-lack-of-quorum-halts-morning-session/",
+        "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/"
+      ]
+    },
+    {
+      "title": "FJI CRC still starts 15 Oct; Rabuka sufficient-time leftover vs NFP mid-December ask; no HIV gazette",
+      "summary": "Fiji Times 14 Oct: special committee met again; face-to-face still Thursday 15 Oct Suva Civic Centre. Fiji Sun datePublished 2026-10-13T20:00:00Z: Rabuka says the public had sufficient time for the CRC; written submissions still 23 Oct 16:00; report to November sitting. Tension with leftover NFP mid-December ask and FHRC 11-day complaint. FBC RSS no newer CRC slot. laws.gov.fj LM still 12 Oct 11:42:40 GMT. Parliamentary. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "rabuka", "nfp", "referendum"],
+      "sources": [
+        "https://www.fijitimes.com.fj/constitution-committee-meets-for-second-time-in-two-days/",
+        "https://fijisun.com.fj/news/nation/public-had-time-to-submit-constitution-views-pm",
+        "https://laws.gov.fj/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NEC K50m Western Province border post",
+      "type": "domestic infrastructure / climate-security logistics",
+      "parties": ["PNG"],
+      "status": "NEC-approved as spoken by Tkatchenko 14 Oct 02:00 UTC; construction/gazettal unconfirmed",
+      "bindingness": "political / budget until gazetted",
+      "assess": "Daily-window catch-up. PNG–IDN trade overlay amid El Niño. Not a security pact. Not FLASH."
+    },
+    {
+      "name": "PNG CLRC Review of the Form and System of Government",
+      "type": "domestic constitutional",
+      "parties": ["PNG"],
+      "status": "report presented to the House; King/head-of-state recommendation not voted",
+      "bindingness": "recommendation until adopted",
+      "assess": "Catch-up via readable National body. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; listing still live on National GET; no this-hour division",
+      "bindingness": "constitutional if passed",
+      "assess": "Unchanged vs 09:51. Morning quorum delay did not cancel the sitting. Not FLASH."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "face-to-face still starts 15 Oct; Rabuka sufficient-time CLAIM leftover; written submissions to 23 Oct 16:00; NFP asks mid-December",
+      "bindingness": "statute + referendum path",
+      "assess": "Parliamentary bargaining. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned; DFAT/Defence HTTP 000; Island Sun 403",
+      "bindingness": "political",
+      "assess": "Collection-path ≠ signature."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct; gazette still unconfirmed; laws.gov.fj LM 12 Oct 11:42:40 GMT",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "Unchanged."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "6 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "PNG GE27 60-seat Organic Law / possible Supreme Court path",
+      "direction": "unchanged",
+      "horizon": "weeks–GE27",
+      "confidence": "M",
+      "escalate_trigger": "Court process that unseats writs, or violence around boundary disputes — not FLASH on a parliamentary warning"
+    },
+    {
+      "risk": "PNG highland / NCD firearms (Poroma C-4 + Gerehu leftover)",
+      "direction": "up",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Mass-casualty attack, capital-scale unrest, or confirmed C-4 use against critical infrastructure — not FLASH on a seizure teaser"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (NFP mid-December ask; 15 Oct consultations; Rabuka sufficient-time)",
+      "direction": "unchanged",
+      "horizon": "days–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on party conditions"
+    },
+    {
+      "risk": "PNG El Niño implementation (K304m spoken vs North Fly no-lift; K50m border post approved)",
+      "direction": "unchanged",
+      "horizon": "weeks–2027 season",
+      "confidence": "M",
+      "escalate_trigger": "Provincial famine/health collapse or state-capacity breach — not FLASH on a budget figure"
+    },
+    {
+      "risk": "Suva regional-org cyber CLAIM (org unnamed)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "L",
+      "escalate_trigger": "Named org plus Tier A confirmation of a capacity-breaching compromise, or a cable cut"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    },
+    {
+      "risk": "El Niño cyclone season; no named SW Pacific system this hour",
+      "direction": "unchanged",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    }
+  ],
+  "open_questions": [
+    "Will PNG Parliament divide on 20–21 Oct, and in what form?",
+    "Bird’s 60 seats: PNGEC list vs Supreme Court filing vs Boundaries Commission instrument?",
+    "Poroma SHP C-4: RPNGC inventory, arrests, charges? Keep separate from Gerehu.",
+    "RPNGC Gerehu suspect: charges filed? Named international partner?",
+    "K50m Western Province border post: gazettal / contractor / opening date vs North Fly 500t still without lift?",
+    "Does Turaga remain a formal CRC special-committee member, or only an attendee?",
+    "Will Rabuka extend CRC consultation past 23 Oct 16:00 toward NFP’s mid-December ask, or hold the sufficient-time line?",
+    "NGOCHR s.160 challenge: Speaker/President/Electoral Commission response vs 9 Dec?",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date? DFAT/Defence still HTTP 000.",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM; Fiji-CERT confirmation?",
+    "NEMA bill text / gazettal vs Joseph final-stages CLAIM?",
+    "Porgera 23 Sep coronial or RPNGC SITREP vs 8-dead CLAIM?",
+    "Island Sun / SIBC CF-403 workaround?",
+    "PMMM-4 official PDF still uncollected?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "1.812 million drought-critical: Tier A situation report vs PNG Bulletin leftover?",
+    "CLRC King/head-of-state recommendation listed for debate, or parked behind 20–21 Oct Bougainville?"
+  ],
+  "sources": [
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-10-14T10:44:26Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "Daily Post /news", "publisher": "Daily Post", "url": "https://www.dailypost.vu/news/", "published_at": "2026-10-14T10:48:07Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PINA feed No Feed Access", "publisher": "PINA", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-14T10:47:18Z", "countries": [], "tier": "C", "confidence": "H"},
+    {"title": "RNZ Pacific RSS", "publisher": "RNZ", "url": "https://www.rnz.co.nz/rss/pacific.xml", "published_at": "2026-10-14T05:16:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Southwest Pacific Tropical Cyclone Outlook - October 2026", "publisher": "NIWA / Earth Sciences NZ", "url": "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026", "published_at": "2026-10-14T08:41:35Z", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "Bird warns of legal risks to 60 seats", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41279/bird-warns-of-legal-risks-to-60-seats", "published_at": "2026-10-14T09:00:00Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "Police seize Military-Grade weapons and C-4 explosives in raid", "publisher": "Post Courier", "url": "https://www.postcourier.com.pg/police-seize-military-grade-weapons-and-c-4-explosives-in-raid/", "published_at": "2026-10-14T08:14:40Z", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "Government approves K50m Border Post as El Niño drought paralyzes Western Province", "publisher": "Post Courier", "url": "https://www.postcourier.com.pg/government-approves-k50m-border-post-as-el-nino-drought-paralyzes-western-province/", "published_at": "2026-10-14T02:00:54Z", "countries": ["PNG", "IDN"], "tier": "B", "confidence": "H"},
+    {"title": "Foreign king or local president for head of state", "publisher": "The National", "url": "https://www.thenational.com.pg/foreign-king-or-local-president-for-head-of-state/", "published_at": "2026-10-14T02:57:43Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-14T02:56:05Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "Constitution committee meets for second time in two days", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/constitution-committee-meets-for-second-time-in-two-days/", "published_at": "2026-10-14", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Public had time to submit Constitution views: PM", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/public-had-time-to-submit-constitution-views-pm", "published_at": "2026-10-13T20:00:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "ASPI homepage", "publisher": "ASPI", "url": "https://www.aspi.org.au/", "published_at": "2026-10-14T04:58:28Z", "countries": ["AUS"], "tier": "B", "confidence": "M"}
+  ]
+}
