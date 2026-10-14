@@ -1,0 +1,50 @@
+{
+  "product": "flash",
+  "desk": "asean",
+  "window_start_utc": "2026-10-14T12:50:00Z",
+  "window_end_utc": "2026-10-14T13:51:00Z",
+  "generated_at_utc": "2026-10-14T13:51:00Z",
+  "overall_confidence": "H",
+  "countries_touched": ["SGP", "MYS", "IDN"],
+  "asean_institutional": false,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": true,
+  "flash_trigger": "psi_ge_201",
+  "priority_items": [
+    {
+      "title": "FLASH: SGP west 24-hr PSI 203 Very Unhealthy at 21:00 SGT; other regions Unhealthy; 1-hr west easing; APIMS max 187<200",
+      "summary": "Official 21:00 SGT (13:00 UTC) 24-hr PSI N127/C184/E174/S161/W203 (update_timestamp 21:00:54 SGT). West 197→203 crosses Very Unhealthy (201–300); first region this episode. 1-hr PM2.5 21:00 W203 High, easing vs 20:00 W274 Very High and 15:00 peak 288 — rolling-index band-cross, not a new 1-hr spike. AsiaOne 13:09 UTC CLAIM: first 2026 Very Unhealthy print vs last-week central 192 (single-outlet). N95/shelters/ActiveSG closures already on from afternoon 1-hr Very High. weather.gov.sg still as-at-4pm PSI 118–168 — not a 9pm print. APIMS 21:00 MYT complete 68/68: 31 unhealthy, Klang 187<200. Not catastrophic-capacity break; no emergency AMM; IDN disaster-status rejection unchanged. Do not rewrite 14 Oct daily PR #87.",
+      "countries": ["SGP", "MYS", "IDN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "official",
+      "topics": ["haze", "AATHP", "public_health", "transboundary"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-10-14",
+        "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-14",
+        "https://www.asiaone.com/singapore/haze-singapore-psi-203-very-unhealthy-western-singapore-oct-14",
+        "https://www.weather.gov.sg/haze-situation-update-14-october-2026/",
+        "https://www.haze.gov.sg/",
+        "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+        "https://www.channelnewsasia.com/singapore/singapore-haze-oct-14-unhealthy-pm-25-psi-6457956"
+      ]
+    }
+  ],
+  "agreements_delta": [],
+  "risks": [
+    {
+      "risk": "SGP 24-hr PSI Very Unhealthy (west) with transboundary haze still feeding from Kalimantan/Sumatra",
+      "direction": "up",
+      "horizon": "6-36h",
+      "confidence": "H",
+      "trigger_to_escalate": "west or other region PSI≥301 Hazardous; APIMS ≥200 with national-capacity break; IDN bencana declaration; emergency AMM; or second FLASH if PSI≥201 spreads island-wide with HTF upgrade"
+    }
+  ],
+  "open_questions": [
+    "Does 22:00 SGT PSI hold west ≥201 or mean-revert as 1-hr PM2.5 eases?",
+    "Dated NEA/MSS 9pm advisory still unpublished (4pm last-good; MSS DNS NXDOMAIN this environment)",
+    "Any 9pm HTF upgrade beyond already-announced N95/shelters/ActiveSG closures?"
+  ]
+}
