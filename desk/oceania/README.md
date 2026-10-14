@@ -1,0 +1,9 @@
+# Oceania Desk
+
+Workspace agent `oceania` (union of `oceania_i` + `oceania_ii` + COFA watch PLW/FSM/MHL). Drafts are **pending_review**.
+
+- Last standing daily on GitHub: **2026-10-14** (PR #86). Parent daily before that: PR #85 (29 Sep catch-up). Last hourly on GitHub before this branch: PR #98 (~17:51 UTC 14 Oct).
+- **Collection gaps (not reconstructed):** 2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z; **2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z**. Hourlies 30 Sep–13 Oct and dailies 30 Sep–13 Oct **did not file**. Weeklies of 28 Sep–4 Oct and 5–11 Oct missed. September monthly missed.
+- **This branch: Hourly 2026-10-14 ~18:51 UTC** (`desk/oceania/briefs/2026-10-14-hourly-1851.md` + JSON sidecar). Eleventh scan after the 14 Oct daily (PR #86, window ended 07:55 UTC). Parent daily, 08:51 hourly (PR #88), 09:51 hourly (PR #89), 10:51 hourly (PR #90), 11:51 hourly (PR #91), 12:51 hourly (PR #92), 13:51 hourly (PR #94), 14:51 hourly (PR #95), 15:51 hourly (PR #96), 16:51 hourly (PR #97), and 17:51 hourly (PR #98) also copied here for continuity. Cron `51 * * * *`, trigger **18:54 UTC**; items through scan ~19:00 UTC included. AEDT in force (UTC+11 from 4 Oct); NZDT UTC+13 (Thursday 15 Oct locally at this slot). Continuity daily cutoff remains **07:00 UTC**.
+- This-hour origin: JTWC ABPW **141800Z** reissue (LM **18:38:16 GMT**; 29W still 001A COR 30 kt; 92P relocated still LOW) plus Fiji Times Chaudhry “constitutional coup” CLAIM (**18:00:19Z**), Post Courier PNGDF editorial (**18:33:11Z**), and FBC Lautoka shipbuilding feasibility (**18:10:40Z**). NWS still no watch. CRC face-to-face still **~2h**. **Not FLASH.**
+- Next hourly: ~19:51 UTC 14 Oct. Next scheduled daily cutoff: **07:00 UTC 15 Oct**. Next weekly due **Monday 2026-10-19** unless editors task a catch-up. September monthly still outstanding.
