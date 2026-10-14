@@ -1,0 +1,232 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-10-13T08:00:00Z",
+  "window_end_utc": "2026-10-14T08:00:00Z",
+  "generated_at_utc": "2026-10-14T08:10:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["IDN", "MYS", "SGP", "MMR", "PHL", "CHN", "THA", "KHM", "VNM", "LAO"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "coverage_gap_note": "Last filed daily 2026-09-29 PR #84. This packet does not backfill 30 Sep–13 Oct dailies, 5/12 Oct weeklies, or the September monthly.",
+  "priority_items": [
+    {
+      "title": "Haze: IDN rejects disaster status; MYS takes AATHP gap to AMM; SGP all-five Unhealthy at cutoff",
+      "summary": "FACT: 16:00 SGT PSI N118/C160/E159/S143/W168 all Unhealthy; 1-hr west 251 Very High (15:00 peak 288). APIMS last complete 15:00 MYT 26 unhealthy, Pasir Gudang 181<200. haze.gov 10:49 AM names Singapore; Unhealthy-to-Hazardous receptors. Dudung: no national disaster, foreign help not discussed. Hasan: will raise haze classification at AMM before 49th Summit. ARI 277,075 in 7 IDN provinces as of 12 Oct. Not FLASH (PSI 168 / API 181).",
+      "countries": ["IDN", "MYS", "SGP"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "AMM", "non-traditional"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-10-14",
+        "https://www.haze.gov.sg/",
+        "https://www.malaymail.com/news/malaysia/2026/10/13/malaysia-aims-to-slap-disaster-status-on-transboundary-haze-at-asean-meet/238881",
+        "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/10/14/regional-fallout-grows-as-indonesia-rejects-disaster-status",
+        "https://www.nst.com.my/world/region/2026/10/1555082/indonesias-prabowo-vows-urgent-action-toxic-haze-hits-singapore-and"
+      ]
+    },
+    {
+      "title": "Fahmi: >3,000 further Myanmar returns 'soon'; 7–8 Oct MAH visit is carry",
+      "summary": "CLAIM (Fahmi 11:49 MYT 14 Oct): MYS is 'first' to get Myanmar to accept refugees at Naypyidaw's expense; >3,000 of various ethnic groups will begin soon. FACT out of window: Anwar–MAH 8 Oct — 10,493 YTD; 3,000–4,000 in depots. No Home Ministry sailing notice this window. Not a 5PC instrument.",
+      "countries": ["MYS", "MMR"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "claim",
+      "topics": ["Myanmar", "5PC", "migration", "hedging"],
+      "sources": [
+        "https://www.malaymail.com/news/malaysia/2026/10/14/fahmi-malaysia-first-country-to-secure-myanmars-acceptance-of-returning-refugees/239035",
+        "https://www.channelnewsasia.com/asia/malaysia-anwar-ibrahim-myanmar-acceptance-min-aung-hlaing-6441536",
+        "https://www.pmo.gov.my/en/verbatim-en/verbatim-text-remarks-by-yab-dato-seri-anwar-ibrahim-prime-minister-of-malaysia-at-a-joint-press-conference-with-his-excellency-min-aung-hlaing/"
+      ]
+    },
+    {
+      "title": "AFP WPS weekly: 27 PLAN/CCG hulls 6–12 Oct vs 42 prior week; no in-window kinetic",
+      "summary": "CLAIM (Trinidad/GMA 12:11 PHT 13 Oct): BDM 8 CCG+4 PLAN; Ayungin 5+4; Pag-asa 3+2; Escoda 1 PLAN. Presence down vs 22–28 Sep 42. No DFA HTML (403). Do not use thin Manila Times Scarborough water-cannon pages. Not a second FLASH on 18 Sep ramming.",
+      "countries": ["PHL", "CHN"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "claim",
+      "topics": ["SCS", "WPS", "gray-zone"],
+      "sources": [
+        "https://www.gmanetwork.com/news/topstories/nation/1005734/27-chinese-vessels-monitored-in-west-philippine-sea-in-past-6-days/story/"
+      ]
+    },
+    {
+      "title": "THA–KHM UNCLOS Annex V round two opens 14 Oct The Hague",
+      "summary": "FACT (Sihasak via Thai PBS 13 Oct): legal/technical document exchange; no substantive decision this stage; ~12 months; THA boundary-first. CLAIM (Ke Sovann, UNHCR ExCom 13 Oct): Thai forces block >20,000 civilian returns. Do not use undated Thai Times landmine copy.",
+      "countries": ["THA", "KHM"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["diplomacy", "UNCLOS", "Mekong", "border"],
+      "sources": [
+        "https://www.thaipbsworld.com/thailand-cambodia-standoff/570922",
+        "https://en.kampucheathmey.com/politics/1149687/"
+      ]
+    },
+    {
+      "title": "VNM–LAO 2027 defence plan signed; 5th CLV civil-defence exercise 14 Oct",
+      "summary": "FACT: Giang–Khamlieng signed the 2027 defence cooperation plan in Hanoi 13 Oct. 5th joint civil-defence exercise at Engineer Brigade 249 on 14 Oct continues the 29 Sep–15 Oct CLV window.",
+      "countries": ["VNM", "LAO", "KHM"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["defense", "HA/DR", "minilateral"],
+      "sources": [
+        "https://vietnamnews.vn/politics-laws/1801905/viet-nam-laos-strengthen-defence-cooperation.html",
+        "https://english.vov.vn/en/politics/diplomacy/vietnam-laos-and-cambodia-strengthen-joint-disaster-response-capabilities-post1341177.vov"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "AMM haze disaster-classification ask",
+      "type": "institutional proposal",
+      "parties": ["MYS", "ASEAN"],
+      "status": "announced",
+      "date": "2026-10-13",
+      "venue": "Sepang (Hasan); AMM TBC ahead of 49th Summit",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Hasan: AADMER natural-disaster mechanisms do not classify haze. Meeting not yet held."
+    },
+    {
+      "name": "IDN national-disaster declaration / foreign firefighting help",
+      "type": "domestic status / assistance",
+      "parties": ["IDN"],
+      "status": "rejected",
+      "date": "2026-10-12",
+      "venue": "Jakarta",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Dudung Monday restated Tue–Wed: still capable; international assistance not discussed. Prabowo ordered additional domestic resources 13 Oct."
+    },
+    {
+      "name": "MYS–MMR further depot returns (~3,000+)",
+      "type": "returns",
+      "parties": ["MYS", "MMR"],
+      "status": "announced",
+      "date": "2026-10-14",
+      "venue": "Putrajaya (Fahmi assembly)",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Sailing unpublished. 7–8 Oct MAH visit is out of window; 29 Sep 1,476 tranche already operational."
+    },
+    {
+      "name": "UNCLOS Annex V second round",
+      "type": "compulsory conciliation",
+      "parties": ["THA", "KHM"],
+      "status": "convened",
+      "date": "2026-10-14",
+      "venue": "The Hague",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Legal/technical; no substantive decision this stage. Boundary-first vs resource-sharing split remains."
+    },
+    {
+      "name": "VNM–LAO defence cooperation plan 2027",
+      "type": "defence plan",
+      "parties": ["VNM", "LAO"],
+      "status": "signed",
+      "date": "2026-10-13",
+      "venue": "Hanoi",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Bilateral special relationship; not an ASEAN-10 pact."
+    },
+    {
+      "name": "5th CLV joint civil-defence exercise",
+      "type": "trilateral drill",
+      "parties": ["KHM", "LAO", "VNM"],
+      "status": "underway",
+      "date": "2026-10-14",
+      "venue": "Engineer Brigade 249, Hanoi",
+      "bindingness": "operational",
+      "in_window": true,
+      "note": "Continuation of 29 Sep–15 Oct CLV window."
+    },
+    {
+      "name": "ASEAN DEFA",
+      "type": "digital economy agreement",
+      "parties": ["ASEAN"],
+      "status": "calendar_signing",
+      "date": "2026-11",
+      "venue": "49th ASEAN Summit, Manila",
+      "bindingness": "legal_once_signed",
+      "in_window": false,
+      "note": "No new signature this window."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze SGP/MYS/IDN + AATHP/AADMER split",
+      "direction": "up",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "PSI >=201 or MYS API >=200 with national-capacity break; emergency AMM"
+    },
+    {
+      "risk": "MYS-MMR returns vs 5PC / non-refoulement",
+      "direction": "up",
+      "horizon": "days-weeks",
+      "confidence": "M",
+      "trigger_to_escalate": "Sailing of the >3000; forced conscription evidence; Chair split"
+    },
+    {
+      "risk": "SCS gray-zone PHL-CHN",
+      "direction": "flat",
+      "horizon": "hours-days",
+      "confidence": "M",
+      "trigger_to_escalate": "Shots; ramming with injuries; emergency AMM"
+    },
+    {
+      "risk": "THA-KHM dual track (PCA + land border)",
+      "direction": "flat",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger_to_escalate": "Hague walkout; dated mine/POW incident with multi-source"
+    },
+    {
+      "risk": "IDR / EM FX",
+      "direction": "flat",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger_to_escalate": "Capital controls; BI FX-reserve plunge; bank holiday"
+    }
+  ],
+  "open_questions": [
+    "Home Ministry sailing order and ethnicity of the Fahmi >3000.",
+    "AMM date and whether haze is on the annotated agenda.",
+    "Complete 16:00 MYT APIMS 68/68 (incomplete 46/68 at cutoff).",
+    "MSS 14 Oct as-at-5pm slug (404 at cutoff).",
+    "Named Wednesday IHSG/STI/JISDOR closes (~09:00 UTC, after cutoff).",
+    "PCA/Thai MFA/AKP body from Hague day-one.",
+    "DFA HTML still 403; CCG primary on the 27-hull week."
+  ],
+  "sources": [
+    {"title": "NEA PSI API 14 Oct", "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-10-14", "published_at": "2026-10-14T08:00:43Z", "publisher": "NEA", "tier": "A"},
+    {"title": "NEA PM2.5 API 14 Oct", "url": "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-14", "published_at": "2026-10-14T08:00:43Z", "publisher": "NEA", "tier": "A"},
+    {"title": "haze.gov.sg sitrep 10:49 AM 14 Oct", "url": "https://www.haze.gov.sg/", "published_at": "2026-10-14T02:49:00Z", "publisher": "NEA/ASMC", "tier": "A"},
+    {"title": "Malay Mail — Hasan AMM haze ask", "url": "https://www.malaymail.com/news/malaysia/2026/10/13/malaysia-aims-to-slap-disaster-status-on-transboundary-haze-at-asean-meet/238881", "published_at": "2026-10-13T01:35:00Z", "publisher": "Malay Mail/Bernama", "tier": "B"},
+    {"title": "The Star — IDN rejects disaster status", "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/10/14/regional-fallout-grows-as-indonesia-rejects-disaster-status", "published_at": "2026-10-14T06:55:00Z", "publisher": "The Star/Jakarta Post", "tier": "B"},
+    {"title": "NST/Reuters — Prabowo resources / ARI 277075", "url": "https://www.nst.com.my/world/region/2026/10/1555082/indonesias-prabowo-vows-urgent-action-toxic-haze-hits-singapore-and", "published_at": "2026-10-13T15:38:00Z", "publisher": "Reuters/NST", "tier": "B"},
+    {"title": "CNA — 1-hr PM2.5 west 288", "url": "https://www.channelnewsasia.com/singapore/singapore-haze-oct-14-unhealthy-pm-25-psi-6457956", "published_at": "2026-10-14T07:00:00Z", "publisher": "CNA", "tier": "B"},
+    {"title": "Malay Mail — Fahmi >3000 returns", "url": "https://www.malaymail.com/news/malaysia/2026/10/14/fahmi-malaysia-first-country-to-secure-myanmars-acceptance-of-returning-refugees/239035", "published_at": "2026-10-14T03:49:00Z", "publisher": "Malay Mail/Bernama", "tier": "B"},
+    {"title": "GMA — AFP 27 vessels", "url": "https://www.gmanetwork.com/news/topstories/nation/1005734/27-chinese-vessels-monitored-in-west-philippine-sea-in-past-6-days/story/", "published_at": "2026-10-13T04:11:00Z", "publisher": "GMA", "tier": "B"},
+    {"title": "Thai PBS — Hague round two", "url": "https://www.thaipbsworld.com/thailand-cambodia-standoff/570922", "published_at": "2026-10-13T03:00:00Z", "publisher": "Thai PBS", "tier": "B"},
+    {"title": "Kampucheathmey — UNHCR ExCom", "url": "https://en.kampucheathmey.com/politics/1149687/", "published_at": "2026-10-14T00:00:00Z", "publisher": "Kampucheathmey", "tier": "C"},
+    {"title": "Vietnam News — 2027 defence plan", "url": "https://vietnamnews.vn/politics-laws/1801905/viet-nam-laos-strengthen-defence-cooperation.html", "published_at": "2026-10-13T09:26:00Z", "publisher": "VNA/VNS", "tier": "A"},
+    {"title": "BI JISDOR", "url": "https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/default.aspx", "published_at": "2026-10-13T00:00:00Z", "publisher": "Bank Indonesia", "tier": "A"},
+    {"title": "Bernama — MYR close", "url": "https://www.bernama.com/en/market/news.php?id=2619732", "published_at": "2026-10-13T11:36:00Z", "publisher": "Bernama", "tier": "A"},
+    {"title": "VietnamPlus — SBV 25646", "url": "https://en.vietnamplus.vn/reference-exchange-rate-increases-13-vnd-on-october-14-post353609.vnp", "published_at": "2026-10-14T01:54:00Z", "publisher": "VNA", "tier": "A"}
+  ]
+}
