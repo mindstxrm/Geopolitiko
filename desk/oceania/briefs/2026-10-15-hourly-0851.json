@@ -1,0 +1,206 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-15T07:55:00Z",
+  "window_end_utc": "2026-10-15T08:51:00Z",
+  "generated_at_utc": "2026-10-15T09:12:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-15",
+  "parent_hourly": "2026-10-15T06:51:00Z",
+  "scan_through_utc": "2026-10-15T08:57:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM", "PHL", "TLS"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "JTWC NR 004 names TD 29W (CHAMPI) still 30 kt; leftover Typhoon Watch / TCP 3A; Guam COR 3 first-file; TCV still none",
+      "summary": "This-window JTWC WTPN32 PGTW 150900 Warning NR 004 (LM 07:54:12 GMT) names Tropical Depression 29W (CHAMPI) still 030 kt at 10.9N 158.4E (~809 nm east of Andersen). Forecast 035/045/055/065/080/095 kt through 72h; next 151500Z. ABPW10 PGTW 150800 reissue (LM 08:03:14 GMT) prints the name; 92P still MEDIUM at 8.3S 164.7W. Leftover NWS TCP Intermediate 3A (LM 06:50:02 GMT) still 35 mph at 10.7N 158.5E with CHANGES None; leftover HLS 349 PM / CAP O.CON (updated 08:49:58Z; leftover SPS dropped). TCV still none. KUAM first-file (parent-daily miss; datePublished 07:28:18Z): Gov Leon Guerrero directed COR 3 as of 5:00 p.m. Thursday / 07:00 UTC. Stripes tracker #5 LM 08:15:00 GMT corroborates COR 3 + Champi; Sunday-over-Guam Cat-1 90-mph is media CLAIM vs JTWC 72h 095 kt. GHS HTML still leftover TCFA + Cat-2 prepare slug. PDN crane LM 08:02:42 GMT: Gantry 6 returned; Yankee anticipated not in force. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "USA", "ASM", "WSM"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td_29w", "champi", "jtwc", "nws_guam", "typhoon_watch", "cor_3", "cofa", "cyclone"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://www.kuam.com/story/364066096/guam-in-cor-3-typhoon-watch-in-effect-prepare-for-at-least-category-2-typhoon",
+        "https://www.stripes.com/theaters/asia_pacific/storm_tracker/2026-10-14/96w-invest:-marianas-might-be-in-the-crosshairs-23151384.html",
+        "https://www.postguam.com/news/local/another-gantry-crane-returns-to-service-as-port-prepares-for-storm/article_232fccc7-00c5-479c-8059-d0ea1ad7f3c9.html",
+        "https://ghs.guam.gov/"
+      ]
+    },
+    {
+      "title": "FMS TDS 150844 UTC upgrades TD01F to LOW TO MODERATE; JTWC 92P still MEDIUM; Gale 002 leftover waters-only",
+      "summary": "This-window RSMC Nadi Tropical Disturbance Summary issued 150844 UTC (FMS RSS lastBuildDate 08:44:29 +1200) analyses TD01F near 08.1S 164.9W at 150600 UTC and raises 24-hour cyclone potential from leftover LOW TO VERY LOW to LOW TO MODERATE. Leftover Gale Warning 002 (150658 UTC) still 35 kt waters-only in box 02-04S 166-170W. Leftover JTWC ABPW 150800 still MEDIUM on 92P at 8.3S 164.7W. No named Southwest Pacific cyclone. Not a Fiji-land warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "FJI", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td01f", "invest_92p", "fms", "rsmc_nadi", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt"
+      ]
+    },
+    {
+      "title": "FJI Nausori advertised window now closed with no venue product; ABC RSS 500 and Honiara 403 continue; AUS-SLB still unsigned",
+      "summary": "FBC lastBuildDate still 05:37:46Z. No new CRC item. Nausori Vunimono High School Hall advertised 05:00-08:00 UTC is now CLOSED; no Fiji Times / Fiji Sun / FBC venue product. FBC ?s=Nausori HTTP 500. Civic Centre leftover 05:08-05:14Z cluster unchanged. Daily Post homepage still HTTP 200 (LM 08:47:34 GMT) with leftover kava-import lead. PINA RSS still No Feed Access (pubDate 08:31:23 UTC). Island Sun / SIBC / Solomon Star homepages 403. DFAT/Defence timeout. ABC News RSS HTTP 500 still. Post Courier lastBuildDate 08:33:35Z is a tick without a new item. NBC still 41304; 41305-41315 404. Not FLASH.",
+      "countries": ["FJI", "AUS", "SLB", "VUT", "PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "collection_path", "aus_slb_treaty"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fijitimes.com.fj/",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.nbc.com.pg/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "JTWC Tropical Depression 29W (CHAMPI) Warning NR 004",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "USA"],
+      "status": "this-window origin: WTPN32 PGTW 150900 LM 07:54:12 GMT; still 030 kt at 10.9N 158.4E; named CHAMPI; next 151500Z",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Sequential warning + name assignment ≠ tropical-storm intensity on this JTWC product (still 30 kt). Forecast 95 kt at 72h is forecast, not current Category."
+    },
+    {
+      "name": "JTWC ABPW10 PGTW 150800 reissue",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "ASM", "WSM", "USA"],
+      "status": "this-window origin: LM 08:03:14 GMT; 29W named CHAMPI still 30 kt; 92P still MEDIUM at 8.3S 164.7W; 28W on final-warning path",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Justification is a system-name update in para 1.A.(2)."
+    },
+    {
+      "name": "NWS TCP PQ2 Intermediate Advisory Number 3A (TD 29W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover: WTPQ32 PGUM 150649 LM 06:50:02 GMT; 449 PM ChST; CHANGES None; still 35 mph at 10.7N 158.5E; Typhoon Watch continued; next scheduled 800 PM ChST",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Did not rebuild this hour. Still does not print Champi."
+    },
+    {
+      "name": "NWS HLS PQ2 / CAP Typhoon Watch continuation (TD 29W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "USA"],
+      "status": "leftover: WTPQ82 PGUM 150549 LM 05:50:16 GMT; 349 PM ChST; NEW INFORMATION None; VTEC O.CON.PGUM.TY.A.4029; CAP updated 08:49:58Z still 3:49 PM headline; leftover SPS dropped from CAP",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. HLS did not rebuild. SPS drop is CAP hygiene, not a watch change."
+    },
+    {
+      "name": "Guam Condition of Readiness 3",
+      "type": "climate / civil defence",
+      "parties": ["GUM", "USA"],
+      "status": "this-hourly first-file (parent-daily miss): KUAM datePublished 07:28:18Z; Gov Leon Guerrero directed COR 3 as of 5:00 p.m. Thursday / 07:00 UTC; Stripes #5 LM 08:15:00 GMT corroborates; GHS/Governor HTML still no COR 3 string",
+      "bindingness": "gubernatorial readiness directive as spoken by KUAM; not a legal security instrument",
+      "assess": "Not FLASH. COR 3 is the 48-hour prep step matching a Typhoon Watch. Not landfall."
+    },
+    {
+      "name": "Port of Guam Heavy Weather Condition Yankee",
+      "type": "climate / port operations",
+      "parties": ["GUM"],
+      "status": "this-window PDN LM 08:02:42 GMT: GM Respicio anticipates Yankee as 29W approaches; Crane 6 returned; Crane 5 still down; Yankee not in force this scan",
+      "bindingness": "port/captain-of-the-port condition (anticipated)",
+      "assess": "Not FLASH. Anticipated ≠ in force."
+    },
+    {
+      "name": "RSMC Nadi TDS 150844 UTC (TD01F)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM", "FJI"],
+      "status": "this-window origin: issued 150844 UTC; potential LOW TO MODERATE (upgrade from leftover LOW TO VERY LOW); centre 08.1S 164.9W at 150600 UTC",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Unnamed. Not a Fiji-land warning. Closes part of the leftover JTWC-Nadi split vs 92P MEDIUM."
+    },
+    {
+      "name": "RSMC Nadi Gale Warning 002",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM"],
+      "status": "leftover: issued 150658 UTC; 35 kt waters-only 02-04S 166-170W; cancels 001",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Unchanged this hour."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD 29W / CHAMPI (FSM now; GUM/MNP weekend forecast corridor)",
+      "direction": "up",
+      "horizon": "hours-4 days",
+      "confidence": "H",
+      "escalate_on": "Named system plus Category-level landfall with mass-casualty or state-capacity breach — not FLASH on NR 004 at 30 kt, a name assignment, leftover Watch/TCP 3A, COR 3, or forecast typhoon language"
+    },
+    {
+      "risk": "TD01F / Invest 92P (ENE Swains)",
+      "direction": "up",
+      "horizon": "1-3 days",
+      "confidence": "M",
+      "escalate_on": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on a Nadi LOW TO MODERATE upgrade or a waters-only gale box"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock",
+      "direction": "unchanged",
+      "horizon": "hours-Dec referendum path",
+      "confidence": "H",
+      "escalate_on": "Extra-constitutional GE delay or sitting violence — not FLASH on a missing Nausori venue product after window-close"
+    },
+    {
+      "risk": "PNG Bougainville ratification (89/118)",
+      "direction": "unchanged",
+      "horizon": "5-6 days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a scheduled 20-21 Oct debate"
+    },
+    {
+      "risk": "AUS-SLB treaty still unsigned / SLB-CHN 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_on": "Signed AUS-SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "NWS 800 PM ChST TCP vs leftover 3A: intensity/track change, Champi name, Watch upgraded to Warning?",
+    "First ChST TCV breakpoint product vs leftover HLS 349 PM / CAP O.CON?",
+    "29W 151500Z: still 30 kt, or upgrade past 34 kt?",
+    "GHS/Governor HTML corroborating KUAM 5:00 p.m. COR 3 directive?",
+    "US bases TCCOR still 4, or moved with island COR 3?",
+    "Port Yankee in force vs PDN anticipated language?",
+    "Delayed Nausori CRC venue product after 08:00 UTC close; any official extension vs 23 Oct 16:00?",
+    "AUS-SLB signature date? DFAT/Defence still timeout.",
+    "ABC News RSS HTTP 500: transient or standing break?",
+    "Will PNG Parliament divide on 20-21 Oct given Haley Tuesday and PICOF-19?"
+  ],
+  "sources": [
+    {"title": "JTWC TD 29W (CHAMPI) Warning NR 004", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at": "2026-10-15T07:54:12Z", "tier": "A"},
+    {"title": "JTWC ABPW10 PGTW 150800 REISSUED", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-15T08:03:14Z", "tier": "A"},
+    {"title": "NWS Guam TCP Intermediate Advisory 3A", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at": "2026-10-15T06:50:02Z", "tier": "A"},
+    {"title": "NWS Guam HLS 349 PM", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt", "published_at": "2026-10-15T05:50:16Z", "tier": "A"},
+    {"title": "NWS Guam TCV none issued", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1", "published_at": "2026-10-15T08:53:59Z", "tier": "A"},
+    {"title": "NWS CAP active alerts Guam", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at": "2026-10-15T08:49:58Z", "tier": "A"},
+    {"title": "KUAM Guam in COR 3", "url": "https://www.kuam.com/story/364066096/guam-in-cor-3-typhoon-watch-in-effect-prepare-for-at-least-category-2-typhoon", "published_at": "2026-10-15T07:28:18Z", "tier": "B"},
+    {"title": "Stars and Stripes TD 29W (Champi) #5", "url": "https://www.stripes.com/theaters/asia_pacific/storm_tracker/2026-10-14/96w-invest:-marianas-might-be-in-the-crosshairs-23151384.html", "published_at": "2026-10-15T08:15:00Z", "tier": "B"},
+    {"title": "PDN gantry crane / port Yankee anticipated", "url": "https://www.postguam.com/news/local/another-gantry-crane-returns-to-service-as-port-prepares-for-storm/article_232fccc7-00c5-479c-8059-d0ea1ad7f3c9.html", "published_at": "2026-10-15T08:02:42Z", "tier": "B"},
+    {"title": "FMS warnings RSS TDS 150844 UTC", "url": "https://www.met.gov.fj/feed/warnings/", "published_at": "2026-10-15T08:44:00Z", "tier": "A"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "published_at": "2026-10-15T05:37:46Z", "tier": "B"},
+    {"title": "PINA feed No Feed Access", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-15T08:31:23Z", "tier": "C"}
+  ]
+}
