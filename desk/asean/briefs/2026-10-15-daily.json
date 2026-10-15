@@ -1,0 +1,276 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-10-14T08:00:00Z",
+  "window_end_utc": "2026-10-15T08:00:00Z",
+  "generated_at_utc": "2026-10-15T08:50:00Z",
+  "overall_confidence": "H",
+  "countries_touched": ["IDN", "MYS", "SGP", "TLS", "PHL", "CHN", "USA", "THA", "KHM", "MMR"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "coverage_gap_note": "Last filed daily 2026-10-14 PR #87. This packet does not backfill 30 Sep–13 Oct dailies, 5/12 Oct weeklies, or the September monthly. Do not rewrite PR #87 / #93 / #84 / #70 / #68 / #48.",
+  "cutoff_prints": {
+    "sgp_psi_1600_sgt": {"north": 123, "central": 187, "east": 163, "south": 156, "west": 192, "band": "all_unhealthy", "update_timestamp": "2026-10-15T16:00:53+08:00"},
+    "sgp_pm25_1hr_1600_sgt": {"north": 95, "central": 181, "east": 147, "south": 140, "west": 151},
+    "sgp_west_24hr_peak_this_window": {"value": 212, "timestamp": "2026-10-15T12:00:00+08:00"},
+    "sgp_west_left_vu": {"value": 196, "timestamp": "2026-10-15T15:00:00+08:00"},
+    "apims_1600_myt": {"complete_68_68": true, "unhealthy": 34, "moderate": 34, "max": 194, "max_station": "Klang"},
+    "psi_0000_sgt": "skipped"
+  },
+  "priority_items": [
+    {
+      "title": "Haze: FLASH W203 already filed; cutoff W192 Unhealthy (left VU); APIMS 194<200; not second FLASH",
+      "summary": "FACT: 16:00 SGT PSI N123/C187/E163/S156/W192 all Unhealthy. West crossed 201 at 21:00 SGT 14 Oct (203, PR #93), peaked 212 at noon 15 Oct, left VU at 15:00 (196). 1-hr cutoff C181 High / W151 High; in-window 1-hr peak W274 at 20:00 SGT 14 Oct. APIMS 16:00 complete 68/68: 34 unhealthy, Klang 194<200. haze.gov 10:43 AM names Singapore + southern Thailand. No bencana; no emergency AMM.",
+      "countries": ["IDN", "MYS", "SGP", "THA"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "FLASH", "non-traditional"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-10-15",
+        "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-15",
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-10-14",
+        "https://www.haze.gov.sg/",
+        "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly"
+      ]
+    },
+    {
+      "title": "TLS nationwide school suspension 15–17 Oct on Indonesian haze (Dili AQI 165–174)",
+      "summary": "FACT (ME/MAE 14 Oct): face-to-face classes suspended nationwide 15–17 Oct. DNMG Dili AQI 165–174 (harmful, not Hazardous). CNA/ST 15 Oct corroboration. School-closure class, not national-capacity break. Accession-track receptor added to the haze map.",
+      "countries": ["TLS", "IDN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "TLS", "accession", "non-traditional"],
+      "sources": [
+        "https://timor-leste.gov.tl/?lang=en",
+        "https://www.channelnewsasia.com/asia/timor-leste-shuts-schools-indonesia-haze-6461526"
+      ]
+    },
+    {
+      "title": "IDN: Polri 223+9 karhutla suspects; dry-ice trial; Hasan first-time talks; still no bencana",
+      "summary": "FACT (Bareskrim 14 Oct): 223 individual suspects (273 reports / 5,157.89 ha) and 9 corporate suspects (98 reports / 25,600.26 ha). CLAIM (Hasan/Bernama): first-time IDN–MYS NADMA/NSC fire talks. FACT (CNA 07:30 UTC 15 Oct): 1.5-ton dry-ice trial over South Sumatra. Dudung disaster-status rejection stands. Jumhur 'assess foreign aid' is 13 Oct forum gap-carry.",
+      "countries": ["IDN", "MYS"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "enforcement", "AATHP"],
+      "sources": [
+        "https://tribratanews.polri.go.id/blog/nasional-3/bareskrim-tetapkan-9-tersangka-karhutla-korporasi-223-orang-dijerat-kasus-perorangan-107209",
+        "https://www.channelnewsasia.com/asia/indonesia-individuals-companies-suspects-forest-fires-haze-6458531",
+        "https://www.thestar.com.my/news/nation/2026/10/15/joint-action-to-tackle-haze",
+        "https://www.channelnewsasia.com/asia/indonesia-test-dry-ice-seeding-combat-haze-air-quality-visibility-6461586"
+      ]
+    },
+    {
+      "title": "WPS: Malvar patrol at Bajo de Masinloc + 16th PH–US MCA; no aggressive acts",
+      "summary": "FACT (ABS-CBN 14:52 PHT 15 Oct): BRP Miguel Malvar ~20 NM south of BDM; 2 PLAN + 1 CCG; radio challenge PLAN 554; PLAN 544 closest 0.6 NM; Chinese chopper tailed AW109; no aggressive acts / no dangerous maneuvers / no new structures. FACT: 16th PH–US MCA (Malvar / Melchora Aquino / USS Warrior) sea phase in window. Not FLASH. DFA HTML 403.",
+      "countries": ["PHL", "CHN", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["SCS", "WPS", "gray-zone", "exercises"],
+      "sources": [
+        "https://www.abs-cbn.com/news/nation/2026/10/15/ph-navy-spots-3-chinese-vessels-near-bajo-de-masinloc-chinese-chopper-tails-aw109-1452",
+        "https://www.abs-cbn.com/news/nation/2026/10/15/ph-us-conduct-16th-bilateral-maritime-cooperative-activity-in-west-ph-sea-0017"
+      ]
+    },
+    {
+      "title": "THA–KHM UNCLOS Annex V round two day-one complete in The Hague",
+      "summary": "FACT (AKP 14 Oct): Peace Palace day-one concluded; sessions 14–18 Oct; agents Prak Sokhonn and Sihasak; chair Katrina Cooper. Cambodia still prefers a single comprehensive boundary treaty, joint development as alternative. No substantive decision this stage. Thai MFA 9 Oct note is pre-brief, not a 14 Oct readout.",
+      "countries": ["THA", "KHM"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["diplomacy", "UNCLOS", "Mekong"],
+      "sources": [
+        "https://www.akp.gov.kh/post/detail/383899",
+        "https://en.kampucheathmey.com/politics/1149777/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "SGP west 24-hr PSI FLASH (201–300)",
+      "type": "air-quality print / desk FLASH",
+      "parties": ["SGP"],
+      "status": "triggered_then_left_VU",
+      "date": "2026-10-14",
+      "venue": "NEA 21:00 SGT; cutoff 16:00 SGT 15 Oct W192",
+      "bindingness": "n/a",
+      "in_window": true,
+      "note": "Filed as FLASH PR #93. Cutoff left VU. Do not rewrite PR #93."
+    },
+    {
+      "name": "TLS nationwide school suspension",
+      "type": "administrative health measure",
+      "parties": ["TLS"],
+      "status": "in_force",
+      "date": "2026-10-14",
+      "venue": "Dili (ME/MAE)",
+      "bindingness": "administrative",
+      "in_window": true,
+      "note": "15–17 Oct; Dili AQI 165–174. Resume 19 Oct TBC."
+    },
+    {
+      "name": "Polri karhutla suspects 223 individuals + 9 firms",
+      "type": "criminal enforcement",
+      "parties": ["IDN"],
+      "status": "announced",
+      "date": "2026-10-14",
+      "venue": "Kemenko Polkam, Jakarta",
+      "bindingness": "criminal process",
+      "in_window": true,
+      "note": "As-of 13 Oct. Corporate names unpublished."
+    },
+    {
+      "name": "IDN–MYS first-time fire talks (Hasan CLAIM)",
+      "type": "bilateral operational talks",
+      "parties": ["IDN", "MYS"],
+      "status": "announced",
+      "date": "2026-10-14",
+      "venue": "NADMA/NSC/MFA SG channel",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "No MoU. Not an emergency AMM."
+    },
+    {
+      "name": "IDN dry-ice seeding trial",
+      "type": "weather modification",
+      "parties": ["IDN"],
+      "status": "underway",
+      "date": "2026-10-15",
+      "venue": "South Sumatra",
+      "bindingness": "operational",
+      "in_window": true,
+      "note": "1.5 tons solid CO2; evaluate before Central Kalimantan."
+    },
+    {
+      "name": "IDN national-disaster declaration / foreign firefighting help",
+      "type": "domestic status / assistance",
+      "parties": ["IDN"],
+      "status": "rejected",
+      "date": "2026-10-12",
+      "venue": "Jakarta",
+      "bindingness": "political",
+      "in_window": false,
+      "note": "Dudung rejection stands. Jumhur 'assess offers' is 13 Oct forum gap-carry circulating 15 Oct. Not a declaration and not accepted help."
+    },
+    {
+      "name": "UNCLOS Annex V second round",
+      "type": "compulsory conciliation",
+      "parties": ["THA", "KHM"],
+      "status": "day_one_complete",
+      "date": "2026-10-14",
+      "venue": "Peace Palace, The Hague",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Sessions through 18 Oct. No substantive decision this stage."
+    },
+    {
+      "name": "16th PH–US bilateral maritime cooperative activity",
+      "type": "bilateral exercise",
+      "parties": ["PHL", "USA"],
+      "status": "conducted",
+      "date": "2026-10-14",
+      "venue": "West Philippine Sea",
+      "bindingness": "operational",
+      "in_window": true,
+      "note": "BRP Miguel Malvar, BRP Melchora Aquino, USS Warrior."
+    },
+    {
+      "name": "MYS–MMR further depot returns (~3,000+)",
+      "type": "returns",
+      "parties": ["MYS", "MMR"],
+      "status": "announced",
+      "date": "2026-10-14",
+      "venue": "Putrajaya",
+      "bindingness": "political",
+      "in_window": false,
+      "note": "Fahmi 14 Oct assembly already in prior daily; sailing still unpublished. Star 15 Oct is restatement."
+    },
+    {
+      "name": "AMM haze disaster-classification ask",
+      "type": "institutional proposal",
+      "parties": ["MYS", "ASEAN"],
+      "status": "announced",
+      "date": "2026-10-13",
+      "venue": "AMM TBC ahead of 49th Summit",
+      "bindingness": "political",
+      "in_window": false,
+      "note": "Meeting not yet held. Not an emergency AMM."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze SGP/MYS/IDN/TLS + AATHP/AADMER split",
+      "direction": "up_vs_prior_daily_off_vu_vs_noon_peak",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "PSI >=301 or MYS API >=200 with national-capacity break; IDN bencana; emergency AMM"
+    },
+    {
+      "risk": "MYS-MMR returns vs 5PC / non-refoulement",
+      "direction": "flat",
+      "horizon": "days-weeks",
+      "confidence": "M",
+      "trigger_to_escalate": "Sailing of the >3000; forced conscription evidence; Chair split"
+    },
+    {
+      "risk": "SCS gray-zone PHL-CHN",
+      "direction": "flat",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "Shots; ramming with injuries; second-hull strike; emergency AMM"
+    },
+    {
+      "risk": "THA-KHM dual track (PCA + land border)",
+      "direction": "flat",
+      "horizon": "days",
+      "confidence": "H",
+      "trigger_to_escalate": "Hague walkout; dated mine/POW incident with multi-source"
+    },
+    {
+      "risk": "IDR / EM FX",
+      "direction": "flat",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger_to_escalate": "Capital controls; BI FX-reserve plunge; bank holiday"
+    }
+  ],
+  "open_questions": [
+    "Home Ministry sailing order and ethnicity of the Fahmi >3000.",
+    "AMM annotated agenda text and any emergency session.",
+    "Named corporate karhutla suspects / HGU action.",
+    "15 Oct JISDOR and named Thursday STI/IHSG/KLCI closes (due after cutoff).",
+    "MSS 15 Oct as-at-5pm slug (404 at cutoff); 00:00 SGT PSI gap.",
+    "DFA HTML (still 403); PCA/Thai MFA day-one readout beyond the 9 Oct pre-brief.",
+    "Independent ARI/burn-scar update beyond 12 Oct Health Ministry 277075."
+  ],
+  "sources": [
+    {"title": "NEA PSI API 15 Oct", "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-10-15", "published_at": "2026-10-15T08:00:53Z", "publisher": "NEA", "tier": "A"},
+    {"title": "NEA PM2.5 API 15 Oct", "url": "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-15", "published_at": "2026-10-15T08:00:00Z", "publisher": "NEA", "tier": "A"},
+    {"title": "NEA PSI API 14 Oct FLASH 21:00 W203", "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-10-14", "published_at": "2026-10-14T13:00:54Z", "publisher": "NEA", "tier": "A"},
+    {"title": "haze.gov.sg sitrep 10:43 AM 15 Oct", "url": "https://www.haze.gov.sg/", "published_at": "2026-10-15T02:43:00Z", "publisher": "NEA/ASMC", "tier": "A"},
+    {"title": "DOE APIMS 16:00 MYT 15 Oct", "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly", "published_at": "2026-10-15T08:00:00Z", "publisher": "DOE Malaysia", "tier": "A"},
+    {"title": "TLS ME/MAE school suspension", "url": "https://timor-leste.gov.tl/?lang=en", "published_at": "2026-10-14T00:00:00Z", "publisher": "Government of Timor-Leste", "tier": "A"},
+    {"title": "CNA — TLS shuts schools", "url": "https://www.channelnewsasia.com/asia/timor-leste-shuts-schools-indonesia-haze-6461526", "published_at": "2026-10-15T06:46:00Z", "publisher": "CNA", "tier": "B"},
+    {"title": "Polri Tribrata — 223 + 9 suspects", "url": "https://tribratanews.polri.go.id/blog/nasional-3/bareskrim-tetapkan-9-tersangka-karhutla-korporasi-223-orang-dijerat-kasus-perorangan-107209", "published_at": "2026-10-14T13:41:00Z", "publisher": "Polri", "tier": "A"},
+    {"title": "CNA — 223 + 9 firms / Hasan talks", "url": "https://www.channelnewsasia.com/asia/indonesia-individuals-companies-suspects-forest-fires-haze-6458531", "published_at": "2026-10-14T09:16:00Z", "publisher": "CNA", "tier": "B"},
+    {"title": "The Star — Joint action to tackle haze", "url": "https://www.thestar.com.my/news/nation/2026/10/15/joint-action-to-tackle-haze", "published_at": "2026-10-15T00:00:00Z", "publisher": "The Star/Bernama", "tier": "B"},
+    {"title": "CNA — dry-ice trial", "url": "https://www.channelnewsasia.com/asia/indonesia-test-dry-ice-seeding-combat-haze-air-quality-visibility-6461586", "published_at": "2026-10-15T07:30:00Z", "publisher": "CNA", "tier": "B"},
+    {"title": "ABS-CBN — Malvar / Bajo de Masinloc", "url": "https://www.abs-cbn.com/news/nation/2026/10/15/ph-navy-spots-3-chinese-vessels-near-bajo-de-masinloc-chinese-chopper-tails-aw109-1452", "published_at": "2026-10-15T06:52:00Z", "publisher": "ABS-CBN", "tier": "B"},
+    {"title": "ABS-CBN — 16th PH–US MCA", "url": "https://www.abs-cbn.com/news/nation/2026/10/15/ph-us-conduct-16th-bilateral-maritime-cooperative-activity-in-west-ph-sea-0017", "published_at": "2026-10-14T16:17:00Z", "publisher": "ABS-CBN", "tier": "B"},
+    {"title": "AKP — UNCLOS day-one", "url": "https://www.akp.gov.kh/post/detail/383899", "published_at": "2026-10-14T00:00:00Z", "publisher": "AKP", "tier": "A"},
+    {"title": "VOI — BI rupiah intervention", "url": "https://voi.id/en/economy/598540", "published_at": "2026-10-15T00:00:00Z", "publisher": "VOI/BI", "tier": "B"}
+  ]
+}
