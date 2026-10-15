@@ -1,0 +1,9 @@
+# Oceania Desk
+
+Workspace agent `oceania` (union of `oceania_i` + `oceania_ii` + COFA watch PLW/FSM/MHL). Drafts are **pending_review**.
+
+- Last standing daily on GitHub before this branch: **2026-10-15** (PR #111). Parent daily before that: PR #86 (14 Oct). Intra-day hourlies 08:51 14 Oct–18:51 15 Oct: PRs #88–#123.
+- **This branch: Hourly 2026-10-15 ~19:51 UTC** (`desk/oceania/briefs/2026-10-15-hourly-1951.md` + JSON sidecar), twelfth scan after the 15 Oct daily. Parent daily and 08:51–18:51 hourlies copied for continuity. Cron `51 * * * *`, trigger **19:53 UTC**; items through scan ~19:58 UTC included (this-window TCP **Advisory Number 5A** LM **19:12:46 GMT**; ABPW LM tick **19:39:18 GMT**; FMS Gale 004 leftover; PC `lastBuildDate` **19:49:26Z**; FBC `lastBuildDate` **19:34:54Z**; Daily Post HTTP/1.1 LM **19:50:44 GMT**; PINA `pubDate` **19:18:53 UTC**). AEDT in force (UTC+11 from 4 Oct); NZDT UTC+13. Continuity cutoff remains **07:00 UTC**.
+- **Collection gaps (not reconstructed):** 2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z; **2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z**. Hourlies 30 Sep–13 Oct and dailies 30 Sep–13 Oct **did not file**. Weeklies of 28 Sep–4 Oct and 5–11 Oct missed. September monthly missed.
+- This-hour lead: this-window NWS **Intermediate Advisory Number 5A** still **tropical storm 40 mph** at **11.6N 156.5E**; leftover JTWC **NR 005** still **tropical storm at 35 kt**. Classification split on 29W remains **closed**. Closes parent 19:00 UTC miss. Leftover **ABPW 151800** still **HIGH** on 92P (LM tick). Leftover **Gale 004** waters-only. **Not FLASH.**
+- Next hourly: ~20:51 UTC 15 Oct (do not rewrite the 15 Oct daily unless FLASH). Next scheduled NWS advisory **800 AM ChST / 22:00 UTC**. Next intermediate **1100 AM ChST / 01:00 UTC**. Next HLS **~9 AM ChST / 23:00 UTC**. Next JTWC **152100Z**. Next weekly due **Monday 2026-10-19** unless editors task a catch-up. September monthly still outstanding.
