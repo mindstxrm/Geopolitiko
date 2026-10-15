@@ -1,0 +1,271 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-15T14:51:00Z",
+  "window_end_utc": "2026-10-15T15:51:00Z",
+  "generated_at_utc": "2026-10-15T16:08:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-15",
+  "parent_hourly": "2026-10-15T14:51:00Z",
+  "scan_through_utc": "2026-10-15T15:57:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM", "PHL", "TLS"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "This-window NWS Advisory 5 upgrades Champi to TS 40 mph and closes the NWS–JTWC classification split; leftover JTWC NR 005 still 35 kt; HLS / CAP O.CON; TCV still none",
+      "summary": "WTPQ32 PGUM 151508 Advisory Number 5 (LM 15:08:27 GMT; 108 AM ChST Fri 16 Oct) upgrades Champi to a tropical storm at 40 mph, 11.1N 156.8E, about 825 miles east of Guam. Typhoon Watch remains for Guam, Rota, Tinian and Saipan. Forecast: possibly a typhoon Saturday; close to Guam Sunday morning. Next intermediate 500 AM ChST / next scheduled 800 AM ChST. Advertised 200 AM / 16:00 UTC full advisory dropped 52 minutes early. Leftover JTWC Warning NR 005 (WTPN32 PGTW 151500; LM still 13:42:12 GMT) still tropical storm 035 kt at 11.0N 157.4E; no NR 006; next still 152100Z. This-window ABPW 151500 (LM 15:00:16 GMT) upgrades the 29W paragraph to tropical storm. Leftover HLS 151056 LM still 10:56:40 GMT still prints depression. CAP recapture still 8:56 PM ChST Watch Update (VTEC O.CON). TCV still none. This-scan recapture of 1225 AM ChST marine O.CON (origin 14:25 UTC) already names Tropical Storm Champi. JTWC 60-hr 090 kt at 13.5N 144.5E remains forecast closest-approach near Guam, not a verifying landfall. Not Category now. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "USA"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td_29w", "champi", "jtwc", "tropical_storm", "nws_guam", "typhoon_watch", "tcp_advisory_5", "hls", "cofa", "cyclone"],
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://api.weather.gov/alerts/active?area=MP",
+        "https://www.weather.gov/wwamap/wwatxtget.php?cwa=gum&wwa=all",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1",
+        "https://ghs.guam.gov/public-advisory-no-2-typhoon-watch-effect-guam-governor-declares-condition-readiness-3",
+        "https://governor.guam.gov/",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/"
+      ]
+    },
+    {
+      "title": "HOLD leftover FMS Gale Warning 003 (waters-only); TDS still LOW TO MODERATE; this-window ABPW still MEDIUM on 92P at 8.3S 164.7W",
+      "summary": "FMS RSS lastBuildDate still 13:39:45 +1200; Gale Warning 003 leftover issued 151339 UTC; 35 kt waters-only in box 02S 170W / 02S 167W / 03S 166W / 04S 166W / 04S 170W. TDS 150844 UTC unchanged LOW TO MODERATE at 08.1S 164.9W. This-window JTWC ABPW 151500 still MEDIUM on 92P, now near 8.3S 164.7W / 407 NM ENE of Swains. No named Southwest Pacific cyclone. Not a Fiji-land warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "FJI", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td01f", "invest_92p", "fms", "rsmc_nadi", "gale_003", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt"
+      ]
+    },
+    {
+      "title": "HOLD leftover PC Paiela/Wau/Hiwa/PACPOL; Nausori still without FBC/FT venue product; PINA pubDate tick 15:38:16 UTC still blocked; Daily Post 429 cleared; DHERST ask-by elapsed; AUS-SLB still unsigned",
+      "summary": "Post Courier lastBuildDate still 14:07:10Z; no this-window first-file. FBC lastBuildDate still 05:37:46Z. Nausori advertised sitting remains closed after 08:00 UTC with no Fiji Times / FBC venue product. Leftover FijiVillage no-extension copy after Vunimono Hall (datePublished 11:06:41 UTC). Leftover Mai TV first-file (dateline 15 Oct; curl 403). Daily Post HTTP/2 200 and HTTP/1.1 200 LM 15:51:43 GMT (from 14:51:29); parent-hour 429 cleared; leftover kava-import lead. PINA RSS still No Feed Access (pubDate 15:38:16 UTC; stub path /2026/10/16/ 404; 15 Oct stub 200 leftover). Island Sun / SIBC / Solomon Star homepages 403. DFAT/Defence HTTP/2 curl 92 then HTTP/1.1 timeout 22s. ABC News RSS HTTP 500 still. Leftover NBC 41308; 41309-41318 404; 15 Oct DHERST ask-by still elapsed at 01:51 PNG Friday. PDN Bill 371-38 leftover (14-0; $12m Rainy Day Fund; LM still 11:30:32 GMT). Not FLASH.",
+      "countries": ["FJI", "AUS", "SLB", "VUT", "PNG", "GUM"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "collection_path", "aus_slb_treaty", "nbc_41308", "bill_371_38", "fijivillage_nausori"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fijitimes.com.fj/",
+        "https://www.fijivillage.com/indepth/no-extension-for-constitution-amendment-bill-consultation-period-rabuka-036f1b/",
+        "https://maitvfiji.com/rabuka-defends-changes-to-crc-draft-rules-out-more-consultation-time/",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml",
+        "https://www.nbc.com.pg/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.guampdn.com/news/senators-approve-12m-for-invest-champi-preparedness-mitigation-response/article_5d1d054e-135f-4900-adc8-ee1899a8ca02.html"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NWS TCP Advisory Number 5 (TS Champi / 29W)",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "this-window NEW",
+      "this_window_delta": "WTPQ32 PGUM 151508; LM 15:08:27 GMT; upgraded to tropical storm 40 mph at 11.1N 156.8E; Watch remains; next intermediate 500 AM ChST / next scheduled 800 AM ChST",
+      "notes": "Supersedes leftover 4A CCB. Classification split with JTWC closed. Not Category now. Not FLASH."
+    },
+    {
+      "name": "JTWC Tropical Storm 29W (CHAMPI) Warning NR 005",
+      "type": "climate / MDA",
+      "parties": ["FSM", "GUM", "MNP", "USA"],
+      "status": "leftover HOLD",
+      "this_window_delta": "LM still 13:42:12 GMT; no NR 006; still 035 kt TS at 11.0N 157.4E; next still 152100Z",
+      "notes": "Present-tense TS at 35 kt leftover. 60-hr 090 kt near Guam is forecast. Not Category now. Not FLASH."
+    },
+    {
+      "name": "JTWC ABPW10 PGTW 151500 reissue",
+      "type": "climate / MDA",
+      "parties": ["FSM", "GUM", "MNP", "USA", "ASM", "WSM"],
+      "status": "this-window NEW file",
+      "this_window_delta": "LM 15:00:16 GMT; 29W paragraph upgraded to TS 35 kt; 92P still MEDIUM at 8.3S 164.7W; 28W final",
+      "notes": "Justification: upgraded para 1.A.(2) to tropical storm. Not FLASH."
+    },
+    {
+      "name": "NWS HLS PQ2 856 PM ChST (TD Champi / 29W)",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover HOLD",
+      "this_window_delta": "LM still 10:56:40 GMT; did not rebuild; still prints depression at 11.0N 157.8E",
+      "notes": "Lags Advisory 5. Not a warning upgrade. Not FLASH."
+    },
+    {
+      "name": "NWS marine Typhoon Watch O.CON (1225 AM ChST)",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "USA"],
+      "status": "this-scan recapture (origin 14:25 UTC)",
+      "this_window_delta": "WWA bundle recapture; VTEC O.CON on PMZ151>154; already names Tropical Storm Champi",
+      "notes": "Origin inside parent 13:51-14:51 window, unlisted in PR #119. Watch remains. Not FLASH."
+    },
+    {
+      "name": "PINA RSS",
+      "type": "collection path",
+      "parties": ["PIF"],
+      "status": "still No Feed Access",
+      "this_window_delta": "pubDate 15:38:16 UTC (tick from 14:36:43 UTC); stub path /2026/10/16/ 404",
+      "notes": "Access-denial clock ≠ story. Date-rollover stub is empty."
+    },
+    {
+      "name": "Daily Post homepage",
+      "type": "collection path",
+      "parties": ["VUT"],
+      "status": "header tick; 429 cleared",
+      "this_window_delta": "LM 15:51:43 GMT; HTTP/2 200 and HTTP/1.1 200; leftover kava-import lead",
+      "notes": "Parent-hour 429 cleared. ≠ Nakamal."
+    },
+    {
+      "name": "NBC 41308 UOG HELP-loan petition",
+      "type": "domestic education finance",
+      "parties": ["PNG"],
+      "status": "leftover; ask-by elapsed",
+      "this_window_delta": "15 Oct ask-by still elapsed at 01:51 PNG Friday; still no DHERST reply; 41309-41318 404",
+      "notes": "Elapsed ask-by ≠ unrest. Not FLASH."
+    },
+    {
+      "name": "AUS-SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned",
+      "this_window_delta": "none; DFAT/Defence HTTP/2 curl 92 then HTTP/1.1 timeout 22s",
+      "notes": "Collection-path ≠ signature."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TS 29W / CHAMPI (FSM now; GUM/MNP weekend forecast corridor)",
+      "direction": "up",
+      "horizon": "hours-4 days",
+      "confidence": "H/M",
+      "escalate_on": "Named system plus Category-level landfall with mass-casualty or state-capacity breach — not FLASH on NWS 40 mph TS or leftover JTWC 35 kt TS"
+    },
+    {
+      "risk": "TD01F / Invest 92P (ENE Swains)",
+      "direction": "hold",
+      "horizon": "1-3 days",
+      "confidence": "M",
+      "escalate_on": "Named October out-of-season cyclone with PIC landfall / mass-casualty"
+    },
+    {
+      "risk": "PACPOL / PPI institutionalisation (PC 12:42 lede leftover)",
+      "direction": "hold",
+      "horizon": "weeks-GE27",
+      "confidence": "L-M",
+      "escalate_on": "Official confirmation of a radically expanded foreign security presence or a Forum-linked force-status text — not FLASH on a paywalled minister welcome"
+    },
+    {
+      "risk": "PNG-LNG Hiwa/Koma royalty identification (PC 13:46 leftover)",
+      "direction": "hold",
+      "horizon": "weeks-months",
+      "confidence": "L-M",
+      "escalate_on": "Capital-scale unrest or project-halt with fiscal/security spillover — not FLASH on a landowner Cabinet appeal"
+    },
+    {
+      "risk": "Enga Paiela-Pogera / Maip Mulitaka tribal fighting (PC 14:07 consultation leftover)",
+      "direction": "hold",
+      "horizon": "weeks-months",
+      "confidence": "L-M",
+      "escalate_on": "Capital-scale unrest or mine-halt with fiscal/security spillover — not FLASH on an NGO ward consultation"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock",
+      "direction": "hold",
+      "horizon": "hours-Dec referendum path",
+      "confidence": "H/M",
+      "escalate_on": "Extra-constitutional delay of the GE, or violence around sittings"
+    },
+    {
+      "risk": "PNG UOG HELP-loan petition (NBC 41308; 15 Oct ask-by elapsed)",
+      "direction": "hold",
+      "horizon": "hours-days",
+      "confidence": "H/L-M",
+      "escalate_on": "Capital-scale unrest or sitting violence — not FLASH on an elapsed 15 Oct ask-by"
+    },
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "hold",
+      "horizon": "5-6 days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "SLB dual-track (AUS unsigned / PRC 2022 unrepealed)",
+      "direction": "hold",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_on": "Signed AUS-SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "Leftover HLS 856 PM: rebuild to Advisory 5 TS 40 mph / 11.1N 156.8E, or stay on the 7 PM 157.8E depression fix through ~3 AM ChST?",
+    "First ChST TCV breakpoint product vs leftover CAP O.CON vs this-window TCP Advisory 5?",
+    "29W 152100Z: still 35 kt TS, or upgrade further?",
+    "Next intermediate 500 AM ChST / 19:00 UTC: still Watch-only, or warning points?",
+    "Next scheduled NWS 800 AM ChST / 22:00 UTC: intensity vs JTWC 160000Z 11.5N 154.9E / 040 kt forecast?",
+    "Flood Watch issuance vs leftover HLS / leftover AFD likely vs 10 Oct FLS leftover cancel?",
+    "Official Chuuk SCA product text vs leftover AFD-only (TKK SCA HTTP 400; TKK NSH none-issued)?",
+    "Governor of Guam HTML matching GHS Adv. 2 / leftover HLS COR 3 restatement through the TS upgrade?",
+    "Next HLS ~3 AM ChST / 17:00 UTC Friday: Watch still O.CON, or warning? Does it drop depression language?",
+    "US bases TCCOR vs leftover 4 vs island COR 3?",
+    "Port Yankee captain-of-the-port product vs leftover PDN anticipated?",
+    "GHS Public Advisory No. 3 vs Adv. 2 remaining the civil-defence HTML?",
+    "Local Guam copy (PDN/KUAM/Post Guam) still printing TD after Advisory 5 — when does wire copy catch the TS upgrade?",
+    "Next Nadi TDS: TD01F off LOW TO MODERATE toward JTWC 92P MEDIUM (now 8.3S 164.7W), or named? Next gale vs leftover 003?",
+    "FBC/FT Nausori sitting copy vs leftover FijiVillage delayed copy (11:06 UTC) vs leftover Mai TV first-file?",
+    "DHERST written reply to UOG HELP petition (NBC 41308) after elapsed 15 Oct ask-by?",
+    "PACPOL official RPNGC / PIF / PICP / DFAT text behind the leftover PC 12:42 paywall?",
+    "Hiwa/Koma ILG-No 9025: DPE / NEC / developer instrument vs PC CLAIM?",
+    "Paiela-Pogera / Maip Mulitaka: Enga provincial / RPNGC by-law or gun-amnesty instrument vs leftover PC 14:07 consultation CLAIM?",
+    "AUS-SLB signature date? DFAT/Defence HTTP/2 92 then HTTP/1.1 timeout 22s.",
+    "Bill 371-38 Public Law / governor signature vs leftover PDN 14-0 lede (LM still 11:30:32 GMT ≠ enactment)?",
+    "JTWC 180000Z 13.5N 144.5E / 090 kt vs Advisory 5 close-to-Guam Sunday morning: does the Guam-near forecast hold?"
+  ],
+  "sources": [
+    {"title": "NWS TCP Advisory Number 5 WTPQ32 PGUM 151508", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at_utc": "2026-10-15T15:08:27Z", "tier": "A", "this_window": true},
+    {"title": "JTWC Tropical Storm 29W Warning NR 005 WTPN32 PGTW 151500", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at_utc": "2026-10-15T13:42:12Z", "tier": "A", "this_window": false},
+    {"title": "JTWC ABPW10 PGTW 151500 reissue", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at_utc": "2026-10-15T15:00:16Z", "tier": "A", "this_window": true},
+    {"title": "NWS HLS WTPQ82 PGUM 151056", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt", "published_at_utc": "2026-10-15T10:56:40Z", "tier": "A", "this_window": false},
+    {"title": "NWS CAP active alerts Guam", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at_utc": "2026-10-15T10:56:00Z", "tier": "A", "this_window": false},
+    {"title": "NWS CAP active alerts CNMI", "url": "https://api.weather.gov/alerts/active?area=MP", "published_at_utc": "2026-10-15T10:56:00Z", "tier": "A", "this_window": false},
+    {"title": "NWS WWA summary issued by GUM (1225 AM marine O.CON recapture)", "url": "https://www.weather.gov/wwamap/wwatxtget.php?cwa=gum&wwa=all", "published_at_utc": "2026-10-15T14:25:00Z", "tier": "A", "this_window": false},
+    {"title": "NWS AFD FXPQ50 PGUM 150934", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "published_at_utc": "2026-10-15T09:34:51Z", "tier": "A", "this_window": false},
+    {"title": "NWS Guam FLS leftover 10 Oct cancel", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=FLS&format=CI&version=1", "published_at_utc": "2026-10-10T12:59:00Z", "tier": "A", "this_window": false},
+    {"title": "GHS Public Advisory No. 2", "url": "https://ghs.guam.gov/public-advisory-no-2-typhoon-watch-effect-guam-governor-declares-condition-readiness-3", "tier": "A", "this_window": false},
+    {"title": "FMS alerts RSS Gale Warning 003 / TDS 150844 UTC", "url": "https://www.met.gov.fj/feed/warnings/", "published_at_utc": "2026-10-15T13:39:00Z", "tier": "A", "this_window": false},
+    {"title": "Post Courier Paiela-Pogera peace consultation leftover", "url": "https://www.postcourier.com.pg/local-ngo-launches-community-consultation-meeting-for-peace-in-paiela-pogera-district/", "published_at_utc": "2026-10-15T14:07:05Z", "tier": "B", "this_window": false},
+    {"title": "Post Courier Wau L&O leftover", "url": "https://www.postcourier.com.pg/court-finds-exhibits-with-no-arrests-in-wau/", "published_at_utc": "2026-10-15T13:55:15Z", "tier": "B", "this_window": false},
+    {"title": "Post Courier Hiwa/Koma LNG royalties leftover", "url": "https://www.postcourier.com.pg/89-year-old-tribe-chairman-appeal-to-cabinet-over-missed-lng-royalties/", "published_at_utc": "2026-10-15T13:46:05Z", "tier": "B", "this_window": false},
+    {"title": "Post Courier PACPOL leftover", "url": "https://www.postcourier.com.pg/png-police-leadership-in-the-fight-against-international-crime/", "published_at_utc": "2026-10-15T12:42:51Z", "tier": "B", "this_window": false},
+    {"title": "PINA feed (No Feed Access)", "url": "https://pina.com.fj/feed/", "published_at_utc": "2026-10-15T15:38:16Z", "tier": "C", "this_window": true},
+    {"title": "FijiVillage Nausori delayed copy leftover", "url": "https://www.fijivillage.com/indepth/no-extension-for-constitution-amendment-bill-consultation-period-rabuka-036f1b/", "published_at_utc": "2026-10-15T11:06:41Z", "tier": "B", "this_window": false},
+    {"title": "PDN Senators approve $12M Bill 371-38", "url": "https://www.guampdn.com/news/senators-approve-12m-for-invest-champi-preparedness-mitigation-response/article_5d1d054e-135f-4900-adc8-ee1899a8ca02.html", "published_at_utc": "2026-10-15T04:30:00Z", "last_modified_utc": "2026-10-15T11:30:32Z", "tier": "B", "this_window": false},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "published_at_utc": "2026-10-15T05:37:46Z", "tier": "B", "this_window": false},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "published_at_utc": "2026-10-15T14:07:10Z", "tier": "B", "this_window": false},
+    {"title": "NBC 41308 UOG HELP petition", "url": "https://www.nbc.com.pg/post/41308/uog-students-question-reduced-help-loan-allocations", "published_at_utc": "2026-10-15T09:03:00Z", "tier": "B", "this_window": false},
+    {"title": "Daily Post homepage", "url": "https://www.dailypost.vu/", "last_modified_utc": "2026-10-15T15:51:43Z", "tier": "B", "this_window": true, "http_status_http2": 200, "http_status_http11": 200},
+    {"title": "ABC News RSS", "url": "https://www.abc.net.au/news/feed/51158/rss.xml", "tier": "B", "this_window": false, "http_status": 500},
+    {"title": "Forumsec homepage", "url": "https://forumsec.org/", "last_modified_utc": "2026-10-11T10:23:32Z", "tier": "A", "this_window": false},
+    {"title": "tgftp WT directory", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/", "tier": "A", "this_window": true}
+  ]
+}
