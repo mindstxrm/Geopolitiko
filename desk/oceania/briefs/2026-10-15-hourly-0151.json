@@ -1,0 +1,385 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-15T00:51:00Z",
+  "window_end_utc": "2026-10-15T01:51:00Z",
+  "generated_at_utc": "2026-10-15T02:20:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-14",
+  "parent_hourly": "2026-10-15T00:51:00Z",
+  "scan_through_utc": "2026-10-15T01:56:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM", "PHL"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "This-window TWD names 29W; TCV still none; TCP #2 leftover still watches None; 150300Z not yet",
+      "summary": "This-window NWS TWD AXPQ20 PGUM 150106 (1106 AM ChST / 01:06 UTC) names TD 29W near 10.5N 159.3E and discusses RI / typhoon-possible Marianas weekend passage. WWMY80 PGUM 142339 leftover still live on GU/MP CAP. WTPQ32 LM still 22:25:49 GMT; watches None; next 200 PM ChST. JTWC NR 002 LM still 20:00:16 GMT; still 30 kt; next 150300Z not yet. TCV/TCP(GUM)/TCM still none-issued at ~01:53 UTC. GHS still leftover TCFA; 2019 29W slug remains archive. Not Category now. Not landfall. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td_29w", "nws_guam", "twd", "sps", "cofa", "cyclone"],
+      "sources": [
+        "https://forecast.weather.gov/product.php?issuedby=PQ&product=TWD&site=gum",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=SPS&format=CI&version=1",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://api.weather.gov/alerts/active?area=MP",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1"
+      ]
+    },
+    {
+      "title": "JTWC upgrades Invest 92P to MEDIUM; first-filed FMS Gale Warning 001; Nadi TDS still LOW TO VERY LOW",
+      "summary": "This-window JTWC ABPW10 PGTW 150100 reissue (LM 01:31:15 GMT) upgrades Invest 92P near 7.7S 165.0W (~496 NM NNE Pago Pago) to MEDIUM 24h potential (22–27 kt). First-filed FMS item 20000 Gale Warning 001 issued 150042 UTC for waters 02–04S 166–170W, 35 kt waters-only. Parent FMS RSS still showed sole item 20036. Leftover TDS 142043 UTC still TD01F 07.5S 164.8W LOW TO VERY LOW. JTWC–Nadi split. Unnamed. Not a Fiji-land gale. Not FLASH.",
+      "countries": ["ASM", "WSM", "FJI", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["invest_92p", "td01f", "jtwc_abpw", "fms_gale", "cyclone"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.met.gov.fj/warnings/"
+      ]
+    },
+    {
+      "title": "FBC Civic Centre sitting product: FCOSS six-month CRC extension ask; TI Fiji Code of Conduct timetable",
+      "summary": "This-window Tier B origin. FBC pubDate 2026-10-15T01:11:15Z. FCOSS Director Vani Catanasiga asks a six-month extension of Constitution Amendment Bill consultations; other Suva Civic Centre participants raised time to review. TI Fiji separately asks a firm legislative timetable for the Code of Conduct Bill plus related integrity bills. Civic Centre advertised window closed 00:00 UTC. Fiji Sun still leftover “consultations begin.” FWRM URL unchanged (retick 01:10:17Z). Next sitting Nausori 05:00–08:00 UTC. No SO.129. Parliamentary. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "constitution", "civic_centre", "fcoss", "transparency_international"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/push-to-extend-constitution-consultations/",
+        "https://www.fbcnews.com.fj/news/womens-group-challenges-immunity-and-executive-power/",
+        "https://www.fijitimes.com.fj/pm-rabuka-urges-public-to-participate-in-constitution-bill-consultations/",
+        "https://fijisun.com.fj/news/nation/constitution-bill-consultations-begin-in-suva-today",
+        "https://www.fbcnews.com.fj/feed/"
+      ]
+    },
+    {
+      "title": "FBC: Fiji coral-reef action plan 2026–2031 tied to Pacific COP31 pillars",
+      "summary": "This-window Tier B origin. FBC pubDate 2026-10-15T01:00:17Z. Director of Environment Senimili Nakora: National Action Plan for Coral Reef Conservation 2026–2031; 82 actions; aligns with KMGBF 30×30 and Pacific pre-COP31 pillars (1.5°C, climate finance, ocean–climate nexus, Pacific voices). Legal-reform overlay as spoken. No finance envelope. Not DSM. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["coral_reef", "cop31", "climate_finance", "biodiversity"],
+      "sources": [
+        "https://www.fbcnews.com.fj/news/fijis-reef-strategy-supports-pacific-cop31-priorities/",
+        "https://www.fbcnews.com.fj/feed/"
+      ]
+    },
+    {
+      "title": "Collection path: TWD/ABPW/FMS gale + FBC CRC/reef are this-scan origins; Honiara homepages still 403; ABC RSS 500 continues; AUS–SLB still unsigned",
+      "summary": "FBC lastBuildDate 01:48:55Z. RNZ this-window item is leftover Cook Islands transit-visa lawyer comment 01:04:07Z. Post Courier lastBuildDate 01:37:35Z (CSR/Daulo; no gazette). NBC newest still 41287; 41288–41315 404. Daily Post homepage HTTP 200; LM 01:49:00 GMT; leftover kava-import lead (21:00Z 14 Oct). Island Sun/SIBC/Solomon Star homepages 403; SIBC Ombudsman article-path 200. DFAT/Defence timeout. PINA RSS still blocked; pubDate 01:35:26 UTC; stub /2026/10/15/. ABC News RSS HTTP 500 still. Not FLASH.",
+      "countries": ["AUS", "NZL", "PNG", "FJI", "VUT", "SLB"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["collection_path", "cyclone", "aus_slb_treaty"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.rnz.co.nz/rss/pacific.xml",
+        "https://www.nbc.com.pg/",
+        "https://www.dailypost.vu/",
+        "https://www.dailypost.vu/news/",
+        "https://pina.com.fj/feed/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NWS TWD PQ AXPQ20 PGUM 150106 (TD 29W discussion)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "this-window origin: issued 2026-10-15T01:06:00Z; names 29W; RI/typhoon-possible discussion; TCV still none-issued at ~01:53 UTC",
+      "bindingness": "meteorological discussion; not a legal instrument",
+      "assess": "Not FLASH. TWD ≠ TCV. Replaces leftover 96W/TCFA TWD."
+    },
+    {
+      "name": "NWS SPS GUM WWMY80 PGUM 142339 (TD 29W weekend outlook)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "USA"],
+      "status": "leftover: issued 2026-10-14T23:39:00Z; still live on CAP; TCV still none-issued at ~01:53 UTC",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. SPS ≠ TCV. Watch-negative recapture."
+    },
+    {
+      "name": "NWS TCP PQ2 Advisory Number 2 (TD 29W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover: WTPQ32 PGUM 142225 LM 22:25:49 GMT; watches None; 35 mph at 10.6N 160.1E; next 200 PM ChST",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Still no watch after this-window TWD."
+    },
+    {
+      "name": "JTWC Tropical Depression 29W Warning NR 002 (ex-Invest 96W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "USA"],
+      "status": "no this-window rebuild: WTPN32 LM still 20:00:16 GMT; still 30 kt; next 150300Z not yet",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Sequential warning leftover, not Category landfall."
+    },
+    {
+      "name": "JTWC ABPW10 PGTW 150100 reissue (Invest 92P MEDIUM)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM", "USA"],
+      "status": "this-window: LM 01:31:15 GMT; 92P near 7.7S 165.0W upgraded to MEDIUM 24h potential; 29W leftover 30 kt",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Justification is 92P, not a 29W intensity change."
+    },
+    {
+      "name": "RSMC Nadi Gale Warning 001 (item 20000)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM", "FJI"],
+      "status": "first filed this window: issued 150042 UTC; 35 kt waters-only; box 02–04S 166–170W; parent FMS RSS still sole item 20036",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Waters-only. Not a Fiji-land warning. Not a named TC."
+    },
+    {
+      "name": "RSMC Nadi TD01F (ex-JTWC Invest 92P)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM", "FJI"],
+      "status": "no this-window TDS rebuild: TDS still 142043 UTC; TD01F 07.5S 164.8W; LOW TO VERY LOW next 24h",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Unnamed. Split vs JTWC 92P MEDIUM. Banner ≠ Fiji-land gale. Not FLASH."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill / CRC 15 Oct sitting",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "this-window FBC 01:11:15Z FCOSS six-month extension ask + TI Fiji Code of Conduct timetable; Civic Centre window closed 00:00 UTC; no Fiji Sun post-sitting; FWRM leftover; next Nausori 05:00–08:00 UTC; written submissions still to 23 Oct 16:00; no SO.129 extension",
+      "bindingness": "statute + referendum path",
+      "assess": "Civil-society ask ≠ official extension. Parliamentary. Not FLASH."
+    },
+    {
+      "name": "FJI National Action Plan for Coral Reef Conservation 2026–2031",
+      "type": "climate / biodiversity / ocean governance",
+      "parties": ["FJI"],
+      "status": "this-window FBC 01:00:17Z: 82 actions; COP31-pillar framing; no finance envelope in collected copy",
+      "bindingness": "political / programme until gazetted or funded",
+      "assess": "National Environment process, not a Forum communiqué. Not FLASH."
+    },
+    {
+      "name": "Inshore Fisheries Management Bill consultations",
+      "type": "domestic fisheries / customary rights",
+      "parties": ["FJI"],
+      "status": "leftover FBC 00:07:00Z: first Eastern Division session, Kadavu, 40 participants",
+      "bindingness": "consultation; not yet statute",
+      "assess": "Not FFA/PNA. Not a foreign access deal. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned; DFAT/Defence timeout; Island Sun homepage 403; SIBC article-path only",
+      "bindingness": "political",
+      "assess": "Ombudsman leftover ≠ signature. Collection-path ≠ signature."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; listing still live on National GET; HTTP LM still 00:03:37 GMT; no division",
+      "bindingness": "constitutional if passed",
+      "assess": "Still collides with Haley Tuesday briefing. Not FLASH."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct; gazette still unconfirmed; laws.gov.fj LM 12 Oct 11:42:40 GMT",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "Unchanged."
+    },
+    {
+      "name": "Solomon Islands Ombudsman (Dick Stanley Pirione)",
+      "type": "domestic constitutional / accountability",
+      "parties": ["SLB"],
+      "status": "leftover parent first-capture: Post Courier PACNEWS 00:22:09Z; event 14 Oct morning Government House",
+      "bindingness": "constitutional office (Chapter IX)",
+      "assess": "Not FLASH. Vacancy fill ≠ security pact ≠ AUS–SLB signature."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD 29W (ex-96W; FSM now; GUM/MNP weekend forecast corridor) — named, Warning NR 002 leftover, still 30 kt; this-window TWD 150106 RI/typhoon-possible discussion; leftover SPS; TCP #2 leftover watches None; no NWS watch; 150300Z not yet; no landfall",
+      "direction": "up",
+      "horizon": "hours–4 days",
+      "confidence": "H",
+      "escalate_trigger": "Named system plus Category-level landfall with mass-casualty or state-capacity breach on GUM/MNP/FSM — not FLASH on a TWD, an SPS leftover, Advisory 2 leftover, a leftover PQ1 SPS, a forecast cone, or a 2019 CMS slug"
+    },
+    {
+      "risk": "TD01F / Invest 92P (NE Pago Pago) — JTWC 92P now MEDIUM; first-filed Nadi gale box 02–04S 166–170W waters-only; Nadi TDS still LOW TO VERY LOW; unnamed",
+      "direction": "up",
+      "horizon": "1–3 days",
+      "confidence": "M",
+      "escalate_trigger": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on a MEDIUM disturbance, a waters-only gale box, or a CMS banner"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (Civic Centre closed; FCOSS six-month ask; Nausori next; still parliamentary)",
+      "direction": "up",
+      "horizon": "hours–December",
+      "confidence": "H",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on a civil-society extension ask"
+    },
+    {
+      "risk": "FJI inshore fisheries bill consultations (Kadavu first session leftover)",
+      "direction": "unchanged",
+      "horizon": "weeks–months",
+      "confidence": "H",
+      "escalate_trigger": "Official confirmation of a radically expanded foreign fisheries access or a DSM licence — not FLASH on a community consultation"
+    },
+    {
+      "risk": "FJI maritime strategy 2026–2035 / NZSIS six-month review (official HTML leftover)",
+      "direction": "unchanged",
+      "horizon": "months–2035 / six months",
+      "confidence": "H",
+      "escalate_trigger": "Official confirmation of a radically expanded foreign security presence (basing, exclusive access, armed liaison deployment) — not FLASH on a budget-gated strategy or a six-month assessment partnership"
+    },
+    {
+      "risk": "Lautoka shipbuilding dual-use optics — official 792m leftover; not a yard, not a base",
+      "direction": "unchanged",
+      "horizon": "months–years",
+      "confidence": "H",
+      "escalate_trigger": "Official confirmation of a radically expanded foreign security presence or a signed naval-exclusive access deal — not FLASH on a feasibility study"
+    },
+    {
+      "risk": "PNGDF 2026 recruitment recall (parent editorial leftover)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional seizure, capital-scale unrest, or a gazetted force-structure rupture — not FLASH on an editorial lede"
+    },
+    {
+      "risk": "PNG GE27 60-seat Organic Law / possible Supreme Court path",
+      "direction": "unchanged",
+      "horizon": "days–GE27",
+      "confidence": "M",
+      "escalate_trigger": "Court process that unseats writs, or violence around boundary disputes — not FLASH on a submission-being-processed answer"
+    },
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "6 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate or a CDN tick"
+    },
+    {
+      "risk": "PNG highland / NCD firearms (Poroma C-4 + Gerehu leftover)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "M",
+      "escalate_trigger": "Mass-casualty attack, capital-scale unrest, or confirmed C-4 use against critical infrastructure — not FLASH on a leftover seizure teaser"
+    },
+    {
+      "risk": "PNG El Niño implementation (K304m spoken vs North Fly no-lift; K50m border post approved)",
+      "direction": "unchanged",
+      "horizon": "weeks–2027 season",
+      "confidence": "M",
+      "escalate_trigger": "Provincial famine/health collapse or state-capacity breach — not FLASH on a budget figure"
+    },
+    {
+      "risk": "Suva regional-org cyber CLAIM (org unnamed)",
+      "direction": "unchanged",
+      "horizon": "days–weeks",
+      "confidence": "L",
+      "escalate_trigger": "Named org plus Tier A confirmation of a capacity-breaching compromise, or a cable cut — not FLASH on leftover PACNEWS"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed — Ombudsman fill is leftover domestic, not a pact",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument — not FLASH on a Chapter IX vacancy fill"
+    },
+    {
+      "risk": "El Niño cyclone season; 92P now MEDIUM at JTWC; TD01F leftover LOW TO VERY LOW at Nadi; no named SW Pacific system; 29W is NW Pacific",
+      "direction": "up",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    }
+  ],
+  "open_questions": [
+    "NWS 200 PM ChST TCP Advisory Number 3: does it add a watch?",
+    "First ChST tropical-cyclone watch vs leftover SPS vs leftover Hydrologic Outlook vs this-window TWD 150106?",
+    "29W 150300Z: intensity/track change vs NR 002? Upgrade past 34 kt?",
+    "GHS/OCD: replacement of the TCFA special bulletin with a 29W product?",
+    "US bases TCCOR: still 4, or a this-morning change not collected here?",
+    "Does FMS issue a Fiji-land or Fiji-waters warning distinct from Gale Warning 001 / TDS 20036?",
+    "Next Nadi TDS: does TD01F move off LOW TO VERY LOW to match JTWC 92P MEDIUM?",
+    "Fiji Sun / FBC Nausori sitting copy: attendance, immunity discussion beyond leftover FWRM, any official extension vs the FCOSS six-month ask / 23 Oct 16:00?",
+    "Rabuka / CRC response to Catanasiga six-month ask — statement vs silence?",
+    "Chaudhry Chapter 16 CLAIM: CRC/Solicitor-General explainer vs Bill text?",
+    "Fiji Sun immunity recap: Bill PDF / CRC explainer confirming Chapter 14 ss.204–207 vs Rabuka Supreme Court directive CLAIM?",
+    "Formal instrument: is Turaga a listed government CRC member after the 13 Oct resignation?",
+    "Reef action plan PDF: confirm 82 actions / seven areas / legal-reform overlay vs FBC?",
+    "NZSIS six-month partnership: NZ MFAT/NZSIS release? Scope (assessment only vs embedded liaison)?",
+    "Lautoka: AIFFP transaction instrument vs Cabinet indicated AUS support?",
+    "PH–FJI MFA MOU: signed text vs Cabinet endorsement only?",
+    "Inshore Fisheries Management Bill: PDF / consultation calendar beyond Kadavu?",
+    "Post Courier PNGDF editorial jump still paywalled: Defence Minister spelling, number of recruits, whether they re-enter training?",
+    "Haley next-Tuesday briefing: confirm 20 Oct 2026 date, venue, public vs closed-door?",
+    "Bird’s 12-month NEC-Secretary CLAIM: gazettal, NEC decision number, or Chief Secretary instrument?",
+    "Will PNG Parliament divide on 20–21 Oct, and in what form, given the Haley briefing the same Tuesday?",
+    "Bird’s 60 seats: PNGEC list vs Supreme Court filing vs Boundaries Commission instrument?",
+    "Poroma SHP C-4: RPNGC inventory, arrests, charges? Keep separate from Gerehu.",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date? DFAT/Defence still timeout.",
+    "DFAT Australia Awards 2027 PNG list: corroborate Post Courier 103 headcount?",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM; Fiji-CERT confirmation?",
+    "NCSC Integrity Technology Group advisory: PDF / dated product, and does it name any PIC victim?",
+    "NEMA bill text / gazettal vs Joseph final-stages CLAIM?",
+    "Island Sun homepage / Solomon Star CF-403; SIBC article-path 200 for Ombudsman — reusable for PALM / Auki Road?",
+    "SIG Ombudsman HTML: Sucuri JS wall — collect when interstitial drops?",
+    "PMMM-4 official PDF still uncollected?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "ABC News RSS HTTP 500 still: transient, or a standing collection-path break?",
+    "CNMI SMR: Hofschneider SJR 24-05 status vs Apatang leftover vs any DoE/DoD feasibility funding instrument?",
+    "GPE A$125m: DFAT / GPE official pledge page vs Post Courier lede; any PIC country earmark?"
+  ],
+  "sources": [
+    {"title": "NWS Guam TWD PQ AXPQ20 PGUM 150106", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?issuedby=PQ&product=TWD&site=gum", "published_at": "2026-10-15T01:06:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "Significant Tropical Weather Advisory ABPW10 PGTW 150100 reissued", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-15T01:31:15Z", "countries": ["ASM", "WSM", "FSM", "GUM"], "tier": "A", "confidence": "H"},
+    {"title": "FMS Gale Warning 001 / item 20000", "publisher": "FMS / RSMC Nadi", "url": "https://www.met.gov.fj/feed/warnings/", "published_at": "2026-10-15T00:42:00Z", "countries": ["ASM", "WSM", "FJI"], "tier": "A", "confidence": "H"},
+    {"title": "RSMC Nadi Tropical Disturbance Summary 142043 UTC (TD01F)", "publisher": "FMS / RSMC Nadi", "url": "https://www.met.gov.fj/warnings/", "published_at": "2026-10-14T20:43:00Z", "countries": ["ASM", "WSM", "FJI"], "tier": "A", "confidence": "H"},
+    {"title": "Push to extend constitution consultations", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/push-to-extend-constitution-consultations/", "published_at": "2026-10-15T01:11:15Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Fiji’s reef strategy supports Pacific Cop31 priorities", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/fijis-reef-strategy-supports-pacific-cop31-priorities/", "published_at": "2026-10-15T01:00:17Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Women’s group challenges immunity and executive power", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/womens-group-challenges-immunity-and-executive-power/", "published_at": "2026-10-15T01:10:17Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "NWS Guam SPS GUM WWMY80 PGUM 142339", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=SPS&format=CI&version=1", "published_at": "2026-10-14T23:39:00Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS API active alerts Guam", "publisher": "NWS", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at": "2026-10-15T01:53:00Z", "countries": ["GUM"], "tier": "A", "confidence": "H"},
+    {"title": "NWS API active alerts CNMI", "publisher": "NWS", "url": "https://api.weather.gov/alerts/active?area=MP", "published_at": "2026-10-15T01:53:00Z", "countries": ["MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam TCP PQ2 Advisory Number 2 WTPQ32 PGUM 142225", "publisher": "NWS Guam", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at": "2026-10-14T22:25:49Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "Tropical Depression 29W (TWENTYNINE) Warning NR 002 WTPN32 PGTW 142100", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at": "2026-10-14T20:00:16Z", "countries": ["FSM", "GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "NWS Guam TCV — none issued recently", "publisher": "NWS Guam", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1", "published_at": "2026-10-15T01:53:00Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "PM Rabuka urges public to participate in Constitution Bill consultations", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/pm-rabuka-urges-public-to-participate-in-constitution-bill-consultations/", "published_at": "2026-10-14T22:22:41Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Decisions of the 18th Cabinet Meeting held on 13 October 2026", "publisher": "Fiji Government", "url": "https://www.fiji.gov.fj/decisions-of-the-18th-cabinet-meeting-held-on-13-october-2026/", "published_at": "2026-10-14T08:16:31Z", "countries": ["FJI", "NZL", "AUS", "PHL"], "tier": "A", "confidence": "H"},
+    {"title": "FBC RSS", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/feed/", "published_at": "2026-10-15T01:48:55Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-10-15T01:49:00Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PINA feed No Feed Access", "publisher": "PINA", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-15T01:35:26Z", "countries": [], "tier": "C", "confidence": "H"},
+    {"title": "RNZ Pacific RSS / Cook Islands transit-visa case", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/community/1923773/case-of-woman-stuck-in-cook-islands-may-be-hot-to-handle-immigration-lawyer-says", "published_at": "2026-10-15T01:04:07Z", "countries": ["COK", "NZL"], "tier": "B", "confidence": "H"},
+    {"title": "Southwest Pacific Tropical Cyclone Outlook - October 2026", "publisher": "NIWA / Earth Sciences NZ", "url": "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026", "published_at": "2026-10-15T01:53:10Z", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-15T00:03:37Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "ASPI homepage", "publisher": "ASPI", "url": "https://www.aspi.org.au/", "published_at": "2026-10-14T04:58:28Z", "countries": ["AUS"], "tier": "B", "confidence": "M"}
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "task": "oceania.daily_brief",
+  "window_start_utc": "2026-10-13T07:00:00Z",
+  "window_end_utc": "2026-10-14T07:55:00Z",
+  "generated_at_utc": "2026-10-14T08:20:00Z",
+  "overall_confidence": "M",
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "pif_institutional": true,
+  "collection_gap": "2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z",
+  "parent_daily": "2026-09-29",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "DNK", "NLD"],
+  "priority_items": [
+    {
+      "title": "PNG — Bougainville referendum ratification deferred to 20–21 Oct; 89/118 threshold restated; no vote this cutoff",
+      "summary": "The National (14 Oct): Leader of Government Business Peter Tsiamalili Jr listed two days of debate on 20–21 Oct after this week’s condolences for Daulo MP Gorosahu. Three-quarter majority 89 of 118 restated. NBC 41142 (13 Oct 11:14 PGT) framed the October sitting as the Peace Agreement ratification window; Melanesian Framework only if Parliament votes yes; ABG leftover self-government by Sep 2027 / independence declaration 2030. No division tallied. Not extra-constitutional. Not FLASH.",
+      "countries": ["PNG"],
+      "topics": ["governance", "strategic"],
+      "importance": 5,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/",
+        "https://www.nbc.com.pg/post/41142/october-parliament-ratification"
+      ]
+    },
+    {
+      "title": "FJI — Acting AG/Justice Minister Turaga resigns; CRC submissions 12–23 Oct; extension CLAIM; HIV Bill passed 1 Oct (gap)",
+      "summary": "FBC 13 Oct 15:06 FJT (RNZ in-window 18:38 UTC): Rabuka accepted Siromi Turaga’s Cabinet resignation after an explicit video; remains MP/PAP; Solicitor-General covers legal advice. FHRC (FBC 14 Oct 06:00 FJT) flagged an 11-day public-submission window to 23 Oct. Fiji Times: Rabuka considering a mid-November sitting that could slip the 9 Dec referendum. Gap residual: second reading 38–5–9 on 2 Oct; HIV-AIDS Amendment Bill passed 1 Oct. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "topics": ["governance"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.fbcnews.com.fj/news/siromi-turaga-resigns-from-cabinet/",
+        "https://www.rnz.co.nz/news/pacific/1874170/fiji-s-justice-minister-resigns-following-explicit-video-controversy",
+        "https://www.fbcnews.com.fj/news/commission-calls-for-more-time-and-public-education/",
+        "https://www.fijitimes.com.fj/government-considers-extending-constitution-bill-consultations/"
+      ]
+    },
+    {
+      "title": "PIF/UN — PIC statements on 24 Sep sea-level declaration: political framework, legal gaps; PRF pledges US$190m (9 Oct residual)",
+      "summary": "PINA 14 Oct of 12 Oct UNGA debate: PNG called out ‘veto by attrition’; Palau for PIF pressed PRF capitalisation and 1.5°C; Kiribati (PSIDS) human rights/non-refoulement; Tuvalu maritime-zone permanence; Vanuatu cited the 2025 ICJ AO. Declaration adopted 24 Sep is political, not a legal shield. Forumsec 9 Oct residual: Fiji US$10m + Denmark US$2.3m + Netherlands US$1m; total pledges US$190m vs US$500m end-2026 target. Not FLASH.",
+      "countries": ["PLW", "PNG", "KIR", "TUV", "VUT", "FJI"],
+      "topics": ["climate", "strategic"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://pina.com.fj/2026/10/14/pacific-nations-warn-un-sea-level-rise-declaration-falls-short/",
+        "https://forumsec.org/publications/release-fiji-pledges-us10-million-pacific-climate-finance-drive-gains-momentum-ahead"
+      ]
+    },
+    {
+      "title": "AUKUS — HII Newport News awarded US$56m Navy engineering/design contract (option US$91m)",
+      "summary": "HII 13 Oct: NNS awarded US$56 million FMS/USIS contract for AUKUS engineering and design; option to US$91 million. Supports UK/Australia technology insertion, supply chain, workforce, digital transformation, and SSN-AUKUS design. Jane’s 2026-10-14T02:36:59Z. Not a Virginia-class transfer, not Australian force-posture change, not a Pacific base. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["strategic"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://hii.com/news/hii-is-awarded-contract-to-support-aukus-engineering-and-design-work/",
+        "https://www.janes.com/defence-intelligence-insights/defence-news/security/us-navy-awards-hii-contract-for-aukus-engineering-and-design-work"
+      ]
+    },
+    {
+      "title": "Climate — NIWA/FMS 2026–27 cyclone outlooks; no named SW Pacific system this cutoff",
+      "summary": "Earth Sciences NZ 14 Oct: 7–11 named TCs Nov–Apr; at least four Cat 3+ possible anywhere; elevated east of Date Line (WSM/TKL/parts KIR); near-normal FJI/TON; normal-to-reduced NCL/VUT. FMS (FBC 14 Oct 07:10 FJT): 2–3 TCs through Fiji EEZ, 1–2 severe; RSMC Nadi 11–15 named. BoM desk 403 / browser 200, LM 03:01:24Z. No named SW Pacific cyclone. Not FLASH.",
+      "countries": ["NZL", "FJI", "WSM", "KIR", "TON", "VUT", "NCL"],
+      "topics": ["climate", "humanitarian"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://niwa.co.nz/news/increased-tropical-cyclone-activity-possible-parts-southwest-pacific",
+        "https://www.fbcnews.com.fj/news/up-to-three-cyclones-predicted-for-fiji/"
+      ]
+    },
+    {
+      "title": "PNG — Gerehu firearms cache (raid 8 Oct; RNZ 14 Oct); Porgera September killings delayed reporting",
+      "summary": "RNZ 13 Oct 23:43 UTC: Manning said specialist units executed Gerehu warrants on 8 Oct; assembled rifles, parts, 3D-printing kit; one adult male in custody; international syndicate CLAIM. Asia Pacific Report 13 Oct: ≥8 dead at Porgera on 23 Sep; local blame on Kumul 23; police deny. Not capital-level unrest. Not FLASH.",
+      "countries": ["PNG"],
+      "topics": ["governance", "strategic"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1894237/png-police-seize-high-powered-weapons-cache-linked-to-an-international-syndicate",
+        "https://asiapacificreport.nz/2026/10/13/eight-dead-in-september-massacre-at-papua-new-guineas-troubled-porgera/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; no division this cutoff",
+      "bindingness": "constitutional if passed",
+      "assess": "Parliamentary. 89/118. Not FLASH."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "second reading passed 2 Oct (gap); submissions 12–23 Oct; extension CLAIM",
+      "bindingness": "statute + referendum if two-thirds at third reading",
+      "assess": "Turaga resignation is Cabinet, not a halt."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct (gap); gazette unconfirmed",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "Closes 29 Sep floor-vote watch."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned",
+      "bindingness": "political",
+      "assess": "Recirculation ≠ signature."
+    },
+    {
+      "name": "HII–USN AUKUS FMS/USIS",
+      "type": "security / industrial",
+      "parties": ["USA", "AUS", "GBR"],
+      "status": "awarded 13 Oct US$56m / option US$91m",
+      "bindingness": "commercial / FMS",
+      "assess": "Design support. Not boat transfer. Not FLASH."
+    },
+    {
+      "name": "PRF capitalisation",
+      "type": "climate finance",
+      "parties": ["PIF", "FJI", "DNK", "NLD"],
+      "status": "pledges US$190m as of 9 Oct residual",
+      "bindingness": "political / trust fund",
+      "assess": "Still short of US$500m end-2026 target."
+    },
+    {
+      "name": "NRU Rome Statute withdrawal",
+      "type": "legal",
+      "parties": ["NRU"],
+      "status": "deposited 23 Sep 2026; effect 23 Sep 2027",
+      "bindingness": "legal",
+      "assess": "Not a recognition switch. Gap close."
+    },
+    {
+      "name": "Nakamal AFP implementation",
+      "type": "police / security-adjacent",
+      "parties": ["VUT", "AUS"],
+      "status": "in force; JSCOT 12 Oct — 8 AFP, ‘could nearly double’ CLAIM",
+      "bindingness": "legal (treaty) / implementation CLAIM",
+      "assess": "Police advisors, not a base. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "up",
+      "horizon": "7–10 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock",
+      "direction": "up",
+      "horizon": "weeks–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on a resignation"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    },
+    {
+      "risk": "El Niño cyclone season elevated east of Date Line",
+      "direction": "up",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    },
+    {
+      "risk": "PNG firearms / Porgera law-and-order",
+      "direction": "up",
+      "horizon": "weeks–GE27",
+      "confidence": "M",
+      "escalate_trigger": "Capital-level unrest or confirmed partner-force kinetic incident"
+    }
+  ],
+  "open_questions": [
+    "Will PNG Parliament divide on 20–21 Oct, and in what form?",
+    "Does Turaga remain on the CRC special committee, and will Rabuka move an extension before 23 Oct?",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date, or still negotiations underway?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "PRF Tier A pledge table reconciling US$190m with the US$500m target?",
+    "RPNGC Gerehu suspect: charges filed? Named international partner?",
+    "Porgera 23 Sep coronial or RPNGC SITREP vs 8-dead CLAIM?",
+    "Island Sun homepage CF-challenge workaround?",
+    "PMMM-4 official PDF still uncollected?"
+  ],
+  "sources": [
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-14", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "October Parliament ratification", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41142/october-parliament-ratification", "published_at": "2026-10-13T01:14:00Z", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "Siromi Turaga resigns from cabinet", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/siromi-turaga-resigns-from-cabinet/", "published_at": "2026-10-13T03:06:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Fiji's justice minister resigns following explicit video controversy", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1874170/fiji-s-justice-minister-resigns-following-explicit-video-controversy", "published_at": "2026-10-13T18:38:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Commission calls for more time and public education", "publisher": "FBC", "url": "https://www.fbcnews.com.fj/news/commission-calls-for-more-time-and-public-education/", "published_at": "2026-10-13T18:00:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Pacific nations warn UN sea-level rise declaration falls short", "publisher": "PINA", "url": "https://pina.com.fj/2026/10/14/pacific-nations-warn-un-sea-level-rise-declaration-falls-short/", "published_at": "2026-10-14", "countries": ["PLW", "PNG", "KIR", "TUV", "VUT"], "tier": "B", "confidence": "H"},
+    {"title": "Fiji Pledges US$10 Million as Pacific Climate Finance Drive Gains Momentum Ahead of COP31", "publisher": "PIF Secretariat", "url": "https://forumsec.org/publications/release-fiji-pledges-us10-million-pacific-climate-finance-drive-gains-momentum-ahead", "published_at": "2026-10-09", "countries": ["FJI"], "tier": "A", "confidence": "H"},
+    {"title": "HII is Awarded Contract to Support AUKUS Engineering and Design Work", "publisher": "HII", "url": "https://hii.com/news/hii-is-awarded-contract-to-support-aukus-engineering-and-design-work/", "published_at": "2026-10-13", "countries": ["AUS", "USA", "GBR"], "tier": "B", "confidence": "H"},
+    {"title": "Increased tropical cyclone activity possible for parts of the Southwest Pacific", "publisher": "Earth Sciences NZ / NIWA", "url": "https://niwa.co.nz/news/increased-tropical-cyclone-activity-possible-parts-southwest-pacific", "published_at": "2026-10-14", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "Up to three cyclones predicted for Fiji", "publisher": "FBC / FMS", "url": "https://www.fbcnews.com.fj/news/up-to-three-cyclones-predicted-for-fiji/", "published_at": "2026-10-13T19:10:00Z", "countries": ["FJI"], "tier": "A", "confidence": "H"},
+    {"title": "PNG police seize high-powered weapons cache", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1894237/png-police-seize-high-powered-weapons-cache-linked-to-an-international-syndicate", "published_at": "2026-10-13T23:43:00Z", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "GREAT gov’t targets 5,000 labour mobility deployment annually", "publisher": "Island Sun", "url": "https://theislandsun.com.sb/great-govt-targets-5000-labour-mobility-deployment-annually/", "published_at": "2026-10-14", "countries": ["SLB", "AUS"], "tier": "B", "confidence": "H"}
+  ]
+}
