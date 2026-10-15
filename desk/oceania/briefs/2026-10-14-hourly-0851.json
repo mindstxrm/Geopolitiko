@@ -1,0 +1,187 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-14T07:55:00Z",
+  "window_end_utc": "2026-10-14T08:51:00Z",
+  "generated_at_utc": "2026-10-14T09:20:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-14",
+  "parent_hourly": null,
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Evening slot quiet: no FLASH meteorology or security signature; Daily Post/NIWA LM ticks are CDN",
+      "summary": "RNZ Pacific RSS newest still Bainivalu 05:16 UTC. FBC RSS newest 06:30 UTC Harris AI (out of scope). BoM specialised still desk 403 / browser 200, LM unchanged 03:01:24 GMT; no named SW Pacific cyclone. NIWA outlook page LM 08:41:35 GMT is a CDN tick of the 14 Oct outlook already in the daily. Daily Post home/news LM 08:54:14/08:54:16 GMT with 14 Oct morning leads dated 20:00–21:43 UTC 13 Oct. DFAT/Defence HTTP 000. Island Sun/The National/ASPI/SIBC 403. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["AUS", "NZL", "FJI", "VUT", "SLB"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "topics": ["collection_path", "cyclone", "aus_slb_treaty"],
+      "sources": [
+        "https://www.rnz.co.nz/rss/pacific.xml",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026",
+        "https://www.dailypost.vu/",
+        "https://www.dailypost.vu/news/"
+      ]
+    },
+    {
+      "title": "FJI CRC: face-to-face starts 15 Oct; Turaga attended committee; NGOCHR challenges 9 Dec announcement authority (parent-daily miss)",
+      "summary": "PINA/Fiji Times: Turaga attended the Special Committee after Cabinet resignation; Parliament lists public consultations from Thursday 15 Oct (Suva Civic Centre, Nausori, then Navua/Nadroga/Nadi/Lautoka). Fiji Sun 13 Oct 21:30 UTC: Rabuka says the process should not derail; anybody can be a committee member. Fiji Sun 13 Oct 20:00 UTC: written submissions to 23 Oct 16:00. PINA 01:19 UTC: NGOCHR questions s.160 authority for announcing a 9 Dec referendum before third reading. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "turaga", "referendum", "ngochr"],
+      "sources": [
+        "https://pina.com.fj/2026/10/14/fiji-acting-a-g-turaga-resigns-from-cabinet-remains-mp/",
+        "https://www.fijitimes.com.fj/turaga-attends-constitution-committee-meeting/",
+        "https://fijisun.com.fj/news/nation/turagas-exit-will-not-derail-constitution-process-pm",
+        "https://fijisun.com.fj/news/nation/public-had-time-to-submit-constitution-views-pm",
+        "https://pina.com.fj/2026/10/14/fiji-rights-coalition-questions-legal-authority-for-referendum-date/"
+      ]
+    },
+    {
+      "title": "US Embassy Suva cyber CLAIM vs PRC denial vs Fiji ministry probe; unnamed regional org (parent-daily miss)",
+      "summary": "RNZ 13 Oct 17:43 UTC: US Embassy Suva said it informed Fiji and a Suva-based regional organisation of a suspected Jul–Aug 2026 network compromise attributed to China-linked actors. PRC Embassy Wellington: disinformation. Fiji Sun 13 Oct 20:30 UTC: Naivalarua ministry investigating; Rabuka says not released to PMO; Pre-COP suspected-attempt CLAIM. Organisation unnamed. Attribution unadjudicated. Not FLASH.",
+      "countries": ["FJI", "USA", "CHN"],
+      "importance": 3,
+      "confidence": "M",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "strategic",
+      "topics": ["cyber", "forum_infrastructure", "attribution"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/1885822/china-denies-us-allegation-of-malicious-cyber-activity-in-the-pacific",
+        "https://fijisun.com.fj/news/nation/ministry-probes-suspected-cyberattack-on-regional-organisation"
+      ]
+    },
+    {
+      "title": "PNG NBC homepage off Bougainville; North Fly 500t logistics and K80m Papua LNG forum cost; AUS–SLB still unsigned",
+      "summary": "NBC 200 leads Boundaries Commission (41287), North Fly 500 tonnes with no boats/aircraft (41260), and K80m Papua LNG forum cost questioned (41249). No this-hour ratification vote. The National 20–21 Oct listing stands but page 403 this hour. Papua LNG not FID. Island Sun 403. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["PNG", "SLB", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["bougainville", "el_nino", "papua_lng", "aus_slb_treaty"],
+      "sources": [
+        "https://www.nbc.com.pg/",
+        "https://www.nbc.com.pg/post/41287/pm-says-boundaries-commission-submission-being-processed",
+        "https://www.nbc.com.pg/post/41260/no-boats-no-aircraft-to-deliver-500-tonnes-of-relief-to-north-fly",
+        "https://www.nbc.com.pg/post/41249/k80-million-papua-lng-forum-cost-questioned-in-parliament"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Fiji Constitution Amendment Bill consultations",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "face-to-face starts 15 Oct; written submissions to 23 Oct 16:00; Turaga attended committee",
+      "bindingness": "statute + referendum path",
+      "assess": "Parent-daily catch-up. Parliamentary. NGOCHR s.160 challenge is process, not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned; DFAT/Defence HTTP 000; Island Sun 403",
+      "bindingness": "political",
+      "assess": "Collection-path ≠ signature."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; no this-hour division; NBC does not lead a vote",
+      "bindingness": "constitutional if passed",
+      "assess": "The National 403 this hour. Not FLASH."
+    },
+    {
+      "name": "HIV-AIDS Amendment Bill 2026",
+      "type": "domestic public-health",
+      "parties": ["FJI"],
+      "status": "passed 1 Oct; gazette still unconfirmed; laws.gov.fj LM 12 Oct 11:42:40 GMT",
+      "bindingness": "legal; commencement by gazette",
+      "assess": "fiji.gov.fj recovered 200. Recovery ≠ gazette."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "6–7 days",
+      "confidence": "M",
+      "escalate_trigger": "Unilateral extra-constitutional declaration or sitting violence — not FLASH on a scheduled debate or NBC slot change"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (Turaga attending; NGOCHR s.160; 15 Oct consultations)",
+      "direction": "up",
+      "horizon": "days–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on a resignation, committee appearance, or NGO statement"
+    },
+    {
+      "risk": "Suva regional-org cyber CLAIM (org unnamed)",
+      "direction": "up",
+      "horizon": "days–weeks",
+      "confidence": "L",
+      "escalate_trigger": "Named org plus Tier A confirmation of a capacity-breaching compromise, or a cable cut — not FLASH on an Embassy post or a denial"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    },
+    {
+      "risk": "El Niño cyclone season; no named SW Pacific system this hour",
+      "direction": "unchanged",
+      "horizon": "Nov–Apr (possible early start)",
+      "confidence": "H",
+      "escalate_trigger": "Category-level landfall with mass-casualty or state-capacity breach"
+    }
+  ],
+  "open_questions": [
+    "Will PNG Parliament divide on 20–21 Oct, and in what form? The National 403 this hour.",
+    "Does Turaga remain a formal CRC special-committee member, or only an attendee?",
+    "NGOCHR s.160 challenge: Speaker/President/Electoral Commission response vs 9 Dec?",
+    "HIV-AIDS Amendment Bill gazette / Legal Notice date?",
+    "AUS–SLB signature date? DFAT/Defence still HTTP 000.",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM; Fiji-CERT confirmation?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "PRF Tier A pledge table reconciling US$190m with the US$500m target?",
+    "RPNGC Gerehu suspect: charges filed? Named international partner?",
+    "Porgera 23 Sep coronial or RPNGC SITREP vs 8-dead CLAIM?",
+    "Island Sun / SIBC CF-403 workaround?",
+    "PMMM-4 official PDF still uncollected?",
+    "North Fly 500t: NDMO/NEA SITREP vs NBC logistics colour?"
+  ],
+  "sources": [
+    {"title": "RNZ Pacific RSS", "publisher": "RNZ", "url": "https://www.rnz.co.nz/rss/pacific.xml", "published_at": "2026-10-14T05:16:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "China denies US allegation of malicious cyber activity in the Pacific", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1885822/china-denies-us-allegation-of-malicious-cyber-activity-in-the-pacific", "published_at": "2026-10-13T17:43:00Z", "countries": ["FJI", "USA", "CHN"], "tier": "B", "confidence": "M"},
+    {"title": "Ministry probes suspected cyberattack on regional organisation", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/ministry-probes-suspected-cyberattack-on-regional-organisation", "published_at": "2026-10-13T20:30:00Z", "countries": ["FJI", "USA"], "tier": "B", "confidence": "M"},
+    {"title": "Fiji Acting A-G Turaga resigns from Cabinet, remains MP", "publisher": "PINA", "url": "https://pina.com.fj/2026/10/14/fiji-acting-a-g-turaga-resigns-from-cabinet-remains-mp/", "published_at": "2026-10-14", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Turaga attends Constitution Committee meeting", "publisher": "Fiji Times", "url": "https://www.fijitimes.com.fj/turaga-attends-constitution-committee-meeting/", "published_at": "2026-10-13", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Turaga’s exit will not derail Constitution process: PM", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/turagas-exit-will-not-derail-constitution-process-pm", "published_at": "2026-10-13T21:30:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Public had time to submit Constitution views: PM", "publisher": "Fiji Sun", "url": "https://fijisun.com.fj/news/nation/public-had-time-to-submit-constitution-views-pm", "published_at": "2026-10-13T20:00:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Fiji rights coalition questions legal authority for referendum date", "publisher": "PINA", "url": "https://pina.com.fj/2026/10/14/fiji-rights-coalition-questions-legal-authority-for-referendum-date/", "published_at": "2026-10-14T01:19:00Z", "countries": ["FJI"], "tier": "B", "confidence": "H"},
+    {"title": "Southwest Pacific Tropical Cyclone Outlook - October 2026", "publisher": "NIWA / Earth Sciences NZ", "url": "https://niwa.co.nz/climate-and-weather/southwest-pacific-tropical-cyclone-outlook/southwest-pacific-tropical-cyclone-outlook-october-2026", "published_at": "2026-10-14T08:41:35Z", "countries": ["NZL"], "tier": "A", "confidence": "H"},
+    {"title": "Daily Post homepage", "publisher": "Daily Post", "url": "https://www.dailypost.vu/", "published_at": "2026-10-14T08:54:14Z", "countries": ["VUT"], "tier": "B", "confidence": "H"},
+    {"title": "PM says Boundaries Commission submission being processed", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41287/pm-says-boundaries-commission-submission-being-processed", "published_at": "2026-10-14", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "No boats, no aircraft to deliver 500 tonnes of relief to North Fly", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41260/no-boats-no-aircraft-to-deliver-500-tonnes-of-relief-to-north-fly", "published_at": "2026-10-14", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "K80 million Papua LNG forum cost questioned in Parliament", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41249/k80-million-papua-lng-forum-cost-questioned-in-parliament", "published_at": "2026-10-14", "countries": ["PNG"], "tier": "B", "confidence": "M"}
+  ]
+}
