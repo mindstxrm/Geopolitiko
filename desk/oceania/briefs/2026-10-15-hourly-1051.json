@@ -1,0 +1,231 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-15T09:51:00Z",
+  "window_end_utc": "2026-10-15T10:51:00Z",
+  "generated_at_utc": "2026-10-15T11:02:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-15",
+  "parent_hourly": "2026-10-15T09:51:00Z",
+  "scan_through_utc": "2026-10-15T11:02:00Z",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "JPN", "GUM", "MNP", "ASM", "PHL", "TLS"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NWS HLS 856 PM ChST prints TD Champi (29W), restates Guam COR 3, Watch continued O.CON; TCV still none",
+      "summary": "Scan-through NWS WTPQ82 PGUM 151056 Local Statement (LM 10:56:40 GMT; 856 PM ChST) names Tropical Depression Champi (29W), NEW INFORMATION Guam COR 3, Typhoon Watch continued at VTEC O.CON, still 35 mph at 11.0N 157.8E (~890 miles east of Guam). Next HLS around 3 AM ChST. CAP updated 10:56:49Z with 8:56 PM ChST Watch Update (product change). Leftover TCP Advisory 4 still 35 mph (LM 09:24:44 GMT); leftover JTWC NR 004 still 030 kt (LM 07:54:12 GMT); TCV still none. Flood Watch still likely, not issued. Governor homepage still silent. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "USA"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td_29w", "champi", "nws_guam", "typhoon_watch", "cor_3", "hls", "cofa", "cyclone"],
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://api.weather.gov/alerts/active?area=MP",
+        "https://www.weather.gov/wwamap/wwatxtget.php?cwa=gum&wwa=all",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1",
+        "https://ghs.guam.gov/public-advisory-no-2-typhoon-watch-effect-guam-governor-declares-condition-readiness-3",
+        "https://governor.guam.gov/"
+      ]
+    },
+    {
+      "title": "Leftover FMS TDS still LOW TO MODERATE on TD01F; JTWC 92P still MEDIUM; Gale 002 leftover waters-only",
+      "summary": "No this-window Nadi rebuild. FMS RSS lastBuildDate still 08:44:29 +1200; TDS 150844 UTC still LOW TO MODERATE at 08.1S 164.9W; Gale Warning 002 still 35 kt waters-only in box 02-04S 166-170W. Leftover JTWC ABPW 150800 still MEDIUM on 92P at 8.3S 164.7W. No named Southwest Pacific cyclone. Not a Fiji-land warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "FJI", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td01f", "invest_92p", "fms", "rsmc_nadi", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt"
+      ]
+    },
+    {
+      "title": "Mai TV first-file post-Nausori CRC sitting; Bill 371-38 named on leftover PDN $12m copy; ABC RSS 500 and Honiara 403 continue; AUS-SLB still unsigned",
+      "summary": "FBC lastBuildDate still 05:37:46Z. Nausori advertised sitting remains closed after 08:00 UTC with no Fiji Times / FBC venue product. This-scan Mai TV first-file (dateline 15 Oct; curl 403) describes Suva and Nausori sittings as held and Rabuka ruling out an extension; exact quotes single-outlet. Daily Post homepage still HTTP 200 with leftover kava-import lead. PINA RSS still No Feed Access (pubDate 10:46:05 UTC). Island Sun / SIBC / Solomon Star homepages 403. DFAT/Defence timeout. ABC News RSS HTTP 500 still. Post Courier lastBuildDate still 09:52:24Z. Leftover NBC 41308; 41309-41313 404. This-scan collection close: PDN Bill 371-38 (14-0; $12m Rainy Day Fund; datePublished 04:30 UTC leftover; LM 10:53:07 GMT). Not FLASH.",
+      "countries": ["FJI", "AUS", "SLB", "VUT", "PNG", "GUM"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["crc", "collection_path", "aus_slb_treaty", "nbc_41308", "bill_371_38"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fijitimes.com.fj/",
+        "https://maitvfiji.com/rabuka-defends-changes-to-crc-draft-rules-out-more-consultation-time/",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.nbc.com.pg/",
+        "https://www.guampdn.com/news/senators-approve-12m-for-invest-champi-preparedness-mitigation-response/article_5d1d054e-135f-4900-adc8-ee1899a8ca02.html"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NWS HLS PQ2 856 PM ChST (TD Champi / 29W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "this-window/scan-through origin: WTPQ82 PGUM 151056 LM 10:56:40 GMT; 856 PM ChST; prints Champi; NEW INFORMATION Guam COR 3; Typhoon Watch continued; VTEC O.CON; still 35 mph at 11.0N 157.8E; next HLS around 3 AM ChST",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Scheduled local statement now prints the Champi name and restates island COR 3. O.CON is not a Watch-to-Warning upgrade. Still 35 mph."
+    },
+    {
+      "name": "NWS CAP Typhoon Watch Update 8:56 PM ChST",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "USA"],
+      "status": "this-window: CAP updated 10:56:49Z; headline 8:56 PM ChST; messageType Update; VTEC O.CON.PGUM.TY.A.4029",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Product change matching HLS 151056. Not a TCV breakpoint."
+    },
+    {
+      "name": "Guam Condition of Readiness 3",
+      "type": "climate / civil defence",
+      "parties": ["GUM", "USA"],
+      "status": "leftover official HTML GHS Adv. 2; this-window NWS HLS restates COR 3 as NEW INFORMATION; Governor homepage still no COR 3 string",
+      "bindingness": "gubernatorial readiness directive; HLS restatement is meteorological, not a new legal instrument",
+      "assess": "Not FLASH. HLS restatement of leftover COR 3 is not landfall and not a new gubernatorial order."
+    },
+    {
+      "name": "Guam Legislature Bill 371-38",
+      "type": "territorial finance / disaster preparedness",
+      "parties": ["GUM"],
+      "status": "this-scan collection close: PDN names Bill 371-38; 14-0 Thursday; $10m amended to $12m Rainy Day Fund; available at COR 3; datePublished 04:30 UTC leftover; LM 10:53:07 GMT; no Public Law collected",
+      "bindingness": "territorial statute if signed/enacted; Public Law uncollected",
+      "assess": "Not FLASH. Territorial Rainy Day appropriation, not compact cash, not a security pact."
+    },
+    {
+      "name": "NWS TCP PQ2 Advisory Number 4 (TD Champi / 29W)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover: WTPQ32 PGUM 150924 LM 09:24:44 GMT; still 35 mph; next intermediate 1100 PM ChST",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Did not rebuild this hour."
+    },
+    {
+      "name": "JTWC Tropical Depression 29W (CHAMPI) Warning NR 004",
+      "type": "climate / maritime domain awareness",
+      "parties": ["FSM", "GUM", "MNP", "USA"],
+      "status": "leftover: WTPN32 PGTW 150900 LM 07:54:12 GMT; still 030 kt at 10.9N 158.4E; named CHAMPI; next 151500Z",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Did not rebuild. HLS 85-kt citation is forecast."
+    },
+    {
+      "name": "Port of Guam Heavy Weather Condition Yankee",
+      "type": "climate / port operations",
+      "parties": ["GUM"],
+      "status": "leftover PDN LM 08:02:42 GMT: GM Respicio anticipates Yankee; Crane 6 returned; Crane 5 still down; HLS return-to-port language is watch prep; Yankee not in force this scan",
+      "bindingness": "port/captain-of-the-port condition (anticipated)",
+      "assess": "Not FLASH. Anticipated ≠ in force."
+    },
+    {
+      "name": "RSMC Nadi TDS 150844 UTC (TD01F)",
+      "type": "climate / maritime domain awareness",
+      "parties": ["ASM", "WSM", "FJI"],
+      "status": "leftover: issued 150844 UTC; potential LOW TO MODERATE; centre 08.1S 164.9W at 150600 UTC",
+      "bindingness": "meteorological advisory; not a legal instrument",
+      "assess": "Not FLASH. Unnamed. Not a Fiji-land warning. No this-window rebuild."
+    },
+    {
+      "name": "Fiji CRC sitting (15 Oct Civic Centre / Nausori)",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "leftover FBC Civic Centre cluster; Nausori still no FBC/FT venue product after 08:00 UTC close; this-scan Mai TV first-file describes both sittings as held and Rabuka ruling out an extension; no SO.129",
+      "bindingness": "parliamentary process; not a legal instrument until third reading / referendum",
+      "assess": "Not FLASH. Single-outlet no-extension CLAIM. Missing FBC/FT venue product is not extra-constitutional."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD 29W / CHAMPI (FSM now; GUM/MNP weekend forecast corridor)",
+      "direction": "up",
+      "horizon": "hours-4 days",
+      "confidence": "H",
+      "escalate_on": "Named system plus Category-level landfall with mass-casualty or state-capacity breach — not FLASH on HLS O.CON at 35 mph, leftover TCP 4 CHANGES None, leftover NR 004 at 30 kt, leftover official COR 3 HTML, an HLS restatement of COR 3, a likely Flood Watch, or forecast 85-kt / typhoon language"
+    },
+    {
+      "risk": "TD01F / Invest 92P (ENE Swains)",
+      "direction": "unchanged",
+      "horizon": "1-3 days",
+      "confidence": "M",
+      "escalate_on": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on a held Nadi LOW TO MODERATE class or a waters-only gale box"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock",
+      "direction": "unchanged",
+      "horizon": "hours-Dec referendum path",
+      "confidence": "H",
+      "escalate_on": "Extra-constitutional GE delay or sitting violence — not FLASH on a missing FBC/FT Nausori venue product or a single-outlet no-extension CLAIM"
+    },
+    {
+      "risk": "PNG UOG HELP-loan petition (NBC 41308)",
+      "direction": "unchanged",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "escalate_on": "Capital-scale unrest or sitting violence — not FLASH on a student petition"
+    },
+    {
+      "risk": "PNG Bougainville ratification (89/118)",
+      "direction": "unchanged",
+      "horizon": "5-6 days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a scheduled 20-21 Oct debate"
+    },
+    {
+      "risk": "AUS-SLB treaty still unsigned / SLB-CHN 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_on": "Signed AUS-SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "1100 PM ChST intermediate TCP: still 35 mph vs leftover Advisory 4?",
+    "First ChST TCV breakpoint product vs this-window HLS 856 PM / CAP O.CON vs leftover TCP 4?",
+    "29W 151500Z: still 30 kt, or upgrade past 34 kt?",
+    "Flood Watch issuance vs this-window HLS / leftover AFD likely language?",
+    "Official Chuuk SCA product text vs leftover AFD-only?",
+    "Governor of Guam HTML matching GHS Adv. 2 and this-window HLS COR 3 restatement?",
+    "Next HLS around 3 AM ChST / 17:00 UTC Friday: Watch still O.CON, or warning?",
+    "US bases TCCOR still 4, or moved with island COR 3?",
+    "Port Yankee in force vs leftover PDN anticipated language vs HLS return-to-port prep?",
+    "Delayed Nausori FBC/FT CRC venue product after 08:00 UTC close vs this-scan Mai TV first-file; any official extension vs 23 Oct 16:00?",
+    "DHERST written reply to UOG HELP petition (NBC 41308) vs campus action?",
+    "AUS-SLB signature date? DFAT/Defence still timeout.",
+    "ABC News RSS HTTP 500: transient or standing break?",
+    "Bill 371-38 Public Law / governor signature vs leftover PDN 14-0 lede?",
+    "Will PNG Parliament divide on 20-21 Oct given Haley Tuesday and PICOF-19?"
+  ],
+  "sources": [
+    {"title": "NWS Guam HLS 856 PM ChST (Champi / 29W)", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt", "published_at": "2026-10-15T10:56:40Z", "tier": "A"},
+    {"title": "NWS CAP active alerts Guam 8:56 PM Update", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at": "2026-10-15T10:56:49Z", "tier": "A"},
+    {"title": "NWS CAP active alerts CNMI", "url": "https://api.weather.gov/alerts/active?area=MP", "published_at": "2026-10-15T10:56:49Z", "tier": "A"},
+    {"title": "NWS WWA summary issued by GUM", "url": "https://www.weather.gov/wwamap/wwatxtget.php?cwa=gum&wwa=all", "published_at": "2026-10-15T10:56:40Z", "tier": "A"},
+    {"title": "NWS Guam TCP Advisory Number 4 (Champi / 29W)", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at": "2026-10-15T09:24:44Z", "tier": "A"},
+    {"title": "NWS Guam AFD FXPQ50 PGUM 150934", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "published_at": "2026-10-15T09:34:51Z", "tier": "A"},
+    {"title": "GHS/OCD Public Advisory No. 2 COR 3", "url": "https://ghs.guam.gov/public-advisory-no-2-typhoon-watch-effect-guam-governor-declares-condition-readiness-3", "published_at": "2026-10-15T09:30:00Z", "tier": "A"},
+    {"title": "JTWC TD 29W (CHAMPI) Warning NR 004", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at": "2026-10-15T07:54:12Z", "tier": "A"},
+    {"title": "JTWC ABPW10 PGTW 150800 REISSUED", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-15T08:03:14Z", "tier": "A"},
+    {"title": "NWS Guam TCV none issued", "url": "https://forecast.weather.gov/product.php?site=GUM&issuedby=GUM&product=TCV&format=CI&version=1", "published_at": "2026-10-15T10:58:00Z", "tier": "A"},
+    {"title": "PDN senators approve $12M Bill 371-38", "url": "https://www.guampdn.com/news/senators-approve-12m-for-invest-champi-preparedness-mitigation-response/article_5d1d054e-135f-4900-adc8-ee1899a8ca02.html", "published_at": "2026-10-15T04:30:00Z", "tier": "B"},
+    {"title": "Mai TV Rabuka Nausori CRC no-extension", "url": "https://maitvfiji.com/rabuka-defends-changes-to-crc-draft-rules-out-more-consultation-time/", "published_at": null, "tier": "B", "published_at_note": "dateline 15 Oct 2026 only; curl 403; no verified UTC timestamp"},
+    {"title": "FMS warnings RSS TDS 150844 UTC", "url": "https://www.met.gov.fj/feed/warnings/", "published_at": "2026-10-15T08:44:00Z", "tier": "A"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "published_at": "2026-10-15T05:37:46Z", "tier": "B"},
+    {"title": "PINA feed No Feed Access", "url": "https://pina.com.fj/feed/", "published_at": "2026-10-15T10:46:05Z", "tier": "C"},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "published_at": "2026-10-15T09:52:24Z", "tier": "B"}
+  ]
+}
