@@ -1,0 +1,280 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-10-16T10:51:00Z",
+  "window_end_utc": "2026-10-16T11:51:00Z",
+  "generated_at_utc": "2026-10-16T12:12:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-10-16",
+  "parent_hourly": "2026-10-16T10:51:00Z",
+  "scan_through_utc": "2026-10-16T11:57:00Z",
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN",
+    "JPN", "GUM", "MNP", "ASM", "PHL", "TLS", "ISR", "KOR"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "THIS-WINDOW HLS 161143 / CAP O.CON 9:43 PM catch leftover Adv 8 60 mph; leftover TCP Adv 8 / JTWC NR 008 / JMA-CMA 160900 / AFD 161053 HOLD; TCV still none",
+      "summary": "This-window WTPQ82 PGUM 161143 Local Statement (943 PM ChST; LM 11:43:57 GMT): O.CON Typhoon Warning remains Guam/Rota and Tropical Storm Warning remains Tinian/Saipan; still TS 60 mph at 11.6N 152.1E; forecast Guam 85-110 mph / gusts 150 / likely to move near Guam as a typhoon; next HLS around 3 AM ChST. CAP Typhoon Warning now Update 9:43 PM ChST (O.CON.PGUM.TY.W.4029), superseding leftover 4:11 PM O.NEW. Leftover WTPQ32 PGUM 160908 Advisory Number 8 (708 PM ChST; LM still 09:08:24 GMT): CHANGES None; still TS 60 mph. Leftover JTWC NR 008 still 050 kt (web LM still 07:40:13 GMT). Leftover AFD 161053 HOLD (LM still 10:53:51 GMT). Leftover JMA 160900 still STS 55 kt. Leftover CMA 160900 still STS 25 m/s. Leftover FFA 160431 Flood Watch CON and leftover CFW 160512 High Surf / Coastal Flood hold. TCV product.php still none. Product.php HLS still none-issued (lags tgftp 161143). Leftover GHS JIC 2 still leads; JIC 3/4/5 guessed 404; JIC 1 still says Watch. Governor HTML still silent. TS class split remains OPEN. Next intermediate 1100 PM ChST / 13:00 UTC. Not Category now. Not landfall. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "USA", "JPN", "CHN"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": [
+        "td_29w", "champi", "nws_guam", "tcp_adv_8", "hls_161143", "afd_161053",
+        "typhoon_warning", "tropical_storm_warning", "cap_typhoon_warning",
+        "jma_sts_55kt", "cma_sts", "jtwc_nr_008", "cor_2", "tccor_2",
+        "ghs_jic_2", "cofa", "cyclone"
+      ],
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt",
+        "https://api.weather.gov/alerts/active?area=GU",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq50.rjtd..txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq20.babj..txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt"
+      ]
+    },
+    {
+      "title": "leftover PDN territorial SOE HOLD; leftover PAG Yankee HOLD; THIS-WINDOW PDN $15M LM tick (still no Public Law)",
+      "summary": "Leftover PDN SOE article datetime 18:49 ChST / 08:49 UTC / LM still 09:10:21 GMT remains 90 days unless extended with emergency procurement up to a combined maximum of $250,000 and GHS/OCD as lead agency. Governor HTML and press-releases still silent; no EO PDF collected. Leftover PAG Condition YANKEE still leads the official port site. This-window PDN $15M Bill 1 (12-S) LM tick 11:20:11 GMT (parent 10:38:02 GMT); still no Public Law number. Leftover $12 million (Bill 371-38) remains signed-as-printed with no Public Law number. Territorial, not compact cash. Forecast 85-110 mph remains forecast. Not FLASH.",
+      "countries": ["GUM", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": [
+        "guam_soe", "bill_1_12s", "bill_371_38", "champi_finance",
+        "territorial", "cor_2", "port_yankee", "pag", "cyclone"
+      ],
+      "sources": [
+        "https://www.guampdn.com/news/governor-declares-state-of-emergency-in-anticipation-of-champi/article_2bce0b66-f2ec-450b-ae7f-bb833c669b4c.html",
+        "https://portofguam.com/port-moves-condition-yankee-champi-approaches-guam",
+        "https://www.guampdn.com/news/senators-pass-additional-15m-for-champi-response-recovery/article_83523f87-86df-401f-8976-353bb92ca0b2.html",
+        "https://governor.guam.gov/"
+      ]
+    },
+    {
+      "title": "THIS-WINDOW FMS SWB FIVE still Tropical Cyclone Warning for Suwarrow; leftover JTWC 01P 35 kt / A04 HIGH / Gale 008 HOLD",
+      "summary": "FMS lastBuildDate now 11:13:19 +1200. This-window Special Weather Bulletin Number FIVE issued 161113 UTC still keeps a Tropical Cyclone Warning in force for Suwarrow and a Tropical Cyclone Alert in force for Palmerston, Aitutaki and nearby islands; still unnamed TD01F 30 kt near 11.2S 163.3W / about 120 NM north of Suwarrow at 160900UTC; next SWB 161430 UTC. Leftover A04 160730 UTC still HIGH. Leftover Gale 008 160701 UTC unchanged. Leftover JTWC 01P NR 001 still 035 kt at 10.8S 163.3W (tgftp LM still 07:24:20 GMT); web sh0126web.txt still HTTP 403. Leftover ABPW 160700 (LM still 07:30:13 GMT) still has 92P on a tropical cyclone warning. Leftover RNZ/CIMS 07:08 UTC still lags the Warning. This-window RNZ Pacific newest item is rugby (out of scope). No this-window MetService / EMCI / Cook Islands Government civil-defence instrument. No named Southwest Pacific cyclone. Island-specific Warning is not a naming. JTWC numbering is not an RSMC name. Forecast Category 1 is not now. Not a Fiji-land warning. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": [
+        "td01f", "tc_01p", "invest_92p", "fms", "rsmc_nadi", "cook_islands",
+        "suwarrow", "tropical_cyclone_warning", "swb_five", "a04",
+        "abpw_160700", "cyclone"
+      ],
+      "sources": [
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.rnz.co.nz/news/pacific/1958250/cook-islanders-urged-to-be-prepared-for-potential-cyclone"
+      ]
+    },
+    {
+      "title": "leftover NBC 41355 / 41352 / FFA KURUKURU HOLD; THIS-WINDOW Island Sun + SIBC homepage 403 (parent 200); ABC RSS 500 HOLD; AUS-SLB still unsigned",
+      "summary": "Leftover NBC 41355 (Hela PPC: student arrested over alleged 14 Oct Komo Secondary invigilator attack; Tari cell) and leftover NBC 41352 (62 Morobe entrepreneurs, US-funded training) remain live; 41356-41361/41363-76 sampled 404. Distinct from leftover Wewak 41347 — do not fuse. Post Courier lastBuildDate still 08:15:07Z with the 10-item feed unchanged. FBC lastBuildDate still 05:42:05Z (CRC/electoral cluster HOLD). Daily Post first-pass HTTP 200 homepage LM 11:53:14 GMT; leftover VTU-strike lead (article LM still 21:30:24 GMT); leftover SHEFA-Hunan article 200 this hour (parent 429; article LM still 21:33:16 GMT). PINA RSS still No Feed Access (pubDate 11:34:09 UTC; stub path /2026/10/16/ still 200 with leftover PACPOL/Palau/sea-drones/IMF rows). This-window Island Sun and SIBC homepages HTTP 403 (parent 200). Solomon Star homepage 403 HOLD. DFAT/Defence timeout 20s / 0 bytes. ABC News RSS HTTP 500 HOLD. Leftover FFA Operation KURUKURU wrap content HOLD (datePublished still 05:32 UTC; HTTP LM tick 11:20:42 GMT): 5-16 Oct; 17 Members plus AUS/FRA/NZL/USA support; PacGuard trial / November 2026 launch as printed. Leftover NBC 41308; 15 Oct DHERST ask-by still elapsed at 21:51 PNG Friday. CRC HOLD is parliamentary. Not FLASH.",
+      "countries": ["PNG", "FJI", "VUT", "AUS", "SLB", "USA", "FRA", "NZL", "GUM", "CHN"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": [
+        "nbc_41355", "nbc_41352", "ffa_kurukuru", "fbc_crc_hold", "vtu_strike",
+        "shefa_hunan", "collection_path", "aus_slb_treaty", "abc_rss_500",
+        "pina_blocked", "pacguard", "island_sun_403", "sibc_403"
+      ],
+      "sources": [
+        "https://www.nbc.com.pg/post/41355/student-suspect-in-custody",
+        "https://www.nbc.com.pg/post/41352/morobe-entrepreneurs-complete-us-funded-business-training",
+        "https://www.ffa.int/2026/10/operation-kurukuru-ffa-wraps-largest-surveillance-operation-of-2026/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.dailypost.vu/",
+        "https://pina.com.fj/feed/",
+        "https://www.abc.net.au/news/feed/51158/rss.xml",
+        "https://theislandsun.com.sb/",
+        "https://www.sibconline.com.sb/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NWS HLS WTPQ82 PGUM 161143 (TS Champi / 29W)",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "this-window first-collected",
+      "this_window_delta": "943 PM ChST; LM 11:43:57 GMT; O.CON TY.W Guam/Rota + TR.W/TY.A Tinian/Saipan; catches Adv 8 60 mph; forecast Guam 85-110 mph / gusts 150; next HLS around 3 AM ChST",
+      "notes": "Local statement. Warning geography HOLD. Forecast not now. Not FLASH."
+    },
+    {
+      "name": "NWS CAP Typhoon Warning 9:43 PM ChST",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "USA"],
+      "status": "this-window Update O.CON",
+      "this_window_delta": "messageType Update; VTEC O.CON.PGUM.TY.W.4029; supersedes leftover 4:11 PM O.NEW",
+      "notes": "Matches this-window HLS. TCV still none. Not FLASH."
+    },
+    {
+      "name": "NWS TCP Advisory Number 8 (TS Champi / 29W)",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover HOLD",
+      "this_window_delta": "WTPQ32 PGUM 160908; LM still 09:08:24 GMT; 708 PM ChST; CHANGES None; still TS 60 mph at 11.6N 152.1E; next intermediate 1100 PM ChST; next scheduled 200 AM ChST Sat",
+      "notes": "No this-window file-touch. Still TS. Warning geography HOLD. Not FLASH."
+    },
+    {
+      "name": "FMS Special Weather Bulletin Number FIVE (Northern Cooks / TD01F)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "this-window first-collected",
+      "this_window_delta": "Issued 161113 UTC; lastBuildDate 11:13:19 +1200; Warning remains Suwarrow; Alert remains Palmerston/Aitutaki; still unnamed 30 kt; next SWB 161430 UTC",
+      "notes": "Unnamed. Forecast not now. Supersedes FOUR as latest SWB. Not FLASH."
+    },
+    {
+      "name": "Guam Legislature Bill 1 (12-S) additional $15M Champi response",
+      "type": "territorial finance / disaster prep",
+      "parties": ["GUM"],
+      "status": "leftover HOLD with this-window LM tick",
+      "this_window_delta": "PDN LM 11:20:11 GMT (parent 10:38:02 GMT); still no Public Law number",
+      "notes": "Territorial. LM tick is not enactment. Not FLASH."
+    },
+    {
+      "name": "FFA Operation KURUKURU 2026 wrap",
+      "type": "MDA / fisheries surveillance",
+      "parties": ["FFA", "AUS", "FRA", "NZL", "USA", "SLB"],
+      "status": "leftover HOLD",
+      "this_window_delta": "datePublished still 05:32 UTC; dateModified still 05:55 UTC; HTTP LM tick 11:20:42 GMT",
+      "notes": "Content HOLD. MDA wrap. Not a signed security pact. Not FLASH."
+    },
+    {
+      "name": "AUS-SLB treaty",
+      "type": "security / development compact",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned",
+      "this_window_delta": "Unchanged; DFAT/Defence timeout 20s / 0 bytes",
+      "notes": "Collection-path is not a signature. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TS 29W / CHAMPI (FSM now; GUM/MNP weekend forecast corridor)",
+      "direction": "hold",
+      "horizon": "hours-4 days",
+      "confidence": "H current class / M track",
+      "escalate_trigger": "Named system plus Category-level landfall with mass-casualty or state-capacity breach on GUM/MNP/FSM — not FLASH on leftover Adv 8 60 mph TS + Typhoon Warning, this-window HLS O.CON catch-up, leftover JTWC 50 kt, leftover JMA STS 55 kt, leftover CMA STS, leftover Flood Watch CON, leftover High Surf Warning / Coastal Flood Watch, leftover COR 2 / TCCOR 2, leftover PAG Yankee, leftover territorial SOE, leftover territorial $15M, leftover AFD discussion, or forecast Sunday typhoon / 85-110 mph / CAT 2 language"
+    },
+    {
+      "risk": "TD01F / JTWC 01P (this-window Suwarrow Warning)",
+      "direction": "hold",
+      "horizon": "hours-3 days",
+      "confidence": "H Warning in force / M track-naming",
+      "escalate_trigger": "Named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on this-window unnamed Suwarrow Warning continuation, leftover JTWC 01P 35 kt, leftover HIGH, leftover marine gales, leftover RNZ/CIMS copy, or forecast Category-1 language"
+    },
+    {
+      "risk": "Guam territorial Champi finance / SOE (leftover PDN SOE; leftover $15M LM tick / $12M)",
+      "direction": "hold",
+      "horizon": "days",
+      "confidence": "H OG / M EO PDF Public Law",
+      "escalate_trigger": "Compact-cash or federal disaster-declaration instrument — not FLASH on a territorial SOE or appropriation LM tick"
+    },
+    {
+      "risk": "Hela exam-assault arrest (leftover NBC 41355) / leftover Wewak 41347",
+      "direction": "hold",
+      "horizon": "hours-days",
+      "confidence": "H OG / L-M attribution",
+      "escalate_trigger": "Capital-scale unrest or sitting violence — not FLASH on a provincial exam-assault CLAIM or arrest lede; do not fuse Hela with Wewak"
+    },
+    {
+      "risk": "Papua LNG operatorship (leftover PC Maladina / NBC 41320)",
+      "direction": "hold",
+      "horizon": "weeks-15 Dec",
+      "confidence": "H ledes / M FID path",
+      "escalate_trigger": "Official FID or project collapse with fiscal/security spillover — not FLASH on operatorship"
+    },
+    {
+      "risk": "VUT nationwide teachers strike / OAG stay (Daily Post leftover)",
+      "direction": "hold",
+      "horizon": "days-weeks",
+      "confidence": "H lede / M order",
+      "escalate_trigger": "Capital-scale unrest or sitting violence around leftover 19-30 Oct extraordinary session — not FLASH on a leftover Supreme Court stay application"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock (leftover NGOCHR/Nawaikula/SoE option HOLD)",
+      "direction": "hold",
+      "horizon": "hours-Dec referendum path",
+      "confidence": "H clock / M path",
+      "escalate_trigger": "Extra-constitutional delay of the GE, or violence around sittings — not FLASH on leftover CRC submissions or an FEO may-align option"
+    },
+    {
+      "risk": "SLB dual-track (AUS unsigned / PRC 2022 unrepealed)",
+      "direction": "hold",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS-SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "Next intermediate 1100 PM ChST / 13:00 UTC vs Adv 8 60 mph / Warning points?",
+    "Next HLS around 3 AM ChST / 17:00 UTC vs this-window 943 PM Warning-matched 60 mph text?",
+    "First ChST TCV breakpoint product vs this-window CAP O.CON.TY.W.4029 vs Adv 8 (TCV still none at ~11:54)?",
+    "161500Z still 50 kt TS, or does JTWC step toward leftover NWS 60 mph / leftover JMA STS 55 kt?",
+    "Official Chuuk SCA product text vs leftover AFD-stated in-effect vs TKK NSH none-issued?",
+    "Governor of Guam HTML / EO PDF matching leftover PDN SOE, or does the Governor site stay silent?",
+    "Next GHS numbered advisory / JIC 3 matching Adv 8 Warning (JIC 1 still Watch; JIC 3/4/5 guessed 404)?",
+    "Territorial SOE: EO number / gazette vs PDN $250,000 / 90-day copy?",
+    "Next SWB 161430 UTC: named, expanded Warning beyond Suwarrow, or still unnamed with Alert remainder?",
+    "Next JTWC 01P 162100Z vs leftover 35 kt?",
+    "Bill 1 (12-S) Public Law / governor signature vs leftover PDN 14-yea lede / this-window LM tick?",
+    "Bill 371-38 Public Law number vs PDN already-signed-as-printed?",
+    "Papua LNG FID language vs leftover 15 Dec sunset vs leftover Maladina/NBC operatorship?",
+    "DHERST written reply to UOG HELP petition after still-elapsed 15 Oct ask-by?",
+    "AUS-SLB: any signature date? DFAT/Defence timeout 20s / 0 bytes.",
+    "ABC News RSS HTTP 500 HOLD after daily recovered 200 — standing evening break?",
+    "Daily Post first-pass 200 durability (homepage LM tick without a new lede; SHEFA 200 this hour after parent 429)?",
+    "VUT Supreme Court: stay granted/refused vs leftover Daily Post application lede?",
+    "Cook Islands / NZ civil-defence product matching this-window Nadi Suwarrow Warning?",
+    "Product.php TCP/HLS still none-issued at ~11:54 despite leftover tgftp 160908 / this-window tgftp 161143 / leftover AFD php current — collection-path lag or office routing?",
+    "Island Sun / SIBC homepage 403 durability vs parent 200; Solomon Star 403 workaround durability?",
+    "PacGuard November 2026 launch instrument vs FFA as-printed trial language?"
+  ],
+  "sources": [
+    {"title": "NWS Guam HLS WTPQ82 PGUM 161143 this-window first-collected", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt", "published_at_utc": "2026-10-16T11:43:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "NWS API active alerts Guam CAP Typhoon Warning Update 9:43 PM ChST", "url": "https://api.weather.gov/alerts/active?area=GU", "published_at_utc": "2026-10-16T11:43:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "NWS Guam TCP Advisory Number 8 WTPQ32 PGUM 160908 leftover HOLD", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at_utc": "2026-10-16T09:08:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "NWS Guam AFD FXPQ50 PGUM 161053 leftover HOLD", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "published_at_utc": "2026-10-16T10:53:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "JMA RSMC STS Champi WTPQ50 RJTD 160900 leftover HOLD", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq50.rjtd..txt", "published_at_utc": "2026-10-16T09:00:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "CMA subjective forecast STS Champi WTPQ20 BABJ 160900 leftover HOLD", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq20.babj..txt", "published_at_utc": "2026-10-16T09:00:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "JTWC Tropical Storm 29W Warning NR 008 leftover HOLD", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at_utc": "2026-10-16T09:00:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "FMS SWB Number FIVE 161113 UTC this-window first-collected", "url": "https://www.met.gov.fj/feed/warnings/", "published_at_utc": "2026-10-16T11:13:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "JTWC Tropical Cyclone 01P Warning NR 001 leftover HOLD", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt", "published_at_utc": "2026-10-16T09:00:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "Pacific Daily News Governor declares state of emergency leftover HOLD", "url": "https://www.guampdn.com/news/governor-declares-state-of-emergency-in-anticipation-of-champi/article_2bce0b66-f2ec-450b-ae7f-bb833c669b4c.html", "published_at_utc": "2026-10-16T08:49:00Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "Pacific Daily News $15M Bill 1 (12-S) this-window LM tick", "url": "https://www.guampdn.com/news/senators-pass-additional-15m-for-champi-response-recovery/article_83523f87-86df-401f-8976-353bb92ca0b2.html", "published_at_utc": "2026-10-16T07:20:00Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "FFA Operation KURUKURU 2026 wrap leftover HOLD", "url": "https://www.ffa.int/2026/10/operation-kurukuru-ffa-wraps-largest-surveillance-operation-of-2026/", "published_at_utc": "2026-10-16T05:32:20Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "NBC 41355 Student suspect in police custody leftover HOLD", "url": "https://www.nbc.com.pg/post/41355/student-suspect-in-custody", "published_at_utc": "2026-10-16T09:53:00Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "Port Authority of Guam Condition YANKEE leftover HOLD", "url": "https://portofguam.com/port-moves-condition-yankee-champi-approaches-guam", "published_at_utc": "2026-10-16T08:53:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "GHS JIC Release No. 2 leftover HOLD", "url": "https://ghs.guam.gov/jic-release-no-2-judiciary-guam-closure-fuel-permit-temporary-waiver-988-lifeline-available", "published_at_utc": "2026-10-16T07:15:00Z", "tier": "A", "claim_type": "FACT"},
+    {"title": "Post Courier RSS leftover HOLD", "url": "https://www.postcourier.com.pg/feed/", "published_at_utc": "2026-10-16T08:15:07Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "FBC RSS leftover HOLD", "url": "https://www.fbcnews.com.fj/feed/", "published_at_utc": "2026-10-16T05:42:05Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "Daily Post homepage first-pass 200", "url": "https://www.dailypost.vu/", "published_at_utc": "2026-10-16T11:53:14Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "PINA feed still No Feed Access", "url": "https://pina.com.fj/feed/", "published_at_utc": "2026-10-16T11:34:09Z", "tier": "C", "claim_type": "FACT"},
+    {"title": "Island Sun homepage this-window 403", "url": "https://theislandsun.com.sb/", "published_at_utc": "2026-10-16T11:54:36Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "SIBC homepage this-window 403", "url": "https://www.sibconline.com.sb/", "published_at_utc": "2026-10-16T11:54:36Z", "tier": "B", "claim_type": "FACT"},
+    {"title": "ABC News RSS HTTP 500 HOLD", "url": "https://www.abc.net.au/news/feed/51158/rss.xml", "published_at_utc": "2026-10-16T11:54:37Z", "tier": "B", "claim_type": "FACT"}
+  ]
+}
