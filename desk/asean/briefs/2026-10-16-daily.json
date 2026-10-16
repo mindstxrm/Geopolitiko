@@ -1,0 +1,346 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-10-15T08:00:00Z",
+  "window_end_utc": "2026-10-16T08:00:00Z",
+  "generated_at_utc": "2026-10-16T08:05:00Z",
+  "overall_confidence": "H",
+  "countries_touched": ["IDN", "MYS", "SGP", "TLS", "PHL", "CHN", "USA", "THA", "KHM", "MMR"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "coverage_gap_note": "Last filed daily 2026-10-15 PR #112. This packet does not backfill 30 Sep–13 Oct dailies, 5/12 Oct weeklies, or the September monthly. Do not rewrite PR #112 / #87 / #93 / #84 / #70 / #68 / #48.",
+  "cutoff_prints": {
+    "sgp_psi_1600_sgt": {
+      "north": 159,
+      "central": 229,
+      "east": 204,
+      "south": 183,
+      "west": 205,
+      "band": "three_region_vu_central_east_west",
+      "update_timestamp": "2026-10-16T16:00:35+08:00"
+    },
+    "sgp_pm25_1hr_1600_sgt": {
+      "north": 127,
+      "central": 174,
+      "east": 135,
+      "south": 89,
+      "west": 157
+    },
+    "sgp_psi_0000_sgt": {
+      "north": 132,
+      "central": 203,
+      "east": 176,
+      "south": 167,
+      "west": 178,
+      "note": "dated query skips 00:00; confirmed via date_time=2026-10-16T00:00:00"
+    },
+    "sgp_central_24hr_peak_this_window": {
+      "value": 229,
+      "timestamp": "2026-10-16T15:00:00+08:00",
+      "held_at_cutoff": true
+    },
+    "sgp_west_reentered_vu": {
+      "value": 201,
+      "timestamp": "2026-10-16T10:00:00+08:00"
+    },
+    "sgp_1hr_peak_this_window": {
+      "value": 221,
+      "region": "central",
+      "timestamp": "2026-10-15T19:00:00+08:00"
+    },
+    "apims_1600_myt": {
+      "complete_68_68": false,
+      "n": 51,
+      "note": "incomplete dump; do not use"
+    },
+    "apims_1500_myt": {
+      "complete_68_68": true,
+      "unhealthy": 30,
+      "very_unhealthy": 1,
+      "moderate": 37,
+      "max": 204,
+      "max_station": "Pasir Gudang"
+    }
+  },
+  "priority_items": [
+    {
+      "title": "Haze: three-region VU at cutoff C229/E204/W205; year-high central 229; not second FLASH",
+      "summary": "FACT: 16:00 SGT PSI N159/C229 VU/E204 VU/S183 Unhealthy/W205 VU. Central first VU at 00:00 (C203); east/west re-entered VU at 10:00. 1-hr cutoff C174 High / W157 High; in-window 1-hr peak C221 at 19:00 SGT 15 Oct. APIMS 15:00 complete 68/68: 31 unhealthy, Pasir Gudang 204 VU; 16:00 incomplete 51/68. haze.gov 10:53 AM names Singapore + Papua/Maluku. Max 229<<301. No bencana; no emergency AMM.",
+      "countries": ["IDN", "MYS", "SGP", "TLS"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "non-traditional"],
+      "sources": [
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-10-16",
+        "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-16",
+        "https://www.haze.gov.sg/",
+        "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly"
+      ]
+    },
+    {
+      "title": "Haze diplomacy: Prabowo approves foreign help in principle; Wong Transboundary Haze Pollution Act; Hasan no-note; no AMM",
+      "summary": "FACT: FM Arrmanatha said Prabowo approved foreign firefighting assistance; technical BNPB; countries/form unpublished. FACT: PM Wong will ID companies and may use the Transboundary Haze Pollution Act; no filed prosecution. CLAIM: Hasan will not send a diplomatic note or sue. Dudung bencana rejection stands. Kemenhut 799 high-confidence hotspots as-of 21:00 WIB 15 Oct; Bromo 4 killed.",
+      "countries": ["IDN", "SGP", "MYS"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "diplomacy", "legal"],
+      "sources": [
+        "https://www.channelnewsasia.com/asia/indonesia-haze-prabowo-approves-foreign-help-6462316",
+        "https://www.channelnewsasia.com/singapore/haze-singapore-indonesia-companies-fires-legal-action-pm-wong-6463101",
+        "https://www.straitstimes.com/asia/se-asia/malaysia-has-no-plans-to-take-legal-action-or-issue-diplomatic-note-over-haze-says-foreign-minister"
+      ]
+    },
+    {
+      "title": "MSCI Standalone consultation; IHSG halt then ~11% intra-day; not capital controls",
+      "summary": "FACT: MSCI consultation to reclassify Indonesia EM to Standalone; comments to 30 Apr 2027; decision by 30 Jun 2027; freeze remains. FACT: IHSG open -8.01% to 5,393.92 + 30-min BEI halt; sesi I 5,233 / -10.76%; CNA post-resume -11.1%. Yahoo ~5,198 at ~07:54Z is session II intra-day, not a Friday close. OJK respects consultation; BI intervening in NDF/spot/DNDF. Not FLASH / not capital controls / not default.",
+      "countries": ["IDN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["macro", "markets", "MSCI", "FDI"],
+      "sources": [
+        "https://ir.msci.com/news-releases/news-release-details/msci-launches-consultation-proposal-reclassify-indonesia",
+        "https://www.channelnewsasia.com/business/indonesia-stocks-msci-weigh-market-reclassification-6464081",
+        "https://en.antaranews.com/news/435877/ojk-respects-msci-plan-to-reclassify-indonesias-market"
+      ]
+    },
+    {
+      "title": "WPS: Marcos to summon PRC ambassador; Lawak drive-away; no kinetic FLASH",
+      "summary": "FACT: Marcos said Jing Quan 15 Oct 'easily win' force remark sounds like a threat and will summon the envoy. DFA: thinly veiled threat. FACT: PCG drove away Yuetaiyu 63168 + four boats at Lawak on 15 Oct; no shots/injuries/second-hull. Malvar patrol + 16th PH-US MCA remain prior-window carry. No emergency AMM.",
+      "countries": ["PHL", "CHN", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["SCS", "WPS", "diplomacy", "gray-zone"],
+      "sources": [
+        "https://www.abs-cbn.com/news/nation/2026/10/16/marcos-china-use-of-force-remark-sounds-very-much-like-a-threat-1004",
+        "https://www.philstar.com/headlines/2026/10/16/2563637/marcos-chinese-ambassadors-force-remark-sounds-very-much-threat",
+        "https://www.abs-cbn.com/news/nation/2026/10/15/pcg-drives-away-chinese-vessel-4-boats-away-from-waters-of-lawak-island-1656"
+      ]
+    },
+    {
+      "title": "IDN-TLS BIT signed in Jakarta; accession-track overlay",
+      "summary": "FACT: BKPM Rosan and TLS DPM Kalbuadi Lay signed a Bilateral Investment Treaty on 15 Oct in Jakarta (2023 commitment; talks Nov 2024-Aug 2025). Ratification unpublished. TLS school suspension 15-17 Oct still in force. Not ASEAN-10 accession.",
+      "countries": ["IDN", "TLS"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["agreements", "investment", "accession"],
+      "sources": [
+        "https://bkpm.go.id/index.php/id/info/siaran-pers/indonesia-dan-timor-leste-teken-bit-buka-peluang-kerja-sama-ekonomi-lebih-luas",
+        "https://en.antaranews.com/news/435829/indonesia-timor-leste-seal-investment-treaty-to-expand-economic-ties"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "IDN-TLS Bilateral Investment Treaty",
+      "type": "BIT",
+      "parties": ["IDN", "TLS"],
+      "status": "signed",
+      "date": "2026-10-15",
+      "venue": "Jakarta",
+      "bindingness": "legal once in force (ratification unpublished)",
+      "in_window": true,
+      "note": "Rosan-Kalbuadi Lay; 2023 commitment."
+    },
+    {
+      "name": "IDN foreign firefighting help (Prabowo approval)",
+      "type": "operational assistance",
+      "parties": ["IDN"],
+      "status": "approved",
+      "date": "2026-10-15",
+      "venue": "Jakarta / BNPB technical",
+      "bindingness": "political / operational",
+      "in_window": true,
+      "note": "Countries and form unpublished; not bencana; not sailing."
+    },
+    {
+      "name": "SGP Transboundary Haze Pollution Act — company ID",
+      "type": "domestic statute",
+      "parties": ["SGP"],
+      "status": "announced",
+      "date": "2026-10-15",
+      "venue": "Singapore",
+      "bindingness": "legal if charged",
+      "in_window": true,
+      "note": "PM Wong; no filed prosecution this window."
+    },
+    {
+      "name": "MSCI Indonesia EM to Standalone consultation",
+      "type": "index classification",
+      "parties": ["IDN"],
+      "status": "consultation",
+      "date": "2026-10-15",
+      "venue": "MSCI",
+      "bindingness": "market (not a treaty)",
+      "in_window": true,
+      "note": "Comments to 30 Apr 2027; decision by 30 Jun 2027; freeze remains."
+    },
+    {
+      "name": "SGP 24-hr PSI three-region VU",
+      "type": "air-quality print",
+      "parties": ["SGP"],
+      "status": "three_region_vu_at_cutoff",
+      "date": "2026-10-16",
+      "venue": "NEA 16:00 SGT C229/E204/W205",
+      "bindingness": "n/a",
+      "in_window": true,
+      "note": "FLASH remains PR #93. Do not treat C229 as a second FLASH (229<<301)."
+    },
+    {
+      "name": "IDN CPTPP accession regulatory mapping",
+      "type": "trade accession prep",
+      "parties": ["IDN"],
+      "status": "announced",
+      "date": "2026-10-16",
+      "venue": "Jakarta",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "AWG still subject to CPTPP consensus."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Transboundary haze SGP/MYS/IDN/TLS + AATHP/AADMER split",
+      "direction": "up_vs_prior_daily_three_region_vu",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "PSI >=301 or MYS API >=200 with new national-capacity break; IDN bencana; emergency AMM"
+    },
+    {
+      "risk": "IDN index-inclusion / IDR (MSCI Standalone consultation)",
+      "direction": "up",
+      "horizon": "days-months",
+      "confidence": "H",
+      "trigger_to_escalate": "Capital controls; bank holiday; default; second 15% halt without resume"
+    },
+    {
+      "risk": "SCS gray-zone PHL-CHN",
+      "direction": "up_diplomatic_flat_kinetic",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "Shots; ramming with injuries; second-hull strike; emergency AMM"
+    },
+    {
+      "risk": "MYS-MMR returns vs 5PC / non-refoulement",
+      "direction": "flat",
+      "horizon": "days-weeks",
+      "confidence": "M",
+      "trigger_to_escalate": "Sailing of the >3000; forced conscription evidence; Chair split"
+    },
+    {
+      "risk": "THA-KHM dual track (PCA + land border)",
+      "direction": "flat",
+      "horizon": "days",
+      "confidence": "H",
+      "trigger_to_escalate": "Hague walkout; dated mine/POW incident with multi-source"
+    }
+  ],
+  "open_questions": [
+    "Named countries / platforms / MoU for Prabowo foreign-help approval; any aircraft actually deployed.",
+    "NEA chargesheet or prosecution under the Transboundary Haze Pollution Act.",
+    "AMM annotated agenda text and any emergency session.",
+    "Home Ministry sailing order and ethnicity of the Fahmi >3000.",
+    "Named Friday STI/IHSG/KLCI closes and 16 Oct JISDOR (due after cutoff).",
+    "APIMS 16:00 complete 68/68 (incomplete 51/68 at cutoff).",
+    "DFA HTML (still 403); Hague 16 Oct session readout beyond day-one."
+  ],
+  "sources": [
+    {
+      "title": "NEA PSI API 16 Oct",
+      "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-10-16",
+      "published_at": "2026-10-16T08:00:35Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "NEA PM2.5 API 16 Oct",
+      "url": "https://api.data.gov.sg/v1/environment/pm25?date=2026-10-16",
+      "published_at": "2026-10-16T08:00:35Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "haze.gov.sg sitrep 10:53 AM 16 Oct",
+      "url": "https://www.haze.gov.sg/",
+      "published_at": "2026-10-16T02:53:00Z",
+      "publisher": "NEA / ASMC",
+      "tier": "A"
+    },
+    {
+      "title": "DOE APIMS hourly 15:00 MYT 16 Oct complete 68/68",
+      "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+      "published_at": "2026-10-16T07:00:00Z",
+      "publisher": "DOE Malaysia",
+      "tier": "A"
+    },
+    {
+      "title": "MSCI consultation: reclassify Indonesia EM to Standalone",
+      "url": "https://ir.msci.com/news-releases/news-release-details/msci-launches-consultation-proposal-reclassify-indonesia",
+      "published_at": "2026-10-15T21:49:20Z",
+      "publisher": "MSCI",
+      "tier": "A"
+    },
+    {
+      "title": "CNA: Indonesian stocks dive as MSCI weighs reclassification",
+      "url": "https://www.channelnewsasia.com/business/indonesia-stocks-msci-weigh-market-reclassification-6464081",
+      "published_at": "2026-10-16T03:43:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "CNA: Prabowo approves foreign help",
+      "url": "https://www.channelnewsasia.com/asia/indonesia-haze-prabowo-approves-foreign-help-6462316",
+      "published_at": "2026-10-15T12:06:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "CNA: PM Wong companies / Transboundary Haze Pollution Act",
+      "url": "https://www.channelnewsasia.com/singapore/haze-singapore-indonesia-companies-fires-legal-action-pm-wong-6463101",
+      "published_at": "2026-10-15T15:18:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "BKPM: Indonesia-Timor-Leste BIT",
+      "url": "https://bkpm.go.id/index.php/id/info/siaran-pers/indonesia-dan-timor-leste-teken-bit-buka-peluang-kerja-sama-ekonomi-lebih-luas",
+      "published_at": "2026-10-15T04:00:00Z",
+      "publisher": "BKPM",
+      "tier": "A"
+    },
+    {
+      "title": "ABS-CBN: Marcos to summon China envoy",
+      "url": "https://www.abs-cbn.com/news/nation/2026/10/16/marcos-china-use-of-force-remark-sounds-very-much-like-a-threat-1004",
+      "published_at": "2026-10-16T02:04:00Z",
+      "publisher": "ABS-CBN",
+      "tier": "B"
+    },
+    {
+      "title": "ABS-CBN: PCG Lawak drive-away",
+      "url": "https://www.abs-cbn.com/news/nation/2026/10/15/pcg-drives-away-chinese-vessel-4-boats-away-from-waters-of-lawak-island-1656",
+      "published_at": "2026-10-15T08:56:00Z",
+      "publisher": "ABS-CBN",
+      "tier": "B"
+    },
+    {
+      "title": "Bank Indonesia JISDOR last-good 15 Oct Rp17.948,00",
+      "url": "https://www.bi.go.id/id/statistik/informasi-kurs/jisdor/Default.aspx",
+      "published_at": "2026-10-15T00:00:00Z",
+      "publisher": "Bank Indonesia",
+      "tier": "A"
+    }
+  ]
+}
