@@ -8,6 +8,13 @@ from typing import Any
 from config import analyst_desk_heuristic_only
 
 from app.analyst_desk.agents import AGENTS, get_agent
+from app.analyst_desk.desk_sops import (
+    append_sources_appendix,
+    build_numbered_sources,
+    build_system_prompt,
+    get_sop_for_agent,
+)
+from app.analyst_desk.eval_brief import evaluate_brief
 from app.analyst_desk.store import (
     complete_agent_task,
     create_agent_task,
@@ -40,7 +47,7 @@ def _call_llm(system: str, user: str, max_tokens: int = 2500) -> tuple[str | Non
             model=os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
             messages=[
                 {"role": "system", "content": system},
-                {"role": "user", "content": user[:12000]},
+                {"role": "user", "content": user[:14000]},
             ],
             max_tokens=max_tokens,
         )
@@ -53,100 +60,105 @@ def _call_llm(system: str, user: str, max_tokens: int = 2500) -> tuple[str | Non
 
 def _fallback_daily_volume(
     agent: dict[str, Any],
+    agent_id: str,
     articles: list[dict[str, Any]],
+    sources: list[dict[str, Any]],
     days: int,
     llm_note: str | None,
 ) -> str:
     """Structured draft from the article list when the LLM is unavailable."""
+    sop = get_sop_for_agent(agent_id)
     lines = [
-        "## Executive snapshot",
-        f"- Region: **{agent['label']}** (ISO3: {', '.join(agent['countries'])}).",
-        f"- **{len(articles)}** articles in the last **{days}** days matched this scope in the news DB.",
+        f"## Top line",
+        f"- Region: **{agent['label']}** ({sop['label']}) — ISO3: {', '.join(agent['countries'])}.",
+        f"- **{len(articles)}** articles in the last **{days}** days matched this scope.",
+        f"- Overall confidence: **{'L' if len(articles) < 5 else 'M'}** (heuristic roll-up).",
         "",
-        "## Headlines & evidence (automated roll-up, not LLM prose)",
+        "## Priority developments",
     ]
     if not articles:
         lines.append("_No articles in window._")
     else:
-        for i, a in enumerate(articles[:30], 1):
+        for i, a in enumerate(articles[:20], 1):
+            sid = f"S{i}"
             title = (a.get("title") or "(no title)").strip()
             src = (a.get("source_name") or "").strip()
             summ = ((a.get("summary") or "").replace("\n", " ").strip())[:300]
-            kt = ((a.get("key_takeaways") or "").replace("\n", " ").strip())[:200]
-            lines.append(f"{i}. **[{src}]** {title}")
+            lines.append(f"{i}. **[{src}]** {title} [{sid}]")
+            lines.append("   - CLAIM/FACT pending human review (automated roll-up).")
             if summ:
                 lines.append(f"   - _Summary:_ {summ}{'…' if len(summ) == 300 else ''}")
-            if kt:
-                lines.append(f"   - _Takeaways:_ {kt}{'…' if len(kt) == 200 else ''}")
-    lines.append("")
+    lines.extend(
+        [
+            "",
+            "## Country notes",
+            "_See evidence list; deepen on approve._",
+            "",
+            "## Risk board",
+            "| Risk | Direction | Horizon | Confidence | Trigger |",
+            "|---|---|---|---|---|",
+            "| Evidence thin / coverage gaps | → | 7d | L | Spike in conflict or alliance news |",
+            "",
+            "## Open questions",
+            "- Which items deserve multi-source confirmation before publish?",
+            "",
+        ]
+    )
     if analyst_desk_heuristic_only():
         lines.extend(
             [
-                "## Mode",
-                "_**Heuristic-only.** These regional agents aggregate headlines, summaries, and takeaways "
-                "from Geopolitiko's database—no LLM, no API key._",
+                "## Gaps / uncertainty",
+                "_**Heuristic-only.** Aggregated from Geopolitiko DB—no LLM narrative._",
             ]
         )
     else:
-        lines.append("## Why there is no narrative brief")
-        if llm_note:
-            lines.append(llm_note)
-        else:
-            lines.append("_Unknown reason._")
-        lines.append("")
-        lines.append(
-            "Re-run **Daily volume** after fixing the issue above to get LLM-synthesized sections "
-            "(Executive snapshot, Key developments, Watch items, Gaps)."
-        )
-    return "\n".join(lines)
+        lines.extend(["## Gaps / uncertainty", llm_note or "_LLM unavailable._", ""])
+    body = "\n".join(lines)
+    return append_sources_appendix(body, sources)
 
 
 def _fallback_weekly_country(
     agent: dict[str, Any],
+    agent_id: str,
     country_code: str,
     articles: list[dict[str, Any]],
+    sources: list[dict[str, Any]],
     days: int,
     llm_note: str | None,
 ) -> str:
     lines = [
-        "## Situation (evidence list)",
+        "## Executive summary",
         f"- Focus: **{country_code}** under {agent['label']}.",
         f"- **{len(articles)}** articles in the last **{days}** days.",
         "",
-        "## Article trail",
+        "## Situation",
     ]
     if not articles:
         lines.append("_No articles in window._")
     else:
-        for i, a in enumerate(articles[:28], 1):
+        for i, a in enumerate(articles[:18], 1):
             title = (a.get("title") or "(no title)").strip()
             src = (a.get("source_name") or "").strip()
-            summ = ((a.get("summary") or "").replace("\n", " ").strip())[:280]
-            lines.append(f"{i}. **[{src}]** {title}")
-            if summ:
-                lines.append(f"   - {summ}{'…' if len(summ) == 280 else ''}")
-    lines.append("")
-    if analyst_desk_heuristic_only():
-        lines.extend(
-            [
-                "## Mode",
-                "_**Heuristic-only** — article trail from the database; no LLM synthesis._",
-            ]
-        )
-    else:
-        lines.extend(["## LLM note", llm_note or "_Unknown._", ""])
-        lines.append(
-            "Re-run **Weekly** after setting `OPENAI_API_KEY` for Drivers / Scenarios / External angles prose."
-        )
-    return "\n".join(lines)
-
-
-def _article_brief(a: dict[str, Any]) -> str:
-    title = (a.get("title") or "").strip()
-    src = (a.get("source_name") or "").strip()
-    summ = (a.get("summary") or "")[:400]
-    kt = (a.get("key_takeaways") or "")[:300]
-    return f"- [{src}] {title}\n  {summ}\n  Takeaways: {kt}\n"
+            lines.append(f"- **[{src}]** {title} [S{i}]")
+    lines.extend(
+        [
+            "",
+            "## Drivers",
+            "_Pending synthesis — see Sources._",
+            "",
+            "## Scenarios",
+            "- **Base:** continued pattern of reported items (ASSESS).",
+            "- **Upside / Downside:** insufficient evidence in heuristic mode.",
+            "",
+            "## What would change our view",
+            "- Multi-source confirmation of any kinetic or elite-politics claim.",
+            "",
+        ]
+    )
+    if llm_note and not analyst_desk_heuristic_only():
+        lines.extend(["## Gaps / uncertainty", llm_note, ""])
+    body = "\n".join(lines)
+    return append_sources_appendix(body, sources)
 
 
 def _fetch_context(agent_id: str, days: int = 7, limit: int = 40) -> tuple[list[dict], dict[str, Any]]:
@@ -167,8 +179,26 @@ def _fetch_context(agent_id: str, days: int = 7, limit: int = 40) -> tuple[list[
         "article_ids": [a.get("id") for a in articles if a.get("id")],
         "days": days,
         "article_count": len(articles),
+        "desk_family": get_sop_for_agent(agent_id).get("family"),
     }
     return articles, meta
+
+
+def _finalize_body(
+    body: str,
+    *,
+    agent_id: str,
+    sources: list[dict[str, Any]],
+    weekly: bool,
+    meta: dict[str, Any],
+) -> tuple[str, dict[str, Any]]:
+    body = append_sources_appendix(body, sources)
+    evaluation = evaluate_brief(body, agent_id=agent_id, sources=sources, weekly=weekly)
+    meta = dict(meta)
+    meta["sources"] = sources
+    meta["eval"] = evaluation
+    meta["desk_family"] = evaluation.get("desk_family")
+    return body, meta
 
 
 def run_daily_volume(agent_id: str, days: int = 7) -> int | None:
@@ -179,24 +209,19 @@ def run_daily_volume(agent_id: str, days: int = 7) -> int | None:
     task_id = create_agent_task(agent_id, "daily_volume", {"days": days})
     try:
         articles, meta = _fetch_context(agent_id, days=days, limit=50)
-        briefs = "\n".join(_article_brief(a) for a in articles[:35])
-        if not briefs.strip():
-            briefs = "(No articles matched this region in the selected window.)"
+        evidence_block, sources = build_numbered_sources(articles, limit=35)
 
-        system = f"""You are a senior geopolitical analyst for {agent['label']}.
-Write a concise daily-style regional brief for internal clients.
-Use only the evidence in the article list; if evidence is thin, say so.
-Use clear markdown: ## Executive snapshot, ## Key developments (bullets), ## Watch items, ## Gaps / uncertainty.
-Stay neutral and analytic; no policy prescriptions unless framed as options others are debating."""
-        user = f"""Region: {agent['label']}
-Countries (ISO3): {', '.join(agent['countries'])}
+        system = build_system_prompt(agent, agent_id, weekly=False)
+        user = f"""Produce today's daily brief for {agent['label']}.
 
-Recent headlines and summaries:
-{briefs}
+Numbered evidence (cite as [S1], [S2], …):
+{evidence_block}
 """
-        body, llm_err = _call_llm(system, user, max_tokens=2200)
+        body, llm_err = _call_llm(system, user, max_tokens=2400)
         if not body:
-            body = _fallback_daily_volume(agent, articles, days, llm_err)
+            body = _fallback_daily_volume(agent, agent_id, articles, sources, days, llm_err)
+
+        body, meta = _finalize_body(body, agent_id=agent_id, sources=sources, weekly=False, meta=meta)
 
         title = f"Daily volume — {agent['label']}"
         pid = insert_proposal(
@@ -213,7 +238,12 @@ Recent headlines and summaries:
             from_agent_id=agent_id,
             entity_type="proposal",
             entity_id=pid,
-            payload={"run_type": "daily_volume", "article_count": meta.get("article_count", 0)},
+            payload={
+                "run_type": "daily_volume",
+                "article_count": meta.get("article_count", 0),
+                "eval_score": (meta.get("eval") or {}).get("score"),
+                "desk_family": meta.get("desk_family"),
+            },
         )
         return pid
     except Exception as e:
@@ -232,6 +262,7 @@ def run_weekly_country_deep_dive(agent_id: str, country_code: str, days: int = 1
         from app.models import get_articles
 
         articles = get_articles(limit=45, country=cc, days=days)
+        evidence_block, sources = build_numbered_sources(articles, limit=30)
         meta: dict[str, Any] = {
             "agent_id": agent_id,
             "countries": agent["countries"],
@@ -239,19 +270,22 @@ def run_weekly_country_deep_dive(agent_id: str, country_code: str, days: int = 1
             "article_ids": [a.get("id") for a in articles if a.get("id")],
             "days": days,
             "article_count": len(articles),
+            "desk_family": get_sop_for_agent(agent_id).get("family"),
         }
-        briefs = "\n".join(_article_brief(a) for a in articles[:30])
-        if not briefs.strip():
-            briefs = "(No articles for this country in the window.)"
 
-        system = f"""You are a senior geopolitical analyst covering {agent['label']}.
-Produce a weekly-style country note (internal) with markdown sections:
-## Situation, ## Drivers, ## External angles, ## Scenarios (2–3 short), ## What would change our view.
-Ground claims in the provided clips only; flag uncertainty."""
-        user = f"Focus country: {cc}\n\nArticle evidence:\n{briefs}"
-        body, llm_err = _call_llm(system, user, max_tokens=2800)
+        system = build_system_prompt(agent, agent_id, weekly=True)
+        user = f"""Produce a weekly-style country note.
+
+Focus country: {cc}
+
+Numbered evidence (cite as [S1], [S2], …):
+{evidence_block}
+"""
+        body, llm_err = _call_llm(system, user, max_tokens=3000)
         if not body:
-            body = _fallback_weekly_country(agent, cc, articles, days, llm_err)
+            body = _fallback_weekly_country(agent, agent_id, cc, articles, sources, days, llm_err)
+
+        body, meta = _finalize_body(body, agent_id=agent_id, sources=sources, weekly=True, meta=meta)
 
         title = f"Weekly deep dive — {cc} ({agent['label']})"
         pid = insert_proposal(
@@ -269,7 +303,12 @@ Ground claims in the provided clips only; flag uncertainty."""
             from_agent_id=agent_id,
             entity_type="proposal",
             entity_id=pid,
-            payload={"run_type": "weekly_country", "country_code": cc, "article_count": meta.get("article_count", 0)},
+            payload={
+                "run_type": "weekly_country",
+                "country_code": cc,
+                "article_count": meta.get("article_count", 0),
+                "eval_score": (meta.get("eval") or {}).get("score"),
+            },
         )
         return pid
     except Exception as e:

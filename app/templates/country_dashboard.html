@@ -98,10 +98,14 @@
         </ul>
         {% endif %}
       </div>
-      {% if desk_terminal_intel %}
-      <div class="tab-card tab-card-wide">
+      <div class="tab-card tab-card-wide" id="analyst-desk-terminal">
         <h3>Analyst Desk — approved for Terminal</h3>
-        <p class="muted" style="font-size:0.9rem;">Human-approved drafts from the separate Analyst Desk; quantitative signals extracted from recent news are attached when you approve.</p>
+        <p class="muted" style="font-size:0.9rem;">
+          Human-approved drafts from Analyst Desk appear here after publish.
+          Review queue at Desk Approvals (<code>:5005/approvals</code>).
+          Platform status: <a href="{{ url_for('main.ops_health_board') }}">Ops health</a>.
+        </p>
+        {% if desk_terminal_intel %}
         {% for item in desk_terminal_intel %}
         <article class="desk-terminal-item" style="margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color, #2a3545);">
           <p class="muted" style="margin:0 0 0.35rem 0;font-size:0.85rem;">
@@ -124,8 +128,10 @@
           {% endif %}
         </article>
         {% endfor %}
+        {% else %}
+        <p class="empty-state">No approved Desk intel for this country yet. Approve a matching proposal in Analyst Desk to publish it here.</p>
+        {% endif %}
       </div>
-      {% endif %}
       {% if executive_one_pager and executive_one_pager.type == 'country' and (executive_one_pager.drivers or executive_one_pager.implications) %}
       <div class="tab-card tab-card-wide synthesis-embedded">
         <h3>Executive One-Pager</h3>

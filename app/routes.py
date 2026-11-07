@@ -267,6 +267,7 @@ from app.models import (
     get_user_entity_visit,
     get_entity_change_log,
     get_desk_terminal_intel_for_country,
+    get_recent_desk_terminal_intel,
 )
 from app.country_data import ISO3_TO_2
 
@@ -335,6 +336,29 @@ def _parse_impact_param(value):
 def help_page():
     """Getting started, navigation, keyboard shortcuts, and glossary."""
     return render_template("help.html")
+
+
+@bp.route("/ops")
+def ops_health_board():
+    """Operator health board: scrape/jobs freshness, desk queue, publish loop, secrets."""
+    from app.platform_health import build_health_report
+    from app.scheduler import is_macro_ingest_running, is_refresh_running
+
+    report = build_health_report()
+    report["runtime"] = {
+        "refresh_running": is_refresh_running(),
+        "macro_ingest_running": is_macro_ingest_running(),
+    }
+    recent_intel = []
+    try:
+        recent_intel = get_recent_desk_terminal_intel(limit=12)
+    except Exception:
+        recent_intel = []
+    return render_template(
+        "ops_health.html",
+        health=report,
+        recent_intel=recent_intel,
+    )
 
 
 @bp.route("/workspace/tasks", methods=["GET", "POST"])

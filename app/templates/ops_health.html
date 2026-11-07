@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Ops health — Geopolitical Terminal{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-title">Ops health</h1>
+    <p class="page-intro">
+      Scrape/job freshness, Analyst Desk queue, and approve→publish visibility.
+      Machine JSON: <a href="{{ url_for('api.api_health') }}"><code>/api/health</code></a>
+    </p>
+  </header>
+
+  {% set status = health.status or 'unknown' %}
+  <section class="sidebar-panel" style="margin-bottom:16px;">
+    <p style="margin:0;">
+      Overall:
+      <strong class="{% if status == 'ok' %}text-ok{% elif status == 'degraded' %}text-warn{% else %}text-bad{% endif %}">
+        {{ status|upper }}
+      </strong>
+      · as of {{ health.generated_at }}
+      {% if health.runtime and health.runtime.refresh_running %} · refresh running now{% endif %}
+      {% if health.runtime and health.runtime.macro_ingest_running %} · macro ingest running now{% endif %}
+    </p>
+  </section>
+
+  <section class="sidebar-panel" style="margin-bottom:16px;">
+    <h2 style="margin-top:0;">Checks</h2>
+    <table class="mini-terminal-table" aria-label="Health checks">
+      <thead>
+        <tr><th>Check</th><th>Status</th><th>Detail</th></tr>
+      </thead>
+      <tbody>
+        {% for c in health.checks %}
+        <tr>
+          <td>{{ c.name }}</td>
+          <td>{% if c.ok %}OK{% else %}{{ c.severity|upper }}{% endif %}</td>
+          <td class="muted">{{ c.detail }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="muted">No checks.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:16px;">
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">News DB / scrape</h3>
+      <ul class="data-list">
+        <li>Articles: <strong>{{ health.news.article_count }}</strong></li>
+        <li>Last article scrape: {{ health.news.last_scrape_time or '—' }}</li>
+        <li>Hours since scrape: {{ "%.1f"|format(health.news.hours_since_scrape) if health.news.hours_since_scrape is not none else '—' }}</li>
+        <li>DB: {{ health.news.database.path }}</li>
+        <li>Size: {{ health.news.database.size_bytes }} bytes · writable dir: {{ health.news.database.writable_dir }}</li>
+      </ul>
+    </section>
+
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Refresh / macro</h3>
+      <ul class="data-list">
+        <li>Last refresh: {{ health.refresh.ops.last_refresh_status or '—' }} @ {{ health.refresh.ops.last_refresh_finished_at or '—' }}</li>
+        <li>Articles last scrape job: {{ health.refresh.ops.last_scrape_articles if health.refresh.ops.last_scrape_articles is defined else '—' }}</li>
+        <li>Last macro: {{ health.refresh.ops.last_macro_status or '—' }} @ {{ health.refresh.ops.last_macro_ingest_at or '—' }}</li>
+        <li>Last backup: {{ health.refresh.ops.last_backup_at or '—' }}</li>
+        {% if health.refresh.ops.last_refresh_error %}
+        <li class="muted">Refresh error: {{ health.refresh.ops.last_refresh_error }}</li>
+        {% endif %}
+      </ul>
+    </section>
+
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Analyst Desk</h3>
+      <ul class="data-list">
+        <li>Pending proposals: <strong>{{ health.desk.pending_proposals if health.desk.pending_proposals is not none else '—' }}</strong></li>
+        <li>Approved but unpublished: {{ health.desk.approved_unpublished if health.desk.approved_unpublished is not none else '—' }}</li>
+        <li>Briefings rows: {{ health.desk.recent_briefings if health.desk.recent_briefings is not none else '—' }}</li>
+        <li>Last desk task: {{ health.desk.last_task_at or '—' }}</li>
+        <li>Publish on approve: {{ health.desk.publish_on_approve }}</li>
+        <li>Terminal intel rows: {{ health.terminal_intel.count }}</li>
+        <li>Last published: {{ health.terminal_intel.last_published_at or '—' }}</li>
+      </ul>
+      <p class="muted" style="margin-bottom:0;">Desk UI: <code>http://127.0.0.1:5005</code> (local)</p>
+    </section>
+
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Secrets / runtime</h3>
+      <ul class="data-list">
+        <li>Production runtime: {{ health.secrets.production_runtime }}</li>
+        <li>Non-default SECRET_KEY: {{ health.secrets.secret_key_set }}</li>
+        <li>Desk password set: {{ health.secrets.desk_password_set }}</li>
+        <li>OpenAI configured: {{ health.secrets.openai_configured }}</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="sidebar-panel">
+    <h2 style="margin-top:0;">Recently published to Terminal</h2>
+    <p class="muted">After you approve a Desk proposal, it should appear here and on matching country dashboards.</p>
+    <table class="mini-terminal-table" aria-label="Recent desk terminal intel">
+      <thead>
+        <tr><th>When</th><th>Title</th><th>Agent</th><th>Countries</th><th>Open</th></tr>
+      </thead>
+      <tbody>
+        {% for item in recent_intel %}
+        <tr>
+          <td class="muted">{{ (item.published_at or '')[:16].replace('T',' ') }}</td>
+          <td>{{ item.title or ('Proposal #' ~ item.proposal_id) }}</td>
+          <td>{{ item.agent_id }}</td>
+          <td class="muted">{{ item.countries_csv or item.focus_country or '—' }}</td>
+          <td>
+            {% if item.focus_country %}
+            <a href="{{ url_for('main.country_dashboard', country_code=item.focus_country) }}">Country</a>
+            {% elif item.countries_csv %}
+            <a href="{{ url_for('main.country_dashboard', country_code=item.countries_csv.split(',')[0]) }}">Country</a>
+            {% else %}
+            —
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="muted">Nothing published yet. Approve a proposal in Analyst Desk Approvals.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <style>
+    .text-ok { color: #3ecf8e; }
+    .text-warn { color: #e6b84d; }
+    .text-bad { color: #e85d6a; }
+  </style>
+{% endblock %}

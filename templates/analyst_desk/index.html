@@ -424,6 +424,7 @@
         <th>Title</th>
         <th>Status</th>
         <th>Created</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -432,12 +433,21 @@
         <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td>
         <td>{{ p.agent_id }}</td>
         <td>{{ p.run_type }}</td>
-        <td>{{ p.title or '—' }}</td>
+        <td>
+          <a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}" style="font-weight:600;">
+            {{ p.title or ('Proposal #' ~ p.id) }}
+          </a>
+        </td>
         <td>{{ p.status }}</td>
         <td class="muted">{{ p.created_at }}</td>
+        <td>
+          <a class="btn secondary" href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">
+            {% if p.status == 'pending' %}Review{% else %}Open{% endif %}
+          </a>
+        </td>
       </tr>
       {% else %}
-      <tr><td colspan="6" class="muted">No proposals yet.</td></tr>
+      <tr><td colspan="7" class="muted">No proposals yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

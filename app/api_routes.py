@@ -169,6 +169,21 @@ def _command_suggest_scenarios(q, limit=10):
     return out
 
 
+@api.route("/health")
+def api_health():
+    """Liveness/readiness-ish platform health for ops and uptime checks."""
+    from app.platform_health import build_health_report
+    from app.scheduler import is_macro_ingest_running, is_refresh_running
+
+    report = build_health_report()
+    report["runtime"] = {
+        "refresh_running": is_refresh_running(),
+        "macro_ingest_running": is_macro_ingest_running(),
+    }
+    code = 200 if report.get("status") in ("ok", "degraded") else 503
+    return jsonify(report), code
+
+
 @api.route("/command/suggest")
 def api_command_suggest():
     """Typeahead for command bar: countries, regions, presets, scenarios. ?q=...&type=country|region|keyword|scenario|..."""

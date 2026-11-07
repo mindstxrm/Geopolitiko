@@ -12,8 +12,12 @@ _BOILERPLATE_PHRASES = [
 
 
 def create_app():
+    from config import DATABASE_PATH, SECRET_KEY, assert_production_secrets, load_app_dotenv
+
+    load_app_dotenv()
+    assert_production_secrets()
+
     app = Flask(__name__)
-    from config import DATABASE_PATH, SECRET_KEY
     app.config["DATABASE_PATH"] = DATABASE_PATH
     app.config["SECRET_KEY"] = SECRET_KEY
 

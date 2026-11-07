@@ -49,6 +49,11 @@ python run.py
 
 Open [http://127.0.0.1:5003](http://127.0.0.1:5003) (or the port in `run.py`).
 
+**Ops health (P0):** [http://127.0.0.1:5003/ops](http://127.0.0.1:5003/ops) and JSON [http://127.0.0.1:5003/api/health](http://127.0.0.1:5003/api/health).  
+Backups: `python scripts/backup_sqlite.py`. Runbook: `docs/P0_OPS_RUNBOOK.md`.  
+**Intel quality (P1):** Desk SOP packs + citation grounding + brief eval — `docs/P1_INTEL_QUALITY.md`.  
+Tests: `pytest -q`.
+
 ### Analyst Desk (separate approval console)
 
 Human-in-the-loop drafts for a **fixed multi-region analyst registry** live in a **separate** Flask app and **separate SQLite file** (`data/analyst_desk.db` by default)—not the main Geopolitiko UI or `news.db` approval flow.

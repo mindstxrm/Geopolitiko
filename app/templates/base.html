@@ -77,8 +77,8 @@
       </li>
 
       <li class="nav-group-wrap" data-nav-group="tools">
-        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks') else '' }}>
-          <summary class="nav-group-trigger" title="Scenario Engine: run scenarios and export reports. Reports: briefings and outlook. Workspace: multi-panel views.">Tools</summary>
+        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board') else '' }}>
+          <summary class="nav-group-trigger" title="Scenario Engine: run scenarios and export reports. Reports: briefings and outlook. Workspace: multi-panel views. Ops: scrape/job health.">Tools</summary>
           <ul class="nav-group-menu">
             <li><a href="{{ url_for('main.scenario_engine') }}" class="{{ 'active' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary') else '' }}">Scenario Engine</a></li>
             <li><a href="{{ url_for('main.reports_hub') }}" class="{{ 'active' if ep == 'main.reports_hub' else '' }}">Reports</a></li>
@@ -86,6 +86,7 @@
             {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('main.workspace_tasks') }}" class="{{ 'active' if ep == 'main.workspace_tasks' else '' }}">Tasks</a></li>
             {% endif %}
+            <li><a href="{{ url_for('main.ops_health_board') }}" class="{{ 'active' if ep == 'main.ops_health_board' else '' }}">Ops health</a></li>
           </ul>
         </details>
       </li>

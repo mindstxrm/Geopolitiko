@@ -47,6 +47,9 @@ def run_refresh() -> None:
 
 def _do_refresh() -> None:
     """Actual refresh logic: scrape + jobs."""
+    from app.platform_ops import record_refresh_failure, record_refresh_start, record_refresh_success
+
+    record_refresh_start()
     try:
         init_db(DATABASE_PATH)
 
@@ -102,7 +105,9 @@ def _do_refresh() -> None:
         _fire_alert_webhooks()
         # 10. Conflict events: emit new incidents/exercises/movement and fire conflict alert webhooks
         _emit_conflict_events()
+        record_refresh_success(articles_scraped=total, sources=len(results))
     except Exception as e:
+        record_refresh_failure(str(e))
         logger.exception("Refresh failed: %s", e)
 
 
@@ -191,7 +196,10 @@ def run_macro_ingest() -> None:
         try:
             _macro_running = True
             from app.macro_pipeline import ingest_macro_once
+            from app.platform_ops import record_macro_failure, record_macro_success
+
             res = ingest_macro_once()
+            record_macro_success()
             logger.info(
                 "Macro ingest done: WB %s/%s, FX %s, FRED %s, Eurostat %s",
                 res.get("world_bank_written"),
@@ -201,6 +209,12 @@ def run_macro_ingest() -> None:
                 res.get("eurostat_written"),
             )
         except Exception as e:
+            try:
+                from app.platform_ops import record_macro_failure
+
+                record_macro_failure(str(e))
+            except Exception:
+                pass
             logger.warning("Macro ingest failed: %s", e)
         finally:
             _macro_running = False

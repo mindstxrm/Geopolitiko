@@ -2231,6 +2231,36 @@ def _connection_for_path(path: str):
         conn.close()
 
 
+def get_recent_desk_terminal_intel(limit: int = 20) -> list:
+    """Most recently published Analyst Desk items for Terminal/ops views."""
+    with _connection() as conn:
+        try:
+            cur = conn.execute(
+                """
+                SELECT id, proposal_id, agent_id, run_type, title, body_markdown, countries_csv,
+                       focus_country, metrics_json, reviewer_note, published_at, updated_at
+                FROM desk_terminal_intel
+                ORDER BY datetime(published_at) DESC
+                LIMIT ?
+                """,
+                (limit,),
+            )
+            rows = [dict(r) for r in cur.fetchall()]
+        except sqlite3.OperationalError:
+            return []
+    out = []
+    for r in rows:
+        mj = r.get("metrics_json") or "[]"
+        try:
+            r["metrics"] = json.loads(mj) if isinstance(mj, str) else []
+        except json.JSONDecodeError:
+            r["metrics"] = []
+        if "metrics_json" in r:
+            del r["metrics_json"]
+        out.append(r)
+    return out
+
+
 def get_desk_terminal_intel_for_country(country_code: str, limit: int = 12) -> list:
     """Approved desk briefs + extracted metrics snapshot for a country (ISO3)."""
     if not country_code or not str(country_code).strip():

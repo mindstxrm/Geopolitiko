@@ -18,7 +18,14 @@
         <td>{{ p.run_type }}</td>
         <td>{{ p.title or '—' }}</td>
         <td class="muted">{{ p.published_to_terminal_at or '—' }}</td>
-        <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">view</a></td>
+        <td>
+          <a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">view</a>
+          {% set focus = (p.focus_country or '')|trim %}
+          {% set first_cc = focus or ((p.countries or [None])[0] if p.countries else none) %}
+          {% if first_cc %}
+          · <a href="http://127.0.0.1:5003/country/{{ first_cc }}#analyst-desk-terminal" target="_blank" rel="noopener">Terminal</a>
+          {% endif %}
+        </td>
       </tr>
       {% else %}
       <tr><td colspan="6" class="muted">No published proposals yet.</td></tr>

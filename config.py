@@ -24,6 +24,66 @@ SCRAPE_USER_AGENT = (
     "GeopoliticalNews/1.0 (News aggregator; +https://github.com/geopolitical-news)"
 )
 
+_DEV_SECRET_KEY = "dev-secret-key-change-in-production"
+_DEV_ANALYST_DESK_SECRET_KEY = "analyst-desk-dev-secret-change-in-production"
+
+
+def is_production_runtime() -> bool:
+    """Render, or GEOPOLITIKO_ENV/FLASK_ENV=production."""
+    if (os.environ.get("RENDER") or "").strip():
+        return True
+    env = (os.environ.get("GEOPOLITIKO_ENV") or os.environ.get("FLASK_ENV") or "").strip().lower()
+    return env in ("production", "prod")
+
+
+def assert_production_secrets(*, strict: bool | None = None) -> None:
+    """
+    Fail fast when deploying with default secrets.
+    No-op in local/dev unless strict=True is passed explicitly.
+    Set GEOPOLITIKO_STRICT_SECRETS=0 to soft-warn instead of raise (emergency only).
+    """
+    soft = (os.environ.get("GEOPOLITIKO_STRICT_SECRETS") or "1").strip().lower() in (
+        "0",
+        "false",
+        "no",
+        "off",
+    )
+    if strict is None:
+        if not is_production_runtime():
+            return
+        strict = not soft
+    elif not strict and not is_production_runtime():
+        return
+
+    problems: list[str] = []
+    sk = (os.environ.get("SECRET_KEY") or SECRET_KEY or "").strip()
+    if not sk or sk == _DEV_SECRET_KEY:
+        problems.append("SECRET_KEY must be set to a non-default value in production")
+    desk_sk = (os.environ.get("ANALYST_DESK_SECRET_KEY") or "").strip()
+    if not desk_sk or desk_sk == _DEV_ANALYST_DESK_SECRET_KEY:
+        problems.append(
+            "ANALYST_DESK_SECRET_KEY must be set to a non-default value in production"
+        )
+    if not (os.environ.get("ANALYST_DESK_ADMIN_PASSWORD") or "").strip():
+        if (os.environ.get("GEOPOLITIKO_REQUIRE_DESK_PASSWORD") or "1").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+            "on",
+        ):
+            problems.append(
+                "ANALYST_DESK_ADMIN_PASSWORD should be set in production (or set GEOPOLITIKO_REQUIRE_DESK_PASSWORD=0)"
+            )
+
+    if not problems:
+        return
+    msg = "Production secret check failed:\n- " + "\n- ".join(problems)
+    if strict:
+        raise RuntimeError(msg)
+    import logging
+
+    logging.getLogger(__name__).warning(msg)
+
 # UN voting data: local UNGA-DM RS-077 folder (All_Votes_RS-077.csv)
 # Default: ~/Downloads/UNGA-DM RS-077. Override with UNIGE_UN_VOTES_PATH.
 UNIGE_UN_VOTES_PATH = os.environ.get("UNIGE_UN_VOTES_PATH", str(Path.home() / "Downloads" / "UNGA-DM RS-077"))

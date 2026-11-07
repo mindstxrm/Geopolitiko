@@ -1,7 +1,16 @@
 {% extends "analyst_desk/base.html" %}
 {% block title %}{{ p.title or ('Proposal #' ~ p.id) }} — Analyst Desk{% endblock %}
+{% block extra_head %}
+<style>
+  main { max-width: 1100px; }
+  .proposal-actions { position: sticky; bottom: 0; background: rgba(15,20,25,0.92); border-top: 1px solid #2a3545; padding: 0.75rem 0; margin-top: 0.5rem; }
+</style>
+{% endblock %}
 {% block body %}
-<p><a href="{{ url_for('analyst_desk.index') }}">← Inbox</a></p>
+<p>
+  <a href="{{ url_for('analyst_desk.approvals') }}">← Approvals</a>
+  · <a href="{{ url_for('analyst_desk.index') }}">Inbox</a>
+</p>
 <div class="panel">
   <h2>{{ p.title or ('Proposal #' ~ p.id) }}</h2>
   <p class="muted">
@@ -12,22 +21,57 @@
     {% if p.focus_country %} · Focus: {{ p.focus_country }}{% endif %}
   </p>
   {% if p.source_context %}
-  <p class="muted">Grounding: {{ p.source_context.article_count }} articles (last {{ p.source_context.days }} days)</p>
+  <p class="muted">
+    Grounding: {{ p.source_context.article_count }} articles (last {{ p.source_context.days }} days)
+    {% if p.source_context.desk_family %} · Desk SOP: <strong>{{ p.source_context.desk_family }}</strong>{% endif %}
+  </p>
   {% endif %}
 </div>
 
+{% if p.source_context and p.source_context.eval %}
+{% set ev = p.source_context.eval %}
+<div class="panel">
+  <h2>Quality eval (automated)</h2>
+  <p style="margin-top:0;">
+    Score: <strong>{{ ev.score }}</strong> / 100 · Grade: <strong>{{ ev.grade }}</strong>
+    · {% if ev.pass %}<span style="color:var(--ok)">Pass threshold</span>{% else %}<span style="color:var(--bad)">Below threshold — review carefully</span>{% endif %}
+  </p>
+  <table>
+    <thead><tr><th>Check</th><th>OK</th><th>Detail</th></tr></thead>
+    <tbody>
+      {% for c in ev.checks %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ 'yes' if c.ok else 'no' }}</td>
+        <td class="muted">{{ c.detail }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if ev.missing_sections %}
+  <p class="muted">Missing sections: {{ ev.missing_sections | join(', ') }}</p>
+  {% endif %}
+  <p class="muted" style="margin-bottom:0;">
+    Citations found: {% if ev.citation_ids %}{% for n in ev.citation_ids %}[S{{ n }}] {% endfor %}{% else %}none{% endif %}
+    · Evidence items: {{ ev.source_count }}
+  </p>
+</div>
+{% endif %}
+
 {% if p.status == 'pending' %}
 <div class="panel">
-  <h2>Review</h2>
+  <h2>Draft content</h2>
+  <p class="muted" style="margin-top:0;">Read the full text below. Edit anything that should change before you approve.</p>
   <form method="post">
-    <label for="reviewed_body">Text (edit before approve)</label>
+    <label for="reviewed_body">Proposal body</label>
     <textarea id="reviewed_body" name="reviewed_body">{{ display_body }}</textarea>
     <label for="reviewer_note" style="display:block;margin-top:0.75rem;">Reviewer note (optional)</label>
     <input type="text" id="reviewer_note" name="reviewer_note" style="width:100%;max-width:100%;" placeholder="Internal note">
-    <p style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-      <button type="submit" name="action" value="approve" class="btn ok">Approve</button>
+    <div class="proposal-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+      <button type="submit" name="action" value="approve" class="btn ok">Approve + publish to Terminal</button>
       <button type="submit" name="action" value="reject" class="btn danger">Reject</button>
-    </p>
+      <span class="muted">Approving pushes this draft into the Geopolitical Terminal when publish-on-approve is enabled.</span>
+    </div>
   </form>
 </div>
 {% else %}

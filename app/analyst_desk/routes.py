@@ -271,8 +271,23 @@ def proposal_detail(pid: int):
                 )
             elif pub.get("ok"):
                 n = pub.get("metrics_attached", 0)
+                countries = row.get("countries") or []
+                if not isinstance(countries, list):
+                    countries = []
+                focus = (row.get("focus_country") or "").strip().upper()
+                link_codes = []
+                if focus:
+                    link_codes.append(focus)
+                for c in countries:
+                    cc = str(c).strip().upper()
+                    if cc and cc not in link_codes:
+                        link_codes.append(cc)
+                links = ", ".join(
+                    f"http://127.0.0.1:5003/country/{cc}#analyst-desk-terminal" for cc in link_codes[:5]
+                )
+                where = f" Open on Terminal: {links}" if links else " Check Terminal Ops health → recently published."
                 flash(
-                    f"Approved and published to Geopolitical Terminal ({n} quantitative signals attached).",
+                    f"Approved and published to Geopolitical Terminal ({n} quantitative signals attached).{where}",
                     "info",
                 )
             else:
