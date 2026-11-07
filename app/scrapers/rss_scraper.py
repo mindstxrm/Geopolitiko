@@ -10,6 +10,11 @@ from requests.exceptions import RequestException
 from config import SCRAPE_USER_AGENT
 from app.scrapers.sources import SOURCES
 from app.models import init_db, upsert_article
+from app.scrapers.http_cache import (
+    get_source_cache,
+    record_source_fetch,
+    source_http_cache_summary,
+)
 
 # YouTube/Vimeo URL patterns for embed detection
 _VIDEO_HOST_PATTERNS = [
@@ -99,21 +104,74 @@ def _parse_date(entry) -> str | None:
     return None
 
 
-def _fetch_feed(url: str) -> feedparser.FeedParserDict | None:
-    """Fetch and parse an RSS/Atom feed with a polite User-Agent."""
+def _fetch_feed(
+    url: str,
+    *,
+    etag: str | None = None,
+    last_modified: str | None = None,
+) -> tuple[feedparser.FeedParserDict | None, int | None, str | None, str | None, bool]:
+    """
+    Fetch and parse an RSS/Atom feed with conditional GET.
+    Returns (feed|None, status, new_etag, new_last_modified, not_modified).
+    """
+    headers = {"User-Agent": SCRAPE_USER_AGENT}
+    if etag:
+        headers["If-None-Match"] = etag
+    if last_modified:
+        headers["If-Modified-Since"] = last_modified
     try:
-        resp = get(url, timeout=15, headers={"User-Agent": SCRAPE_USER_AGENT})
+        resp = get(url, timeout=15, headers=headers)
+        status = int(resp.status_code)
+        new_etag = resp.headers.get("ETag")
+        new_lm = resp.headers.get("Last-Modified")
+        if status == 304:
+            return None, status, new_etag or etag, new_lm or last_modified, True
         resp.raise_for_status()
-        return feedparser.parse(resp.content)
+        return feedparser.parse(resp.content), status, new_etag, new_lm, False
     except RequestException:
-        return None
+        return None, None, None, None, False
 
 
 def scrape_source(source: dict, db_path: str) -> int:
-    """Scrape one source and upsert articles into the database. Returns count added."""
+    """Scrape one source and upsert articles into the database. Returns count added (0 on 304/empty)."""
     init_db(db_path)
-    feed = _fetch_feed(source["url"])
-    if not feed or not feed.entries:
+    name = source["name"]
+    url = source["url"]
+    cached = get_source_cache(db_path, name) or {}
+    feed, status, new_etag, new_lm, not_modified = _fetch_feed(
+        url,
+        etag=cached.get("etag"),
+        last_modified=cached.get("last_modified"),
+    )
+    if not_modified:
+        record_source_fetch(
+            db_path,
+            source_name=name,
+            feed_url=url,
+            status=status or 304,
+            etag=new_etag,
+            last_modified=new_lm,
+            not_modified=True,
+        )
+        return 0
+    if feed is None:
+        record_source_fetch(
+            db_path,
+            source_name=name,
+            feed_url=url,
+            status=status,
+            error="fetch_failed",
+        )
+        return 0
+    if not feed.entries:
+        record_source_fetch(
+            db_path,
+            source_name=name,
+            feed_url=url,
+            status=status or 200,
+            etag=new_etag,
+            last_modified=new_lm,
+        )
         return 0
     count = 0
     for entry in feed.entries:
@@ -137,6 +195,15 @@ def scrape_source(source: dict, db_path: str) -> int:
             video_url=video_url,
         )
         count += 1
+    record_source_fetch(
+        db_path,
+        source_name=name,
+        feed_url=url,
+        status=status or 200,
+        etag=new_etag,
+        last_modified=new_lm,
+        not_modified=False,
+    )
     return count
 
 
@@ -149,4 +216,17 @@ def scrape_all_sources(db_path: str) -> dict[str, int]:
             results[name] = scrape_source(source, db_path)
         except Exception:
             results[name] = 0
+            try:
+                record_source_fetch(
+                    db_path,
+                    source_name=name,
+                    feed_url=source.get("url") or "",
+                    status=None,
+                    error="exception",
+                )
+            except Exception:
+                pass
     return results
+
+
+__all__ = ["scrape_source", "scrape_all_sources", "source_http_cache_summary"]

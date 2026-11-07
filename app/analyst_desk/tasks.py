@@ -60,11 +60,38 @@ def run_full_pipeline(self) -> dict[str, Any]:
             return {"ok": False, "skipped": True, "reason": "lock"}
         try:
             from app.analyst_desk.orchestrator import run_full_pipeline_tick
+            from app.platform_ops import record_desk_worker_heartbeat
+            from config import analyst_desk_celery_beat_seconds
 
             stats = run_full_pipeline_tick()
+            # Parity with loop worker: scheduled multi-region briefs
+            try:
+                from app.analyst_desk.scheduled_briefs import run_scheduled_regional_briefs
+
+                sched = run_scheduled_regional_briefs()
+                stats["scheduled_briefs"] = (
+                    0 if sched.get("skipped") else len(sched.get("created") or [])
+                )
+                if not sched.get("skipped"):
+                    logger.info(
+                        "scheduled briefs created=%s errors=%s",
+                        len(sched.get("created") or []),
+                        len(sched.get("errors") or []),
+                    )
+            except Exception:
+                logger.exception("scheduled briefs failed inside Celery tick")
+                stats["scheduled_briefs"] = -1
+
+            interval = analyst_desk_celery_beat_seconds() or 300
+            record_desk_worker_heartbeat(
+                status="ok",
+                interval_seconds=interval,
+                stats=stats,
+            )
             logger.info(
                 "run_full_pipeline OK task_id=%s ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s "
-                "events=%s alerts=%s briefing=%s topics=%s regional=%s country_risk=%s movers=%s scenarios=%s",
+                "events=%s alerts=%s briefing=%s topics=%s regional=%s country_risk=%s movers=%s scenarios=%s "
+                "scheduled_briefs=%s",
                 self.request.id,
                 stats.get("ingested", 0),
                 stats.get("enriched", 0),
@@ -78,10 +105,22 @@ def run_full_pipeline(self) -> dict[str, Any]:
                 stats.get("country_snaps", 0),
                 stats.get("movers", 0),
                 stats.get("scenarios", 0),
+                stats.get("scheduled_briefs", 0),
             )
             return stats
         except Exception as exc:
             logger.exception("run_full_pipeline failed task_id=%s", self.request.id)
+            try:
+                from app.platform_ops import record_desk_worker_heartbeat
+                from config import analyst_desk_celery_beat_seconds
+
+                record_desk_worker_heartbeat(
+                    status="error",
+                    interval_seconds=analyst_desk_celery_beat_seconds() or 300,
+                    error=str(exc),
+                )
+            except Exception:
+                pass
             if int(self.request.retries or 0) >= int(getattr(self, "max_retries", 0)):
                 create_dead_letter_task(
                     task_name="app.analyst_desk.tasks.run_full_pipeline",

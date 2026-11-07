@@ -211,3 +211,46 @@ def analyst_desk_metric_llm_merge_heuristic() -> bool:
     """If True, also run regex heuristics and merge (more coverage, noisier). If False, LLM-only when LLM returns any row."""
     v = (os.environ.get("ANALYST_DESK_METRIC_LLM_MERGE_HEURISTIC") or "0").strip().lower()
     return v in ("1", "true", "yes", "on")
+
+
+def _env_int(name: str, default: int, *, minimum: int = 0) -> int:
+    raw = (os.environ.get(name) or str(default)).strip()
+    try:
+        return max(minimum, int(raw))
+    except ValueError:
+        return default
+
+
+def ingest_scrape_seconds() -> int:
+    """Scrape-only cadence for the dedicated ingest worker (default 180s)."""
+    return _env_int("INGEST_SCRAPE_SECONDS", 180, minimum=30)
+
+
+def ingest_jobs_seconds() -> int:
+    """Heavy analysis jobs cadence (default 900s)."""
+    return _env_int("INGEST_JOBS_SECONDS", 900, minimum=60)
+
+
+def ingest_macro_seconds() -> int:
+    """Fast macro (FX/FRED) cadence for ingest worker (default 3600s)."""
+    return _env_int("INGEST_MACRO_SECONDS", 3600, minimum=300)
+
+
+def ingest_macro_full_seconds() -> int:
+    """Full World Bank + FX macro batch cadence (default 86400s)."""
+    return _env_int("INGEST_MACRO_FULL_SECONDS", 86400, minimum=3600)
+
+
+def live_news_stale_minutes() -> int:
+    """UI/health STALE threshold for news scrape lag (default 30 min)."""
+    return _env_int("LIVE_NEWS_STALE_MINUTES", 30, minimum=5)
+
+
+def live_macro_stale_minutes() -> int:
+    """UI/health STALE threshold for macro FX lag (default 120 min)."""
+    return _env_int("LIVE_MACRO_STALE_MINUTES", 120, minimum=15)
+
+
+def macro_homepage_cache_seconds() -> int:
+    """In-process homepage macro cache TTL (default 900s for livelier FX-ish panels)."""
+    return _env_int("MACRO_HOMEPAGE_CACHE_SECONDS", 900, minimum=60)

@@ -155,6 +155,12 @@
     </nav>
   </header>
   <main>
+    {% if terminal_public_url %}
+    <div class="flash info" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fde68a;">
+      Desk drafts from Terminal news. If Terminal shows <strong>STALE DATA</strong>, start the ingest worker so Approvals stay current.
+      · <a href="{{ terminal_public_url }}/ops" target="_blank" rel="noopener">Terminal Ops</a>
+    </div>
+    {% endif %}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for cat, msg in messages %}
         <div class="flash {{ cat }}">{{ msg }}</div>

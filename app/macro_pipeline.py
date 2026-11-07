@@ -298,8 +298,15 @@ def _fetch_eurostat_unemployment_prime_age() -> Dict[str, Tuple[float, str]]:
     return out
 
 
-def ingest_macro_once(country_limit: int = 220) -> Dict[str, object]:
-    """Seed + ingest current snapshot into time-series tables."""
+def ingest_macro_once(country_limit: int = 220, mode: str = "full") -> Dict[str, object]:
+    """
+    Seed + ingest current snapshot into time-series tables.
+    mode='full' → World Bank + FX + FRED + Eurostat
+    mode='fast' → FX + FRED only (hourly live path)
+    """
+    mode = (mode or "full").strip().lower()
+    if mode not in ("full", "fast"):
+        mode = "full"
     macro_seed_defaults()
 
     # Pull catalogs
@@ -315,18 +322,20 @@ def ingest_macro_once(country_limit: int = 220) -> Dict[str, object]:
     with _connection() as conn:
         country_id_by_code = {r[0]: int(r[1]) for r in conn.execute("SELECT code, id FROM countries").fetchall()}
         indicator_id_by_name = {r[0]: int(r[1]) for r in conn.execute("SELECT name, id FROM indicators").fetchall()}
-        wb_pairs = conn.execute(
-            """
-            SELECT i.name, i.external_code
-            FROM indicators i
-            JOIN data_sources s ON s.id = i.source_id
-            WHERE s.key = 'world_bank'
-              AND i.external_code IS NOT NULL
-              AND i.external_code != ''
-              AND (i.frequency = 'annual' OR i.frequency IS NULL)
-            ORDER BY i.name
-            """
-        ).fetchall()
+        wb_pairs = []
+        if mode == "full":
+            wb_pairs = conn.execute(
+                """
+                SELECT i.name, i.external_code
+                FROM indicators i
+                JOIN data_sources s ON s.id = i.source_id
+                WHERE s.key = 'world_bank'
+                  AND i.external_code IS NOT NULL
+                  AND i.external_code != ''
+                  AND (i.frequency = 'annual' OR i.frequency IS NULL)
+                ORDER BY i.name
+                """
+            ).fetchall()
         fx_pairs = conn.execute(
             """
             SELECT i.name, i.external_code
@@ -480,26 +489,28 @@ def ingest_macro_once(country_limit: int = 220) -> Dict[str, object]:
     else:
         logger.info("FRED_API_KEY not set; skipping FRED series")
 
-    # Eurostat — harmonised unemployment (EU members in catalog)
+    # Eurostat — harmonised unemployment (EU members in catalog); full mode only
     euro_ok = 0
-    eu_iid = indicator_id_by_name.get("eurostat_unemployment_prime_age")
-    if eu_iid:
-        eu_map = _fetch_eurostat_unemployment_prime_age()
-        for iso3, (fv, dstr) in eu_map.items():
-            cid = country_id_by_code.get(iso3)
-            if not cid:
-                continue
-            macro_insert_value(
-                cid,
-                eu_iid,
-                dstr,
-                fv,
-                raw_json=json.dumps({"source": "eurostat", "dataset": "une_rt_a"}),
-            )
-            euro_ok += 1
+    if mode == "full":
+        eu_iid = indicator_id_by_name.get("eurostat_unemployment_prime_age")
+        if eu_iid:
+            eu_map = _fetch_eurostat_unemployment_prime_age()
+            for iso3, (fv, dstr) in eu_map.items():
+                cid = country_id_by_code.get(iso3)
+                if not cid:
+                    continue
+                macro_insert_value(
+                    cid,
+                    eu_iid,
+                    dstr,
+                    fv,
+                    raw_json=json.dumps({"source": "eurostat", "dataset": "une_rt_a"}),
+                )
+                euro_ok += 1
 
     return {
         "ok": True,
+        "mode": mode,
         "ingested_at": _utc_now_iso(),
         "world_bank_attempts": wb_attempts,
         "world_bank_written": wb_ok,

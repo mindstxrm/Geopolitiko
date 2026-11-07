@@ -1,5 +1,6 @@
-"""Background scheduler: scrape news and run analysis jobs every minute."""
-import json
+"""Background scheduler: scrape news and run analysis jobs (separable cadences)."""
+from __future__ import annotations
+
 import logging
 import threading
 import time
@@ -27,88 +28,154 @@ REFRESH_IMPACT_LIMIT = 2000
 
 _running = False
 _lock = threading.Lock()
+_jobs_running = False
+_jobs_lock = threading.Lock()
 _macro_running = False
 _macro_lock = threading.Lock()
 
 
-def run_refresh() -> None:
-    """Run scraper then all analysis jobs (topics, impact, analysis, digest, cluster)."""
+def run_scrape_only() -> dict:
+    """
+    Scrape all RSS sources without running analysis jobs.
+    Returns {ok, articles, sources, not_modified?, error?}.
+    """
     global _running
-    if _lock.acquire(blocking=False):
-        try:
-            _running = True
-            _do_refresh()
-        finally:
-            _running = False
-            _lock.release()
-    else:
-        logger.info("Refresh skipped (previous run still in progress)")
-
-
-def _do_refresh() -> None:
-    """Actual refresh logic: scrape + jobs."""
-    from app.platform_ops import record_refresh_failure, record_refresh_start, record_refresh_success
-
-    record_refresh_start()
+    if not _lock.acquire(blocking=False):
+        logger.info("Scrape skipped (previous scrape/refresh still in progress)")
+        return {"ok": False, "skipped": True, "reason": "lock"}
     try:
+        _running = True
+        from app.platform_ops import record_refresh_start, record_refresh_success, record_refresh_failure
+
+        record_refresh_start()
+        try:
+            init_db(DATABASE_PATH)
+            from app.scrapers.rss_scraper import scrape_all_sources
+
+            results = scrape_all_sources(DATABASE_PATH)
+            total = sum(int(v or 0) for v in results.values())
+            not_modified = sum(1 for v in results.values() if v == 0)
+            logger.info(
+                "Scrape-only done: %s articles from %s sources (%s zero/304)",
+                total,
+                len(results),
+                not_modified,
+            )
+            record_refresh_success(articles_scraped=total, sources=len(results))
+            try:
+                from app.platform_ops import write_ops_status
+                from app.scrapers.rss_scraper import source_http_cache_summary
+
+                write_ops_status({"source_http_cache": source_http_cache_summary(DATABASE_PATH)})
+            except Exception:
+                pass
+            return {
+                "ok": True,
+                "articles": total,
+                "sources": len(results),
+                "zero_or_304": not_modified,
+                "by_source": results,
+            }
+        except Exception as e:
+            record_refresh_failure(str(e))
+            logger.exception("Scrape-only failed: %s", e)
+            return {"ok": False, "error": str(e)}
+    finally:
+        _running = False
+        _lock.release()
+
+
+def run_analysis_jobs() -> dict:
+    """Run topics/impact/analysis/digest/cluster/risk/alerts without scraping."""
+    global _jobs_running
+    if not _jobs_lock.acquire(blocking=False):
+        logger.info("Analysis jobs skipped (previous jobs still in progress)")
+        return {"ok": False, "skipped": True, "reason": "lock"}
+    try:
+        _jobs_running = True
         init_db(DATABASE_PATH)
+        out: dict = {"ok": True}
 
-        # 1. Scrape all RSS sources
-        from app.scrapers.rss_scraper import scrape_all_sources
-        results = scrape_all_sources(DATABASE_PATH)
-        total = sum(results.values())
-        logger.info("Scrape done: %s articles from %s sources", total, len(results))
-
-        # 2. Topics & entities
         from app.jobs.topics import extract_topics_for_all
-        n = extract_topics_for_all(limit=REFRESH_TOPICS_LIMIT)
-        logger.info("Topics: %s articles", n)
 
-        # 3. Impact scoring
+        out["topics"] = extract_topics_for_all(limit=REFRESH_TOPICS_LIMIT)
+        logger.info("Topics: %s articles", out["topics"])
+
         from app.jobs.impact import score_all
-        n = score_all(limit=REFRESH_IMPACT_LIMIT)
-        logger.info("Impact: %s articles", n)
 
-        # 4. Analysis (key takeaways, why it matters)
+        out["impact"] = score_all(limit=REFRESH_IMPACT_LIMIT)
+        logger.info("Impact: %s articles", out["impact"])
+
         from app.jobs.analysis import generate_analysis_for_all
-        n = generate_analysis_for_all(limit=REFRESH_ANALYSIS_LIMIT)
-        logger.info("Analysis: %s articles", n)
 
-        # 5. Daily digest
+        out["analysis"] = generate_analysis_for_all(limit=REFRESH_ANALYSIS_LIMIT)
+        logger.info("Analysis: %s articles", out["analysis"])
+
         from app.jobs.digest import generate_daily_digest
+
         generate_daily_digest()
+        out["digest"] = True
         logger.info("Daily digest created")
 
-        # 6. Clustering
         from app.jobs.clustering import cluster_articles
+
         cluster_articles(lookback_days=7)
+        out["cluster"] = True
         logger.info("Clustering done")
 
-        # 7. Risk Engine (country risk + forward probability index)
         try:
             from app.risk_engine import compute_country_risk_from_articles, compute_forward_risk_index
+
             compute_country_risk_from_articles(days=7)
             compute_forward_risk_index(days=7)
+            out["risk"] = True
             logger.info("Risk engine updated")
         except Exception as e:
             logger.warning("Risk engine failed: %s", e)
+            out["risk"] = False
 
-        # 8. Institutional models (GEPI, fragility, CDEI, SFI, etc.)
         try:
             from app.jobs.institutional import run_institutional_models
+
             run_institutional_models()
+            out["institutional"] = True
             logger.info("Institutional models updated")
         except Exception as e:
             logger.warning("Institutional models failed: %s", e)
+            out["institutional"] = False
 
-        # 9. Alert webhooks (notify when new matches)
         _fire_alert_webhooks()
-        # 10. Conflict events: emit new incidents/exercises/movement and fire conflict alert webhooks
         _emit_conflict_events()
-        record_refresh_success(articles_scraped=total, sources=len(results))
+        out["alerts"] = True
+        try:
+            from app.platform_ops import write_ops_status
+
+            write_ops_status({"last_jobs_finished_at": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "last_jobs_status": "ok"})
+        except Exception:
+            pass
+        return out
     except Exception as e:
-        record_refresh_failure(str(e))
-        logger.exception("Refresh failed: %s", e)
+        logger.exception("Analysis jobs failed: %s", e)
+        try:
+            from app.platform_ops import write_ops_status
+
+            write_ops_status({"last_jobs_status": "error", "last_jobs_error": str(e)[:2000]})
+        except Exception:
+            pass
+        return {"ok": False, "error": str(e)}
+    finally:
+        _jobs_running = False
+        _jobs_lock.release()
+
+
+def run_refresh() -> None:
+    """Run scraper then all analysis jobs (topics, impact, analysis, digest, cluster)."""
+    scrape = run_scrape_only()
+    if scrape.get("skipped"):
+        return
+    if not scrape.get("ok"):
+        return
+    run_analysis_jobs()
 
 
 def _fire_alert_webhooks() -> None:
@@ -177,7 +244,8 @@ def _emit_conflict_events() -> None:
 
 
 def start_scheduler(interval_seconds: int = 60, first_delay_seconds: int = 15) -> None:
-    """Start background thread that runs refresh every interval_seconds."""
+    """Start background thread that runs full refresh every interval_seconds (dev convenience)."""
+
     def loop():
         time.sleep(first_delay_seconds)
         while True:
@@ -189,46 +257,53 @@ def start_scheduler(interval_seconds: int = 60, first_delay_seconds: int = 15) -
     logger.info("Scheduler started: refresh every %ss (first in %ss)", interval_seconds, first_delay_seconds)
 
 
-def run_macro_ingest() -> None:
-    """Run macro ingestion (guarded by a lock)."""
+def run_macro_ingest(*, mode: str = "full") -> dict:
+    """
+    Run macro ingestion (guarded by a lock).
+    mode: 'full' (WB+FX+FRED+Eurostat) or 'fast' (FX+FRED only).
+    """
     global _macro_running
-    if _macro_lock.acquire(blocking=False):
-        try:
-            _macro_running = True
-            from app.macro_pipeline import ingest_macro_once
-            from app.platform_ops import record_macro_failure, record_macro_success
-
-            res = ingest_macro_once()
-            record_macro_success()
-            logger.info(
-                "Macro ingest done: WB %s/%s, FX %s, FRED %s, Eurostat %s",
-                res.get("world_bank_written"),
-                res.get("world_bank_attempts"),
-                res.get("fx_written"),
-                res.get("fred_written"),
-                res.get("eurostat_written"),
-            )
-        except Exception as e:
-            try:
-                from app.platform_ops import record_macro_failure
-
-                record_macro_failure(str(e))
-            except Exception:
-                pass
-            logger.warning("Macro ingest failed: %s", e)
-        finally:
-            _macro_running = False
-            _macro_lock.release()
-    else:
+    if not _macro_lock.acquire(blocking=False):
         logger.info("Macro ingest skipped (previous run still in progress)")
+        return {"ok": False, "skipped": True, "reason": "lock"}
+    try:
+        _macro_running = True
+        from app.macro_pipeline import ingest_macro_once
+        from app.platform_ops import record_macro_failure, record_macro_success
+
+        res = ingest_macro_once(mode=mode)
+        record_macro_success()
+        logger.info(
+            "Macro ingest (%s) done: WB %s/%s, FX %s, FRED %s, Eurostat %s",
+            mode,
+            res.get("world_bank_written"),
+            res.get("world_bank_attempts"),
+            res.get("fx_written"),
+            res.get("fred_written"),
+            res.get("eurostat_written"),
+        )
+        return {"ok": True, **res}
+    except Exception as e:
+        try:
+            from app.platform_ops import record_macro_failure
+
+            record_macro_failure(str(e))
+        except Exception:
+            pass
+        logger.warning("Macro ingest failed: %s", e)
+        return {"ok": False, "error": str(e)}
+    finally:
+        _macro_running = False
+        _macro_lock.release()
 
 
 def start_macro_scheduler(interval_seconds: int = 6 * 60 * 60, first_delay_seconds: int = 30) -> None:
     """Start background thread that runs macro ingest on a slower cadence."""
+
     def loop():
         time.sleep(first_delay_seconds)
         while True:
-            run_macro_ingest()
+            run_macro_ingest(mode="full")
             time.sleep(interval_seconds)
 
     t = threading.Thread(target=loop, daemon=True, name="macro-scheduler")
@@ -237,7 +312,7 @@ def start_macro_scheduler(interval_seconds: int = 6 * 60 * 60, first_delay_secon
 
 
 def is_refresh_running() -> bool:
-    return _running
+    return _running or _jobs_running
 
 
 def is_macro_ingest_running() -> bool:

@@ -116,10 +116,18 @@ def create_app():
         from app.models import get_last_scrape_time
 
         now = datetime.now(timezone.utc)
+        freshness = {}
+        try:
+            from app.freshness import build_freshness_snapshot
+
+            freshness = build_freshness_snapshot()
+        except Exception:
+            freshness = {"any_stale": False, "banner": None}
         return {
             "policy_now_utc": now.strftime("%Y-%m-%d %H:%M UTC"),
             "policy_now_iso": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "last_scrape_time": get_last_scrape_time(),
+            "data_freshness": freshness,
         }
 
     # Pre-warm world GeoJSON cache in background so Situation Room map loads fast

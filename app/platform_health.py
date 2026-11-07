@@ -206,18 +206,33 @@ def build_health_report() -> dict[str, Any]:
         f"{article_count} articles",
         severity="warn",
     )
+    # Live mode: news should be < LIVE_NEWS_STALE_MINUTES (default 30)
+    try:
+        from config import live_news_stale_minutes
+
+        news_limit_h = float(live_news_stale_minutes()) / 60.0
+    except Exception:
+        news_limit_h = 0.5
     add(
         "scrape_freshness",
-        scrape_hours is not None and scrape_hours < 24,
-        f"last article scrape {last_scrape or 'never'}; hours_ago={scrape_hours}",
+        scrape_hours is not None and scrape_hours <= news_limit_h,
+        f"last article scrape {last_scrape or 'never'}; hours_ago={scrape_hours}; live_limit_h={news_limit_h}",
         severity="warn",
     )
     refresh_ok = (ops.get("last_refresh_status") == "ok") or not ops
     add(
         "last_refresh",
-        refresh_ok and (refresh_hours is None or refresh_hours < 24),
+        refresh_ok and (refresh_hours is None or refresh_hours <= max(news_limit_h * 2, 1.0)),
         ops.get("last_refresh_error")
         or f"status={ops.get('last_refresh_status') or 'unknown'}; finished={ops.get('last_refresh_finished_at')}",
+        severity="warn",
+    )
+    ingest_hb = ops.get("ingest_worker_last_heartbeat_at")
+    ingest_h = _hours_since(ingest_hb)
+    add(
+        "ingest_worker",
+        ingest_h is not None and ingest_h <= max(news_limit_h * 2, 0.5),
+        f"heartbeat={ingest_hb or 'never'}; hours_ago={ingest_h}",
         severity="warn",
     )
     add(
@@ -292,7 +307,27 @@ def build_health_report() -> dict[str, Any]:
         "celery_preferred": _celery_preferred(),
         "cutover": _cutover_block(),
         "feature_flags": _feature_flags_block(),
+        "freshness": _freshness_block(),
+        "source_http_cache": ops.get("source_http_cache") or {},
+        "ingest_worker": {
+            "last_heartbeat_at": ops.get("ingest_worker_last_heartbeat_at"),
+            "last_scrape_at": ops.get("ingest_worker_last_scrape_at"),
+            "last_jobs_at": ops.get("ingest_worker_last_jobs_at"),
+            "last_macro_fast_at": ops.get("ingest_worker_last_macro_fast_at"),
+            "last_macro_full_at": ops.get("ingest_worker_last_macro_full_at"),
+            "scrape_seconds": ops.get("ingest_scrape_seconds"),
+            "jobs_seconds": ops.get("ingest_jobs_seconds"),
+        },
     }
+
+
+def _freshness_block() -> dict[str, Any]:
+    try:
+        from app.freshness import build_freshness_snapshot
+
+        return build_freshness_snapshot()
+    except Exception as e:
+        return {"error": str(e), "any_stale": True}
 
 
 def _cutover_block() -> dict[str, Any]:

@@ -86,6 +86,28 @@
     </section>
 
     <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Ingest worker (live news)</h3>
+      <ul class="data-list">
+        <li>Heartbeat: <strong>{{ health.ingest_worker.last_heartbeat_at if health.ingest_worker else 'never' }}</strong></li>
+        <li>Last scrape: {{ health.ingest_worker.last_scrape_at if health.ingest_worker else '—' }}</li>
+        <li>Last jobs: {{ health.ingest_worker.last_jobs_at if health.ingest_worker else '—' }}</li>
+        <li>Macro fast / full: {{ health.ingest_worker.last_macro_fast_at if health.ingest_worker else '—' }} / {{ health.ingest_worker.last_macro_full_at if health.ingest_worker else '—' }}</li>
+        <li>Cadence: scrape {{ health.ingest_worker.scrape_seconds if health.ingest_worker else '—' }}s · jobs {{ health.ingest_worker.jobs_seconds if health.ingest_worker else '—' }}s</li>
+        {% if health.freshness %}
+        <li>News stale: <strong>{{ health.freshness.news_stale }}</strong>
+          {% if health.freshness.news_minutes_ago is not none %}({{ health.freshness.news_minutes_ago }}m ago){% endif %}
+        </li>
+        {% endif %}
+        {% if health.source_http_cache %}
+        <li>HTTP 304s: {{ health.source_http_cache.not_modified_count or 0 }} / {{ health.source_http_cache.fetch_count or 0 }}
+          (rate {{ health.source_http_cache.not_modified_rate or 0 }})
+        </li>
+        {% endif %}
+      </ul>
+      <p class="muted" style="margin-bottom:0;">Start: <code>python run_ingest_worker.py</code> · Compose service <code>ingest</code> · see <code>docs/LIVE_DATA.md</code></p>
+    </section>
+
+    <section class="sidebar-panel">
       <h3 style="margin-top:0;">Desk worker</h3>
       <ul class="data-list">
         <li>Heartbeat: <strong>{{ health.desk_worker.last_heartbeat_at or 'never' }}</strong></li>
@@ -96,7 +118,7 @@
         <li class="muted">Error: {{ health.desk_worker.last_error }}</li>
         {% endif %}
       </ul>
-      <p class="muted" style="margin-bottom:0;">Start: <code>python run_analyst_desk_worker.py</code></p>
+      <p class="muted" style="margin-bottom:0;">Start: <code>python run_analyst_desk_worker.py</code> or Celery worker+beat</p>
     </section>
 
     <section class="sidebar-panel">

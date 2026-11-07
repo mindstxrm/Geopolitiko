@@ -58,6 +58,10 @@ Backups: `python scripts/backup_sqlite.py`. Runbook: `docs/P0_OPS_RUNBOOK.md`.
 **Product loop (P5):** Declutter, reject taxonomy, DLQ replay — `docs/P5_PRODUCT_LOOP.md`.  
 **Intel spine (P6):** Terminal events, confirmation gates, entities, golden briefs — `docs/P6_INTEL_SPINE.md`.  
 **Cutover (P7):** Dialect helpers, feature flags, domain package start — `docs/P7_PLATFORM_CUTOVER.md`.  
+**Live data:** Always-on ingest worker + ETag scrapes + STALE banners — `docs/LIVE_DATA.md`.  
+```bash
+python run_ingest_worker.py   # or: docker compose up --build
+```
 Tests: `pytest -q`. Local prod-parity: `docker compose up --build`.
 
 ### Analyst Desk (separate approval console)

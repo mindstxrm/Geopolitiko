@@ -51,7 +51,15 @@ _DEFAULT_SPECS: List[IndicatorSpec] = [
 
 
 _cache: Dict[str, Any] = {"expires_at": None, "payload": None}
-_CACHE_TTL_SECONDS = 6 * 60 * 60  # 6 hours
+
+
+def _cache_ttl_seconds() -> int:
+    try:
+        from config import macro_homepage_cache_seconds
+
+        return int(macro_homepage_cache_seconds())
+    except Exception:
+        return 900  # 15 min default (was 6h)
 
 
 def _utc_now_iso() -> str:
@@ -133,7 +141,7 @@ def get_macro_indicators() -> Dict[str, Any]:
 
     payload = {"updated_at": _utc_now_iso(), "indicators": indicators}
     _cache["payload"] = payload
-    _cache["expires_at"] = now.replace(microsecond=0) + _seconds(_CACHE_TTL_SECONDS)
+    _cache["expires_at"] = now.replace(microsecond=0) + _seconds(_cache_ttl_seconds())
     return payload
 
 

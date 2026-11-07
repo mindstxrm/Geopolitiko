@@ -86,6 +86,28 @@ services:
       web:
         condition: service_started
 
+  ingest:
+    build: .
+    command: python run_ingest_worker.py
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_PATH: /app/data/news.db
+      ANALYST_DESK_DATABASE_PATH: /app/data/analyst_desk.db
+      INGEST_SCRAPE_SECONDS: "180"
+      INGEST_JOBS_SECONDS: "900"
+      INGEST_MACRO_SECONDS: "3600"
+      INGEST_MACRO_FULL_SECONDS: "86400"
+      GEOPOLITIKO_ENV: production
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      web:
+        condition: service_started
+    restart: unless-stopped
+
   worker:
     build: .
     command: celery -A app.analyst_desk.celery_app worker -l INFO -Q celery,desk_metrics -c 2

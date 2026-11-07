@@ -166,7 +166,8 @@
           {% else %}
           <p>Run these from the <strong>project root</strong> (<code>GeopoliticalNews</code>):</p>
           <ol>
-            <li><code>python scrape.py</code> — fetches articles into <code>data/news.db</code></li>
+            <li><code>python run_ingest_worker.py</code> — always-on scrape + jobs (or Compose <code>ingest</code>)</li>
+            <li><code>python scrape.py</code> — one-shot fetch into <code>data/news.db</code></li>
             <li><code>python run_jobs.py --all</code> — topics, impact, analysis</li>
           </ol>
           <p>Then refresh this page. If scrape prints "Total: 0 articles", check your network or try again later (feeds can be temporarily empty).</p>
