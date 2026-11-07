@@ -361,6 +361,28 @@ def ops_health_board():
     )
 
 
+@bp.route("/desk")
+@bp.route("/tools/analyst-desk")
+def launch_analyst_desk():
+    """Open Analyst Desk with a short-lived SSO bridge token (P2 unified auth)."""
+    from flask import redirect as flask_redirect
+
+    from app.analyst_desk.auth_bridge import analyst_desk_public_url, mint_bridge_token
+
+    next_path = (request.args.get("next") or "/").strip() or "/"
+    if not next_path.startswith("/"):
+        next_path = "/"
+    if current_user.is_authenticated:
+        token = mint_bridge_token(
+            user_id=int(current_user.id),
+            username=getattr(current_user, "username", None) or str(current_user.id),
+        )
+        url = f"{analyst_desk_public_url()}/auth/bridge?token={token}&next={next_path}"
+        return flask_redirect(url)
+    # Not logged in: send to Terminal login, then back here
+    return redirect(url_for("main.login", next=url_for("main.launch_analyst_desk", next=next_path)))
+
+
 @bp.route("/workspace/tasks", methods=["GET", "POST"])
 @login_required
 def workspace_tasks():

@@ -52,6 +52,7 @@ Open [http://127.0.0.1:5003](http://127.0.0.1:5003) (or the port in `run.py`).
 **Ops health (P0):** [http://127.0.0.1:5003/ops](http://127.0.0.1:5003/ops) and JSON [http://127.0.0.1:5003/api/health](http://127.0.0.1:5003/api/health).  
 Backups: `python scripts/backup_sqlite.py`. Runbook: `docs/P0_OPS_RUNBOOK.md`.  
 **Intel quality (P1):** Desk SOP packs + citation grounding + brief eval — `docs/P1_INTEL_QUALITY.md`.  
+**Operability (P2):** Terminal→Desk SSO (`/desk`), worker heartbeats, shared design tokens — `docs/P2_OPERABILITY.md`.  
 Tests: `pytest -q`.
 
 ### Analyst Desk (separate approval console)

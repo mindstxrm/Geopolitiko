@@ -1,14 +1,22 @@
 {% extends "analyst_desk/base.html" %}
 {% block title %}Login — Analyst Desk{% endblock %}
 {% block body %}
-<div class="panel" style="max-width: 400px;">
+<div class="panel" style="max-width: 440px;">
   <h2>Analyst Desk login</h2>
-  <p class="muted">This console is separate from the main Geopolitiko platform.</p>
+  <p class="muted">
+    Unified auth (P2): use your <strong>Terminal username + password</strong>, or the shared Desk admin password.
+    From the Terminal you can also open <code>/desk</code> while logged in for one-click SSO.
+  </p>
   <form method="post">
+    <label for="username">Terminal username (optional if using Desk password only)</label>
+    <input type="text" id="username" name="username" autocomplete="username" style="margin-bottom:0.75rem;">
     <label for="password">Password</label>
     <input type="password" id="password" name="password" autocomplete="current-password" required>
-    <p style="margin-top: 1rem;">
+    <p style="margin-top: 1rem; display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
       <button type="submit" class="btn">Enter</button>
+      {% if terminal_public_url %}
+      <a class="btn secondary" href="{{ terminal_public_url }}/desk">Open via Terminal SSO</a>
+      {% endif %}
     </p>
   </form>
 </div>

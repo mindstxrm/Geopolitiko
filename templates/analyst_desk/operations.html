@@ -18,6 +18,33 @@
 </div>
 
 <div class="panel">
+  <h2>Background worker (always-on)</h2>
+  <p class="muted" style="margin-top:0;">
+    Keep drafts flowing with <code>python run_analyst_desk_worker.py</code> (or Celery). Heartbeats land on Terminal Ops too.
+  </p>
+  <ul class="muted" style="padding-left:1.1rem;">
+    <li>Last heartbeat: <strong style="color:var(--text)">{{ worker.last_heartbeat_at or 'never — start the worker' }}</strong></li>
+    <li>Last status: <strong style="color:var(--text)">{{ worker.last_status or '—' }}</strong> · interval {{ worker.interval_seconds }}s</li>
+    {% if worker.last_stats %}
+    <li>
+      Last tick:
+      ingested {{ worker.last_stats.ingested if worker.last_stats.ingested is defined else '—' }} ·
+      events {{ worker.last_stats.events if worker.last_stats.events is defined else '—' }} ·
+      alerts {{ worker.last_stats.alerts_created if worker.last_stats.alerts_created is defined else '—' }} ·
+      briefing {{ worker.last_stats.briefing_id if worker.last_stats.briefing_id is defined else '—' }}
+    </li>
+    {% endif %}
+    {% if worker.last_error %}
+    <li style="color:var(--bad)">Error: {{ worker.last_error }}</li>
+    {% endif %}
+  </ul>
+  <p class="muted" style="margin-bottom:0;">
+    JSON: <a href="{{ url_for('analyst_desk.health') }}">/health</a>
+    · See <code>docs/P2_OPERABILITY.md</code> for launchd/systemd.
+  </p>
+</div>
+
+<div class="panel">
   <h2>Retention / Cleanup</h2>
   <p class="muted">Deletes old operational rows to keep SQLite compact: tasks (30d), processed/failed messages (14d), extracted metrics (30d).</p>
   <form method="post" action="{{ url_for('analyst_desk.operations_prune') }}">

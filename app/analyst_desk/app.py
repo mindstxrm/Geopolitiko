@@ -14,15 +14,18 @@ from config import (
     ANALYST_DESK_SECRET_KEY,
     DATABASE_PATH,
     analyst_desk_heuristic_only,
+    assert_production_secrets,
     load_app_dotenv,
 )
 from app.analyst_desk.agents import AGENTS
 from app.analyst_desk.store import init_analyst_desk_db, sync_agents_registry
 from app.models import init_db
+from app.observability import install_request_observability
 
 
 def create_analyst_desk_app() -> Flask:
     load_app_dotenv()
+    assert_production_secrets()
     # News DB global path for read-only article access
     init_db(DATABASE_PATH)
     init_analyst_desk_db(ANALYST_DESK_DATABASE_PATH)
@@ -38,23 +41,35 @@ def create_analyst_desk_app() -> Flask:
     from app.analyst_desk.routes import bp as analyst_desk_bp
 
     app.register_blueprint(analyst_desk_bp)
+    install_request_observability(app, service="analyst_desk")
 
     @app.context_processor
     def _analyst_desk_template_globals():
+        from app.analyst_desk.auth_bridge import terminal_public_url
+
         return {
             "analyst_desk_auth_required": bool(
                 (app.config.get("ANALYST_DESK_ADMIN_PASSWORD") or "").strip()
             ),
             "analyst_desk_heuristic_only": analyst_desk_heuristic_only(),
+            "terminal_public_url": terminal_public_url(),
+            "desk_user": session.get("analyst_desk_user"),
         }
 
     def _password_configured() -> bool:
         return bool((app.config.get("ANALYST_DESK_ADMIN_PASSWORD") or "").strip())
 
     def _is_logged_in() -> bool:
+        # Open desk when no desk password is set (dev)
         if not _password_configured():
             return True
         return bool(session.get("analyst_desk_ok"))
+
+    _PUBLIC_ENDPOINTS = {
+        "analyst_desk.login",
+        "analyst_desk.auth_bridge",
+        "analyst_desk.health",
+    }
 
     @app.before_request
     def _analyst_desk_auth_gate():
@@ -62,7 +77,7 @@ def create_analyst_desk_app() -> Flask:
             return
         if request.blueprint != "analyst_desk":
             return
-        if request.endpoint == "analyst_desk.login":
+        if request.endpoint in _PUBLIC_ENDPOINTS:
             return
         if not _is_logged_in():
             return redirect(url_for("analyst_desk.login", next=request.path))

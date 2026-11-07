@@ -183,6 +183,16 @@ def build_health_report() -> dict[str, Any]:
     desk = _desk_counts()
     intel = _terminal_intel_stats()
     secrets = _secrets_status()
+    worker_hb = ops.get("desk_worker_last_heartbeat_at")
+    worker_hours = _hours_since(worker_hb)
+    interval = ops.get("desk_worker_interval_seconds") or 300
+    try:
+        interval_f = float(interval)
+    except (TypeError, ValueError):
+        interval_f = 300.0
+    # Stale if no heartbeat within 3x configured interval (min 15 min grace for first boot)
+    stale_after_h = max(0.25, (interval_f * 3) / 3600.0)
+    worker_fresh = worker_hours is not None and worker_hours <= stale_after_h
 
     checks: list[dict[str, Any]] = []
 
@@ -224,6 +234,15 @@ def build_health_report() -> dict[str, Any]:
             "set ANALYST_DESK_ADMIN_PASSWORD in production",
             severity="warn",
         )
+    add(
+        "desk_worker",
+        worker_fresh or worker_hb is None,
+        (
+            f"heartbeat={worker_hb or 'never'}; status={ops.get('desk_worker_last_status') or '—'}; "
+            f"hours_ago={worker_hours}"
+        ),
+        severity="warn",
+    )
 
     hard_fail = any(c["severity"] == "error" and not c["ok"] for c in checks)
     warn = any(c["severity"] == "warn" and not c["ok"] for c in checks)
@@ -247,6 +266,15 @@ def build_health_report() -> dict[str, Any]:
             "database": desk_db,
             **desk,
             "publish_on_approve": analyst_desk_publish_on_approve(),
+        },
+        "desk_worker": {
+            "last_heartbeat_at": worker_hb,
+            "hours_since_heartbeat": worker_hours,
+            "last_status": ops.get("desk_worker_last_status"),
+            "interval_seconds": ops.get("desk_worker_interval_seconds"),
+            "last_error": ops.get("desk_worker_last_error"),
+            "last_stats": ops.get("desk_worker_last_stats"),
+            "fresh": worker_fresh,
         },
         "terminal_intel": intel,
         "secrets": secrets,

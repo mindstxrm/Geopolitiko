@@ -53,24 +53,31 @@ def _handle_sigterm(*_args) -> None:
 
 def run_tick() -> None:
     from app.analyst_desk.orchestrator import run_full_pipeline_tick
+    from app.platform_ops import record_desk_worker_heartbeat
 
-    stats = run_full_pipeline_tick()
-    logger.info(
-        "tick ok ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s events=%s alerts=%s briefing=%s "
-        "topics=%s regions=%s countries=%s movers=%s scenarios=%s",
-        stats.get("ingested", 0),
-        stats.get("enriched", 0),
-        stats.get("metrics_docs", 0),
-        stats.get("metrics_rows", 0),
-        stats.get("events", 0),
-        stats.get("alerts_created", 0),
-        stats.get("briefing_id"),
-        stats.get("topic_briefings", 0),
-        stats.get("regional_snaps", 0),
-        stats.get("country_snaps", 0),
-        stats.get("movers", 0),
-        stats.get("scenarios", 0),
-    )
+    interval = analyst_desk_worker_interval_seconds()
+    try:
+        stats = run_full_pipeline_tick()
+        record_desk_worker_heartbeat(status="ok", interval_seconds=interval, stats=stats)
+        logger.info(
+            "tick ok ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s events=%s alerts=%s briefing=%s "
+            "topics=%s regions=%s countries=%s movers=%s scenarios=%s",
+            stats.get("ingested", 0),
+            stats.get("enriched", 0),
+            stats.get("metrics_docs", 0),
+            stats.get("metrics_rows", 0),
+            stats.get("events", 0),
+            stats.get("alerts_created", 0),
+            stats.get("briefing_id"),
+            stats.get("topic_briefings", 0),
+            stats.get("regional_snaps", 0),
+            stats.get("country_snaps", 0),
+            stats.get("movers", 0),
+            stats.get("scenarios", 0),
+        )
+    except Exception as e:
+        record_desk_worker_heartbeat(status="error", interval_seconds=interval, error=str(e))
+        raise
 
 
 def main() -> int:

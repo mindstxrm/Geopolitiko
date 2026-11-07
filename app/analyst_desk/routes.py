@@ -90,28 +90,113 @@ def _password_configured(app) -> bool:
     return bool(pwd)
 
 
+@bp.route("/health")
+def health():
+    """Unauthenticated Desk health for uptime / worker monitors."""
+    from flask import jsonify
+
+    from app.platform_health import build_health_report
+    from app.platform_ops import read_ops_status
+    from config import analyst_desk_worker_interval_seconds
+
+    report = build_health_report()
+    ops = read_ops_status()
+    payload = {
+        "service": "analyst_desk",
+        "status": report.get("status"),
+        "generated_at": report.get("generated_at"),
+        "desk": report.get("desk"),
+        "worker": {
+            "last_heartbeat_at": ops.get("desk_worker_last_heartbeat_at"),
+            "last_status": ops.get("desk_worker_last_status"),
+            "interval_seconds": ops.get("desk_worker_interval_seconds")
+            or analyst_desk_worker_interval_seconds(),
+            "last_error": ops.get("desk_worker_last_error"),
+            "last_stats": ops.get("desk_worker_last_stats"),
+        },
+        "terminal_intel": report.get("terminal_intel"),
+    }
+    code = 200 if payload["status"] in ("ok", "degraded") else 503
+    return jsonify(payload), code
+
+
+@bp.route("/auth/bridge")
+def auth_bridge():
+    """Consume a short-lived Terminal SSO token and open a Desk session."""
+    from app.analyst_desk.auth_bridge import verify_bridge_token
+    from app.observability import log_event
+
+    token = (request.args.get("token") or "").strip()
+    data = verify_bridge_token(token)
+    if not data:
+        flash("SSO link expired or invalid. Log in again from the Terminal or use Desk password.", "error")
+        return redirect(url_for("analyst_desk.login"))
+    session["analyst_desk_ok"] = True
+    session["analyst_desk_user"] = {
+        "id": data.get("uid"),
+        "username": data.get("u"),
+        "via": "terminal_bridge",
+    }
+    session.permanent = True
+    log_event("desk_sso_ok", username=data.get("u"), user_id=data.get("uid"))
+    nxt = request.args.get("next") or url_for("analyst_desk.index")
+    flash(f"Signed in via Terminal as {data.get('u')}.", "info")
+    return redirect(nxt)
+
+
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     from flask import current_app
 
+    from app.auth import verify_password
+    from app.models import get_user_by_username
+    from app.observability import log_event
+
     app = current_app
+    # Dev open mode
     if not _password_configured(app):
+        session["analyst_desk_ok"] = True
+        session["analyst_desk_user"] = {"username": "dev-open", "via": "open"}
         return redirect(url_for("analyst_desk.index"))
     if request.method == "POST":
         pwd = (request.form.get("password") or "").strip()
+        username = (request.form.get("username") or "").strip()
         expected = (app.config.get("ANALYST_DESK_ADMIN_PASSWORD") or "").strip()
-        if pwd and pwd == expected:
+        ok = False
+        via = None
+        user_meta = None
+        # 1) Shared desk admin password
+        if pwd and expected and pwd == expected:
+            ok = True
+            via = "desk_password"
+            user_meta = {"username": username or "desk-admin", "via": via}
+        # 2) Terminal user credentials (unified auth)
+        if not ok and username and pwd:
+            row = get_user_by_username(username)
+            if row and verify_password(row, pwd) and row.get("is_active", 1):
+                ok = True
+                via = "terminal_user"
+                user_meta = {
+                    "id": row.get("id"),
+                    "username": row.get("username"),
+                    "via": via,
+                }
+        if ok:
             session["analyst_desk_ok"] = True
+            session["analyst_desk_user"] = user_meta
             session.permanent = True
+            log_event("desk_login_ok", via=via, username=(user_meta or {}).get("username"))
             nxt = request.args.get("next") or url_for("analyst_desk.index")
             return redirect(nxt)
-        flash("Invalid password.", "error")
+        log_event("desk_login_fail", username=username or "-")
+        flash("Invalid credentials. Use Desk password or your Terminal username/password.", "error")
     return render_template("analyst_desk/login.html")
 
 
 @bp.route("/logout")
 def logout():
     session.pop("analyst_desk_ok", None)
+    session.pop("analyst_desk_user", None)
     return redirect(url_for("analyst_desk.login"))
 
 
@@ -144,6 +229,18 @@ def index():
 
 @bp.route("/operations")
 def operations():
+    from app.platform_ops import read_ops_status
+    from config import analyst_desk_worker_interval_seconds
+
+    ops = read_ops_status()
+    worker = {
+        "last_heartbeat_at": ops.get("desk_worker_last_heartbeat_at"),
+        "last_status": ops.get("desk_worker_last_status"),
+        "interval_seconds": ops.get("desk_worker_interval_seconds")
+        or analyst_desk_worker_interval_seconds(),
+        "last_error": ops.get("desk_worker_last_error"),
+        "last_stats": ops.get("desk_worker_last_stats") or {},
+    }
     return render_template(
         "analyst_desk/operations.html",
         proposal_counts=count_proposals_by_status(),
@@ -156,6 +253,7 @@ def operations():
         dead_letters=list_recent_dead_letter_tasks(limit=30),
         delivery=delivery_status(),
         celery_available=_celery_desk_available(),
+        worker=worker,
     )
 
 

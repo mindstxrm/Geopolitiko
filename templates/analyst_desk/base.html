@@ -4,89 +4,113 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Analyst Desk{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f1419;
-      --panel: #1a2332;
-      --text: #e7ecf3;
-      --muted: #8b9bb4;
-      --accent: #5b8def;
-      --ok: #3ecf8e;
-      --bad: #e85d6a;
+      --bg: #0b0f17;
+      --panel: #121826;
+      --panel-elevated: #182033;
+      --text: #eef2ff;
+      --muted: #7b879c;
+      --ink-secondary: #a8b3c7;
+      --border: #243044;
+      --accent: #6ea8ff;
+      --accent-muted: rgba(110, 168, 255, 0.14);
+      --ok: #34d399;
+      --bad: #f87171;
+      --warn: #fbbf24;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
     }
     * { box-sizing: border-box; }
     body {
-      font-family: "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font);
       background: var(--bg);
       color: var(--text);
       margin: 0;
       line-height: 1.5;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     header {
-      background: var(--panel);
+      background: var(--panel-elevated);
       padding: 0.75rem 1.25rem;
-      border-bottom: 1px solid #2a3545;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 0.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
-    header strong { font-size: 1.05rem; }
+    header strong { font-size: 1.05rem; letter-spacing: -0.02em; }
     .tag {
       font-size: 0.75rem;
       color: var(--muted);
-      border: 1px solid #2a3545;
+      border: 1px solid var(--border);
+      background: var(--accent-muted);
       padding: 0.15rem 0.5rem;
-      border-radius: 4px;
+      border-radius: 999px;
     }
     main { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
-    table a { font-weight: 500; }
-    .btn.secondary { white-space: nowrap; }
     .flash {
       padding: 0.6rem 0.9rem;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       margin-bottom: 1rem;
       font-size: 0.9rem;
     }
-    .flash.info { background: #1e3a2f; color: #b8f0d2; }
-    .flash.error { background: #3a1e24; color: #ffb4bc; }
+    .flash.info { background: rgba(52, 211, 153, 0.12); color: #b8f0d2; border: 1px solid rgba(52, 211, 153, 0.25); }
+    .flash.error { background: rgba(248, 113, 113, 0.12); color: #ffb4bc; border: 1px solid rgba(248, 113, 113, 0.25); }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { text-align: left; padding: 0.5rem 0.4rem; border-bottom: 1px solid #2a3545; }
-    th { color: var(--muted); font-weight: 600; }
+    th, td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    table a { font-weight: 500; }
     .btn {
       display: inline-block;
       background: var(--accent);
-      color: #fff !important;
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
+      color: #0b0f17 !important;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
       border: none;
       cursor: pointer;
       font-size: 0.875rem;
+      font-weight: 650;
       text-decoration: none !important;
+      font-family: inherit;
     }
-    .btn.secondary { background: #3d4f66; }
-    .btn.danger { background: var(--bad); }
-    .btn.ok { background: #2d6a4f; }
-    textarea, input[type="password"] {
+    .btn.secondary { background: var(--panel-elevated); color: var(--text) !important; border: 1px solid var(--border); }
+    .btn.danger { background: var(--bad); color: #fff !important; }
+    .btn.ok { background: #059669; color: #fff !important; }
+    .btn.secondary { white-space: nowrap; }
+    textarea, input[type="password"], input[type="text"], input[type="search"] {
       width: 100%;
       background: #0d1117;
       color: var(--text);
-      border: 1px solid #2a3545;
-      border-radius: 6px;
-      padding: 0.6rem;
-      font-family: ui-monospace, monospace;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.75rem;
+      font-family: var(--mono);
       font-size: 0.85rem;
+    }
+    textarea:focus, input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
     }
     textarea { min-height: 320px; }
     .panel {
       background: var(--panel);
-      border: 1px solid #2a3545;
-      border-radius: 8px;
-      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
       margin-bottom: 1rem;
     }
     details.panel > summary {
@@ -99,8 +123,10 @@
     details.panel > summary + * {
       margin-top: 0.6rem;
     }
-    h2 { font-size: 1.1rem; margin-top: 0; }
+    h2 { font-size: 1.1rem; margin-top: 0; letter-spacing: -0.02em; }
     .muted { color: var(--muted); font-size: 0.85rem; }
+    nav a { margin: 0 0.15rem; }
+    .header-meta { color: var(--ink-secondary); font-size: 0.8125rem; }
   </style>
   {% block extra_head %}{% endblock %}
 </head>
@@ -108,7 +134,10 @@
   <header>
     <div>
       <strong>Analyst Desk</strong>
-      <span class="tag">Separate from Geopolitiko</span>
+      <span class="tag">P2 · aligned with Terminal</span>
+      {% if desk_user and desk_user.username %}
+      <span class="header-meta"> · {{ desk_user.username }}{% if desk_user.via %} ({{ desk_user.via }}){% endif %}</span>
+      {% endif %}
     </div>
     <nav>
       <a href="{{ url_for('analyst_desk.index') }}">Home</a>
@@ -116,6 +145,10 @@
       · <a href="{{ url_for('analyst_desk.approvals') }}">Approvals</a>
       · <a href="{{ url_for('analyst_desk.intel_feed') }}">Intel Feed</a>
       · <a href="{{ url_for('analyst_desk.extraction_qc') }}">Extraction QA</a>
+      · <a href="{{ url_for('analyst_desk.health') }}">Health</a>
+      {% if terminal_public_url %}
+      · <a href="{{ terminal_public_url }}/ops" target="_blank" rel="noopener">Terminal Ops</a>
+      {% endif %}
       {% if session.analyst_desk_ok %}
         · <a href="{{ url_for('analyst_desk.logout') }}">Log out</a>
       {% endif %}

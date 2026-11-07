@@ -79,7 +79,24 @@
         <li>Terminal intel rows: {{ health.terminal_intel.count }}</li>
         <li>Last published: {{ health.terminal_intel.last_published_at or '—' }}</li>
       </ul>
-      <p class="muted" style="margin-bottom:0;">Desk UI: <code>http://127.0.0.1:5005</code> (local)</p>
+      <p class="muted" style="margin-bottom:0;">
+        Desk UI: <a href="{{ url_for('main.launch_analyst_desk') }}">Open Desk (SSO)</a>
+        · <code>http://127.0.0.1:5005</code>
+      </p>
+    </section>
+
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Desk worker</h3>
+      <ul class="data-list">
+        <li>Heartbeat: <strong>{{ health.desk_worker.last_heartbeat_at or 'never' }}</strong></li>
+        <li>Status: {{ health.desk_worker.last_status or '—' }} · fresh: {{ health.desk_worker.fresh }}</li>
+        <li>Interval: {{ health.desk_worker.interval_seconds or '—' }}s</li>
+        <li>Hours since heartbeat: {{ "%.2f"|format(health.desk_worker.hours_since_heartbeat) if health.desk_worker.hours_since_heartbeat is not none else '—' }}</li>
+        {% if health.desk_worker.last_error %}
+        <li class="muted">Error: {{ health.desk_worker.last_error }}</li>
+        {% endif %}
+      </ul>
+      <p class="muted" style="margin-bottom:0;">Start: <code>python run_analyst_desk_worker.py</code></p>
     </section>
 
     <section class="sidebar-panel">

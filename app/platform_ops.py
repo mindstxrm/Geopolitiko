@@ -101,5 +101,38 @@ def record_backup(path: str, bytes_copied: int) -> None:
     )
 
 
+def record_desk_worker_heartbeat(
+    *,
+    status: str = "ok",
+    interval_seconds: int | None = None,
+    stats: dict[str, Any] | None = None,
+    error: str | None = None,
+) -> dict[str, Any]:
+    patch: dict[str, Any] = {
+        "desk_worker_last_heartbeat_at": _now_iso(),
+        "desk_worker_last_status": status,
+    }
+    if interval_seconds is not None:
+        patch["desk_worker_interval_seconds"] = int(interval_seconds)
+    if stats:
+        patch["desk_worker_last_stats"] = {
+            k: stats.get(k)
+            for k in (
+                "ingested",
+                "enriched",
+                "metrics_docs",
+                "events",
+                "alerts_created",
+                "briefing_id",
+            )
+            if k in stats
+        }
+    if error:
+        patch["desk_worker_last_error"] = (error or "")[:2000]
+    elif status == "ok":
+        patch["desk_worker_last_error"] = None
+    return write_ops_status(patch)
+
+
 def default_backup_dir() -> Path:
     return Path(BASE_DIR) / "data" / "backups"

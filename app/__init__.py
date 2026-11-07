@@ -86,6 +86,10 @@ def create_app():
             return out[idx:].strip()
         return out
 
+    from app.observability import install_request_observability
+
+    install_request_observability(app, service="terminal")
+
     from app.routes import bp
     from app.api_routes import api
     app.register_blueprint(bp)
