@@ -26,9 +26,12 @@ def test_home_and_ops_render_visual_classes(app_client):
     home = app_client.get("/")
     assert home.status_code == 200
     html = home.get_data(as_text=True)
-    assert 'class="status-ticker"' in html
+    assert "status-ticker" in html
+    assert "metrics-rail" in html or "status-pill" in html
     assert "status-pill" in html
     assert "situation-top-strip" in html
+    assert "mode-strip" in html
+    assert "fkey-row" in html
 
     ops = app_client.get("/ops")
     assert ops.status_code == 200

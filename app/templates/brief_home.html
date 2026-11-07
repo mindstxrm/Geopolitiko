@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Brief — Geopolitical Terminal{% endblock %}
+
+{% block breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('main.brief_home', mode='brief') }}">Brief</a> <span class="breadcrumb-sep">›</span> Home
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="brief-home layout">
+  <header class="brief-home-header">
+    <h1 class="page-title">Brief</h1>
+    <p class="section-label" style="text-transform:none;letter-spacing:0;font-size:0.8125rem;">Monitor → Investigate → <strong>Brief</strong> · approve, publish, export</p>
+  </header>
+
+  <div class="ops-kpi-row" aria-label="Brief KPIs">
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Desk queue</p>
+      <p class="ops-kpi-value">{{ pending_proposals if pending_proposals is not none else '—' }}</p>
+      <p class="ops-kpi-sub">pending proposals</p>
+    </div>
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Approved unpublished</p>
+      <p class="ops-kpi-value">{{ approved_unpublished if approved_unpublished is not none else '—' }}</p>
+      <p class="ops-kpi-sub">awaiting Terminal publish</p>
+    </div>
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Publish on approve</p>
+      <p class="ops-kpi-value">
+        {% if publish_on_approve is none %}—
+        {% elif publish_on_approve %}<span class="status-pill ok">ON</span>
+        {% else %}<span class="status-pill warn">OFF</span>{% endif %}
+      </p>
+      <p class="ops-kpi-sub"><a href="{{ url_for('main.ops_health_board') }}">Ops health</a></p>
+    </div>
+  </div>
+
+  <div class="brief-home-actions" aria-label="Brief actions">
+    <a class="btn" href="{{ url_for('main.launch_analyst_desk') }}">Open Desk Approvals</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.export_briefing') }}">Export briefing</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.reports_hub') }}">Reports hub</a>
+  </div>
+
+  <section class="sidebar-panel brief-recent" aria-label="Recently published">
+    <h2 class="section-label">Recently published to Terminal</h2>
+    <table class="mini-terminal-table" aria-label="Recent desk terminal intel">
+      <thead>
+        <tr><th>When</th><th>Title</th><th>Agent</th><th>Countries</th><th>Open</th></tr>
+      </thead>
+      <tbody>
+        {% for item in recent_intel %}
+        <tr>
+          <td class="muted">{{ (item.published_at or '')[:16].replace('T',' ') }}</td>
+          <td>{{ item.title or ('Proposal #' ~ item.proposal_id) }}</td>
+          <td>{{ item.agent_id }}</td>
+          <td class="muted">{{ item.countries_csv or item.focus_country or '—' }}</td>
+          <td>
+            {% if item.focus_country %}
+            <a href="{{ url_for('main.country_dashboard', country_code=item.focus_country) }}">Country</a>
+            {% elif item.countries_csv %}
+            <a href="{{ url_for('main.country_dashboard', country_code=item.countries_csv.split(',')[0]) }}">Country</a>
+            {% else %}
+            —
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="muted">Nothing published yet. Approve a proposal in Analyst Desk Approvals.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

@@ -361,6 +361,45 @@ def ops_health_board():
     )
 
 
+@bp.route("/brief")
+def brief_home():
+    """Soft Brief mode home: desk queue, recent publish, CTAs (no Desk login required)."""
+    from app.platform_health import build_health_report
+    from app.status_ticker import build_status_ticker
+
+    pending = None
+    unpublished = None
+    publish_on_approve = None
+    try:
+        report = build_health_report()
+        desk = (report or {}).get("desk") or {}
+        pending = desk.get("pending_proposals")
+        unpublished = desk.get("approved_unpublished")
+        publish_on_approve = desk.get("publish_on_approve")
+    except Exception:
+        report = {}
+    try:
+        ticker = build_status_ticker()
+        if pending is None:
+            pending = ticker.get("pending_proposals")
+    except Exception:
+        ticker = {}
+    recent_intel = []
+    try:
+        recent_intel = get_recent_desk_terminal_intel(limit=12)
+    except Exception:
+        recent_intel = []
+    return render_template(
+        "brief_home.html",
+        pending_proposals=pending,
+        approved_unpublished=unpublished,
+        publish_on_approve=publish_on_approve,
+        recent_intel=recent_intel,
+        health=report or {},
+        status_ticker=ticker or {},
+    )
+
+
 @bp.route("/desk")
 @bp.route("/tools/analyst-desk")
 def launch_analyst_desk():

@@ -22,19 +22,23 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-<body class="terminal{% if terminal_embed %} terminal-embed{% endif %}{% block body_extra_class %}{% endblock %}" id="body-theme" data-terminal-path="{{ request.path }}" data-terminal-endpoint="{{ request.endpoint or '' }}">
+{% set ui_mode = ui_mode|default('monitor') %}
+<body class="terminal{% if terminal_embed %} terminal-embed{% endif %}{% block body_extra_class %}{% endblock %}" id="body-theme" data-terminal-path="{{ request.path }}" data-terminal-endpoint="{{ request.endpoint or '' }}" data-ui-mode="{{ ui_mode }}">
   {% set ep = request.url_rule.endpoint if request.url_rule else '' %}
   {% set ep15 = (ep or '')[:15] %}
   {% if not terminal_embed %}
   <nav class="terminal-nav" aria-label="Main">
-    <a href="{{ url_for('main.situation_room') }}" class="terminal-logo" aria-label="Geopolitical Terminal home">
+    <a href="{{ mode_home_url|default(url_for('main.situation_room')) }}" class="terminal-logo" aria-label="Geopolitical Terminal home">
       <img src="{{ url_for('static', filename='logo.png') }}" alt="Geopolitical Terminal" class="terminal-logo-img">
     </a>
-    {# Monitor → Investigate → Brief hierarchy: Home · Geography · Security · Intelligence · Tools #}
+    {# Soft mode homes: Monitor · Investigate · Brief #}
+    <div class="mode-strip" role="navigation" aria-label="Operator mode">
+      <a href="{{ url_for('main.situation_room', mode='monitor') }}" class="mode-chip {{ 'active' if ui_mode == 'monitor' else '' }}" data-mode="monitor">Monitor</a>
+      <a href="{{ url_for('main.index', mode='investigate') }}" class="mode-chip {{ 'active' if ui_mode == 'investigate' else '' }}" data-mode="investigate">Investigate</a>
+      <a href="{{ url_for('main.brief_home', mode='brief') }}" class="mode-chip {{ 'active' if ui_mode == 'brief' else '' }}" data-mode="brief">Brief</a>
+    </div>
     <ul class="terminal-nav-list">
-      <li><a href="{{ url_for('main.situation_room') }}" class="{{ 'active' if ep == 'main.situation_room' else '' }}">Home</a></li>
-
-      <li class="nav-group-wrap" data-nav-group="geography">
+      <li class="nav-group-wrap" data-nav-group="geography" data-nav-order-monitor="1" data-nav-order-investigate="2" data-nav-order-brief="3">
         <details class="nav-group" {{ 'open' if ep in ('main.integration_dashboard', 'main.country_dashboard', 'main.relationship_mapper', 'main.approval_protests', 'main.stability_dashboard') else '' }}>
           <summary class="nav-group-trigger" title="Countries, regions, politics, stability.">Geography</summary>
           <ul class="nav-group-menu">
@@ -46,7 +50,7 @@
         </details>
       </li>
 
-      <li class="nav-group-wrap" data-nav-group="security">
+      <li class="nav-group-wrap" data-nav-group="security" data-nav-order-monitor="2" data-nav-order-investigate="3" data-nav-order-brief="4">
         <details class="nav-group" {{ 'open' if ep in ('main.supply_chain_dashboard', 'main.diplomacy_sanctions', 'main.conflict_dashboard') or ep15 == 'main.diplomacy' else '' }}>
           <summary class="nav-group-trigger" title="Military, diplomacy, trade & supply chains.">Security</summary>
           <ul class="nav-group-menu">
@@ -57,7 +61,7 @@
         </details>
       </li>
 
-      <li class="nav-group-wrap" data-nav-group="intelligence">
+      <li class="nav-group-wrap" data-nav-group="intelligence" data-nav-order-monitor="3" data-nav-order-investigate="1" data-nav-order-brief="2">
         <details class="nav-group" {{ 'open' if ep in ('main.index', 'main.insights', 'main.alerts_list', 'main.macro_dashboard') else '' }}>
           <summary class="nav-group-trigger" title="Feed, insights, watchlists, macro.">Intelligence</summary>
           <ul class="nav-group-menu">
@@ -69,10 +73,11 @@
         </details>
       </li>
 
-      <li class="nav-group-wrap" data-nav-group="tools">
-        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board') else '' }}>
+      <li class="nav-group-wrap" data-nav-group="tools" data-nav-order-monitor="4" data-nav-order-investigate="4" data-nav-order-brief="1">
+        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board', 'main.brief_home') or ui_mode == 'brief' else '' }}>
           <summary class="nav-group-trigger" title="Reports, Ops, Desk, labs.">Tools</summary>
           <ul class="nav-group-menu">
+            <li><a href="{{ url_for('main.brief_home') }}" class="{{ 'active' if ep == 'main.brief_home' else '' }}">Brief home</a></li>
             <li><a href="{{ url_for('main.reports_hub') }}" class="{{ 'active' if ep == 'main.reports_hub' else '' }}">Reports</a></li>
             <li><a href="{{ url_for('main.ops_health_board') }}" class="{{ 'active' if ep == 'main.ops_health_board' else '' }}">Ops health</a></li>
             <li><a href="{{ url_for('main.launch_analyst_desk') }}">Analyst Desk</a></li>
@@ -143,6 +148,14 @@
         {% endif %}
       </div>
     </div>
+    <div class="fkey-row" role="navigation" aria-label="Function shortcuts">
+      <a class="fkey-chip" href="{{ url_for('main.help_page') }}" data-fkey="F1"><kbd>F1</kbd> Help</a>
+      <a class="fkey-chip {{ 'active' if ui_mode == 'monitor' else '' }}" href="{{ url_for('main.situation_room', mode='monitor') }}" data-fkey="F2"><kbd>F2</kbd> Monitor</a>
+      <a class="fkey-chip {{ 'active' if ui_mode == 'investigate' else '' }}" href="{{ url_for('main.index', mode='investigate') }}" data-fkey="F3"><kbd>F3</kbd> Feed</a>
+      <a class="fkey-chip {{ 'active' if ui_mode == 'brief' else '' }}" href="{{ url_for('main.brief_home', mode='brief') }}" data-fkey="F4"><kbd>F4</kbd> Brief</a>
+      <a class="fkey-chip" href="{{ url_for('main.ops_health_board') }}" data-fkey="F5"><kbd>F5</kbd> Ops</a>
+      <a class="fkey-chip" href="{{ url_for('main.macro_dashboard') }}" data-fkey="F6"><kbd>F6</kbd> Macro</a>
+    </div>
   </header>
   {% else %}
   <div class="terminal-embed-bar" role="region" aria-label="Embedded view">
@@ -154,13 +167,13 @@
   <main class="terminal-main">
     <div class="container layout-main">
       {% if status_ticker is defined and status_ticker %}
-      <div class="status-ticker" role="status" aria-label="Data status">
+      <div class="status-ticker metrics-rail" role="status" aria-label="Data status">
         <span class="ticker-item">
           <span class="status-pill {{ status_ticker.status }}">{{ status_ticker.status_label }}</span>
         </span>
-        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
         <span class="ticker-item">
-          News as-of
+          AS-OF
           {% if status_ticker.news_as_of %}
           <time class="ticker-mono" datetime="{{ status_ticker.news_as_of }}">{{ status_ticker.news_as_of[:16].replace('T',' ') }}</time>
           {% if status_ticker.news_minutes_ago is not none %}
@@ -170,18 +183,20 @@
           <span class="ticker-mono">—</span>
           {% endif %}
         </span>
-        <span class="ticker-sep" aria-hidden="true">·</span>
-        <span class="ticker-item">High-risk <strong class="ticker-mono">{{ status_ticker.high_risk_count if status_ticker.high_risk_count is not none else '—' }}</strong></span>
-        <span class="ticker-sep" aria-hidden="true">·</span>
-        <span class="ticker-item">Desk pending <strong class="ticker-mono">{{ status_ticker.pending_proposals if status_ticker.pending_proposals is not none else '—' }}</strong></span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
+        <span class="ticker-item">HI-RISK <strong class="ticker-mono">{{ status_ticker.high_risk_count if status_ticker.high_risk_count is not none else '—' }}</strong></span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
+        <span class="ticker-item">DESK <strong class="ticker-mono">{{ status_ticker.pending_proposals if status_ticker.pending_proposals is not none else '—' }}</strong></span>
         {% if status_ticker.articles_24h is not none %}
-        <span class="ticker-sep" aria-hidden="true">·</span>
-        <span class="ticker-item">24h <strong class="ticker-mono">{{ status_ticker.articles_24h }}</strong></span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
+        <span class="ticker-item">24H <strong class="ticker-mono">{{ status_ticker.articles_24h }}</strong></span>
         {% endif %}
-        <span class="ticker-sep" aria-hidden="true">·</span>
-        <span class="ticker-item"><a href="{{ url_for('main.ops_health_board') }}">Ops</a></span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
+        <span class="ticker-item ticker-mode">MODE <strong class="ticker-mono">{{ ui_mode|upper }}</strong></span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
+        <span class="ticker-item"><a href="{{ url_for('main.ops_health_board') }}">OPS</a></span>
         {% if status_ticker.status == 'crit' and data_freshness is defined and data_freshness.banner %}
-        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-sep" aria-hidden="true">│</span>
         <span class="ticker-item" title="{{ data_freshness.banner }}">{{ data_freshness.banner }}</span>
         {% endif %}
       </div>
@@ -438,9 +453,24 @@
       }
 
       document.addEventListener('keydown', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+        var tag = (e.target && e.target.tagName) || '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
         if (e.key === '/') { e.preventDefault(); focusCommand(); }
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); focusCommand(); }
+        /* Geopolitiko function keys (not vendor clones) */
+        var fkeyMap = {
+          F1: '{{ url_for("main.help_page") }}',
+          F2: '{{ url_for("main.situation_room", mode="monitor") }}',
+          F3: '{{ url_for("main.index", mode="investigate") }}',
+          F4: '{{ url_for("main.brief_home", mode="brief") }}',
+          F5: '{{ url_for("main.ops_health_board") }}',
+          F6: '{{ url_for("main.macro_dashboard") }}'
+        };
+        if (fkeyMap[e.key]) {
+          e.preventDefault();
+          window.location.href = fkeyMap[e.key];
+          return;
+        }
         if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
           if (e.key === '1') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/country/CN", t2="/supply-chain", t3="/risk", t4="/country/TW") }}'; }
           if (e.key === '2') { e.preventDefault(); window.location.href = '{{ url_for("main.workspace", layout="4", t1="/country/SG", t2="/supply-chain", t3="/risk", t4="/country/MY") }}'; }

@@ -113,7 +113,11 @@ def create_app():
         """As-of time + feed freshness for policy / think-tank UX (all templates)."""
         from datetime import datetime, timezone
 
+        from flask import request as flask_request
+        from flask import url_for as flask_url_for
+
         from app.models import get_last_scrape_time
+        from app.ui_mode import mode_landing_endpoint, resolve_ui_mode
 
         now = datetime.now(timezone.utc)
         freshness = {}
@@ -138,13 +142,42 @@ def create_app():
                 "pending_proposals": None,
                 "articles_24h": None,
             }
+        ep = flask_request.endpoint if flask_request else None
+        ui_mode = resolve_ui_mode(ep)
+        try:
+            mode_home_url = flask_url_for(mode_landing_endpoint(ui_mode))
+        except Exception:
+            mode_home_url = "/"
         return {
             "policy_now_utc": now.strftime("%Y-%m-%d %H:%M UTC"),
             "policy_now_iso": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "last_scrape_time": get_last_scrape_time(),
             "data_freshness": freshness,
             "status_ticker": ticker,
+            "ui_mode": ui_mode,
+            "mode_home_url": mode_home_url,
         }
+
+    @app.after_request
+    def persist_ui_mode_cookie(response):
+        """Write gpk_mode when ?mode= is present on a Terminal navigation."""
+        try:
+            from flask import request as flask_request
+
+            from app.ui_mode import COOKIE_NAME, normalize_mode
+
+            mode = normalize_mode(flask_request.args.get("mode"))
+            if mode:
+                response.set_cookie(
+                    COOKIE_NAME,
+                    mode,
+                    max_age=60 * 60 * 24 * 365,
+                    samesite="Lax",
+                    path="/",
+                )
+        except Exception:
+            pass
+        return response
 
     # Pre-warm world GeoJSON cache in background so Situation Room map loads fast
     def _prewarm_geojson():

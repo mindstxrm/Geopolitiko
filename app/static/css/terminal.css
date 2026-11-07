@@ -31,7 +31,7 @@ body.terminal {
   --t-radius: 6px;
   --t-radius-sm: 4px;
   --t-nav-width: 232px;
-  --t-command-bar-height: 52px;
+  --t-command-bar-height: 80px; /* command + F-key row */
   --t-ticker-height: 32px;
   --t-font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --t-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
@@ -226,7 +226,7 @@ body.terminal .nav-group-menu a.active {
   padding-left: 42px;
 }
 
-/* Top command bar (Bloomberg-style function bar) */
+/* Top command bar + F-key strip (institutional terminal shell) */
 body.terminal .terminal-command-bar {
   grid-area: command;
   background: var(--t-surface-elevated);
@@ -235,6 +235,9 @@ body.terminal .terminal-command-bar {
   position: sticky;
   top: 0;
   z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 body.terminal .terminal-command-bar .command-bar-inner {
@@ -13316,19 +13319,26 @@ body.terminal.macro-terminal .macro-chart-stage {
    Visual Grade-1 — institutional density, ticker, ops wall, segmented controls
    ═══════════════════════════════════════════════════════════════════════════ */
 
-body.terminal .status-ticker {
+body.terminal .status-ticker,
+body.terminal .status-ticker.metrics-rail {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem 0.85rem;
-  margin: 0 0 0.75rem;
-  padding: 0.35rem 0.65rem;
+  gap: 0.25rem 0.65rem;
+  margin: 0 0 0.65rem;
+  padding: 0.28rem 0.55rem;
   background: var(--t-surface-elevated);
   border: 1px solid var(--t-border);
-  border-radius: var(--t-radius-sm);
-  font-size: 0.75rem;
-  line-height: 1.35;
+  border-radius: 0;
+  font-size: 0.6875rem;
+  line-height: 1.3;
   color: var(--t-ink-secondary);
+  position: sticky;
+  top: var(--t-command-bar-height);
+  z-index: 40;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 body.terminal .status-ticker .ticker-item {
   display: inline-flex;
@@ -13775,4 +13785,148 @@ body.terminal .ops-kpi-sub {
   font-size: 0.75rem;
   color: var(--t-ink-muted);
   margin: 4px 0 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Soft mode homes + terminal homage (Monitor / Investigate / Brief)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.terminal .mode-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--t-border);
+}
+
+body.terminal .mode-chip {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  color: var(--t-ink-muted);
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  border-radius: var(--t-radius-sm);
+  padding: 5px 6px;
+}
+
+body.terminal .mode-chip:hover {
+  color: var(--t-accent);
+  border-color: rgba(110, 168, 255, 0.4);
+}
+
+body.terminal .mode-chip.active {
+  color: var(--t-ink);
+  background: var(--t-accent-muted);
+  border-color: rgba(110, 168, 255, 0.45);
+}
+
+body.terminal .terminal-nav-list {
+  display: flex;
+  flex-direction: column;
+}
+
+body.terminal[data-ui-mode="monitor"] .nav-group-wrap[data-nav-group="geography"] { order: 1; }
+body.terminal[data-ui-mode="monitor"] .nav-group-wrap[data-nav-group="security"] { order: 2; }
+body.terminal[data-ui-mode="monitor"] .nav-group-wrap[data-nav-group="intelligence"] { order: 3; }
+body.terminal[data-ui-mode="monitor"] .nav-group-wrap[data-nav-group="tools"] { order: 4; }
+
+body.terminal[data-ui-mode="investigate"] .nav-group-wrap[data-nav-group="intelligence"] { order: 1; }
+body.terminal[data-ui-mode="investigate"] .nav-group-wrap[data-nav-group="geography"] { order: 2; }
+body.terminal[data-ui-mode="investigate"] .nav-group-wrap[data-nav-group="security"] { order: 3; }
+body.terminal[data-ui-mode="investigate"] .nav-group-wrap[data-nav-group="tools"] { order: 4; }
+
+body.terminal[data-ui-mode="brief"] .nav-group-wrap[data-nav-group="tools"] { order: 1; }
+body.terminal[data-ui-mode="brief"] .nav-group-wrap[data-nav-group="intelligence"] { order: 2; }
+body.terminal[data-ui-mode="brief"] .nav-group-wrap[data-nav-group="geography"] { order: 3; }
+body.terminal[data-ui-mode="brief"] .nav-group-wrap[data-nav-group="security"] { order: 4; }
+
+body.terminal .fkey-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  padding: 0 0 8px;
+  border-top: 1px solid transparent;
+}
+
+body.terminal .fkey-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6875rem;
+  font-weight: 650;
+  color: var(--t-ink-muted);
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  border-radius: var(--t-radius-sm);
+  padding: 2px 6px;
+}
+
+body.terminal .fkey-chip kbd {
+  font-family: var(--t-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border: 1px solid var(--t-border);
+  border-radius: 3px;
+  background: var(--t-surface);
+  color: var(--t-ink-secondary);
+}
+
+body.terminal .fkey-chip:hover,
+body.terminal .fkey-chip.active {
+  color: var(--t-accent);
+  border-color: var(--t-border);
+  background: var(--t-accent-muted);
+}
+
+/* Mosaic density — Situation Room blotter cells */
+body.terminal .situation-room .situation-sidebar-pane .sidebar-panel,
+body.terminal .situation-room .situation-panel {
+  border-radius: 0;
+  border-color: var(--t-border);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+body.terminal .situation-room .situation-panel-title,
+body.terminal .situation-room .section-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--t-ink-muted);
+}
+
+body.terminal .situation-room .page-title {
+  font-size: 1.125rem;
+  margin: 0 0 6px;
+}
+
+body.terminal .situation-map-wrap {
+  border: 1px solid var(--t-border);
+  border-radius: 0;
+}
+
+body.terminal .brief-home-header {
+  margin-bottom: 12px;
+}
+
+body.terminal .brief-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+body.terminal .brief-recent {
+  padding: 12px 14px;
+}
+
+body.terminal[data-ui-mode="investigate"] .article-list.layout-institutional .article-card {
+  border-radius: 0;
 }
