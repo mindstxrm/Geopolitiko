@@ -3,21 +3,22 @@
 {% block content %}
 <div class="auth-page">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="{{ url_for('main.situation_room') }}">Home</a> <span class="breadcrumb-sep">›</span> Account
+    <a href="{{ url_for('main.app_home') }}">App home</a> <span class="breadcrumb-sep">›</span> Account
   </nav>
   <h1 class="page-title">Account</h1>
-  <p>Logged in as <strong>{{ current_user.username }}</strong>.</p>
+  <p>Logged in as <strong>{{ current_user.username }}</strong>. <a href="{{ url_for('main.app_home') }}">Back to App home</a></p>
 
   <section class="account-section">
-    <h2>Profile</h2>
+    <h2>Profile &amp; team</h2>
+    <p class="account-hint">Organization is your team label on Terminal (shown on App home). Collaborate via <a href="{{ url_for('main.messaging_hub') }}">Messaging</a> and shared <a href="{{ url_for('main.workspace') }}">Workspace</a> layouts—no separate tenant setup required.</p>
     <form method="post" action="{{ url_for('main.account') }}" class="auth-form">
       <input type="hidden" name="action" value="update_profile">
       <label for="account-name">Name</label>
       <input type="text" id="account-name" name="name" value="{{ current_user.name or '' }}" placeholder="Your full name">
       <label for="account-title">Title</label>
       <input type="text" id="account-title" name="title" value="{{ current_user.title or '' }}" placeholder="e.g. Analyst, Director">
-      <label for="account-organization">Organization</label>
-      <input type="text" id="account-organization" name="organization" value="{{ current_user.organization or '' }}" placeholder="e.g. Acme Corp">
+      <label for="account-organization">Organization (team)</label>
+      <input type="text" id="account-organization" name="organization" value="{{ current_user.organization or '' }}" placeholder="e.g. Acme Risk Desk">
       <button type="submit" class="btn btn-primary">Save profile</button>
     </form>
   </section>

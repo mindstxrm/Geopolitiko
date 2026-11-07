@@ -338,9 +338,54 @@ def help_page():
     return render_template("help.html")
 
 
+@bp.route("/app")
+@login_required
+def app_home():
+    """Customer app home: onboarding checklist, shortcuts, published intel."""
+    profile = None
+    try:
+        profile = get_user_by_id(int(current_user.id))
+    except Exception:
+        profile = None
+    recent_intel = []
+    try:
+        recent_intel = get_recent_desk_terminal_intel(limit=8)
+    except Exception:
+        recent_intel = []
+    watchlist_count = 0
+    alert_count = 0
+    try:
+        watchlist_count = len(get_watchlists() or [])
+    except Exception:
+        pass
+    try:
+        alert_count = len(get_alerts(user_id=int(current_user.id)) or [])
+    except Exception:
+        try:
+            alert_count = len(get_alerts() or [])
+        except Exception:
+            pass
+    return render_template(
+        "app_home.html",
+        profile=profile or {},
+        recent_intel=recent_intel,
+        watchlist_count=watchlist_count,
+        alert_count=alert_count,
+    )
+
+
 @bp.route("/ops")
 def ops_health_board():
-    """Operator health board: scrape/jobs freshness, desk queue, publish loop, secrets."""
+    """Operator health board (admin only): scrape/jobs freshness, desk queue, secrets."""
+    from app.authz import current_role, role_at_least
+
+    # Inline check so unauthenticated users get login, not a soft viewer redirect loop.
+    if not current_user.is_authenticated:
+        return redirect(url_for("main.login", next=url_for("main.ops_health_board")))
+    if not role_at_least(current_role(), "admin"):
+        flash("Ops health is admin-only.", "error")
+        return redirect(url_for("main.app_home"))
+
     from app.platform_health import build_health_report
     from app.scheduler import is_macro_ingest_running, is_refresh_running
 
@@ -403,23 +448,27 @@ def brief_home():
 @bp.route("/desk")
 @bp.route("/tools/analyst-desk")
 def launch_analyst_desk():
-    """Open Analyst Desk with a short-lived SSO bridge token (P2 unified auth)."""
+    """Open Analyst Desk (admin only) with a short-lived SSO bridge token."""
     from flask import redirect as flask_redirect
 
     from app.analyst_desk.auth_bridge import analyst_desk_public_url, mint_bridge_token
+    from app.authz import current_role, role_at_least
 
     next_path = (request.args.get("next") or "/").strip() or "/"
     if not next_path.startswith("/"):
         next_path = "/"
-    if current_user.is_authenticated:
-        token = mint_bridge_token(
-            user_id=int(current_user.id),
-            username=getattr(current_user, "username", None) or str(current_user.id),
-        )
-        url = f"{analyst_desk_public_url()}/auth/bridge?token={token}&next={next_path}"
-        return flask_redirect(url)
-    # Not logged in: send to Terminal login, then back here
-    return redirect(url_for("main.login", next=url_for("main.launch_analyst_desk", next=next_path)))
+    if not current_user.is_authenticated:
+        return redirect(url_for("main.login", next=url_for("main.launch_analyst_desk", next=next_path)))
+    if not role_at_least(current_role(), "admin"):
+        flash("Analyst Desk is admin-only.", "error")
+        return redirect(url_for("main.app_home"))
+    token = mint_bridge_token(
+        user_id=int(current_user.id),
+        username=getattr(current_user, "username", None) or str(current_user.id),
+        role="admin",
+    )
+    url = f"{analyst_desk_public_url()}/auth/bridge?token={token}&next={next_path}"
+    return flask_redirect(url)
 
 
 @bp.route("/workspace/tasks", methods=["GET", "POST"])
@@ -512,7 +561,7 @@ def live_streams():
 def login():
     """Log in with username and password."""
     if current_user.is_authenticated:
-        return redirect(url_for("main.situation_room"))
+        return redirect(url_for("main.app_home"))
     if request.method == "POST":
         username = (request.form.get("username") or "").strip()
         password = request.form.get("password") or ""
@@ -529,10 +578,10 @@ def login():
         from app.auth import User
         user = User(user_row["id"], user_row["username"], user_row.get("email"), user_row.get("is_active", 1))
         login_user(user, remember=bool(request.form.get("remember")))
-        next_url = request.args.get("next") or request.referrer or url_for("main.situation_room")
+        next_url = request.args.get("next") or url_for("main.app_home")
         if next_url and next_url.startswith("/") and "//" not in next_url:
             return redirect(next_url)
-        return redirect(url_for("main.situation_room"))
+        return redirect(url_for("main.app_home"))
     return render_template("login.html")
 
 
@@ -548,7 +597,7 @@ def logout():
 def register():
     """Create a new account. Email, username, name, title, and organization are required. Sends welcome email if SMTP configured."""
     if current_user.is_authenticated:
-        return redirect(url_for("main.situation_room"))
+        return redirect(url_for("main.app_home"))
     if request.method == "POST":
         username = (request.form.get("username") or "").strip().lower()
         password = request.form.get("password") or ""
@@ -581,10 +630,10 @@ def register():
             create_user(username, password, email=email, name=name, title=title, organization=organization)
             from app.email_sender import send_welcome_email
             if send_welcome_email(email, name or username):
-                flash("Account created. A welcome email has been sent to your address. You can log in now.", "success")
+                flash("Account created. A welcome email has been sent. Log in to open your App home.", "success")
             else:
-                flash("Account created. You can log in now.", "success")
-            return redirect(url_for("main.login"))
+                flash("Account created. Log in to open your App home and get started.", "success")
+            return redirect(url_for("main.login", next=url_for("main.app_home")))
         except ValueError as e:
             flash(str(e), "error")
             return render_template("register.html")

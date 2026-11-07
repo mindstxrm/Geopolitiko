@@ -164,7 +164,7 @@
           {% if search_query %}<p><a href="{{ url_for('main.index', **feed_query_no_search) }}">Clear search</a> to see all articles in the current filters.</p>{% endif %}
           <p>Or browse <a href="{{ url_for('main.insights') }}">Insights &amp; clusters</a> for story clusters.</p>
           {% else %}
-          <p>Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a> for ingest freshness and scrape health.</p>
+          <p>Data unavailable — check back soon, or see <a href="{{ url_for('main.help_page') }}">Help</a>.</p>
           <p class="muted">CLI scrape/jobs steps are documented under <a href="{{ url_for('main.help_page') }}">Help</a> and <code>docs/LIVE_DATA.md</code>.</p>
           {% endif %}
         </div>
@@ -311,7 +311,7 @@
           <li><a href="{{ url_for('main.index', window=w, impact='low', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">Low</span> <span class="metric-value metric-low">{{ impact_summary.low }}</span></a></li>
         </ul>
         {% else %}
-        <p class="sidebar-empty">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
+        <p class="sidebar-empty">Impact metrics will appear as stories are scored.</p>
         {% endif %}
       </section>
 

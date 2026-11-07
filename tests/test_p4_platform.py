@@ -119,10 +119,15 @@ def test_approver_gate_on_desk_proposal(tmp_env, monkeypatch):
         sess["analyst_desk_ok"] = True
         sess["analyst_desk_user"] = {"username": "viewer-only", "via": "test", "role": "viewer"}
         sess["analyst_desk_role"] = "viewer"
+    # Desk is admin-only: non-admin sessions are rejected before action handlers.
     r = client.post(
         f"/proposal/{pid}",
         data={"action": "approve", "reviewed_body": "Body text for test"},
-        follow_redirects=True,
+        follow_redirects=False,
     )
-    assert r.status_code == 200
-    assert b"Approver role required" in r.data
+    assert r.status_code in (302, 303, 200)
+    if r.status_code == 200:
+        assert b"Approver role required" in r.data or b"admin-only" in r.data.lower()
+    else:
+        # Redirect away from proposal (login or Terminal /app)
+        assert r.headers.get("Location")

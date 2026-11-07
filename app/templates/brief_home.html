@@ -3,48 +3,48 @@
 
 {% block breadcrumbs %}
 <nav class="breadcrumbs" aria-label="Breadcrumb">
-  <a href="{{ url_for('main.brief_home', mode='brief') }}">Brief</a> <span class="breadcrumb-sep">›</span> Home
+  <a href="{{ url_for('main.brief_home', mode='brief') }}">Brief</a> <span class="breadcrumb-sep">›</span> Hub
 </nav>
 {% endblock %}
 
 {% block content %}
+{% set is_admin = (current_role|default('viewer')) == 'admin' %}
 <div class="brief-home layout">
   <header class="brief-home-header">
     <h1 class="page-title">Brief</h1>
-    <p class="section-label" style="text-transform:none;letter-spacing:0;font-size:0.8125rem;">Monitor → Investigate → <strong>Brief</strong> · approve, publish, export</p>
+    <p class="section-label" style="text-transform:none;letter-spacing:0;font-size:0.8125rem;">Monitor → Investigate → <strong>Brief</strong> · reports, export, published intel</p>
   </header>
 
-  <div class="ops-kpi-row" aria-label="Brief KPIs">
+  <div class="ops-kpi-row" aria-label="Brief actions">
     <div class="ops-kpi">
-      <p class="ops-kpi-label">Desk queue</p>
-      <p class="ops-kpi-value">{{ pending_proposals if pending_proposals is not none else '—' }}</p>
-      <p class="ops-kpi-sub">pending proposals</p>
+      <p class="ops-kpi-label">Reports</p>
+      <p class="ops-kpi-value" style="font-size:0.95rem;"><a href="{{ url_for('main.reports_hub') }}">Open hub</a></p>
+      <p class="ops-kpi-sub">Briefings and outlook</p>
     </div>
     <div class="ops-kpi">
-      <p class="ops-kpi-label">Approved unpublished</p>
-      <p class="ops-kpi-value">{{ approved_unpublished if approved_unpublished is not none else '—' }}</p>
-      <p class="ops-kpi-sub">awaiting Terminal publish</p>
+      <p class="ops-kpi-label">Export</p>
+      <p class="ops-kpi-value" style="font-size:0.95rem;"><a href="{{ url_for('main.export_briefing') }}">Build briefing</a></p>
+      <p class="ops-kpi-sub">Shareable brief packs</p>
     </div>
     <div class="ops-kpi">
-      <p class="ops-kpi-label">Publish on approve</p>
-      <p class="ops-kpi-value">
-        {% if publish_on_approve is none %}—
-        {% elif publish_on_approve %}<span class="status-pill ok">ON</span>
-        {% else %}<span class="status-pill warn">OFF</span>{% endif %}
-      </p>
-      <p class="ops-kpi-sub"><a href="{{ url_for('main.ops_health_board') }}">Ops health</a></p>
+      <p class="ops-kpi-label">Continue</p>
+      <p class="ops-kpi-value" style="font-size:0.95rem;"><a href="{{ url_for('main.situation_room', mode='monitor') }}">Monitor</a> · <a href="{{ url_for('main.index', mode='investigate') }}">Feed</a></p>
+      <p class="ops-kpi-sub">Situation map and intel feed</p>
     </div>
   </div>
 
-  <div class="brief-home-actions" aria-label="Brief actions">
-    <a class="btn" href="{{ url_for('main.launch_analyst_desk') }}">Open Desk Approvals</a>
+  <div class="brief-home-actions" aria-label="Brief shortcuts">
+    <a class="btn" href="{{ url_for('main.reports_hub') }}">Reports hub</a>
     <a class="btn btn-secondary" href="{{ url_for('main.export_briefing') }}">Export briefing</a>
-    <a class="btn btn-secondary" href="{{ url_for('main.reports_hub') }}">Reports hub</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.workspace') }}">Workspace</a>
+    {% if current_user.is_authenticated %}
+    <a class="btn btn-secondary" href="{{ url_for('main.app_home') }}">App home</a>
+    {% endif %}
   </div>
 
   <section class="sidebar-panel brief-recent" aria-label="Recently published">
-    <h2 class="section-label">Recently published to Terminal</h2>
-    <table class="mini-terminal-table" aria-label="Recent desk terminal intel">
+    <h2 class="section-label">Recently published intel</h2>
+    <table class="mini-terminal-table" aria-label="Recent published Terminal intel">
       <thead>
         <tr><th>When</th><th>Title</th><th>Agent</th><th>Countries</th><th>Open</th></tr>
       </thead>
@@ -66,10 +66,43 @@
           </td>
         </tr>
         {% else %}
-        <tr><td colspan="5" class="muted">Nothing published yet. Approve a proposal in Analyst Desk Approvals.</td></tr>
+        <tr><td colspan="5" class="muted">No published intel yet. Check country dashboards as briefs are released.</td></tr>
         {% endfor %}
       </tbody>
     </table>
   </section>
+
+  {% if is_admin %}
+  <details class="overflow-menu" style="margin-top:1rem;">
+    <summary>Admin</summary>
+    <div class="overflow-panel">
+      <div class="ops-kpi-row" aria-label="Admin Brief KPIs">
+        <div class="ops-kpi">
+          <p class="ops-kpi-label">Desk queue</p>
+          <p class="ops-kpi-value">{{ pending_proposals if pending_proposals is not none else '—' }}</p>
+          <p class="ops-kpi-sub">pending proposals</p>
+        </div>
+        <div class="ops-kpi">
+          <p class="ops-kpi-label">Approved unpublished</p>
+          <p class="ops-kpi-value">{{ approved_unpublished if approved_unpublished is not none else '—' }}</p>
+          <p class="ops-kpi-sub">awaiting Terminal publish</p>
+        </div>
+        <div class="ops-kpi">
+          <p class="ops-kpi-label">Publish on approve</p>
+          <p class="ops-kpi-value">
+            {% if publish_on_approve is none %}—
+            {% elif publish_on_approve %}<span class="status-pill ok">ON</span>
+            {% else %}<span class="status-pill warn">OFF</span>{% endif %}
+          </p>
+          <p class="ops-kpi-sub"><a href="{{ url_for('main.ops_health_board') }}">Ops health</a></p>
+        </div>
+      </div>
+      <div class="brief-home-actions">
+        <a class="btn" href="{{ url_for('main.launch_analyst_desk') }}">Open Desk Approvals</a>
+        <a class="btn btn-secondary" href="{{ url_for('main.ops_health_board') }}">Ops health</a>
+      </div>
+    </div>
+  </details>
+  {% endif %}
 </div>
 {% endblock %}

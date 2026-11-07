@@ -13930,3 +13930,49 @@ body.terminal .brief-recent {
 body.terminal[data-ui-mode="investigate"] .article-list.layout-institutional .article-card {
   border-radius: 0;
 }
+
+/* Customer app home */
+body.terminal .app-home-header { margin-bottom: 14px; }
+body.terminal .app-onboarding { margin-bottom: 14px; }
+body.terminal .app-onboarding-list {
+  margin: 0.5rem 0 0.85rem;
+  padding-left: 1.2rem;
+  font-size: 0.875rem;
+  color: var(--t-ink-secondary);
+}
+body.terminal .app-onboarding-list a { color: var(--t-accent); }
+body.terminal .app-home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+body.terminal .app-home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-elevated);
+  border-radius: var(--t-radius-sm);
+  text-decoration: none !important;
+  color: inherit;
+}
+body.terminal .app-home-card:hover {
+  border-color: rgba(110, 168, 255, 0.45);
+}
+body.terminal .app-home-card-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--t-ink-muted);
+}
+body.terminal .app-home-card-title {
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--t-ink);
+}
+body.terminal .app-home-card-desc {
+  font-size: 0.75rem;
+  color: var(--t-ink-muted);
+}

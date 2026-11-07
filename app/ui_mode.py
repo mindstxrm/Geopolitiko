@@ -30,6 +30,7 @@ _ENDPOINT_MODE = {
     "main.approval_protests": "investigate",
     "main.stability_dashboard": "investigate",
     "main.brief_home": "brief",
+    "main.app_home": "brief",
     "main.reports_hub": "brief",
     "main.export_briefing": "brief",
     "main.ops_health_board": "brief",

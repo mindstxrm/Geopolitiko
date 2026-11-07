@@ -128,7 +128,7 @@
       {% if heat_map or integration_countries or risk_index %}
       Layer reflects latest risk and integration data.
       {% else %}
-      Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a> for ingest health. Risk layers appear after scrape/jobs refresh.
+      Data unavailable — check back soon. Risk layers appear as coverage refreshes.
       {% endif %}
     </p>
 
@@ -291,7 +291,7 @@
             </ul>
             <p class="situation-cta"><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
           {% else %}
-            <p class="sidebar-empty">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
+            <p class="sidebar-empty">Risk data unavailable — check back soon.</p>
           {% endif %}
         </section>
       </div>

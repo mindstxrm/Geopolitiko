@@ -30,8 +30,8 @@ def test_reject_requires_reason(tmp_env, monkeypatch):
     client = app.test_client()
     with client.session_transaction() as sess:
         sess["analyst_desk_ok"] = True
-        sess["analyst_desk_user"] = {"username": "approver", "via": "test", "role": "approver"}
-        sess["analyst_desk_role"] = "approver"
+        sess["analyst_desk_user"] = {"username": "approver", "via": "test", "role": "admin"}
+        sess["analyst_desk_role"] = "admin"
 
     r = client.post(
         f"/proposal/{pid}",

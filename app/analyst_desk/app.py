@@ -104,5 +104,20 @@ def create_analyst_desk_app() -> Flask:
             return
         if not _is_logged_in():
             return redirect(url_for("analyst_desk.login", next=request.path))
+        # Admin-only product boundary: customers never use Desk UI.
+        from flask import flash
+
+        from app.authz import current_role, role_at_least
+        from app.analyst_desk.auth_bridge import terminal_public_url
+
+        if not role_at_least(current_role(), "admin"):
+            session.pop("analyst_desk_ok", None)
+            session.pop("analyst_desk_user", None)
+            session.pop("analyst_desk_role", None)
+            flash("Analyst Desk is admin-only.", "error")
+            term = (terminal_public_url() or "").rstrip("/") or ""
+            if term:
+                return redirect(f"{term}/app")
+            return redirect(url_for("analyst_desk.login"))
 
     return app

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Home — Geopolitiko{% endblock %}
+
+{% block content %}
+{% set name = (profile.name or current_user.username) if profile else current_user.username %}
+{% set org = profile.organization if profile else none %}
+<div class="app-home layout">
+  <header class="app-home-header">
+    <h1 class="page-title">Welcome{% if name %}, {{ name }}{% endif %}</h1>
+    {% if org %}
+    <p class="section-label" style="text-transform:none;letter-spacing:0;font-size:0.875rem;">{{ org }} · Geopolitiko Terminal</p>
+    {% else %}
+    <p class="section-label" style="text-transform:none;letter-spacing:0;font-size:0.875rem;">Your geopolitical intelligence workspace</p>
+    {% endif %}
+  </header>
+
+  <div id="app-onboarding" class="app-onboarding sidebar-panel" role="region" aria-label="Getting started" style="display:none;">
+    <h2 class="section-label">Getting started</h2>
+    <p>Geopolitiko is an intelligence terminal: <strong>Monitor</strong> the map, <strong>Investigate</strong> the feed, then <strong>Brief</strong> with reports and exports.</p>
+    <ol class="app-onboarding-list">
+      <li><a href="{{ url_for('main.situation_room', mode='monitor') }}">Open Situation Room</a> — global risk map</li>
+      <li><a href="{{ url_for('main.index', mode='investigate') }}">Browse the Feed</a> — filter by country and risk</li>
+      <li><a href="{{ url_for('main.brief_home', mode='brief') }}">Open Brief</a> — reports and export</li>
+      <li><a href="{{ url_for('main.alerts_list') }}">Set a watchlist or alert</a></li>
+      <li><a href="{{ url_for('main.messaging_hub') }}">Invite colleagues via Messaging</a></li>
+    </ol>
+    <button type="button" class="btn btn-secondary" id="app-onboarding-dismiss">Got it — dismiss</button>
+  </div>
+
+  <div class="app-home-grid" aria-label="Shortcuts">
+    <a class="app-home-card" href="{{ url_for('main.situation_room', mode='monitor') }}">
+      <span class="app-home-card-label">Monitor</span>
+      <span class="app-home-card-title">Situation Room</span>
+      <span class="app-home-card-desc">Global heatmap and live status</span>
+    </a>
+    <a class="app-home-card" href="{{ url_for('main.index', mode='investigate') }}">
+      <span class="app-home-card-label">Investigate</span>
+      <span class="app-home-card-title">Intelligence Feed</span>
+      <span class="app-home-card-desc">Stories, filters, implications</span>
+    </a>
+    <a class="app-home-card" href="{{ url_for('main.brief_home', mode='brief') }}">
+      <span class="app-home-card-label">Brief</span>
+      <span class="app-home-card-title">Reports &amp; export</span>
+      <span class="app-home-card-desc">Briefings and shareable packs</span>
+    </a>
+    <a class="app-home-card" href="{{ url_for('main.alerts_list') }}">
+      <span class="app-home-card-label">Watch</span>
+      <span class="app-home-card-title">Watchlists &amp; alerts</span>
+      <span class="app-home-card-desc">{{ watchlist_count }} watchlists · {{ alert_count }} alerts</span>
+    </a>
+    <a class="app-home-card" href="{{ url_for('main.messaging_hub') }}">
+      <span class="app-home-card-label">Team</span>
+      <span class="app-home-card-title">Messaging</span>
+      <span class="app-home-card-desc">Invite-only intel channels</span>
+    </a>
+    <a class="app-home-card" href="{{ url_for('main.workspace') }}">
+      <span class="app-home-card-label">Layout</span>
+      <span class="app-home-card-title">Workspace</span>
+      <span class="app-home-card-desc">Multi-panel analyst view</span>
+    </a>
+  </div>
+
+  <section class="sidebar-panel" style="margin-top:1rem;" aria-label="Published intel">
+    <h2 class="section-label">Recently published intel</h2>
+    {% if recent_intel %}
+    <ul class="data-list">
+      {% for item in recent_intel[:6] %}
+      <li>
+        <strong>{{ item.title or ('Proposal #' ~ item.proposal_id) }}</strong>
+        <span class="muted"> · {{ (item.published_at or '')[:10] }}</span>
+        {% if item.focus_country %}
+        · <a href="{{ url_for('main.country_dashboard', country_code=item.focus_country) }}">{{ item.focus_country }}</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">Published briefs will appear here and on country dashboards.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var KEY = 'gpk_app_onboarding_v1';
+  var panel = document.getElementById('app-onboarding');
+  var btn = document.getElementById('app-onboarding-dismiss');
+  if (!panel) return;
+  try {
+    if (!localStorage.getItem(KEY)) panel.style.display = '';
+  } catch (e) { panel.style.display = ''; }
+  if (btn) {
+    btn.addEventListener('click', function () {
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+      panel.style.display = 'none';
+    });
+  }
+})();
+</script>
+{% endblock %}

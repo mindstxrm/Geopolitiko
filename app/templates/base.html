@@ -23,12 +23,13 @@
   {% endfor %}
 {% endif %}
 {% set ui_mode = ui_mode|default('monitor') %}
-<body class="terminal{% if terminal_embed %} terminal-embed{% endif %}{% block body_extra_class %}{% endblock %}" id="body-theme" data-terminal-path="{{ request.path }}" data-terminal-endpoint="{{ request.endpoint or '' }}" data-ui-mode="{{ ui_mode }}">
+{% set is_admin = (current_role|default('viewer')) == 'admin' %}
+<body class="terminal{% if terminal_embed %} terminal-embed{% endif %}{% block body_extra_class %}{% endblock %}" id="body-theme" data-terminal-path="{{ request.path }}" data-terminal-endpoint="{{ request.endpoint or '' }}" data-ui-mode="{{ ui_mode }}" data-role="{{ current_role|default('viewer') }}">
   {% set ep = request.url_rule.endpoint if request.url_rule else '' %}
   {% set ep15 = (ep or '')[:15] %}
   {% if not terminal_embed %}
   <nav class="terminal-nav" aria-label="Main">
-    <a href="{{ mode_home_url|default(url_for('main.situation_room')) }}" class="terminal-logo" aria-label="Geopolitical Terminal home">
+    <a href="{% if current_user.is_authenticated and not is_admin %}{{ url_for('main.app_home') }}{% else %}{{ mode_home_url|default(url_for('main.situation_room')) }}{% endif %}" class="terminal-logo" aria-label="Geopolitical Terminal home">
       <img src="{{ url_for('static', filename='logo.png') }}" alt="Geopolitical Terminal" class="terminal-logo-img">
     </a>
     {# Soft mode homes: Monitor · Investigate · Brief #}
@@ -74,19 +75,25 @@
       </li>
 
       <li class="nav-group-wrap" data-nav-group="tools" data-nav-order-monitor="4" data-nav-order-investigate="4" data-nav-order-brief="1">
-        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board', 'main.brief_home') or ui_mode == 'brief' else '' }}>
-          <summary class="nav-group-trigger" title="Reports, Ops, Desk, labs.">Tools</summary>
+        <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board', 'main.brief_home', 'main.app_home') or ui_mode == 'brief' else '' }}>
+          <summary class="nav-group-trigger" title="Reports, Workspace, Brief{% if is_admin %}, Ops, Desk{% endif %}.">Tools</summary>
           <ul class="nav-group-menu">
-            <li><a href="{{ url_for('main.brief_home') }}" class="{{ 'active' if ep == 'main.brief_home' else '' }}">Brief home</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('main.app_home') }}" class="{{ 'active' if ep == 'main.app_home' else '' }}">App home</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('main.brief_home') }}" class="{{ 'active' if ep == 'main.brief_home' else '' }}">Brief</a></li>
             <li><a href="{{ url_for('main.reports_hub') }}" class="{{ 'active' if ep == 'main.reports_hub' else '' }}">Reports</a></li>
+            <li><a href="{{ url_for('main.export_briefing') }}" class="{{ 'active' if ep == 'main.export_briefing' else '' }}">Export briefing</a></li>
+            {% if is_admin %}
             <li><a href="{{ url_for('main.ops_health_board') }}" class="{{ 'active' if ep == 'main.ops_health_board' else '' }}">Ops health</a></li>
             <li><a href="{{ url_for('main.launch_analyst_desk') }}">Analyst Desk</a></li>
+            {% endif %}
             <li>
               <details class="nav-labs overflow-menu"{% if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary', 'main.workspace', 'main.workspace_tasks') %} open{% endif %}>
                 <summary>More</summary>
                 <ul class="overflow-panel" style="list-style:none;padding:0;margin:0;">
-                  <li><a href="{{ url_for('main.scenario_engine') }}" class="{{ 'active' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary') else '' }}">Scenario Engine</a></li>
                   <li><a href="{{ url_for('main.workspace') }}" class="{{ 'active' if ep == 'main.workspace' else '' }}">Workspace</a></li>
+                  <li><a href="{{ url_for('main.scenario_engine') }}" class="{{ 'active' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary') else '' }}">Scenario Engine</a></li>
                   {% if current_user.is_authenticated %}
                   <li><a href="{{ url_for('main.workspace_tasks') }}" class="{{ 'active' if ep == 'main.workspace_tasks' else '' }}">Tasks</a></li>
                   {% endif %}
@@ -153,7 +160,11 @@
       <a class="fkey-chip {{ 'active' if ui_mode == 'monitor' else '' }}" href="{{ url_for('main.situation_room', mode='monitor') }}" data-fkey="F2"><kbd>F2</kbd> Monitor</a>
       <a class="fkey-chip {{ 'active' if ui_mode == 'investigate' else '' }}" href="{{ url_for('main.index', mode='investigate') }}" data-fkey="F3"><kbd>F3</kbd> Feed</a>
       <a class="fkey-chip {{ 'active' if ui_mode == 'brief' else '' }}" href="{{ url_for('main.brief_home', mode='brief') }}" data-fkey="F4"><kbd>F4</kbd> Brief</a>
+      {% if is_admin %}
       <a class="fkey-chip" href="{{ url_for('main.ops_health_board') }}" data-fkey="F5"><kbd>F5</kbd> Ops</a>
+      {% else %}
+      <a class="fkey-chip" href="{{ url_for('main.reports_hub') }}" data-fkey="F5"><kbd>F5</kbd> Reports</a>
+      {% endif %}
       <a class="fkey-chip" href="{{ url_for('main.macro_dashboard') }}" data-fkey="F6"><kbd>F6</kbd> Macro</a>
     </div>
   </header>
@@ -193,8 +204,10 @@
         {% endif %}
         <span class="ticker-sep" aria-hidden="true">│</span>
         <span class="ticker-item ticker-mode">MODE <strong class="ticker-mono">{{ ui_mode|upper }}</strong></span>
+        {% if is_admin %}
         <span class="ticker-sep" aria-hidden="true">│</span>
         <span class="ticker-item"><a href="{{ url_for('main.ops_health_board') }}">OPS</a></span>
+        {% endif %}
         {% if status_ticker.status == 'crit' and data_freshness is defined and data_freshness.banner %}
         <span class="ticker-sep" aria-hidden="true">│</span>
         <span class="ticker-item" title="{{ data_freshness.banner }}">{{ data_freshness.banner }}</span>
@@ -463,7 +476,7 @@
           F2: '{{ url_for("main.situation_room", mode="monitor") }}',
           F3: '{{ url_for("main.index", mode="investigate") }}',
           F4: '{{ url_for("main.brief_home", mode="brief") }}',
-          F5: '{{ url_for("main.ops_health_board") }}',
+          F5: '{% if is_admin %}{{ url_for("main.ops_health_board") }}{% else %}{{ url_for("main.reports_hub") }}{% endif %}',
           F6: '{{ url_for("main.macro_dashboard") }}'
         };
         if (fkeyMap[e.key]) {

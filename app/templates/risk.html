@@ -43,9 +43,9 @@
 
   <section class="risk-section">
     <h2>Global risk heat map</h2>
-    <p class="risk-meta">Country/region risk scores (0–100) from recent article volume and impact. Refresh via <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
+    <p class="risk-meta">Country/region risk scores (0–100) from recent article volume and impact.</p>
     {% if not heat_map %}
-    <p class="empty-state">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
+    <p class="empty-state">Risk data unavailable — check back soon.</p>
     {% else %}
     <div class="risk-heat-table-wrap">
       <table class="risk-heat-table">
@@ -82,7 +82,7 @@
     <h2>Dynamic Forward Risk Probability Index</h2>
     <p class="risk-meta">Modeled probabilities from recent signals (rule-based). Coup likelihood, sanctions probability, trade disruption.</p>
     {% if not risk_index %}
-    <p class="empty-state">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
+    <p class="empty-state">Risk data unavailable — check back soon.</p>
     {% else %}
     <ul class="risk-index-list">
       {% for r in risk_index %}

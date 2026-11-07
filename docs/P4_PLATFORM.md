@@ -41,15 +41,19 @@ Secrets for compose live in [`.env.docker`](../.env.docker) (change before any s
 
 | Role | Can |
 |------|-----|
-| viewer | Read Terminal / Desk |
-| analyst | Generate / draft |
-| approver | Approve / reject / publish |
-| admin | Ops + shared desk password path |
+| viewer | Read customer Terminal (Situation, Feed, Country, Reports, Messaging, …) |
+| analyst | Draft / generate **inside Desk only if also admin** (customer product has no Desk) |
+| approver | Approve / reject / publish **inside Desk only if also admin** |
+| admin | **Analyst Desk + Terminal `/ops`** + full Terminal |
 
+### Customer vs admin product boundary
+
+- **Customers** (non-admin): near-full Terminal via `/app` after login. No Analyst Desk UI, no raw Ops board.
+- **Admin only**: Terminal `/ops`, `/desk` (SSO bridge), and the Desk Flask app after login.
+- Bootstrap yourself as admin with `GEOPOLITIKO_ADMIN_USERNAMES=yourname` or set `users.role=admin`.
 - New users: `GEOPOLITIKO_DEFAULT_USER_ROLE` (default `viewer`)
-- Force admins: `GEOPOLITIKO_ADMIN_USERNAMES=alice,bob`
 - Desk shared password logs in as **admin**
-- Open desk (no password, local) → **admin**
+- Open desk (no password, local) → treated as **admin** for local ops convenience
 
 ## Celery vs loop worker
 

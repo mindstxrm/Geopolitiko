@@ -63,7 +63,8 @@ def test_auth_bridge_sets_session(tmp_env, monkeypatch):
     # Gate blocks index without session
     r0 = c.get("/")
     assert r0.status_code in (302, 200)
-    token = mint_bridge_token(user_id=1, username="bridge-user")
+    monkeypatch.setenv("GEOPOLITIKO_ADMIN_USERNAMES", "bridge-user")
+    token = mint_bridge_token(user_id=1, username="bridge-user", role="admin")
     r = c.get(f"/auth/bridge?token={token}", follow_redirects=False)
     assert r.status_code in (302, 303)
     r2 = c.get("/")

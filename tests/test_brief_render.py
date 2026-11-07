@@ -57,8 +57,8 @@ def test_proposal_page_renders_readable(tmp_env, monkeypatch):
     client = app.test_client()
     with client.session_transaction() as sess:
         sess["analyst_desk_ok"] = True
-        sess["analyst_desk_user"] = {"username": "a", "role": "approver"}
-        sess["analyst_desk_role"] = "approver"
+        sess["analyst_desk_user"] = {"username": "a", "role": "admin"}
+        sess["analyst_desk_role"] = "admin"
     r = client.get(f"/proposal/{pid}")
     assert r.status_code == 200
     assert b"brief-section" in r.data

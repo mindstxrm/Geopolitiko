@@ -34,9 +34,10 @@ def test_brief_home_and_feed_mode(app_client):
     brief = app_client.get("/brief")
     assert brief.status_code == 200
     html = brief.get_data(as_text=True)
-    assert "Desk queue" in html
+    # Customer Brief hub — no Desk CTAs for anonymous/viewer
     assert "Recently published" in html
-    assert "Open Desk Approvals" in html or "launch" in html.lower() or "Analyst Desk" in html
+    assert "Reports hub" in html or "Export" in html
+    assert "Open Desk Approvals" not in html
     assert "metrics-rail" in html or "status-ticker" in html
 
     feed = app_client.get("/feed?mode=investigate")

@@ -106,6 +106,7 @@ def test_health_and_banner_context(app_client):
     data = r.get_json()
     assert "freshness" in data
     assert "ingest_worker" in data
-    # HTML banner path: ops page renders
-    page = app_client.get("/ops")
-    assert page.status_code == 200
+    # Ops is admin-only; anonymous visitors are sent to login
+    page = app_client.get("/ops", follow_redirects=False)
+    assert page.status_code in (302, 303)
+    assert "/login" in (page.headers.get("Location") or "")

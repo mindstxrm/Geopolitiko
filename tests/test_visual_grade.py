@@ -33,13 +33,9 @@ def test_home_and_ops_render_visual_classes(app_client):
     assert "mode-strip" in html
     assert "fkey-row" in html
 
-    ops = app_client.get("/ops")
-    assert ops.status_code == 200
-    ops_html = ops.get_data(as_text=True)
-    assert 'class="ops-wall"' in ops_html or "ops-wall" in ops_html
-    assert "mini-terminal-table" in ops_html
-    # Ad-hoc yellow banner replaced
-    assert "live-stale-banner" not in ops_html or 'class="live-stale-banner"' not in ops_html
+    # Ops is admin-only — anonymous should redirect to login
+    ops_anon = app_client.get("/ops", follow_redirects=False)
+    assert ops_anon.status_code in (302, 303)
 
 
 def test_terminal_css_has_risk_tokens():

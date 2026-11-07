@@ -40,7 +40,7 @@
         <span class="metric-value metric-low">{{ impact_summary.low }}</span>
       </a>
       {% else %}
-      <span class="sidebar-empty">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>. <a href="{{ url_for('main.index') }}">View feed</a></span>
+      <span class="sidebar-empty">Impact metrics unavailable. <a href="{{ url_for('main.index') }}">View feed</a></span>
       {% endif %}
     </div>
 
@@ -109,7 +109,7 @@
           </form>
           <p class="insights-section-links"><a href="{{ url_for('main.insights_digests_rss', type=request.args.get('type', '')) }}">RSS</a></p>
           {% if not digests %}
-            <p class="empty-state">No digests yet — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>. <a href="{{ url_for('main.index') }}">View feed</a></p>
+            <p class="empty-state">No digests yet. <a href="{{ url_for('main.index') }}">View feed</a></p>
           {% else %}
             <ul class="digest-list">
               {% for d in digests %}
@@ -131,7 +131,7 @@
         <section id="insights-trending" class="analysis-section">
           <h2>Trending topics ({{ '24h' if w == '1d' else ('3d' if w == '3d' else ('30 days' if w == '30d' else '7 days')) }})</h2>
           {% if not trending %}
-            <p class="empty-state">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>. <a href="{{ url_for('main.index') }}">View feed</a></p>
+            <p class="empty-state">Topics will appear as articles are tagged. <a href="{{ url_for('main.index') }}">View feed</a></p>
           {% else %}
             <ul class="trending-list">
               {% for topic, count in trending %}
@@ -146,7 +146,7 @@
         <section id="insights-clusters" class="analysis-section">
           <h2>Story clusters (multi-source coverage)</h2>
           {% if not clusters %}
-            <p class="empty-state">No clusters yet — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>. <a href="{{ url_for('main.index') }}">View feed</a></p>
+            <p class="empty-state">No clusters yet. <a href="{{ url_for('main.index') }}">View feed</a></p>
           {% else %}
             <ul class="cluster-list">
               {% for c in clusters %}
