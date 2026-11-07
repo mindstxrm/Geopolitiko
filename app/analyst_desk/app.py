@@ -49,9 +49,23 @@ def create_analyst_desk_app() -> Flask:
     install_security(app, service="analyst_desk")
     init_sentry(service="analyst_desk")
 
+    @app.template_filter("brief_html")
+    def _brief_html_filter(text: str) -> str:
+        from app.analyst_desk.brief_render import render_brief_html
+        from markupsafe import Markup
+
+        return Markup(render_brief_html(text or ""))
+
+    @app.template_filter("brief_preview")
+    def _brief_preview_filter(text: str, limit: int = 180) -> str:
+        from app.analyst_desk.brief_render import brief_preview_plain
+
+        return brief_preview_plain(text or "", limit=limit)
+
     @app.context_processor
     def _analyst_desk_template_globals():
         from app.analyst_desk.auth_bridge import terminal_public_url
+        from app.analyst_desk.brief_render import brief_toc
         from app.authz import current_role
 
         return {
@@ -62,6 +76,7 @@ def create_analyst_desk_app() -> Flask:
             "terminal_public_url": terminal_public_url(),
             "desk_user": session.get("analyst_desk_user"),
             "current_role": current_role(),
+            "brief_toc": brief_toc,
         }
 
     def _password_configured() -> bool:

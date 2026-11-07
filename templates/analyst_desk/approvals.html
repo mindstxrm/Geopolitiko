@@ -39,7 +39,7 @@
       </thead>
       <tbody>
       {% for p in pending %}
-        {% set preview = ((p.body or '')|replace('\n', ' '))[:220] %}
+        {% set preview = (p.body or '')|brief_preview(200) %}
         <tr>
           <td><input type="checkbox" name="proposal_ids" value="{{ p.id }}"></td>
           <td><a href="{{ url_for('analyst_desk.proposal_detail', pid=p.id) }}">{{ p.id }}</a></td>
@@ -56,8 +56,8 @@
             </span>
             {% endif %}
             {% if preview %}
-            <div class="muted" style="margin-top:0.25rem;line-height:1.35;">
-              {{ preview }}{% if (p.body or '')|length > 220 %}…{% endif %}
+            <div class="muted" style="margin-top:0.35rem;line-height:1.45;">
+              {{ preview }}
             </div>
             {% endif %}
           </td>

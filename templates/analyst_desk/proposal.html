@@ -2,41 +2,139 @@
 {% block title %}{{ p.title or ('Proposal #' ~ p.id) }} — Analyst Desk{% endblock %}
 {% block extra_head %}
 <style>
-  main { max-width: 1100px; }
-  .proposal-actions { position: sticky; bottom: 0; background: rgba(15,20,25,0.92); border-top: 1px solid #2a3545; padding: 0.75rem 0; margin-top: 0.5rem; }
+  main { max-width: 920px; }
+  .proposal-meta {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 0.75rem; align-items: center;
+    margin: 0.35rem 0 0;
+  }
+  .proposal-meta .chip {
+    font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--accent-muted); color: var(--ink-secondary);
+  }
+  .proposal-meta .chip strong { color: var(--text); font-weight: 650; }
+  .brief-toc {
+    display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.75rem 0 0;
+  }
+  .brief-toc a {
+    font-size: 0.78rem; padding: 0.2rem 0.55rem; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--ink-secondary); background: var(--panel-elevated);
+    text-decoration: none;
+  }
+  .brief-toc a:hover { border-color: var(--accent); color: var(--accent); }
+  .brief-doc { margin-top: 0.25rem; }
+  .brief-section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem 1.1rem;
+    margin: 0.85rem 0;
+  }
+  .brief-section-so-what { border-left: 3px solid var(--accent); }
+  .brief-section-watch { border-left: 3px solid var(--warn); }
+  .brief-section-sources { border-left: 3px solid var(--ok); }
+  .brief-heading {
+    margin: 0 0 0.65rem;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .brief-body { color: var(--text); font-size: 0.95rem; line-height: 1.65; }
+  .brief-body p { margin: 0 0 0.7rem; }
+  .brief-body p:last-child { margin-bottom: 0; }
+  .brief-body ul, .brief-body ol { margin: 0 0 0.7rem; padding-left: 1.25rem; }
+  .brief-body li { margin: 0.25rem 0; }
+  .brief-body hr { border: none; border-top: 1px solid var(--border); margin: 0.85rem 0; }
+  .brief-cite {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.05rem 0.35rem;
+    margin: 0 0.1rem;
+    border-radius: 4px;
+    background: rgba(110, 168, 255, 0.18);
+    color: #b7d4ff;
+    vertical-align: baseline;
+  }
+  .brief-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+    margin-right: 0.25rem;
+    vertical-align: baseline;
+  }
+  .brief-label-fact { background: rgba(52, 211, 153, 0.18); color: #86efc5; }
+  .brief-label-claim { background: rgba(251, 191, 36, 0.18); color: #fcd34d; }
+  .brief-label-assess, .brief-label-assessment { background: rgba(110, 168, 255, 0.2); color: #93c5fd; }
+  .proposal-actions {
+    position: sticky; bottom: 0; z-index: 20;
+    background: rgba(15,20,25,0.94);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    padding: 0.85rem 0;
+    margin-top: 1rem;
+  }
+  .edit-raw details summary {
+    cursor: pointer; font-weight: 600; color: var(--ink-secondary);
+    list-style: none;
+  }
+  .edit-raw details summary::-webkit-details-marker { display: none; }
+  .edit-raw details[open] summary { margin-bottom: 0.5rem; color: var(--text); }
+  .edit-raw textarea {
+    min-height: 280px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+  .review-controls label { font-size: 0.85rem; color: var(--muted); }
+  .eval-compact { font-size: 0.9rem; }
 </style>
 {% endblock %}
 {% block body %}
+{% set body_text = display_body if p.status == 'pending' else (p.reviewed_body or p.body) %}
+{% set toc = brief_toc(body_text) %}
+
 <p>
   <a href="{{ url_for('analyst_desk.approvals') }}">← Approvals</a>
   · <a href="{{ url_for('analyst_desk.index') }}">Inbox</a>
 </p>
+
 <div class="panel">
-  <h2>{{ p.title or ('Proposal #' ~ p.id) }}</h2>
-  <p class="muted">
-    Agent: <strong>{{ p.agent_id }}</strong> · {{ agents[p.agent_id].label if p.agent_id in agents else '' }}<br>
-    Type: {{ p.run_type }} · Status: <strong>{{ p.status }}</strong><br>
-    Created: {{ p.created_at }}
-    {% if p.published_to_terminal_at %} · <strong>Terminal</strong>: published {{ p.published_to_terminal_at }}{% endif %}
-    {% if p.focus_country %} · Focus: {{ p.focus_country }}{% endif %}
-  </p>
+  <h2 style="margin-bottom:0.35rem;">{{ p.title or ('Proposal #' ~ p.id) }}</h2>
+  <div class="proposal-meta">
+    <span class="chip"><strong>{{ p.agent_id }}</strong>{% if p.agent_id in agents %} · {{ agents[p.agent_id].label }}{% endif %}</span>
+    <span class="chip">{{ p.run_type }}</span>
+    <span class="chip">Status: <strong>{{ p.status }}</strong></span>
+    {% if p.focus_country %}<span class="chip">Focus {{ p.focus_country }}</span>{% endif %}
+    <span class="chip muted">{{ p.created_at }}</span>
+    {% if p.published_to_terminal_at %}<span class="chip" style="border-color:rgba(52,211,153,0.4);">Published {{ p.published_to_terminal_at }}</span>{% endif %}
+  </div>
   {% if p.source_context %}
-  <p class="muted">
-    Grounding: {{ p.source_context.article_count }} articles (last {{ p.source_context.days }} days)
-    {% if p.source_context.desk_family %} · Desk SOP: <strong>{{ p.source_context.desk_family }}</strong>{% endif %}
+  <p class="muted" style="margin:0.65rem 0 0;font-size:0.85rem;">
+    Grounded on {{ p.source_context.article_count or 0 }} articles
+    {% if p.source_context.days %} (last {{ p.source_context.days }} days){% endif %}
+    {% if p.source_context.desk_family %} · SOP <strong>{{ p.source_context.desk_family }}</strong>{% endif %}
   </p>
+  {% endif %}
+  {% if toc|length > 1 %}
+  <nav class="brief-toc" aria-label="Brief sections">
+    {% for s in toc %}
+    <a href="#sec-{{ loop.index }}">{{ s.heading }}</a>
+    {% endfor %}
+  </nav>
   {% endif %}
 </div>
 
 {% if p.source_context and p.source_context.eval %}
 {% set ev = p.source_context.eval %}
-<div class="panel">
-  <h2>Quality eval (automated)</h2>
-  <p style="margin-top:0;">
-    Score: <strong>{{ ev.score }}</strong> / 100 · Grade: <strong>{{ ev.grade }}</strong>
-    · {% if ev.pass %}<span style="color:var(--ok)">Pass threshold</span>{% else %}<span style="color:var(--bad)">Below threshold — review carefully</span>{% endif %}
-  </p>
-  <table>
+<details class="panel eval-compact">
+  <summary style="cursor:pointer;font-weight:650;">
+    Quality check · <strong>{{ ev.grade }}</strong> ({{ ev.score }}/100)
+    · {% if ev.pass %}<span style="color:var(--ok)">pass</span>{% else %}<span style="color:var(--bad)">review carefully</span>{% endif %}
+  </summary>
+  <table style="margin-top:0.75rem;">
     <thead><tr><th>Check</th><th>OK</th><th>Detail</th></tr></thead>
     <tbody>
       {% for c in ev.checks %}
@@ -51,24 +149,33 @@
   {% if ev.missing_sections %}
   <p class="muted">Missing sections: {{ ev.missing_sections | join(', ') }}</p>
   {% endif %}
-  <p class="muted" style="margin-bottom:0;">
-    Citations found: {% if ev.citation_ids %}{% for n in ev.citation_ids %}[S{{ n }}] {% endfor %}{% else %}none{% endif %}
-    · Evidence items: {{ ev.source_count }}
-  </p>
-</div>
+</details>
 {% endif %}
 
 {% if p.status == 'pending' %}
-<div class="panel">
-  <h2>Draft content</h2>
-  <p class="muted" style="margin-top:0;">Read the full text below. Edit anything that should change before you approve.</p>
-  <form method="post">
-    <label for="reviewed_body">Proposal body</label>
-    <textarea id="reviewed_body" name="reviewed_body">{{ display_body }}</textarea>
-    <label for="reviewer_note" style="display:block;margin-top:0.75rem;">Reviewer note (optional)</label>
-    <input type="text" id="reviewer_note" name="reviewer_note" style="width:100%;max-width:100%;" placeholder="Internal note">
-    <label for="reject_reason" style="display:block;margin-top:0.75rem;">Reject reason (required when rejecting)</label>
-    <select id="reject_reason" name="reject_reason" style="width:100%;max-width:28rem;">
+<form method="post">
+  <div class="brief-doc" aria-label="Readable brief">
+    <div id="brief-readable">
+      {{ body_text | brief_html }}
+    </div>
+  </div>
+
+  <div class="panel edit-raw" style="margin-top:1rem;">
+    <details>
+      <summary>Edit raw draft (markdown) — only if you need to change wording before approve</summary>
+      <label for="reviewed_body" class="muted">Proposal body</label>
+      <textarea id="reviewed_body" name="reviewed_body">{{ display_body }}</textarea>
+      <p class="muted" style="margin:0.5rem 0 0;font-size:0.8rem;">
+        Tip: keep <code>##</code> section headings so the readable view stays structured.
+      </p>
+    </details>
+  </div>
+
+  <div class="panel review-controls" style="margin-top:1rem;">
+    <label for="reviewer_note">Reviewer note (optional)</label>
+    <input type="text" id="reviewer_note" name="reviewer_note" style="width:100%;max-width:100%;margin-top:0.35rem;" placeholder="Internal note for the audit trail">
+    <label for="reject_reason" style="display:block;margin-top:0.85rem;">Reject reason (required when rejecting)</label>
+    <select id="reject_reason" name="reject_reason" style="width:100%;max-width:28rem;margin-top:0.35rem;background:#0d1117;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0.65rem;">
       <option value="">— select if rejecting —</option>
       <option value="insufficient_sources">Insufficient sources / single-source</option>
       <option value="ungrounded_claims">Ungrounded claims / weak citations</option>
@@ -79,17 +186,31 @@
       <option value="duplicate">Duplicate of existing proposal</option>
       <option value="other">Other (see note)</option>
     </select>
-    <div class="proposal-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-      <button type="submit" name="action" value="approve" class="btn ok">Approve + publish to Terminal</button>
-      <button type="submit" name="action" value="reject" class="btn danger">Reject</button>
-      <span class="muted">Approving pushes this draft into the Geopolitical Terminal when publish-on-approve is enabled.</span>
-    </div>
-  </form>
-</div>
+  </div>
+
+  <div class="proposal-actions" style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+    <button type="submit" name="action" value="approve" class="btn ok">Approve + publish to Terminal</button>
+    <button type="submit" name="action" value="reject" class="btn danger">Reject</button>
+    <span class="muted" style="font-size:0.82rem;">Read the brief above first. Open “Edit raw draft” only when something needs a fix.</span>
+  </div>
+</form>
+
+<script>
+  // Add stable anchors to rendered section headings for the TOC jump links.
+  (function () {
+    var headings = document.querySelectorAll('#brief-readable .brief-heading');
+    headings.forEach(function (h, i) {
+      var sec = h.closest('.brief-section');
+      if (sec) sec.id = 'sec-' + (i + 1);
+    });
+  })();
+</script>
+
 {% else %}
+
 {% if p.status == 'approved' %}
 <div class="panel">
-  <h2>Where this landed (Terminal)</h2>
+  <h2 style="margin-top:0;">Where this landed (Terminal)</h2>
   <p class="muted" style="margin-top:0;">
     {% if p.published_to_terminal_at %}
     Published to Terminal at <strong>{{ p.published_to_terminal_at }}</strong>.
@@ -112,12 +233,22 @@
   </ul>
 </div>
 {% endif %}
-<div class="panel">
-  <h2>Final text</h2>
-  <pre style="white-space: pre-wrap; font-family: inherit; margin:0;">{{ p.reviewed_body or p.body }}</pre>
-  {% if p.reviewer_note %}
-  <p class="muted" style="margin-top:1rem;">Note: {{ p.reviewer_note }}</p>
-  {% endif %}
+
+<div class="brief-doc">
+  {{ body_text | brief_html }}
 </div>
+{% if p.reviewer_note %}
+<p class="muted" style="margin-top:1rem;">Note: {{ p.reviewer_note }}</p>
+{% endif %}
+
+<script>
+  (function () {
+    var headings = document.querySelectorAll('.brief-doc .brief-heading');
+    headings.forEach(function (h, i) {
+      var sec = h.closest('.brief-section');
+      if (sec) sec.id = 'sec-' + (i + 1);
+    });
+  })();
+</script>
 {% endif %}
 {% endblock %}
