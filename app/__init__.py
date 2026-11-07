@@ -117,17 +117,33 @@ def create_app():
 
         now = datetime.now(timezone.utc)
         freshness = {}
+        ticker = {}
         try:
             from app.freshness import build_freshness_snapshot
 
             freshness = build_freshness_snapshot()
         except Exception:
             freshness = {"any_stale": False, "banner": None}
+        try:
+            from app.status_ticker import build_status_ticker
+
+            ticker = build_status_ticker()
+        except Exception:
+            ticker = {
+                "status": "warn",
+                "status_label": "—",
+                "news_as_of": freshness.get("news_as_of"),
+                "news_minutes_ago": freshness.get("news_minutes_ago"),
+                "high_risk_count": None,
+                "pending_proposals": None,
+                "articles_24h": None,
+            }
         return {
             "policy_now_utc": now.strftime("%Y-%m-%d %H:%M UTC"),
             "policy_now_iso": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "last_scrape_time": get_last_scrape_time(),
             "data_freshness": freshness,
+            "status_ticker": ticker,
         }
 
     # Pre-warm world GeoJSON cache in background so Situation Room map loads fast

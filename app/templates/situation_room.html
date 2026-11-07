@@ -50,37 +50,38 @@
   <section class="situation-main" aria-label="Global heatmap">
     <header class="situation-header">
       <h1 class="page-title">Situation Room</h1>
-      <p class="page-intro">A clear view of where risk is concentrating right now.</p>
 
       <div class="situation-top-strip" aria-label="Status and quick stats">
+        <span class="situation-strip-item">
+          <span class="status-pill {{ 'crit' if data_stale else 'ok' }}">{{ 'STALE' if data_stale else 'OK' }}</span>
+        </span>
+        {% if last_scrape_time %}
+        <span class="situation-strip-item">as-of <strong>{{ last_scrape_time[:16].replace('T', ' ') }}</strong></span>
+        {% endif %}
         <span class="situation-strip-item"><strong>{{ high_risk_count }}</strong> high-risk</span>
         <span class="situation-strip-item"><strong>{{ alerts_firing }}</strong> alerts</span>
-        <span class="situation-strip-item"><strong>{{ articles_24h }}</strong> articles</span>
+        <span class="situation-strip-item"><strong>{{ articles_24h }}</strong> articles/{{ window }}</span>
         {% if highest_risk_region %}<span class="situation-strip-item"><strong>{{ highest_risk_region }}</strong> top region</span>{% endif %}
-        <span class="situation-window-toggle compact">
+        {% if gepi_latest %}<span class="situation-strip-item">GEPI <strong>{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</strong></span>{% endif %}
+        <span class="situation-window-toggle compact segmented" role="group" aria-label="Time window">
           <a href="{{ url_for('main.situation_room', window='24h') }}" class="{{ 'active' if window == '24h' else '' }}">24h</a>
           <a href="{{ url_for('main.situation_room', window='7d') }}" class="{{ 'active' if window == '7d' else '' }}">7d</a>
         </span>
       </div>
 
-      <nav class="situation-quick-links compact" aria-label="Quick access">
-        <a href="{{ url_for('main.index') }}">Feed</a>
-        <a href="{{ url_for('main.macro_dashboard') }}">Macro</a>
-        <a href="{{ url_for('main.risk_dashboard') }}">Risk</a>
-        <a href="{{ url_for('main.workspace') }}" class="situation-workspace-cta">Workspace</a>
-      </nav>
-
       <details class="situation-help-collapsible">
-        <summary>More details</summary>
+        <summary>More · Feed · Macro · Risk · Workspace</summary>
         <div class="situation-help-body">
-          {% if last_scrape_time %}
-          <p class="situation-data-freshness">Data as of <time datetime="{{ last_scrape_time }}">{{ last_scrape_time[:19].replace('T', ' ') }} UTC</time>{% if data_stale %} — may be stale ({{ "%.0f"|format(hours_since_scrape) }}h){% endif %}</p>
-          {% endif %}
           <p class="situation-system-status"><span class="situation-status-dot {{ 'stale' if data_stale else 'ok' }}"></span> {{ system_status }}</p>
           {% if new_sanctions_7d is defined and new_sanctions_7d %}<p class="contextual-help"><strong>{{ new_sanctions_7d }}</strong> new sanctions in the last 7 days.</p>{% endif %}
-          {% if gepi_latest %}<p class="contextual-help">GEPI: <strong>{{ "%.2f"|format(gepi_latest.gepi_score or 0) }}</strong></p>{% endif %}
           <p class="contextual-help">Map combines stability, conflict, sanctions, trade, and supply signals. Click a country for its dashboard.</p>
-          <p class="contextual-help"><a href="{{ url_for('main.situation_room') }}?tour=1" class="tour-trigger-link">Take a short tour</a></p>
+          <nav class="situation-quick-links" aria-label="Quick access" style="margin-top:0.5rem;">
+            <a href="{{ url_for('main.index') }}">Feed</a>
+            <a href="{{ url_for('main.macro_dashboard') }}">Macro</a>
+            <a href="{{ url_for('main.risk_dashboard') }}">Risk</a>
+            <a href="{{ url_for('main.workspace') }}">Workspace</a>
+            <a href="{{ url_for('main.situation_room') }}?tour=1" class="tour-trigger-link">Tour</a>
+          </nav>
         </div>
       </details>
     </header>
@@ -90,11 +91,11 @@
         <div class="situation-map-overlay-block">
           <div class="situation-map-overlay-title">Composite risk</div>
           <div class="situation-map-overlay-legend">
-            <span class="legend-item"><span class="legend-swatch" style="background:#166534"></span></span>
-            <span class="legend-item"><span class="legend-swatch" style="background:#65a30d"></span></span>
-            <span class="legend-item"><span class="legend-swatch" style="background:#ca8a04"></span></span>
-            <span class="legend-item"><span class="legend-swatch" style="background:#ea580c"></span></span>
-            <span class="legend-item"><span class="legend-swatch" style="background:#dc2626"></span></span>
+            <span class="legend-item"><span class="legend-swatch risk-swatch-1"></span></span>
+            <span class="legend-item"><span class="legend-swatch risk-swatch-2"></span></span>
+            <span class="legend-item"><span class="legend-swatch risk-swatch-3"></span></span>
+            <span class="legend-item"><span class="legend-swatch risk-swatch-4"></span></span>
+            <span class="legend-item"><span class="legend-swatch risk-swatch-5"></span></span>
             <span class="legend-caption">Low → Critical</span>
           </div>
           <div class="situation-map-overlay-sub">Stability + Conflict + Sanctions + Trade + Supply</div>

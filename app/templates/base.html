@@ -161,16 +161,37 @@
 
   <main class="terminal-main">
     <div class="container layout-main">
-      {% if data_freshness is defined and data_freshness.any_stale and data_freshness.banner %}
-      <div class="live-stale-banner" role="status" style="margin:0 0 1rem;padding:0.75rem 1rem;border-radius:10px;border:1px solid rgba(251,191,36,0.45);background:rgba(251,191,36,0.12);color:#fde68a;font-size:0.9rem;line-height:1.45;">
-        <strong>STALE DATA</strong> — {{ data_freshness.banner }}
-        · <a href="{{ url_for('main.ops_health_board') }}" style="color:#fef3c7;font-weight:650;">Ops health</a>
-        · Start ingest: <code>python run_ingest_worker.py</code> or Compose <code>ingest</code>
-      </div>
-      {% elif data_freshness is defined and data_freshness.news_as_of %}
-      <div class="live-fresh-strip muted" style="margin:0 0 0.75rem;font-size:0.8rem;color:#7b879c;">
-        Data as of <time datetime="{{ data_freshness.news_as_of }}">{{ data_freshness.news_as_of[:16].replace('T',' ') }} UTC</time>
-        {% if data_freshness.news_minutes_ago is not none %}({{ data_freshness.news_minutes_ago }}m ago){% endif %}
+      {% if status_ticker is defined and status_ticker %}
+      <div class="status-ticker" role="status" aria-label="Data status">
+        <span class="ticker-item">
+          <span class="status-pill {{ status_ticker.status }}">{{ status_ticker.status_label }}</span>
+        </span>
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item">
+          News as-of
+          {% if status_ticker.news_as_of %}
+          <time class="ticker-mono" datetime="{{ status_ticker.news_as_of }}">{{ status_ticker.news_as_of[:16].replace('T',' ') }}</time>
+          {% if status_ticker.news_minutes_ago is not none %}
+          <span class="ticker-mono">({{ status_ticker.news_minutes_ago }}m)</span>
+          {% endif %}
+          {% else %}
+          <span class="ticker-mono">—</span>
+          {% endif %}
+        </span>
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item">High-risk <strong class="ticker-mono">{{ status_ticker.high_risk_count if status_ticker.high_risk_count is not none else '—' }}</strong></span>
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item">Desk pending <strong class="ticker-mono">{{ status_ticker.pending_proposals if status_ticker.pending_proposals is not none else '—' }}</strong></span>
+        {% if status_ticker.articles_24h is not none %}
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item">24h <strong class="ticker-mono">{{ status_ticker.articles_24h }}</strong></span>
+        {% endif %}
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item"><a href="{{ url_for('main.ops_health_board') }}">Ops</a></span>
+        {% if status_ticker.status == 'crit' and data_freshness is defined and data_freshness.banner %}
+        <span class="ticker-sep" aria-hidden="true">·</span>
+        <span class="ticker-item" title="{{ data_freshness.banner }}">{{ data_freshness.banner }}</span>
+        {% endif %}
       </div>
       {% endif %}
       {% with messages = get_flashed_messages(with_categories=true) %}

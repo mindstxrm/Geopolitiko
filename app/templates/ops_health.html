@@ -2,38 +2,39 @@
 {% block title %}Ops health — Geopolitical Terminal{% endblock %}
 
 {% block content %}
-  <header class="page-header">
+{% set status = health.status or 'unknown' %}
+{% set overall_sev = 'ok' if status == 'ok' else ('warn' if status == 'degraded' else 'crit') %}
+
+<div class="ops-wall">
+  <header class="ops-wall-header">
     <h1 class="page-title">Ops health</h1>
-    <p class="page-intro">
-      Scrape/job freshness, Analyst Desk queue, and approve→publish visibility.
-      Machine JSON: <a href="{{ url_for('api.api_health') }}"><code>/api/health</code></a>
-    </p>
+    <span class="status-pill {{ overall_sev }}">{{ status|upper }}</span>
+    <span class="ops-wall-meta">as of {{ health.generated_at }}</span>
+    {% if health.runtime and health.runtime.refresh_running %}<span class="ops-wall-meta">· refresh running</span>{% endif %}
+    {% if health.runtime and health.runtime.macro_ingest_running %}<span class="ops-wall-meta">· macro ingest</span>{% endif %}
+    <span class="ops-wall-meta" style="margin-left:auto;">
+      <a href="{{ url_for('api.api_health') }}"><code>/api/health</code></a>
+    </span>
   </header>
 
-  {% set status = health.status or 'unknown' %}
-  <section class="sidebar-panel" style="margin-bottom:16px;">
-    <p style="margin:0;">
-      Overall:
-      <strong class="{% if status == 'ok' %}text-ok{% elif status == 'degraded' %}text-warn{% else %}text-bad{% endif %}">
-        {{ status|upper }}
-      </strong>
-      · as of {{ health.generated_at }}
-      {% if health.runtime and health.runtime.refresh_running %} · refresh running now{% endif %}
-      {% if health.runtime and health.runtime.macro_ingest_running %} · macro ingest running now{% endif %}
-    </p>
-  </section>
-
-  <section class="sidebar-panel" style="margin-bottom:16px;">
-    <h2 style="margin-top:0;">Checks</h2>
+  <section aria-label="Severity checks">
     <table class="mini-terminal-table" aria-label="Health checks">
       <thead>
-        <tr><th>Check</th><th>Status</th><th>Detail</th></tr>
+        <tr><th>Surface</th><th>Status</th><th>Detail</th></tr>
       </thead>
       <tbody>
         {% for c in health.checks %}
-        <tr>
+        {% set sev = 'ok' if c.ok else (c.severity if c.severity in ('warn', 'error', 'crit') else 'warn') %}
+        {% if sev == 'error' %}{% set sev = 'error' %}{% endif %}
+        <tr class="sev-{{ 'error' if not c.ok and sev != 'warn' else ('warn' if not c.ok else 'ok') }}">
           <td>{{ c.name }}</td>
-          <td>{% if c.ok %}OK{% else %}{{ c.severity|upper }}{% endif %}</td>
+          <td>
+            {% if c.ok %}
+            <span class="status-pill ok">OK</span>
+            {% else %}
+            <span class="status-pill {{ 'crit' if sev != 'warn' else 'warn' }}">{{ (c.severity or 'fail')|upper }}</span>
+            {% endif %}
+          </td>
           <td class="muted">{{ c.detail }}</td>
         </tr>
         {% else %}
@@ -43,147 +44,126 @@
     </table>
   </section>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:16px;">
+  <div class="ops-grid">
     <section class="sidebar-panel">
-      <h3 style="margin-top:0;">News DB / scrape</h3>
+      <h3>Ingest / scrape</h3>
       <ul class="data-list">
-        <li>Articles: <strong>{{ health.news.article_count }}</strong></li>
-        <li>Last article scrape: {{ health.news.last_scrape_time or '—' }}</li>
-        <li>Hours since scrape: {{ "%.1f"|format(health.news.hours_since_scrape) if health.news.hours_since_scrape is not none else '—' }}</li>
-        <li>DB: {{ health.news.database.path }}</li>
-        <li>Size: {{ health.news.database.size_bytes }} bytes · writable dir: {{ health.news.database.writable_dir }}</li>
-      </ul>
-    </section>
-
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Refresh / macro</h3>
-      <ul class="data-list">
-        <li>Last refresh: {{ health.refresh.ops.last_refresh_status or '—' }} @ {{ health.refresh.ops.last_refresh_finished_at or '—' }}</li>
-        <li>Articles last scrape job: {{ health.refresh.ops.last_scrape_articles if health.refresh.ops.last_scrape_articles is defined else '—' }}</li>
-        <li>Last macro: {{ health.refresh.ops.last_macro_status or '—' }} @ {{ health.refresh.ops.last_macro_ingest_at or '—' }}</li>
-        <li>Last backup: {{ health.refresh.ops.last_backup_at or '—' }}</li>
-        {% if health.refresh.ops.last_refresh_error %}
-        <li class="muted">Refresh error: {{ health.refresh.ops.last_refresh_error }}</li>
+        <li>Articles: <strong class="ticker-mono">{{ health.news.article_count }}</strong></li>
+        <li>Last scrape: {{ health.news.last_scrape_time or '—' }}</li>
+        <li>Hours since: {{ "%.1f"|format(health.news.hours_since_scrape) if health.news.hours_since_scrape is not none else '—' }}</li>
+        <li>Heartbeat: <strong>{{ health.ingest_worker.last_heartbeat_at if health.ingest_worker else 'never' }}</strong></li>
+        <li>Last scrape tick: {{ health.ingest_worker.last_scrape_at if health.ingest_worker else '—' }}</li>
+        <li>Last jobs: {{ health.ingest_worker.last_jobs_at if health.ingest_worker else '—' }}</li>
+        <li>Cadence: scrape {{ health.ingest_worker.scrape_seconds if health.ingest_worker else '—' }}s · jobs {{ health.ingest_worker.jobs_seconds if health.ingest_worker else '—' }}s</li>
+        {% if health.freshness %}
+        <li>News stale: <span class="status-pill {{ 'crit' if health.freshness.news_stale else 'ok' }}">{{ 'STALE' if health.freshness.news_stale else 'OK' }}</span>
+          {% if health.freshness.news_minutes_ago is not none %}({{ health.freshness.news_minutes_ago }}m){% endif %}
+        </li>
+        {% endif %}
+        {% if health.source_http_cache %}
+        <li>HTTP 304 rate: <strong>{{ health.source_http_cache.not_modified_rate or 0 }}</strong>
+          ({{ health.source_http_cache.not_modified_count or 0 }}/{{ health.source_http_cache.fetch_count or 0 }})
+        </li>
         {% endif %}
       </ul>
     </section>
 
     <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Analyst Desk</h3>
+      <h3>Desk / approvals</h3>
       <ul class="data-list">
-        <li>Pending proposals: <strong>{{ health.desk.pending_proposals if health.desk.pending_proposals is not none else '—' }}</strong></li>
-        <li>Approved but unpublished: {{ health.desk.approved_unpublished if health.desk.approved_unpublished is not none else '—' }}</li>
-        <li>Briefings rows: {{ health.desk.recent_briefings if health.desk.recent_briefings is not none else '—' }}</li>
+        <li>Pending: <strong>{{ health.desk.pending_proposals if health.desk.pending_proposals is not none else '—' }}</strong></li>
+        <li>Approved unpublished: {{ health.desk.approved_unpublished if health.desk.approved_unpublished is not none else '—' }}</li>
+        <li>Briefings: {{ health.desk.recent_briefings if health.desk.recent_briefings is not none else '—' }}</li>
         <li>Last desk task: {{ health.desk.last_task_at or '—' }}</li>
         <li>Publish on approve: {{ health.desk.publish_on_approve }}</li>
-        <li>Terminal intel rows: {{ health.terminal_intel.count }}</li>
-        <li>Last published: {{ health.terminal_intel.last_published_at or '—' }}</li>
+        <li>Terminal intel: {{ health.terminal_intel.count }} · last {{ health.terminal_intel.last_published_at or '—' }}</li>
+        <li>Worker HB: {{ health.desk_worker.last_heartbeat_at or 'never' }}
+          · <span class="status-pill {{ 'ok' if health.desk_worker.fresh else 'warn' }}">{{ 'FRESH' if health.desk_worker.fresh else 'STALE' }}</span>
+        </li>
       </ul>
-      <p class="muted" style="margin-bottom:0;">
-        Desk UI: <a href="{{ url_for('main.launch_analyst_desk') }}">Open Desk (SSO)</a>
-        · <code>http://127.0.0.1:5005</code>
+      <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;">
+        <a href="{{ url_for('main.launch_analyst_desk') }}">Open Desk</a>
       </p>
     </section>
 
     <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Ingest worker (live news)</h3>
+      <h3>Refresh / macro</h3>
       <ul class="data-list">
-        <li>Heartbeat: <strong>{{ health.ingest_worker.last_heartbeat_at if health.ingest_worker else 'never' }}</strong></li>
-        <li>Last scrape: {{ health.ingest_worker.last_scrape_at if health.ingest_worker else '—' }}</li>
-        <li>Last jobs: {{ health.ingest_worker.last_jobs_at if health.ingest_worker else '—' }}</li>
+        <li>Last refresh: {{ health.refresh.ops.last_refresh_status or '—' }} @ {{ health.refresh.ops.last_refresh_finished_at or '—' }}</li>
+        <li>Articles last job: {{ health.refresh.ops.last_scrape_articles if health.refresh.ops.last_scrape_articles is defined else '—' }}</li>
+        <li>Last macro: {{ health.refresh.ops.last_macro_status or '—' }} @ {{ health.refresh.ops.last_macro_ingest_at or '—' }}</li>
         <li>Macro fast / full: {{ health.ingest_worker.last_macro_fast_at if health.ingest_worker else '—' }} / {{ health.ingest_worker.last_macro_full_at if health.ingest_worker else '—' }}</li>
-        <li>Cadence: scrape {{ health.ingest_worker.scrape_seconds if health.ingest_worker else '—' }}s · jobs {{ health.ingest_worker.jobs_seconds if health.ingest_worker else '—' }}s</li>
-        {% if health.freshness %}
-        <li>News stale: <strong>{{ health.freshness.news_stale }}</strong>
-          {% if health.freshness.news_minutes_ago is not none %}({{ health.freshness.news_minutes_ago }}m ago){% endif %}
-        </li>
-        {% endif %}
-        {% if health.source_http_cache %}
-        <li>HTTP 304s: {{ health.source_http_cache.not_modified_count or 0 }} / {{ health.source_http_cache.fetch_count or 0 }}
-          (rate {{ health.source_http_cache.not_modified_rate or 0 }})
-        </li>
+        <li>Last backup: {{ health.refresh.ops.last_backup_at or '—' }}</li>
+        {% if health.refresh.ops.last_refresh_error %}
+        <li class="muted">Error: {{ health.refresh.ops.last_refresh_error }}</li>
         {% endif %}
       </ul>
-      <p class="muted" style="margin-bottom:0;">Start: <code>python run_ingest_worker.py</code> · Compose service <code>ingest</code> · see <code>docs/LIVE_DATA.md</code></p>
     </section>
 
     <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Desk worker</h3>
+      <h3>Secrets / runtime</h3>
       <ul class="data-list">
-        <li>Heartbeat: <strong>{{ health.desk_worker.last_heartbeat_at or 'never' }}</strong></li>
-        <li>Status: {{ health.desk_worker.last_status or '—' }} · fresh: {{ health.desk_worker.fresh }}</li>
-        <li>Interval: {{ health.desk_worker.interval_seconds or '—' }}s</li>
-        <li>Hours since heartbeat: {{ "%.2f"|format(health.desk_worker.hours_since_heartbeat) if health.desk_worker.hours_since_heartbeat is not none else '—' }}</li>
-        {% if health.desk_worker.last_error %}
-        <li class="muted">Error: {{ health.desk_worker.last_error }}</li>
-        {% endif %}
-      </ul>
-      <p class="muted" style="margin-bottom:0;">Start: <code>python run_analyst_desk_worker.py</code> or Celery worker+beat</p>
-    </section>
-
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Secrets / runtime</h3>
-      <ul class="data-list">
-        <li>Production runtime: {{ health.secrets.production_runtime }}</li>
-        <li>Non-default SECRET_KEY: {{ health.secrets.secret_key_set }}</li>
-        <li>Desk password set: {{ health.secrets.desk_password_set }}</li>
-        <li>OpenAI configured: {{ health.secrets.openai_configured }}</li>
+        <li>Production: {{ health.secrets.production_runtime }}</li>
+        <li>SECRET_KEY set: {{ health.secrets.secret_key_set }}</li>
+        <li>Desk password: {{ health.secrets.desk_password_set }}</li>
+        <li>OpenAI: {{ health.secrets.openai_configured }}</li>
+        <li>DB: {{ health.news.database.path }}</li>
+        <li>Size: {{ health.news.database.size_bytes }} B · writable: {{ health.news.database.writable_dir }}</li>
       </ul>
     </section>
   </div>
 
-  <details class="more-panel" style="margin-bottom:16px;">
-    <summary style="cursor:pointer;font-weight:600;margin-bottom:0.75rem;">More — platform / sources / indicators</summary>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:16px;">
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Platform (P4)</h3>
-      <ul class="data-list">
-        <li>DB backend: <strong>{{ health.database_url.backend if health.database_url else '—' }}</strong>
-          · probe {{ 'ok' if health.database_url and health.database_url.ok else 'fail' }}</li>
-        <li>Celery preferred: {{ health.celery_preferred }}</li>
-        <li>Audit recent: {{ health.audit.recent_count if health.audit else 0 }}
-          {% if health.audit and health.audit.latest %}
-          · latest {{ health.audit.latest.action }} by {{ health.audit.latest.actor or '—' }}
-          {% endif %}
-        </li>
-        <li>In-process metrics: {{ (health.metrics.counters or {})|length if health.metrics else 0 }} counters</li>
-      </ul>
-      <p class="muted" style="margin-bottom:0;">See <code>docs/P4_PLATFORM.md</code> · Compose: <code>docker compose up --build</code></p>
-    </section>
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Source catalog (P3)</h3>
-      <ul class="data-list">
-        <li>Configured feeds: <strong>{{ health.sources.count if health.sources else 0 }}</strong></li>
-        <li>Tier A: {{ (health.sources.by_tier.A if health.sources and health.sources.by_tier else 0) }}</li>
-        <li>Tier B: {{ (health.sources.by_tier.B if health.sources and health.sources.by_tier else 0) }}</li>
-        <li>Tier C: {{ (health.sources.by_tier.C if health.sources and health.sources.by_tier else 0) }}</li>
-      </ul>
-      <p class="muted" style="margin-bottom:0;">API: <a href="{{ url_for('api.api_sources_catalog') }}"><code>/api/sources</code></a></p>
-    </section>
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Indicator coverage (roadmap)</h3>
-      <ul class="data-list">
-        <li>Macro stress countries: <strong>{{ health.indicators.macroeconomic_stress_countries if health.indicators else 0 }}</strong> ({{ health.indicators.macroeconomic_stress_rows if health.indicators else 0 }} rows)</li>
-        <li>Energy exposure countries: {{ health.indicators.energy_commodity_countries if health.indicators else 0 }}</li>
-        <li>Sample: {{ (health.indicators.sample_macro_countries or [])|join(', ') or '—' }}</li>
-      </ul>
-      <p class="muted" style="margin-bottom:0;">API: <a href="{{ url_for('api.api_indicators_coverage') }}"><code>/api/indicators/coverage</code></a></p>
-    </section>
-    <section class="sidebar-panel">
-      <h3 style="margin-top:0;">Scheduled regional briefs</h3>
-      <ul class="data-list">
-        <li>Last run: {{ health.scheduled_briefs.last_at if health.scheduled_briefs else '—' }}</li>
-        <li>Created: {{ health.scheduled_briefs.last_count if health.scheduled_briefs else '—' }} · errors: {{ health.scheduled_briefs.last_errors if health.scheduled_briefs else '—' }}</li>
-        <li>Agents: {{ (health.scheduled_briefs.last_agents or [])|join(', ') if health.scheduled_briefs else '—' }}</li>
-      </ul>
-      <p class="muted" style="margin-bottom:0;">Worker runs these on an interval (see <code>docs/P3_MOAT.md</code>).</p>
-    </section>
-  </div>
+  <details class="more-panel" style="margin-bottom:1rem;">
+    <summary style="cursor:pointer;font-weight:600;margin-bottom:0.75rem;font-size:0.85rem;">More — platform / sources / indicators</summary>
+    <div class="ops-grid">
+      <section class="sidebar-panel">
+        <h3>Platform (P4)</h3>
+        <ul class="data-list">
+          <li>DB backend: <strong>{{ health.database_url.backend if health.database_url else '—' }}</strong>
+            · probe {{ 'ok' if health.database_url and health.database_url.ok else 'fail' }}</li>
+          <li>Celery preferred: {{ health.celery_preferred }}</li>
+          <li>Audit recent: {{ health.audit.recent_count if health.audit else 0 }}
+            {% if health.audit and health.audit.latest %}
+            · latest {{ health.audit.latest.action }} by {{ health.audit.latest.actor or '—' }}
+            {% endif %}
+          </li>
+          <li>In-process metrics: {{ (health.metrics.counters or {})|length if health.metrics else 0 }} counters</li>
+        </ul>
+        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;">See <code>docs/P4_PLATFORM.md</code></p>
+      </section>
+      <section class="sidebar-panel">
+        <h3>Source catalog (P3)</h3>
+        <ul class="data-list">
+          <li>Feeds: <strong>{{ health.sources.count if health.sources else 0 }}</strong></li>
+          <li>Tier A/B/C: {{ (health.sources.by_tier.A if health.sources and health.sources.by_tier else 0) }} /
+            {{ (health.sources.by_tier.B if health.sources and health.sources.by_tier else 0) }} /
+            {{ (health.sources.by_tier.C if health.sources and health.sources.by_tier else 0) }}</li>
+        </ul>
+        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_sources_catalog') }}"><code>/api/sources</code></a></p>
+      </section>
+      <section class="sidebar-panel">
+        <h3>Indicator coverage</h3>
+        <ul class="data-list">
+          <li>Macro stress: <strong>{{ health.indicators.macroeconomic_stress_countries if health.indicators else 0 }}</strong>
+            ({{ health.indicators.macroeconomic_stress_rows if health.indicators else 0 }} rows)</li>
+          <li>Energy exposure: {{ health.indicators.energy_commodity_countries if health.indicators else 0 }}</li>
+          <li>Sample: {{ (health.indicators.sample_macro_countries or [])|join(', ') or '—' }}</li>
+        </ul>
+        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_indicators_coverage') }}"><code>/api/indicators/coverage</code></a></p>
+      </section>
+      <section class="sidebar-panel">
+        <h3>Scheduled regional briefs</h3>
+        <ul class="data-list">
+          <li>Last run: {{ health.scheduled_briefs.last_at if health.scheduled_briefs else '—' }}</li>
+          <li>Created: {{ health.scheduled_briefs.last_count if health.scheduled_briefs else '—' }} · errors: {{ health.scheduled_briefs.last_errors if health.scheduled_briefs else '—' }}</li>
+          <li>Agents: {{ (health.scheduled_briefs.last_agents or [])|join(', ') if health.scheduled_briefs else '—' }}</li>
+        </ul>
+      </section>
+    </div>
   </details>
 
   <section class="sidebar-panel">
-    <h2 style="margin-top:0;">Recently published to Terminal</h2>
-    <p class="muted">After you approve a Desk proposal, it should appear here and on matching country dashboards.</p>
+    <h2 style="margin:0 0 0.5rem;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--t-ink-muted);">Recently published to Terminal</h2>
     <table class="mini-terminal-table" aria-label="Recent desk terminal intel">
       <thead>
         <tr><th>When</th><th>Title</th><th>Agent</th><th>Countries</th><th>Open</th></tr>
@@ -211,10 +191,5 @@
       </tbody>
     </table>
   </section>
-
-  <style>
-    .text-ok { color: #3ecf8e; }
-    .text-warn { color: #e6b84d; }
-    .text-bad { color: #e85d6a; }
-  </style>
+</div>
 {% endblock %}

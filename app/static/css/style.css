@@ -839,21 +839,21 @@ body.terminal.macro-terminal .macro-mini-table .muted {
 body.terminal .mini-terminal-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8125rem;
+  font-size: 0.78rem;
 }
 
 body.terminal .mini-terminal-table thead th {
   text-align: left;
-  font-size: 0.6875rem;
+  font-size: 0.65rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--t-ink-muted);
-  padding: 5px 6px;
+  padding: 4px 6px;
   border-bottom: 1px solid var(--t-border);
 }
 
 body.terminal .mini-terminal-table td {
-  padding: 5px 6px;
+  padding: 4px 6px;
   border-bottom: 1px solid rgba(39, 43, 51, 0.55);
   vertical-align: top;
 }

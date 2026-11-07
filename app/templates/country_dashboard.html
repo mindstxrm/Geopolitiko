@@ -9,7 +9,6 @@
 {% endblock %}
 {% block content %}
 <div class="country-dashboard">
-  <p class="back-link"><a href="{{ url_for('main.integration_dashboard') }}">← Countries & Regions</a> · <a href="{{ url_for('main.situation_room') }}">Situation Room</a> · <a href="{{ url_for('main.relationship_mapper') }}?focus={{ country.country_code }}">Compare in Relationship Mapper</a> · <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade & Supply Chain</a> · <a href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ country.country_code, t2='/supply-chain', t3='/risk', t4='/integration') }}">Open in Workspace</a></p>
   {% if current_user.is_authenticated %}
   {% set forward_type = 'country' %}
   {% set forward_id = '' %}
@@ -20,26 +19,29 @@
 
   <header class="country-dashboard-header chat-draggable" data-chat-drag="1" data-chat-type="country" data-chat-id="" data-chat-extra="{{ country.country_code }}" data-chat-label="Country: {{ country.country_code }}">
     <h1 class="country-dashboard-title">{{ country.country_name }} <span class="country-code">({{ country.country_code }})</span></h1>
-    <p class="country-dashboard-meta">{{ country.region or '—' }} · Last updated {{ (country.updated_at or '')[:16].replace('T', ' ') }} UTC</p>
-    <div class="country-dashboard-scores">
+    <p class="country-dashboard-meta">{{ country.region or '—' }} · Updated {{ (country.updated_at or '')[:16].replace('T', ' ') }} UTC
+      · <a href="{{ url_for('main.relationship_mapper') }}?focus={{ country.country_code }}">Mapper</a>
+      · <a href="{{ url_for('main.supply_chain_dashboard') }}">Trade</a>
+    </p>
+    <div class="country-dashboard-scores score-ticker" aria-label="Score ticker">
       <div class="dashboard-score-card">
-        <span class="dashboard-score-label">Risk composite</span>
+        <span class="dashboard-score-label">Risk</span>
         <span class="dashboard-score-value score-{{ 'high' if (country.combined_systemic_risk_score or 0) >= 60 else ('med' if (country.combined_systemic_risk_score or 0) >= 40 else 'low') }}">{{ country.combined_systemic_risk_score or 0 }}</span>
       </div>
       <div class="dashboard-score-card">
-        <span class="dashboard-score-label">Economic fragility</span>
+        <span class="dashboard-score-label">Econ frag</span>
         <span class="dashboard-score-value score-{{ 'high' if (country.economic_fragility_score or 0) >= 60 else ('med' if (country.economic_fragility_score or 0) >= 40 else 'low') }}">{{ country.economic_fragility_score or 0 }}</span>
       </div>
       <div class="dashboard-score-card">
-        <span class="dashboard-score-label">Escalation probability</span>
+        <span class="dashboard-score-label">Escalation</span>
         <span class="dashboard-score-value">{{ escalation_pct if escalation_pct is not none else '—' }}{% if escalation_pct is not none %}%{% endif %}</span>
       </div>
       {% if cdei_latest %}<div class="dashboard-score-card">
-        <span class="dashboard-score-label">CDEI (chokepoint exposure)</span>
+        <span class="dashboard-score-label">CDEI</span>
         <span class="dashboard-score-value">{{ "%.2f"|format(cdei_latest.cdei_total or 0) }}</span>
       </div>{% endif %}
       {% if sfi_latest %}<div class="dashboard-score-card">
-        <span class="dashboard-score-label">SFI (sanctions friction)</span>
+        <span class="dashboard-score-label">SFI</span>
         <span class="dashboard-score-value">{{ "%.2f"|format(sfi_latest.sfi_score or 0) }}</span>
       </div>{% endif %}
       {% if fragility_latest %}<div class="dashboard-score-card">
@@ -52,11 +54,9 @@
   <div class="terminal-decision-bar" data-cite-ref="GN-CTY-{{ country.country_code }}" data-cite-title="{{ (country.country_name ~ ' — Country dashboard')|e }}" data-cite-url="{{ request.url }}" data-cite-org="Geopolitical Terminal">
     <span class="terminal-cite-ref">GN-CTY-{{ country.country_code }}</span>
     <button type="button" class="btn btn-secondary btn-sm gt-copy-citation">Copy citation</button>
-    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.country_briefing', country_code=country.country_code) }}">Country briefing</a>
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.country_briefing', country_code=country.country_code) }}">Briefing</a>
     <a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace', layout='4', t1='/country/' ~ country.country_code, t2='/supply-chain', t3='/risk', t4='/integration') }}">Workspace</a>
-    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_briefing') }}">Briefing builder</a>
-    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.saved_views_list') }}">Saved views</a>
-    {% if current_user.is_authenticated %}<a class="btn btn-secondary btn-sm" href="{{ url_for('main.workspace_tasks') }}">Tasks</a>{% endif %}
+    <a class="btn btn-secondary btn-sm" href="{{ url_for('main.export_briefing') }}">Builder</a>
   </div>
 
   {% with entity_type='country', entity_ref=country.country_code %}

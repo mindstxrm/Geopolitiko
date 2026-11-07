@@ -19,10 +19,20 @@ body.terminal {
   --t-danger: #f87171;
   --t-success: #34d399;
   --t-warning: #fbbf24;
-  --t-radius: 12px;
-  --t-radius-sm: 8px;
+  /* Institutional risk / status scale */
+  --t-risk-1: #166534;
+  --t-risk-2: #65a30d;
+  --t-risk-3: #ca8a04;
+  --t-risk-4: #ea580c;
+  --t-risk-5: #dc2626;
+  --t-status-ok: var(--t-success);
+  --t-status-warn: var(--t-warning);
+  --t-status-crit: var(--t-danger);
+  --t-radius: 6px;
+  --t-radius-sm: 4px;
   --t-nav-width: 232px;
-  --t-command-bar-height: 60px;
+  --t-command-bar-height: 52px;
+  --t-ticker-height: 32px;
   --t-font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --t-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
   background: var(--t-bg);
@@ -3371,9 +3381,9 @@ body.terminal .country-dashboard-scores {
 body.terminal .dashboard-score-card {
   background: var(--t-surface);
   border: 1px solid var(--t-border);
-  border-radius: 8px;
-  padding: 12px 18px;
-  min-width: 140px;
+  border-radius: var(--t-radius-sm);
+  padding: 8px 12px;
+  min-width: 110px;
 }
 
 body.terminal .dashboard-score-label {
@@ -3389,9 +3399,9 @@ body.terminal .dashboard-score-value {
   font-family: var(--t-mono);
 }
 
-body.terminal .dashboard-score-value.score-high { color: #dc2626; }
-body.terminal .dashboard-score-value.score-med { color: #ca8a04; }
-body.terminal .dashboard-score-value.score-low { color: #22c55e; }
+body.terminal .dashboard-score-value.score-high { color: var(--t-risk-5); }
+body.terminal .dashboard-score-value.score-med { color: var(--t-risk-3); }
+body.terminal .dashboard-score-value.score-low { color: var(--t-risk-2); }
 
 body.terminal .country-tabs {
   display: flex;
@@ -13296,4 +13306,233 @@ body.terminal.macro-terminal .macro-right .sidebar-panel {
 body.terminal.macro-terminal .macro-chart-stage {
   min-height: 320px;
   border-radius: var(--t-radius-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Visual Grade-1 — institutional density, ticker, ops wall, segmented controls
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.terminal .status-ticker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  margin: 0 0 0.75rem;
+  padding: 0.35rem 0.65rem;
+  background: var(--t-surface-elevated);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-sm);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--t-ink-secondary);
+}
+body.terminal .status-ticker .ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+body.terminal .status-ticker .ticker-sep {
+  color: var(--t-ink-muted);
+  opacity: 0.5;
+}
+body.terminal .status-ticker .ticker-mono {
+  font-family: var(--t-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--t-ink);
+}
+body.terminal .status-ticker a {
+  color: var(--t-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+body.terminal .status-ticker a:hover { text-decoration: underline; }
+
+body.terminal .status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--t-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+body.terminal .status-pill.ok {
+  color: var(--t-status-ok);
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+body.terminal .status-pill.warn {
+  color: var(--t-status-warn);
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+body.terminal .status-pill.crit {
+  color: #fecaca;
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+body.terminal .live-stale-banner,
+body.terminal .live-fresh-strip { display: none; } /* replaced by status-ticker */
+
+body.terminal .segmented {
+  display: inline-flex;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-sm);
+  overflow: hidden;
+  background: var(--t-surface);
+}
+body.terminal .segmented a,
+body.terminal .segmented button {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--t-ink-secondary);
+  text-decoration: none;
+  border: none;
+  border-right: 1px solid var(--t-border);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+body.terminal .segmented a:last-child,
+body.terminal .segmented button:last-child { border-right: none; }
+body.terminal .segmented a.active,
+body.terminal .segmented button.active {
+  background: var(--t-accent-muted);
+  color: var(--t-accent);
+}
+
+body.terminal .ops-wall {
+  margin-bottom: 1rem;
+}
+body.terminal .ops-wall-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.65rem;
+}
+body.terminal .ops-wall-header .page-title { margin: 0; }
+body.terminal .ops-wall-meta {
+  font-size: 0.75rem;
+  color: var(--t-ink-muted);
+  font-family: var(--t-mono);
+}
+body.terminal .ops-wall table.mini-terminal-table td,
+body.terminal .ops-wall table.mini-terminal-table th {
+  padding: 4px 6px;
+  font-size: 0.78rem;
+}
+body.terminal .ops-wall tr.sev-error td:first-child,
+body.terminal .ops-wall tr.sev-warn td:first-child {
+  border-left: 3px solid transparent;
+}
+body.terminal .ops-wall tr.sev-error td:first-child { border-left-color: var(--t-status-crit); }
+body.terminal .ops-wall tr.sev-warn td:first-child { border-left-color: var(--t-status-warn); }
+body.terminal .ops-wall tr.sev-ok td:first-child { border-left-color: var(--t-status-ok); }
+body.terminal .ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+body.terminal .ops-grid .sidebar-panel {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--t-radius-sm);
+}
+body.terminal .ops-grid h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--t-ink-muted);
+}
+body.terminal .ops-grid .data-list {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.8rem;
+}
+
+body.terminal .situation-room .page-intro { display: none; }
+body.terminal .situation-first-time-banner { display: none !important; }
+body.terminal .situation-quick-links.compact {
+  display: none;
+}
+body.terminal .situation-top-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  margin: 0.35rem 0 0.65rem;
+  padding: 0.4rem 0.55rem;
+  background: var(--t-surface-elevated);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-sm);
+  font-size: 0.78rem;
+}
+body.terminal .situation-strip-item strong {
+  font-family: var(--t-mono);
+  font-variant-numeric: tabular-nums;
+}
+body.terminal .situation-window-toggle.compact {
+  margin-left: auto;
+}
+body.terminal .situation-window-toggle.compact a {
+  padding: 0.2rem 0.45rem;
+  font-size: 0.7rem;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-sm);
+  color: var(--t-ink-secondary);
+  text-decoration: none;
+  margin-left: 0.2rem;
+}
+body.terminal .situation-window-toggle.compact a.active {
+  background: var(--t-accent-muted);
+  color: var(--t-accent);
+  border-color: rgba(110, 168, 255, 0.4);
+}
+
+body.terminal .country-dashboard .back-link {
+  display: none; /* breadcrumbs + decision bar suffice */
+}
+body.terminal .country-dashboard-scores {
+  gap: 8px;
+}
+body.terminal .country-dashboard-scores.score-ticker .dashboard-score-card {
+  padding: 6px 10px;
+  min-width: 96px;
+  background: var(--t-surface-elevated);
+}
+body.terminal .country-dashboard-scores.score-ticker .dashboard-score-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+body.terminal .country-dashboard-scores.score-ticker .dashboard-score-value {
+  font-size: 1.05rem;
+}
+
+body.terminal .risk-swatch-1 { background: var(--t-risk-1); }
+body.terminal .risk-swatch-2 { background: var(--t-risk-2); }
+body.terminal .risk-swatch-3 { background: var(--t-risk-3); }
+body.terminal .risk-swatch-4 { background: var(--t-risk-4); }
+body.terminal .risk-swatch-5 { background: var(--t-risk-5); }
+
+/* World monitor panel remapped toward terminal tokens */
+body.terminal .wm-dashboard {
+  background: var(--t-surface) !important;
+  border-color: var(--t-border) !important;
+  border-radius: var(--t-radius-sm) !important;
+}
+body.terminal .wm-legend-bar,
+body.terminal .wm-panel {
+  background: var(--t-surface-elevated) !important;
+  border-color: var(--t-border) !important;
 }

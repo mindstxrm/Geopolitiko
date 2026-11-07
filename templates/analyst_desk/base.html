@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* Aligned with Terminal Visual Grade-1 tokens (app/static/css/terminal.css) */
     :root {
       --bg: #0b0f17;
       --panel: #121826;
@@ -21,8 +22,16 @@
       --ok: #34d399;
       --bad: #f87171;
       --warn: #fbbf24;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --t-risk-1: #166534;
+      --t-risk-2: #65a30d;
+      --t-risk-3: #ca8a04;
+      --t-risk-4: #ea580c;
+      --t-risk-5: #dc2626;
+      --t-status-ok: var(--ok);
+      --t-status-warn: var(--warn);
+      --t-status-crit: var(--bad);
+      --radius: 6px;
+      --radius-sm: 4px;
       --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
       --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
     }
@@ -53,13 +62,31 @@
     }
     header strong { font-size: 1.05rem; letter-spacing: -0.02em; }
     .tag {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--muted);
       border: 1px solid var(--border);
       background: var(--accent-muted);
-      padding: 0.15rem 0.5rem;
-      border-radius: 999px;
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      border: 1px solid transparent;
+    }
+    .status-pill.ok { color: var(--ok); background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.35); }
+    .status-pill.warn { color: var(--warn); background: rgba(251, 191, 36, 0.12); border-color: rgba(251, 191, 36, 0.4); }
+    .status-pill.crit { color: #fecaca; background: rgba(248, 113, 113, 0.15); border-color: rgba(248, 113, 113, 0.45); }
     main { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
     .flash {
       padding: 0.6rem 0.9rem;
@@ -134,7 +161,7 @@
   <header>
     <div>
       <strong>Analyst Desk</strong>
-      <span class="tag">P2 · aligned with Terminal</span>
+      <span class="tag">Terminal console</span>
       {% if desk_user and desk_user.username %}
       <span class="header-meta"> · {{ desk_user.username }}{% if desk_user.via %} ({{ desk_user.via }}){% endif %}</span>
       {% endif %}
