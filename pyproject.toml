@@ -1,0 +1,17 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = [
+  "app/models.py",
+  "app/routes.py",
+  "app/static",
+]
+
+[tool.ruff.lint]
+# Keep CI green on the monolith: focus on correctness in new P4 modules.
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]

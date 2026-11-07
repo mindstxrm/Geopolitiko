@@ -110,7 +110,24 @@
     </section>
   </div>
 
+  <details class="more-panel" style="margin-bottom:16px;">
+    <summary style="cursor:pointer;font-weight:600;margin-bottom:0.75rem;">More — platform / sources / indicators</summary>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:16px;">
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Platform (P4)</h3>
+      <ul class="data-list">
+        <li>DB backend: <strong>{{ health.database_url.backend if health.database_url else '—' }}</strong>
+          · probe {{ 'ok' if health.database_url and health.database_url.ok else 'fail' }}</li>
+        <li>Celery preferred: {{ health.celery_preferred }}</li>
+        <li>Audit recent: {{ health.audit.recent_count if health.audit else 0 }}
+          {% if health.audit and health.audit.latest %}
+          · latest {{ health.audit.latest.action }} by {{ health.audit.latest.actor or '—' }}
+          {% endif %}
+        </li>
+        <li>In-process metrics: {{ (health.metrics.counters or {})|length if health.metrics else 0 }} counters</li>
+      </ul>
+      <p class="muted" style="margin-bottom:0;">See <code>docs/P4_PLATFORM.md</code> · Compose: <code>docker compose up --build</code></p>
+    </section>
     <section class="sidebar-panel">
       <h3 style="margin-top:0;">Source catalog (P3)</h3>
       <ul class="data-list">
@@ -140,6 +157,7 @@
       <p class="muted" style="margin-bottom:0;">Worker runs these on an interval (see <code>docs/P3_MOAT.md</code>).</p>
     </section>
   </div>
+  </details>
 
   <section class="sidebar-panel">
     <h2 style="margin-top:0;">Recently published to Terminal</h2>

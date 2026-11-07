@@ -67,6 +67,18 @@
     <textarea id="reviewed_body" name="reviewed_body">{{ display_body }}</textarea>
     <label for="reviewer_note" style="display:block;margin-top:0.75rem;">Reviewer note (optional)</label>
     <input type="text" id="reviewer_note" name="reviewer_note" style="width:100%;max-width:100%;" placeholder="Internal note">
+    <label for="reject_reason" style="display:block;margin-top:0.75rem;">Reject reason (required when rejecting)</label>
+    <select id="reject_reason" name="reject_reason" style="width:100%;max-width:28rem;">
+      <option value="">— select if rejecting —</option>
+      <option value="insufficient_sources">Insufficient sources / single-source</option>
+      <option value="ungrounded_claims">Ungrounded claims / weak citations</option>
+      <option value="stale">Stale / superseded by newer brief</option>
+      <option value="wrong_desk">Wrong desk / out of scope</option>
+      <option value="tone_framing">Tone / framing concern</option>
+      <option value="factual_error">Factual error</option>
+      <option value="duplicate">Duplicate of existing proposal</option>
+      <option value="other">Other (see note)</option>
+    </select>
     <div class="proposal-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
       <button type="submit" name="action" value="approve" class="btn ok">Approve + publish to Terminal</button>
       <button type="submit" name="action" value="reject" class="btn danger">Reject</button>
@@ -75,6 +87,31 @@
   </form>
 </div>
 {% else %}
+{% if p.status == 'approved' %}
+<div class="panel">
+  <h2>Where this landed (Terminal)</h2>
+  <p class="muted" style="margin-top:0;">
+    {% if p.published_to_terminal_at %}
+    Published to Terminal at <strong>{{ p.published_to_terminal_at }}</strong>.
+    {% else %}
+    Approved but not yet visible as Terminal intel (publish may be disabled or failed).
+    {% endif %}
+  </p>
+  <ul>
+    {% set focus = (p.focus_country or '')|upper %}
+    {% if focus %}
+    <li><a href="http://127.0.0.1:5003/country/{{ focus }}#analyst-desk-terminal" target="_blank" rel="noopener">Country dashboard: {{ focus }}</a></li>
+    {% endif %}
+    {% for c in (p.countries or [])[:5] %}
+      {% set cc = (c ~ '')|upper %}
+      {% if cc and cc != focus %}
+      <li><a href="http://127.0.0.1:5003/country/{{ cc }}#analyst-desk-terminal" target="_blank" rel="noopener">Country dashboard: {{ cc }}</a></li>
+      {% endif %}
+    {% endfor %}
+    <li><a href="http://127.0.0.1:5003/ops" target="_blank" rel="noopener">Ops health → recently published</a></li>
+  </ul>
+</div>
+{% endif %}
 <div class="panel">
   <h2>Final text</h2>
   <pre style="white-space: pre-wrap; font-family: inherit; margin:0;">{{ p.reviewed_body or p.body }}</pre>

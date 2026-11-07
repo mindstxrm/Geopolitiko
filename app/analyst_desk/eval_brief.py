@@ -85,19 +85,36 @@ def evaluate_brief(
         },
     ]
 
+    try:
+        from app.analyst_desk.confirmation import gate_brief_for_confirmation
+
+        conf_check = gate_brief_for_confirmation(text, sources)
+        checks.append(
+            {
+                "id": conf_check["id"],
+                "ok": conf_check["ok"],
+                "detail": conf_check["detail"],
+            }
+        )
+        confirmation = conf_check.get("assessment")
+    except Exception:
+        confirmation = None
+
     # Score (partial credit for section coverage)
     present_ratio = 1.0
     if required:
         present_ratio = max(0.0, 1.0 - (len(missing) / len(required)))
-    score = int(30 * present_ratio)
+    score = int(28 * present_ratio)
     if cited_ok:
-        score += 30
+        score += 28
     if has_sources_section or source_count == 0:
-        score += 15
+        score += 14
     if has_labeling or has_gaps or source_count < 3:
-        score += 15
+        score += 14
     if len(text.strip()) >= 120:
-        score += 10
+        score += 8
+    if confirmation is None or confirmation.get("status") in ("not_applicable", "confirmed"):
+        score += 8
     score = max(0, min(100, int(score)))
     if score >= 90:
         grade = "A"
@@ -118,5 +135,6 @@ def evaluate_brief(
         "missing_sections": missing,
         "citation_ids": citations,
         "source_count": source_count,
+        "confirmation": confirmation,
         "pass": score >= 70,
     }

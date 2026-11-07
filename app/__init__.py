@@ -87,13 +87,26 @@ def create_app():
         return out
 
     from app.observability import install_request_observability
+    from app.security import install_security
+    from app.sentry_init import init_sentry
 
     install_request_observability(app, service="terminal")
+    install_security(app, service="terminal")
+    init_sentry(service="terminal")
 
     from app.routes import bp
     from app.api_routes import api
     app.register_blueprint(bp)
     app.register_blueprint(api)
+
+    @app.context_processor
+    def inject_authz_context():
+        try:
+            from app.authz import current_role
+
+            return {"current_role": current_role()}
+        except Exception:
+            return {"current_role": "viewer"}
 
     @app.context_processor
     def inject_terminal_policy_context():

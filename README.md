@@ -54,7 +54,11 @@ Backups: `python scripts/backup_sqlite.py`. Runbook: `docs/P0_OPS_RUNBOOK.md`.
 **Intel quality (P1):** Desk SOP packs + citation grounding + brief eval — `docs/P1_INTEL_QUALITY.md`.  
 **Operability (P2):** Terminal→Desk SSO (`/desk`), worker heartbeats, shared design tokens — `docs/P2_OPERABILITY.md`.  
 **Moat (P3):** Source tiers, scheduled multi-region briefs, approve→webhook delivery, indicator coverage — `docs/P3_MOAT.md`.  
-Tests: `pytest -q`.
+**Platform (P4):** AuthZ/CSRF/audit/Compose/Alembic — `docs/P4_PLATFORM.md`.  
+**Product loop (P5):** Declutter, reject taxonomy, DLQ replay — `docs/P5_PRODUCT_LOOP.md`.  
+**Intel spine (P6):** Terminal events, confirmation gates, entities, golden briefs — `docs/P6_INTEL_SPINE.md`.  
+**Cutover (P7):** Dialect helpers, feature flags, domain package start — `docs/P7_PLATFORM_CUTOVER.md`.  
+Tests: `pytest -q`. Local prod-parity: `docker compose up --build`.
 
 ### Analyst Desk (separate approval console)
 

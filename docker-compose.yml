@@ -1,0 +1,130 @@
+# Local prod-parity stack (P4).
+# SQLite remains the default app store via mounted ./data.
+# Postgres is provisioned for cutover / Alembic experiments (set DATABASE_URL to switch probes).
+#
+#   docker compose up --build
+#   Terminal  http://localhost:5003
+#   Desk      http://localhost:5005
+#   Postgres  localhost:5432  (geopolitiko / geopolitiko)
+#   Redis     localhost:6379
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: geopolitiko
+      POSTGRES_PASSWORD: geopolitiko
+      POSTGRES_DB: geopolitiko
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/docker/init-postgres.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geopolitiko -d geopolitiko"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    command: gunicorn -b 0.0.0.0:5003 -w 2 --timeout 120 run:app
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_PATH: /app/data/news.db
+      ANALYST_DESK_DATABASE_PATH: /app/data/analyst_desk.db
+      # Optional Postgres cutover — uncomment after migrate:
+      # DATABASE_URL: postgresql+psycopg://geopolitiko:geopolitiko@postgres:5432/geopolitiko
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      ANALYST_DESK_USE_CELERY: "1"
+      ANALYST_DESK_PUBLIC_URL: http://localhost:5005
+      TERMINAL_PUBLIC_URL: http://localhost:5003
+      GEOPOLITIKO_ENV: production
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  desk:
+    build: .
+    command: gunicorn -b 0.0.0.0:5005 -w 2 --timeout 120 run_analyst_desk:app
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_PATH: /app/data/news.db
+      ANALYST_DESK_DATABASE_PATH: /app/data/analyst_desk.db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      ANALYST_DESK_USE_CELERY: "1"
+      ANALYST_DESK_PUBLIC_URL: http://localhost:5005
+      TERMINAL_PUBLIC_URL: http://localhost:5003
+      GEOPOLITIKO_ENV: production
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_started
+
+  worker:
+    build: .
+    command: celery -A app.analyst_desk.celery_app worker -l INFO -Q celery,desk_metrics -c 2
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_PATH: /app/data/news.db
+      ANALYST_DESK_DATABASE_PATH: /app/data/analyst_desk.db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      ANALYST_DESK_USE_CELERY: "1"
+      GEOPOLITIKO_ENV: production
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  beat:
+    build: .
+    command: celery -A app.analyst_desk.celery_app beat -l INFO
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_PATH: /app/data/news.db
+      ANALYST_DESK_DATABASE_PATH: /app/data/analyst_desk.db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      ANALYST_DESK_CELERY_BEAT_SECONDS: "300"
+      GEOPOLITIKO_ENV: production
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      worker:
+        condition: service_started
+
+volumes:
+  pgdata:

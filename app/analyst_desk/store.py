@@ -977,6 +977,55 @@ def mark_message_processed(message_id: int, success: bool = True) -> None:
         )
 
 
+def create_standalone_event(
+    *,
+    event_title: str,
+    event_summary: str = "",
+    event_type: str = "general",
+    primary_country_code: str | None = None,
+    region: str | None = None,
+    importance_score: float = 50.0,
+    confidence_score: float = 0.5,
+    event_signature: str | None = None,
+    created_by_agent: str = "manual",
+) -> int:
+    """Insert an event without a document link (tests / manual spine)."""
+    now = _now_iso()
+    with _ad_connection() as conn:
+        if event_signature:
+            row = conn.execute(
+                "SELECT id FROM events WHERE event_signature = ? LIMIT 1",
+                (event_signature,),
+            ).fetchone()
+            if row:
+                return int(row["id"])
+        cur = conn.execute(
+            """
+            INSERT INTO events (
+                event_signature, event_title, event_summary, event_type, primary_country_code, region, event_start_at,
+                event_last_updated_at, status, importance_score, confidence_score, verification_status,
+                created_by_agent, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?, 'pending', ?, ?, ?)
+            """,
+            (
+                event_signature,
+                event_title,
+                event_summary,
+                event_type,
+                primary_country_code,
+                region,
+                now,
+                now,
+                importance_score,
+                confidence_score,
+                created_by_agent,
+                now,
+                now,
+            ),
+        )
+        return int(cur.lastrowid)
+
+
 def upsert_event_from_document(
     *,
     doc_id: int,
@@ -1855,6 +1904,57 @@ def list_recent_dead_letter_tasks(limit: int = 100) -> list[dict[str, Any]]:
                 d["payload"] = {}
             out.append(d)
         return out
+
+
+def get_dead_letter_task(dlq_id: int) -> dict[str, Any] | None:
+    with _ad_connection() as conn:
+        row = conn.execute(
+            """
+            SELECT id, task_name, task_id, payload_json, error_message, retries, created_at
+            FROM dead_letter_tasks WHERE id = ?
+            """,
+            (dlq_id,),
+        ).fetchone()
+        if not row:
+            return None
+        d = dict(row)
+        raw = d.get("payload_json")
+        if raw and isinstance(raw, str):
+            try:
+                d["payload"] = json.loads(raw)
+            except json.JSONDecodeError:
+                d["payload"] = {}
+        else:
+            d["payload"] = {}
+        return d
+
+
+def delete_dead_letter_task(dlq_id: int) -> bool:
+    with _ad_connection() as conn:
+        cur = conn.execute("DELETE FROM dead_letter_tasks WHERE id = ?", (dlq_id,))
+        return cur.rowcount > 0
+
+
+def replay_dead_letter_task(dlq_id: int) -> dict[str, Any]:
+    """
+    Re-queue a dead-lettered Celery task by name (best-effort).
+    Removes the DLQ row on successful enqueue.
+    """
+    row = get_dead_letter_task(dlq_id)
+    if not row:
+        return {"ok": False, "error": "not found"}
+    task_name = (row.get("task_name") or "").strip()
+    payload = row.get("payload") or {}
+    if not task_name:
+        return {"ok": False, "error": "missing task_name"}
+    try:
+        from app.analyst_desk.celery_app import celery_app
+
+        celery_app.send_task(task_name, kwargs=payload if isinstance(payload, dict) else {})
+        delete_dead_letter_task(dlq_id)
+        return {"ok": True, "task_name": task_name, "dlq_id": dlq_id}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "task_name": task_name, "dlq_id": dlq_id}
 
 
 def _row_to_dict(row: sqlite3.Row) -> dict[str, Any]:

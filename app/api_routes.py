@@ -192,6 +192,34 @@ def api_sources_catalog():
     return jsonify({"summary": sources_summary(), "sources": list_sources()})
 
 
+@api.route("/events")
+def api_terminal_events():
+    """Durable Terminal event spine (mirrored from Desk)."""
+    from app.terminal_events import list_terminal_events
+
+    country = (request.args.get("country") or "").strip().upper() or None
+    try:
+        limit = int(request.args.get("limit") or 50)
+    except ValueError:
+        limit = 50
+    rows = list_terminal_events(country=country, limit=limit)
+    return jsonify({"ok": True, "count": len(rows), "events": rows})
+
+
+@api.route("/entities/resolve")
+def api_entities_resolve():
+    """Resolve free-text / ISO3 to stable entity ids."""
+    from app.entities import entity_catalog_summary, extract_entities_from_text, resolve_entity
+
+    q = (request.args.get("q") or "").strip()
+    if q:
+        one = resolve_entity(q)
+        return jsonify({"ok": True, "query": q, "entity": one, "catalog": entity_catalog_summary()})
+    text = (request.args.get("text") or "").strip()
+    found = extract_entities_from_text(text) if text else []
+    return jsonify({"ok": True, "entities": found, "catalog": entity_catalog_summary()})
+
+
 @api.route("/indicators/coverage")
 def api_indicators_coverage():
     """Indicator roadmap coverage counts (macro stress + energy)."""

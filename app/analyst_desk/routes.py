@@ -54,6 +54,8 @@ from app.analyst_desk.store import (
     list_published_proposals,
     list_recent_alerts,
     list_recent_dead_letter_tasks,
+    replay_dead_letter_task,
+    delete_dead_letter_task,
     list_recent_extracted_metrics,
     list_recent_country_risk_snapshots,
     list_recent_agent_messages,
@@ -131,14 +133,26 @@ def auth_bridge():
     if not data:
         flash("SSO link expired or invalid. Log in again from the Terminal or use Desk password.", "error")
         return redirect(url_for("analyst_desk.login"))
+    from app.authz import resolve_user_role
+    from app.models import get_user_by_id
+
+    role = "viewer"
+    try:
+        uid = data.get("uid")
+        row = get_user_by_id(int(uid)) if uid is not None else None
+        role = resolve_user_role(row, data.get("u"))
+    except Exception:
+        role = resolve_user_role(None, data.get("u"))
     session["analyst_desk_ok"] = True
     session["analyst_desk_user"] = {
         "id": data.get("uid"),
         "username": data.get("u"),
         "via": "terminal_bridge",
+        "role": role,
     }
+    session["analyst_desk_role"] = role
     session.permanent = True
-    log_event("desk_sso_ok", username=data.get("u"), user_id=data.get("uid"))
+    log_event("desk_sso_ok", username=data.get("u"), user_id=data.get("uid"), role=role)
     nxt = request.args.get("next") or url_for("analyst_desk.index")
     flash(f"Signed in via Terminal as {data.get('u')}.", "info")
     return redirect(nxt)
@@ -153,10 +167,13 @@ def login():
     from app.observability import log_event
 
     app = current_app
+    from app.authz import resolve_user_role
+
     # Dev open mode
     if not _password_configured(app):
         session["analyst_desk_ok"] = True
-        session["analyst_desk_user"] = {"username": "dev-open", "via": "open"}
+        session["analyst_desk_user"] = {"username": "dev-open", "via": "open", "role": "admin"}
+        session["analyst_desk_role"] = "admin"
         return redirect(url_for("analyst_desk.index"))
     if request.method == "POST":
         pwd = (request.form.get("password") or "").strip()
@@ -169,21 +186,24 @@ def login():
         if pwd and expected and pwd == expected:
             ok = True
             via = "desk_password"
-            user_meta = {"username": username or "desk-admin", "via": via}
+            user_meta = {"username": username or "desk-admin", "via": via, "role": "admin"}
         # 2) Terminal user credentials (unified auth)
         if not ok and username and pwd:
             row = get_user_by_username(username)
             if row and verify_password(row, pwd) and row.get("is_active", 1):
                 ok = True
                 via = "terminal_user"
+                role = resolve_user_role(row, row.get("username"))
                 user_meta = {
                     "id": row.get("id"),
                     "username": row.get("username"),
                     "via": via,
+                    "role": role,
                 }
         if ok:
             session["analyst_desk_ok"] = True
             session["analyst_desk_user"] = user_meta
+            session["analyst_desk_role"] = (user_meta or {}).get("role") or "viewer"
             session.permanent = True
             log_event("desk_login_ok", via=via, username=(user_meta or {}).get("username"))
             nxt = request.args.get("next") or url_for("analyst_desk.index")
@@ -197,6 +217,7 @@ def login():
 def logout():
     session.pop("analyst_desk_ok", None)
     session.pop("analyst_desk_user", None)
+    session.pop("analyst_desk_role", None)
     return redirect(url_for("analyst_desk.login"))
 
 
@@ -259,11 +280,54 @@ def operations():
 
 @bp.route("/operations/prune", methods=["POST"])
 def operations_prune():
+    from app.authz import current_role, role_at_least
+
+    if not role_at_least(current_role(), "admin"):
+        flash("Admin role required to prune operational data.", "error")
+        return redirect(url_for("analyst_desk.operations"))
     out = prune_operational_data(keep_tasks_days=30, keep_messages_days=14, keep_metrics_days=30)
     flash(
         f"Prune complete: tasks {out.get('tasks_deleted', 0)}, messages {out.get('messages_deleted', 0)}, metrics {out.get('metrics_deleted', 0)}.",
         "info",
     )
+    return redirect(url_for("analyst_desk.operations"))
+
+
+@bp.route("/operations/dlq/<int:dlq_id>/replay", methods=["POST"])
+def operations_dlq_replay(dlq_id: int):
+    from app.audit import record_audit
+    from app.authz import current_role, role_at_least
+
+    if not role_at_least(current_role(), "analyst"):
+        flash("Analyst role required to replay dead-letter tasks.", "error")
+        return redirect(url_for("analyst_desk.operations"))
+    result = replay_dead_letter_task(dlq_id)
+    if result.get("ok"):
+        record_audit(
+            "dlq.replay",
+            entity_type="dead_letter_task",
+            entity_id=dlq_id,
+            detail={"task_name": result.get("task_name")},
+        )
+        flash(f"Replayed task {result.get('task_name')} (DLQ #{dlq_id} removed).", "info")
+    else:
+        flash(f"Replay failed: {result.get('error')}", "error")
+    return redirect(url_for("analyst_desk.operations"))
+
+
+@bp.route("/operations/dlq/<int:dlq_id>/dismiss", methods=["POST"])
+def operations_dlq_dismiss(dlq_id: int):
+    from app.audit import record_audit
+    from app.authz import current_role, role_at_least
+
+    if not role_at_least(current_role(), "analyst"):
+        flash("Analyst role required to dismiss dead-letter tasks.", "error")
+        return redirect(url_for("analyst_desk.operations"))
+    if delete_dead_letter_task(dlq_id):
+        record_audit("dlq.dismiss", entity_type="dead_letter_task", entity_id=dlq_id)
+        flash(f"Dismissed DLQ #{dlq_id}.", "info")
+    else:
+        flash("DLQ entry not found.", "error")
     return redirect(url_for("analyst_desk.operations"))
 
 
@@ -279,6 +343,12 @@ def approvals():
 
 @bp.route("/approvals/bulk", methods=["POST"])
 def approvals_bulk():
+    from app.audit import record_audit
+    from app.authz import current_role, role_at_least
+
+    if not role_at_least(current_role(), "approver"):
+        flash("Approver role required for bulk approve/reject.", "error")
+        return redirect(url_for("analyst_desk.approvals"))
     action = (request.form.get("action") or "").strip().lower()
     confirm_publish = (request.form.get("confirm_publish") or "").strip() == "1"
     ids_raw = request.form.getlist("proposal_ids")
@@ -306,14 +376,33 @@ def approvals_bulk():
         if action == "approve":
             update_proposal_review(pid, "approved", row.get("body"), "Bulk-approved")
             changed += 1
+            record_audit(
+                "proposal.approve",
+                entity_type="proposal",
+                entity_id=pid,
+                detail={"bulk": True},
+            )
             pub = publish_approved_proposal_to_terminal(pid)
             if pub.get("ok"):
                 published += 1
+                if not pub.get("skipped"):
+                    record_audit(
+                        "proposal.publish",
+                        entity_type="proposal",
+                        entity_id=pid,
+                        detail={"bulk": True, "metrics_attached": pub.get("metrics_attached")},
+                    )
             else:
                 failed_pub += 1
         elif action == "reject":
             update_proposal_review(pid, "rejected", None, "Bulk-rejected")
             changed += 1
+            record_audit(
+                "proposal.reject",
+                entity_type="proposal",
+                entity_id=pid,
+                detail={"bulk": True},
+            )
     if action == "approve":
         flash(
             f"Bulk approve done: {changed} proposals approved, {published} published, {failed_pub} publish failures.",
@@ -348,6 +437,9 @@ def extraction_qc():
 
 @bp.route("/proposal/<int:pid>", methods=["GET", "POST"])
 def proposal_detail(pid: int):
+    from app.audit import record_audit
+    from app.authz import current_role, role_at_least
+
     row = get_proposal(pid)
     if not row:
         flash("Proposal not found.", "error")
@@ -356,9 +448,19 @@ def proposal_detail(pid: int):
         action = (request.form.get("action") or "").strip()
         note = (request.form.get("reviewer_note") or "").strip() or None
         edited = (request.form.get("reviewed_body") or "").strip()
+        reject_reason = (request.form.get("reject_reason") or "").strip() or None
+        if action in ("approve", "reject") and not role_at_least(current_role(), "approver"):
+            flash("Approver role required for approve/reject.", "error")
+            return redirect(url_for("analyst_desk.proposal_detail", pid=pid))
         if action == "approve":
             final = edited if edited else row["body"]
             update_proposal_review(pid, "approved", final, note)
+            record_audit(
+                "proposal.approve",
+                entity_type="proposal",
+                entity_id=pid,
+                detail={"agent_id": row.get("agent_id"), "note": note},
+            )
             from app.analyst_desk.publish import publish_approved_proposal_to_terminal
 
             pub = publish_approved_proposal_to_terminal(pid)
@@ -368,6 +470,16 @@ def proposal_detail(pid: int):
                     "info",
                 )
             elif pub.get("ok"):
+                record_audit(
+                    "proposal.publish",
+                    entity_type="proposal",
+                    entity_id=pid,
+                    detail={
+                        "metrics_attached": pub.get("metrics_attached"),
+                        "terminal_id": pub.get("terminal_id"),
+                        "countries": pub.get("countries") or row.get("countries"),
+                    },
+                )
                 n = pub.get("metrics_attached", 0)
                 countries = row.get("countries") or []
                 if not isinstance(countries, list):
@@ -397,7 +509,17 @@ def proposal_detail(pid: int):
             else:
                 flash(f"Approved, but Terminal publish failed: {pub.get('error')}", "error")
         elif action == "reject":
-            update_proposal_review(pid, "rejected", None, note)
+            if not reject_reason:
+                flash("Select a reject reason (taxonomy) before rejecting.", "error")
+                return redirect(url_for("analyst_desk.proposal_detail", pid=pid))
+            reason_note = f"[{reject_reason}] {note or ''}".strip()
+            update_proposal_review(pid, "rejected", None, reason_note)
+            record_audit(
+                "proposal.reject",
+                entity_type="proposal",
+                entity_id=pid,
+                detail={"reason": reject_reason, "note": note},
+            )
             flash("Rejected.", "info")
         else:
             flash("Unknown action.", "error")

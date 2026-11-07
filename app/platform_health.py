@@ -286,7 +286,77 @@ def build_health_report() -> dict[str, Any]:
             "last_errors": ops.get("last_scheduled_briefs_errors"),
             "last_agents": ops.get("last_scheduled_briefs_agents"),
         },
+        "database_url": _database_url_block(),
+        "audit": _audit_block(),
+        "metrics": _metrics_block(),
+        "celery_preferred": _celery_preferred(),
+        "cutover": _cutover_block(),
+        "feature_flags": _feature_flags_block(),
     }
+
+
+def _cutover_block() -> dict[str, Any]:
+    try:
+        from app.sql_dialect import cutover_status
+
+        return cutover_status()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def _feature_flags_block() -> dict[str, Any]:
+    try:
+        from app.feature_flags import all_flags
+
+        return all_flags()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def _database_url_block() -> dict[str, Any]:
+    try:
+        from app.db import database_url, dialect_name, probe_database
+
+        url = database_url()
+        probe = probe_database(url)
+        return {
+            "backend": dialect_name(url),
+            "ok": bool(probe.get("ok")),
+            "host": probe.get("host"),
+            "database": probe.get("database"),
+            "path": probe.get("path"),
+            "error": probe.get("error"),
+        }
+    except Exception as e:
+        return {"backend": "unknown", "ok": False, "error": str(e)}
+
+
+def _audit_block() -> dict[str, Any]:
+    try:
+        from app.audit import recent_audit
+
+        rows = recent_audit(limit=5)
+        return {"ok": True, "recent_count": len(rows), "latest": rows[0] if rows else None}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "recent_count": 0}
+
+
+def _metrics_block() -> dict[str, Any]:
+    try:
+        from app.sentry_init import get_metrics_snapshot
+
+        return {"ok": True, "counters": get_metrics_snapshot()}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "counters": {}}
+
+
+def _celery_preferred() -> bool:
+    try:
+        from config import analyst_desk_use_celery
+
+        return bool(analyst_desk_use_celery())
+    except Exception:
+        return False
 
 
 def _sources_block() -> dict[str, Any]:

@@ -366,6 +366,8 @@ def process_event_builder(limit: int = 150) -> dict[str, int]:
 
 def process_verification_checks(limit: int = 120) -> dict[str, int]:
     """Contradiction/verification agent: flag likely conflicting event narratives."""
+    from app.analyst_desk.confirmation import assess_confirmation, text_needs_confirmation
+
     task_id = create_agent_task("verification_agent", "event_verification", {"limit": limit})
     try:
         rows = list_events_for_verification(limit=limit)
@@ -379,6 +381,19 @@ def process_verification_checks(limit: int = 120) -> dict[str, int]:
             has_escalation = any(k in text for k in ("strike", "attack", "sanction", "exercise", "deployment"))
             has_deescalation = any(k in text for k in ("ceasefire", "talks", "resume", "agreement", "rollback"))
             has_uncertain = any(k in text for k in ("reportedly", "unconfirmed", "alleged", "unclear"))
+            # Multi-source gate for sensitive casualty/security claims (sources often empty → single_source/unconfirmed)
+            if text_needs_confirmation(text):
+                conf = assess_confirmation(text=text, sources=[])
+                if conf["status"] in ("single_source", "unconfirmed"):
+                    set_event_verification(
+                        event_id=int(e["id"]),
+                        status="pending",
+                        confidence=0.35,
+                        reason=f"Multi-source gate: {conf['reason']}",
+                        checked_by_agent="verification_agent",
+                    )
+                    pending += 1
+                    continue
             if has_escalation and has_deescalation:
                 set_event_verification(
                     event_id=int(e["id"]),
@@ -409,6 +424,13 @@ def process_verification_checks(limit: int = 120) -> dict[str, int]:
         from app.analyst_desk.store import complete_agent_task
 
         complete_agent_task(task_id)
+        # Mirror durable events into Terminal news.db
+        try:
+            from app.terminal_events import sync_recent_desk_events_to_terminal
+
+            sync_recent_desk_events_to_terminal(limit=min(80, max(limit, 20)))
+        except Exception:
+            pass
         return {"verified": verified, "contradicted": contradicted, "pending": pending}
     except Exception as e:
         fail_agent_task(task_id, str(e))

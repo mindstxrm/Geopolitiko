@@ -12,13 +12,19 @@
 <div class="panel">
   <h2>Pending proposals ({{ pending|length }})</h2>
   <form method="post" action="{{ url_for('analyst_desk.approvals_bulk') }}">
-    <p class="muted" style="margin:0 0 0.5rem 0;">
-      <label><input type="checkbox" name="confirm_publish" value="1"> Confirm publish to Terminal for bulk approvals</label>
-    </p>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;">
-      <button type="submit" name="action" value="approve" class="btn ok">Bulk approve + publish</button>
-      <button type="submit" name="action" value="reject" class="btn danger">Bulk reject</button>
-    </div>
+    <details class="more-panel" style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">More — bulk actions</summary>
+      <p class="muted" style="margin:0.5rem 0;">
+        Prefer opening each proposal first. Bulk is for after you have skimmed.
+      </p>
+      <p class="muted" style="margin:0 0 0.5rem 0;">
+        <label><input type="checkbox" name="confirm_publish" value="1"> Confirm publish to Terminal for bulk approvals</label>
+      </p>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;">
+        <button type="submit" name="action" value="approve" class="btn ok">Bulk approve + publish</button>
+        <button type="submit" name="action" value="reject" class="btn danger">Bulk reject</button>
+      </div>
+    </details>
     <table>
       <thead>
         <tr>

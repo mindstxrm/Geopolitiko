@@ -8,11 +8,8 @@ from flask import Flask, redirect, request, session, url_for
 # Repo root (contains templates/analyst_desk/); app lives at app/analyst_desk/app.py
 _ANALYST_DESK_ROOT = Path(__file__).resolve().parents[2]
 
+import config as _config
 from config import (
-    ANALYST_DESK_ADMIN_PASSWORD,
-    ANALYST_DESK_DATABASE_PATH,
-    ANALYST_DESK_SECRET_KEY,
-    DATABASE_PATH,
     analyst_desk_heuristic_only,
     assert_production_secrets,
     load_app_dotenv,
@@ -26,26 +23,36 @@ from app.observability import install_request_observability
 def create_analyst_desk_app() -> Flask:
     load_app_dotenv()
     assert_production_secrets()
+    # Read paths from config module (not import-time bindings) so tests can monkeypatch.
+    news_db = _config.DATABASE_PATH
+    desk_db = _config.ANALYST_DESK_DATABASE_PATH
+    desk_secret = _config.ANALYST_DESK_SECRET_KEY
+    desk_password = _config.ANALYST_DESK_ADMIN_PASSWORD
     # News DB global path for read-only article access
-    init_db(DATABASE_PATH)
-    init_analyst_desk_db(ANALYST_DESK_DATABASE_PATH)
+    init_db(news_db)
+    init_analyst_desk_db(desk_db)
     sync_agents_registry(AGENTS)
 
     app = Flask(__name__, template_folder=str(_ANALYST_DESK_ROOT / "templates"))
 
-    app.config["SECRET_KEY"] = ANALYST_DESK_SECRET_KEY
-    app.config["ANALYST_DESK_ADMIN_PASSWORD"] = ANALYST_DESK_ADMIN_PASSWORD or ""
+    app.config["SECRET_KEY"] = desk_secret
+    app.config["ANALYST_DESK_ADMIN_PASSWORD"] = desk_password or ""
     app.config["SESSION_COOKIE_NAME"] = "analyst_desk_session"
     app.config["PERMANENT_SESSION_LIFETIME"] = 86400 * 7
 
     from app.analyst_desk.routes import bp as analyst_desk_bp
+    from app.security import install_security
+    from app.sentry_init import init_sentry
 
     app.register_blueprint(analyst_desk_bp)
     install_request_observability(app, service="analyst_desk")
+    install_security(app, service="analyst_desk")
+    init_sentry(service="analyst_desk")
 
     @app.context_processor
     def _analyst_desk_template_globals():
         from app.analyst_desk.auth_bridge import terminal_public_url
+        from app.authz import current_role
 
         return {
             "analyst_desk_auth_required": bool(
@@ -54,6 +61,7 @@ def create_analyst_desk_app() -> Flask:
             "analyst_desk_heuristic_only": analyst_desk_heuristic_only(),
             "terminal_public_url": terminal_public_url(),
             "desk_user": session.get("analyst_desk_user"),
+            "current_role": current_role(),
         }
 
     def _password_configured() -> bool:

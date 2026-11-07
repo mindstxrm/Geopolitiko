@@ -165,6 +165,27 @@ def analyst_desk_celery_beat_seconds() -> int:
         return 300
 
 
+def analyst_desk_use_celery() -> bool:
+    """
+    Prefer Celery worker+beat over the loop worker.
+    Default: on in production unless ANALYST_DESK_USE_CELERY=0.
+    Force loop: ANALYST_DESK_FORCE_LOOP_WORKER=1.
+    """
+    if (os.environ.get("ANALYST_DESK_FORCE_LOOP_WORKER") or "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    ):
+        return False
+    raw = (os.environ.get("ANALYST_DESK_USE_CELERY") or "").strip().lower()
+    if raw in ("0", "false", "no", "off"):
+        return False
+    if raw in ("1", "true", "yes", "on"):
+        return True
+    return is_production_runtime()
+
+
 def analyst_desk_metric_llm_enabled() -> bool:
     """Use OpenAI JSON-schema structured extraction for quantitative signals (when key present and not heuristic-only)."""
     v = (os.environ.get("ANALYST_DESK_METRIC_LLM") or "0").strip().lower()

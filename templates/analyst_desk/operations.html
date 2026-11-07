@@ -132,18 +132,27 @@
 
 <div class="panel">
   <h2>Dead-letter task failures</h2>
+  <p class="muted">Replay re-enqueues the Celery task and removes the DLQ row on success.</p>
   <table>
-    <thead><tr><th>Task</th><th>Retries</th><th>Error</th><th>Created</th></tr></thead>
+    <thead><tr><th>Task</th><th>Retries</th><th>Error</th><th>Created</th><th></th></tr></thead>
     <tbody>
     {% for d in dead_letters %}
       <tr>
-        <td>{{ d.task_name }} <span class="muted">{{ d.task_id or '' }}</span></td>
+        <td>{{ d.task_name }} <span class="muted">#{{ d.id }} {{ d.task_id or '' }}</span></td>
         <td>{{ d.retries }}</td>
         <td class="muted">{{ (d.error_message or '')[:140] }}</td>
         <td class="muted">{{ d.created_at }}</td>
+        <td style="white-space:nowrap;">
+          <form method="post" action="{{ url_for('analyst_desk.operations_dlq_replay', dlq_id=d.id) }}" style="display:inline;">
+            <button type="submit" class="btn ok">Replay</button>
+          </form>
+          <form method="post" action="{{ url_for('analyst_desk.operations_dlq_dismiss', dlq_id=d.id) }}" style="display:inline;">
+            <button type="submit" class="btn secondary">Dismiss</button>
+          </form>
+        </td>
       </tr>
     {% else %}
-      <tr><td colspan="4" class="muted">No dead-letter tasks.</td></tr>
+      <tr><td colspan="5" class="muted">No dead-letter tasks.</td></tr>
     {% endfor %}
     </tbody>
   </table>

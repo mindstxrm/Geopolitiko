@@ -932,6 +932,12 @@ def init_db(path: str) -> None:
         )
         _ensure_article_columns(conn)
         _ensure_desk_terminal_intel_table(conn)
+        try:
+            from app.terminal_events import ensure_terminal_events_table
+
+            ensure_terminal_events_table(conn)
+        except Exception:
+            pass
         conn.execute(
             "CREATE INDEX IF NOT EXISTS idx_articles_cluster ON articles(cluster_id)"
         )
@@ -939,6 +945,13 @@ def init_db(path: str) -> None:
         _create_users_table(conn)
         _ensure_users_profile_columns(conn)
         _ensure_users_policy_prefs_columns(conn)
+        _ensure_users_role_column(conn)
+        try:
+            from app.audit import ensure_audit_table
+
+            ensure_audit_table(conn)
+        except Exception:
+            pass
         _create_api_keys_table(conn)
         _create_alerts_table(conn)
         _ensure_alerts_user_id(conn)
@@ -1486,6 +1499,14 @@ def _ensure_users_policy_prefs_columns(conn: sqlite3.Connection) -> None:
         conn.execute("ALTER TABLE users ADD COLUMN default_legal_review INTEGER DEFAULT 0")
 
 
+def _ensure_users_role_column(conn: sqlite3.Connection) -> None:
+    """RBAC role for Terminal + Desk (viewer/analyst/approver/admin)."""
+    cur = conn.execute("PRAGMA table_info(users)")
+    existing = {row[1] for row in cur.fetchall()}
+    if "role" not in existing:
+        conn.execute("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'viewer'")
+
+
 def _create_policy_workspace_tables(conn: sqlite3.Connection) -> None:
     """Tasks, threaded object comments, per-user visit tracking, entity change audit."""
     conn.execute(
@@ -2023,7 +2044,7 @@ def get_user_by_id(user_id: int) -> Optional[dict]:
     with _connection() as conn:
         cur = conn.execute(
             """SELECT id, username, email, is_active, created_at, name, title, organization,
-                      default_sensitivity_tier, default_legal_review FROM users WHERE id = ?""",
+                      default_sensitivity_tier, default_legal_review, role FROM users WHERE id = ?""",
             (user_id,),
         )
         row = cur.fetchone()
@@ -2037,6 +2058,8 @@ def get_user_by_id(user_id: int) -> Optional[dict]:
         d["default_sensitivity_tier"] = "internal"
     if "default_legal_review" not in d or d.get("default_legal_review") is None:
         d["default_legal_review"] = 0
+    if not d.get("role"):
+        d["role"] = "viewer"
     return d
 
 
@@ -2046,7 +2069,8 @@ def get_user_by_username(username: str) -> Optional[dict]:
         return None
     with _connection() as conn:
         cur = conn.execute(
-            "SELECT id, username, email, password_hash, is_active, created_at, name, title, organization FROM users WHERE username = ?",
+            """SELECT id, username, email, password_hash, is_active, created_at, name, title, organization, role
+               FROM users WHERE username = ?""",
             (username.strip().lower(),),
         )
         row = cur.fetchone()
@@ -2056,6 +2080,8 @@ def get_user_by_username(username: str) -> Optional[dict]:
     for k in ("name", "title", "organization"):
         if k not in d:
             d[k] = None
+    if not d.get("role"):
+        d["role"] = "viewer"
     return d
 
 
@@ -2066,6 +2092,7 @@ def create_user(
     name: Optional[str] = None,
     title: Optional[str] = None,
     organization: Optional[str] = None,
+    role: Optional[str] = None,
 ) -> int:
     """Create a user. Username stored lowercased. Returns user id. Email can be required by caller."""
     username = (username or "").strip().lower()
@@ -2077,13 +2104,34 @@ def create_user(
     name_val = (name or "").strip() or None
     title_val = (title or "").strip() or None
     org_val = (organization or "").strip() or None
+    try:
+        from app.authz import default_user_role, normalize_role
+
+        role_val = normalize_role(role) if role else default_user_role()
+    except Exception:
+        role_val = (role or "viewer").strip().lower() or "viewer"
     with _connection() as conn:
         cur = conn.execute(
-            """INSERT INTO users (username, email, password_hash, is_active, created_at, name, title, organization)
-               VALUES (?, ?, ?, 1, ?, ?, ?, ?)""",
-            (username, email_val, password_hash, created, name_val, title_val, org_val),
+            """INSERT INTO users (username, email, password_hash, is_active, created_at, name, title, organization, role)
+               VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?)""",
+            (username, email_val, password_hash, created, name_val, title_val, org_val, role_val),
         )
         return cur.lastrowid
+
+
+def set_user_role(user_id: int, role: str) -> bool:
+    """Update a user's RBAC role. Returns True on success."""
+    if not user_id:
+        return False
+    try:
+        from app.authz import normalize_role
+
+        role_val = normalize_role(role)
+    except Exception:
+        role_val = (role or "viewer").strip().lower() or "viewer"
+    with _connection() as conn:
+        cur = conn.execute("UPDATE users SET role = ? WHERE id = ?", (role_val, user_id))
+        return cur.rowcount > 0
 
 
 def update_user_profile(
@@ -2183,40 +2231,20 @@ def upsert_desk_terminal_intel(
     path = database_path or _DB_PATH
     if not path:
         raise RuntimeError("Database not initialized")
-    now = datetime.utcnow().isoformat() + "Z"
-    with _connection_for_path(path) as conn:
-        _ensure_desk_terminal_intel_table(conn)
-        conn.execute(
-            """
-            INSERT INTO desk_terminal_intel (
-                proposal_id, agent_id, run_type, title, body_markdown, countries_csv,
-                focus_country, metrics_json, reviewer_note, published_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(proposal_id) DO UPDATE SET
-                agent_id = excluded.agent_id,
-                run_type = excluded.run_type,
-                title = excluded.title,
-                body_markdown = excluded.body_markdown,
-                countries_csv = excluded.countries_csv,
-                focus_country = excluded.focus_country,
-                metrics_json = excluded.metrics_json,
-                reviewer_note = excluded.reviewer_note,
-                updated_at = excluded.updated_at
-            """,
-            (
-                proposal_id,
-                agent_id,
-                run_type,
-                title,
-                body_markdown,
-                countries_csv,
-                focus_country,
-                metrics_json,
-                reviewer_note,
-                now,
-                now,
-            ),
-        )
+    from app.domain.desk_intel import upsert_desk_terminal_intel as _upsert
+
+    _upsert(
+        proposal_id=proposal_id,
+        agent_id=agent_id,
+        run_type=run_type,
+        title=title,
+        body_markdown=body_markdown,
+        countries_csv=countries_csv,
+        focus_country=focus_country,
+        metrics_json=metrics_json,
+        reviewer_note=reviewer_note,
+        database_path=path,
+    )
 
 
 @contextmanager

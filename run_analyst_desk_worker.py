@@ -100,9 +100,31 @@ def main() -> int:
     signal.signal(signal.SIGTERM, _handle_sigterm)
     signal.signal(signal.SIGINT, _handle_sigterm)
 
+    from config import analyst_desk_use_celery
     from app.models import init_db
     from app.analyst_desk.agents import AGENTS
     from app.analyst_desk.store import init_analyst_desk_db, sync_agents_registry
+
+    if analyst_desk_use_celery():
+        logger.warning(
+            "Celery is preferred (ANALYST_DESK_USE_CELERY / production). "
+            "Start: celery -A app.analyst_desk.celery_app worker -l INFO -Q celery,desk_metrics "
+            "and celery -A app.analyst_desk.celery_app beat -l INFO. "
+            "To force this loop worker: ANALYST_DESK_FORCE_LOOP_WORKER=1"
+        )
+        # Still allow loop as escape hatch when FORCE is unset but operator ran this script
+        # intentionally — only exit when FORCE is not set AND USE_CELERY was explicit.
+        import os
+
+        explicit = (os.environ.get("ANALYST_DESK_USE_CELERY") or "").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+            "on",
+        )
+        if explicit:
+            logger.error("Exiting loop worker because ANALYST_DESK_USE_CELERY=1 (use Celery worker+beat).")
+            return 2
 
     init_db(DATABASE_PATH)
     init_analyst_desk_db(ANALYST_DESK_DATABASE_PATH)
