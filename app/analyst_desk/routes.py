@@ -384,8 +384,14 @@ def proposal_detail(pid: int):
                     f"http://127.0.0.1:5003/country/{cc}#analyst-desk-terminal" for cc in link_codes[:5]
                 )
                 where = f" Open on Terminal: {links}" if links else " Check Terminal Ops health → recently published."
+                delivery = pub.get("delivery") or {}
+                deliv = ""
+                if delivery.get("ok"):
+                    deliv = f" Delivered via {delivery.get('channel')}."
+                elif delivery.get("detail"):
+                    deliv = f" Delivery: {delivery.get('detail')}."
                 flash(
-                    f"Approved and published to Geopolitical Terminal ({n} quantitative signals attached).{where}",
+                    f"Approved and published to Geopolitical Terminal ({n} quantitative signals attached).{where}{deliv}",
                     "info",
                 )
             else:
@@ -629,6 +635,20 @@ def pipeline_brief():
     out = generate_daily_brief(limit_events=25)
     flash(f"Daily brief generated (#{out.get('briefing_id')}).", "info")
     return redirect(url_for("analyst_desk.briefing_detail", bid=int(out.get("briefing_id"))))
+
+
+@bp.route("/pipeline/scheduled-briefs", methods=["POST"])
+def pipeline_scheduled_briefs():
+    """Force multi-region daily volume proposals (P3 scheduled briefs)."""
+    from app.analyst_desk.scheduled_briefs import run_scheduled_regional_briefs
+
+    out = run_scheduled_regional_briefs(force=True)
+    flash(
+        f"Scheduled regional briefs: created {len(out.get('created') or [])}, "
+        f"errors {len(out.get('errors') or [])}.",
+        "info",
+    )
+    return redirect(url_for("analyst_desk.approvals"))
 
 
 @bp.route("/pipeline/topics", methods=["POST"])

@@ -53,6 +53,7 @@ Open [http://127.0.0.1:5003](http://127.0.0.1:5003) (or the port in `run.py`).
 Backups: `python scripts/backup_sqlite.py`. Runbook: `docs/P0_OPS_RUNBOOK.md`.  
 **Intel quality (P1):** Desk SOP packs + citation grounding + brief eval — `docs/P1_INTEL_QUALITY.md`.  
 **Operability (P2):** Terminal→Desk SSO (`/desk`), worker heartbeats, shared design tokens — `docs/P2_OPERABILITY.md`.  
+**Moat (P3):** Source tiers, scheduled multi-region briefs, approve→webhook delivery, indicator coverage — `docs/P3_MOAT.md`.  
 Tests: `pytest -q`.
 
 ### Analyst Desk (separate approval console)
@@ -121,7 +122,7 @@ Query agent endpoint (MVP):
 
 ## Adding sources
 
-Edit `app/scrapers/sources.py` and add entries to `SOURCES` with `name`, `url` (RSS/Atom feed URL), and `homepage`.
+Edit `app/scrapers/sources.py` — each entry needs `name`, `url`, `homepage`, plus `tier` (`A`/`B`/`C`) and optional `regions`.
 
 ## Data
 

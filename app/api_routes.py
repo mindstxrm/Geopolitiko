@@ -184,6 +184,22 @@ def api_health():
     return jsonify(report), code
 
 
+@api.route("/sources")
+def api_sources_catalog():
+    """Configured RSS sources with provenance tiers (P3)."""
+    from app.scrapers.sources import list_sources, sources_summary
+
+    return jsonify({"summary": sources_summary(), "sources": list_sources()})
+
+
+@api.route("/indicators/coverage")
+def api_indicators_coverage():
+    """Indicator roadmap coverage counts (macro stress + energy)."""
+    from app.indicator_coverage import build_indicator_coverage
+
+    return jsonify(build_indicator_coverage())
+
+
 @api.route("/command/suggest")
 def api_command_suggest():
     """Typeahead for command bar: countries, regions, presets, scenarios. ?q=...&type=country|region|keyword|scenario|..."""

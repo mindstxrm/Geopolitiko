@@ -110,6 +110,37 @@
     </section>
   </div>
 
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:16px;">
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Source catalog (P3)</h3>
+      <ul class="data-list">
+        <li>Configured feeds: <strong>{{ health.sources.count if health.sources else 0 }}</strong></li>
+        <li>Tier A: {{ (health.sources.by_tier.A if health.sources and health.sources.by_tier else 0) }}</li>
+        <li>Tier B: {{ (health.sources.by_tier.B if health.sources and health.sources.by_tier else 0) }}</li>
+        <li>Tier C: {{ (health.sources.by_tier.C if health.sources and health.sources.by_tier else 0) }}</li>
+      </ul>
+      <p class="muted" style="margin-bottom:0;">API: <a href="{{ url_for('api.api_sources_catalog') }}"><code>/api/sources</code></a></p>
+    </section>
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Indicator coverage (roadmap)</h3>
+      <ul class="data-list">
+        <li>Macro stress countries: <strong>{{ health.indicators.macroeconomic_stress_countries if health.indicators else 0 }}</strong> ({{ health.indicators.macroeconomic_stress_rows if health.indicators else 0 }} rows)</li>
+        <li>Energy exposure countries: {{ health.indicators.energy_commodity_countries if health.indicators else 0 }}</li>
+        <li>Sample: {{ (health.indicators.sample_macro_countries or [])|join(', ') or '—' }}</li>
+      </ul>
+      <p class="muted" style="margin-bottom:0;">API: <a href="{{ url_for('api.api_indicators_coverage') }}"><code>/api/indicators/coverage</code></a></p>
+    </section>
+    <section class="sidebar-panel">
+      <h3 style="margin-top:0;">Scheduled regional briefs</h3>
+      <ul class="data-list">
+        <li>Last run: {{ health.scheduled_briefs.last_at if health.scheduled_briefs else '—' }}</li>
+        <li>Created: {{ health.scheduled_briefs.last_count if health.scheduled_briefs else '—' }} · errors: {{ health.scheduled_briefs.last_errors if health.scheduled_briefs else '—' }}</li>
+        <li>Agents: {{ (health.scheduled_briefs.last_agents or [])|join(', ') if health.scheduled_briefs else '—' }}</li>
+      </ul>
+      <p class="muted" style="margin-bottom:0;">Worker runs these on an interval (see <code>docs/P3_MOAT.md</code>).</p>
+    </section>
+  </div>
+
   <section class="sidebar-panel">
     <h2 style="margin-top:0;">Recently published to Terminal</h2>
     <p class="muted">After you approve a Desk proposal, it should appear here and on matching country dashboards.</p>

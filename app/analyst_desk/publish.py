@@ -72,7 +72,27 @@ def publish_approved_proposal_to_terminal(proposal_id: int) -> dict[str, Any]:
             database_path=DATABASE_PATH,
         )
         mark_proposal_published_to_terminal(proposal_id)
-        return {"ok": True, "proposal_id": proposal_id, "metrics_attached": len(metrics_compact)}
+        delivery: dict[str, Any] = {"ok": False, "channel": "none", "detail": "not_attempted"}
+        try:
+            from app.analyst_desk.delivery import deliver_approved_brief
+
+            # Refresh proposal after review fields are set
+            prop2 = get_proposal(proposal_id) or prop
+            dok, channel, detail = deliver_approved_brief(prop2)
+            delivery = {"ok": dok, "channel": channel, "detail": detail}
+            if dok:
+                logger.info("Approved brief delivered via %s (%s)", channel, detail)
+            else:
+                logger.info("Approved brief delivery skipped/failed: %s", detail)
+        except Exception:
+            logger.exception("deliver_approved_brief failed")
+            delivery = {"ok": False, "channel": "none", "detail": "exception"}
+        return {
+            "ok": True,
+            "proposal_id": proposal_id,
+            "metrics_attached": len(metrics_compact),
+            "delivery": delivery,
+        }
     except Exception as e:
         logger.exception("publish_approved_proposal_to_terminal failed")
         return {"ok": False, "proposal_id": proposal_id, "error": str(e)}

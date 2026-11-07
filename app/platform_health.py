@@ -278,4 +278,30 @@ def build_health_report() -> dict[str, Any]:
         },
         "terminal_intel": intel,
         "secrets": secrets,
+        "sources": _sources_block(),
+        "indicators": _indicators_block(),
+        "scheduled_briefs": {
+            "last_at": ops.get("last_scheduled_briefs_at"),
+            "last_count": ops.get("last_scheduled_briefs_count"),
+            "last_errors": ops.get("last_scheduled_briefs_errors"),
+            "last_agents": ops.get("last_scheduled_briefs_agents"),
+        },
     }
+
+
+def _sources_block() -> dict[str, Any]:
+    try:
+        from app.scrapers.sources import sources_summary
+
+        return sources_summary()
+    except Exception as e:
+        return {"count": 0, "by_tier": {}, "error": str(e)}
+
+
+def _indicators_block() -> dict[str, Any]:
+    try:
+        from app.indicator_coverage import build_indicator_coverage
+
+        return build_indicator_coverage()
+    except Exception as e:
+        return {"ok": False, "error": str(e)}

@@ -413,6 +413,8 @@ Write for internal intelligence consumers. Be concise, neutral, and change-focus
 
 def build_numbered_sources(articles: list[dict[str, Any]], limit: int = 35) -> tuple[str, list[dict[str, Any]]]:
     """Return prompt block + structured source list for eval/context."""
+    from app.scrapers.sources import source_tier_for_name
+
     lines: list[str] = []
     structured: list[dict[str, Any]] = []
     for i, a in enumerate(articles[:limit], 1):
@@ -421,9 +423,10 @@ def build_numbered_sources(articles: list[dict[str, Any]], limit: int = 35) -> t
         src = (a.get("source_name") or "").strip()
         url = (a.get("url") or "").strip()
         aid = a.get("id")
+        tier = source_tier_for_name(src)
         summ = ((a.get("summary") or "").replace("\n", " ").strip())[:400]
         kt = ((a.get("key_takeaways") or "").replace("\n", " ").strip())[:300]
-        lines.append(f"[{sid}] ({src}) {title}")
+        lines.append(f"[{sid}] (Tier {tier} · {src}) {title}")
         if aid:
             lines.append(f"    article_id={aid}")
         if url:
@@ -439,6 +442,7 @@ def build_numbered_sources(articles: list[dict[str, Any]], limit: int = 35) -> t
                 "title": title,
                 "source_name": src,
                 "url": url,
+                "tier": tier,
             }
         )
     if not lines:

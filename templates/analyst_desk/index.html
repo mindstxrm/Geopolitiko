@@ -69,6 +69,9 @@
     <form method="post" action="{{ url_for('analyst_desk.pipeline_brief') }}">
       <button type="submit" class="btn secondary">5) Generate daily brief</button>
     </form>
+    <form method="post" action="{{ url_for('analyst_desk.pipeline_scheduled_briefs') }}">
+      <button type="submit" class="btn secondary">5b) Scheduled multi-region briefs</button>
+    </form>
     <form method="post" action="{{ url_for('analyst_desk.pipeline_topics') }}">
       <button type="submit" class="btn secondary">6) Topic synthesis</button>
     </form>

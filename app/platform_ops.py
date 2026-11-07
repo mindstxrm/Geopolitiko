@@ -124,6 +124,7 @@ def record_desk_worker_heartbeat(
                 "events",
                 "alerts_created",
                 "briefing_id",
+                "scheduled_briefs",
             )
             if k in stats
         }

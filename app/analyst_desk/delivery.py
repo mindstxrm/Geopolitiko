@@ -23,12 +23,20 @@ def _email_recipients() -> list[str]:
 def delivery_status() -> dict[str, Any]:
     """Non-secret delivery config status for UI diagnostics."""
     webhook = _webhook_url()
+    brief_webhook = (
+        (os.environ.get("ANALYST_DESK_BRIEF_WEBHOOK_URL") or "").strip() or webhook
+    )
     recipients = _email_recipients()
     return {
         "webhook_configured": bool(webhook),
         "webhook_preview": webhook[:70] + ("..." if webhook and len(webhook) > 70 else ""),
+        "brief_webhook_configured": bool(brief_webhook),
         "email_configured": bool(recipients),
         "email_recipients": recipients,
+        "deliver_on_approve": (os.environ.get("ANALYST_DESK_DELIVER_ON_APPROVE") or "1")
+        .strip()
+        .lower()
+        in ("1", "true", "yes", "on"),
     }
 
 
@@ -100,4 +108,80 @@ def send_test_delivery() -> tuple[bool, str, str]:
         "created_at": None,
     }
     return deliver_alert(test_alert)
+
+
+def _brief_webhook_url() -> str:
+    """Prefer dedicated brief webhook; fall back to alert webhook."""
+    return (
+        (os.environ.get("ANALYST_DESK_BRIEF_WEBHOOK_URL") or "").strip()
+        or _webhook_url()
+    )
+
+
+def deliver_approved_brief(proposal: dict[str, Any]) -> tuple[bool, str, str]:
+    """
+    Deliver a human-approved proposal (Slack-friendly JSON + email fallback).
+    Controlled by ANALYST_DESK_DELIVER_ON_APPROVE (default on when a channel is configured).
+    """
+    flag = (os.environ.get("ANALYST_DESK_DELIVER_ON_APPROVE") or "1").strip().lower()
+    if flag not in ("1", "true", "yes", "on"):
+        return False, "none", "deliver_on_approve_disabled"
+
+    title = (proposal.get("title") or f"Proposal #{proposal.get('id')}").strip()
+    agent = (proposal.get("agent_id") or "").strip()
+    body = (proposal.get("reviewed_body") or proposal.get("body") or "").strip()
+    excerpt = body[:3500] + ("…" if len(body) > 3500 else "")
+    countries = proposal.get("countries") or []
+    if not isinstance(countries, list):
+        countries = []
+    focus = (proposal.get("focus_country") or "").strip().upper()
+    codes = []
+    if focus:
+        codes.append(focus)
+    for c in countries:
+        cc = str(c).strip().upper()
+        if cc and cc not in codes:
+            codes.append(cc)
+    from app.analyst_desk.auth_bridge import terminal_public_url
+
+    term = terminal_public_url()
+    links = [f"{term}/country/{cc}#analyst-desk-terminal" for cc in codes[:5]]
+    text = (
+        f"*Approved Desk brief*\n"
+        f"*{title}*\n"
+        f"Agent: `{agent}` · id={proposal.get('id')}\n"
+        f"Countries: {', '.join(codes) or '—'}\n"
+        + ("Terminal: " + " | ".join(links) + "\n" if links else "")
+        + f"\n{excerpt}"
+    )
+    payload = {
+        "type": "approved_brief",
+        "text": text,  # Slack incoming webhooks
+        "proposal_id": proposal.get("id"),
+        "agent_id": agent,
+        "title": title,
+        "countries": codes,
+        "terminal_links": links,
+        "body_excerpt": excerpt,
+    }
+
+    url = _brief_webhook_url()
+    if url:
+        try:
+            r = requests.post(url, json=payload, timeout=15)
+            if 200 <= r.status_code < 300:
+                return True, "webhook", "ok"
+            webhook_detail = f"webhook_http_{r.status_code}"
+        except Exception as e:
+            webhook_detail = f"webhook_error:{e}"
+    else:
+        webhook_detail = "webhook_not_configured"
+
+    ok2, detail2 = _send_email_alert(
+        subject=f"[Approved] {title}",
+        body=text.replace("*", ""),
+    )
+    if ok2:
+        return True, "email", detail2
+    return False, "none", f"{webhook_detail}; {detail2}"
 

@@ -58,10 +58,25 @@ def run_tick() -> None:
     interval = analyst_desk_worker_interval_seconds()
     try:
         stats = run_full_pipeline_tick()
+        # P3: multi-region scheduled daily volumes (interval-gated)
+        try:
+            from app.analyst_desk.scheduled_briefs import run_scheduled_regional_briefs
+
+            sched = run_scheduled_regional_briefs()
+            stats["scheduled_briefs"] = 0 if sched.get("skipped") else len(sched.get("created") or [])
+            if not sched.get("skipped"):
+                logger.info(
+                    "scheduled briefs created=%s errors=%s",
+                    len(sched.get("created") or []),
+                    len(sched.get("errors") or []),
+                )
+        except Exception:
+            logger.exception("scheduled briefs failed")
+            stats["scheduled_briefs"] = -1
         record_desk_worker_heartbeat(status="ok", interval_seconds=interval, stats=stats)
         logger.info(
             "tick ok ingested=%s enriched=%s metrics_docs=%s metrics_rows=%s events=%s alerts=%s briefing=%s "
-            "topics=%s regions=%s countries=%s movers=%s scenarios=%s",
+            "topics=%s regions=%s countries=%s movers=%s scenarios=%s scheduled_briefs=%s",
             stats.get("ingested", 0),
             stats.get("enriched", 0),
             stats.get("metrics_docs", 0),
@@ -74,6 +89,7 @@ def run_tick() -> None:
             stats.get("country_snaps", 0),
             stats.get("movers", 0),
             stats.get("scenarios", 0),
+            stats.get("scheduled_briefs", 0),
         )
     except Exception as e:
         record_desk_worker_heartbeat(status="error", interval_seconds=interval, error=str(e))
