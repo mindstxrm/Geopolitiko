@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {# Institutional Terminal: dark chrome only — do not load light style.css (fights tokens). #}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
   {% block head %}{% endblock %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -30,22 +30,25 @@
     <a href="{{ url_for('main.situation_room') }}" class="terminal-logo" aria-label="Geopolitical Terminal home">
       <img src="{{ url_for('static', filename='logo.png') }}" alt="Geopolitical Terminal" class="terminal-logo-img">
     </a>
+    {# Monitor → Investigate → Brief hierarchy: Home · Geography · Security · Intelligence · Tools #}
     <ul class="terminal-nav-list">
       <li><a href="{{ url_for('main.situation_room') }}" class="{{ 'active' if ep == 'main.situation_room' else '' }}">Home</a></li>
 
       <li class="nav-group-wrap" data-nav-group="geography">
-        <details class="nav-group" {{ 'open' if ep in ('main.integration_dashboard', 'main.country_dashboard', 'main.relationship_mapper') else '' }}>
-          <summary class="nav-group-trigger" title="Countries and regions: risk and integration by country. Relationship Mapper: alignment and trade.">Geography</summary>
+        <details class="nav-group" {{ 'open' if ep in ('main.integration_dashboard', 'main.country_dashboard', 'main.relationship_mapper', 'main.approval_protests', 'main.stability_dashboard') else '' }}>
+          <summary class="nav-group-trigger" title="Countries, regions, politics, stability.">Geography</summary>
           <ul class="nav-group-menu">
             <li><a href="{{ url_for('main.integration_dashboard') }}" class="{{ 'active' if ep in ('main.integration_dashboard', 'main.country_dashboard') else '' }}">Countries & Regions</a></li>
             <li><a href="{{ url_for('main.relationship_mapper') }}" class="{{ 'active' if ep == 'main.relationship_mapper' else '' }}">Relationship Mapper</a></li>
+            <li><a href="{{ url_for('main.approval_protests') }}" class="{{ 'active' if ep == 'main.approval_protests' else '' }}">Elections & protests</a></li>
+            <li><a href="{{ url_for('main.stability_dashboard') }}" class="{{ 'active' if ep == 'main.stability_dashboard' else '' }}">Political Stability</a></li>
           </ul>
         </details>
       </li>
 
       <li class="nav-group-wrap" data-nav-group="security">
         <details class="nav-group" {{ 'open' if ep in ('main.supply_chain_dashboard', 'main.diplomacy_sanctions', 'main.conflict_dashboard') or ep15 == 'main.diplomacy' else '' }}>
-          <summary class="nav-group-trigger" title="Military & security; diplomacy, treaties, agreements; trade & supply chains; sanctions.">Security & Diplomacy</summary>
+          <summary class="nav-group-trigger" title="Military, diplomacy, trade & supply chains.">Security</summary>
           <ul class="nav-group-menu">
             <li><a href="{{ url_for('main.conflict_dashboard') }}" class="{{ 'active' if ep == 'main.conflict_dashboard' else '' }}">Military & Security</a></li>
             <li><a href="{{ url_for('main.diplomacy_dashboard') }}" class="{{ 'active' if ep15 == 'main.diplomacy' else '' }}">Diplomacy & Agreements</a></li>
@@ -54,19 +57,9 @@
         </details>
       </li>
 
-      <li class="nav-group-wrap" data-nav-group="politics">
-        <details class="nav-group" {{ 'open' if ep in ('main.approval_protests', 'main.stability_dashboard') else '' }}>
-          <summary class="nav-group-trigger" title="Elections, approval ratings, protests; political stability indicators.">Politics</summary>
-          <ul class="nav-group-menu">
-            <li><a href="{{ url_for('main.approval_protests') }}" class="{{ 'active' if ep == 'main.approval_protests' else '' }}">Elections, approval & protests</a></li>
-            <li><a href="{{ url_for('main.stability_dashboard') }}" class="{{ 'active' if ep == 'main.stability_dashboard' else '' }}">Political Stability</a></li>
-          </ul>
-        </details>
-      </li>
-
       <li class="nav-group-wrap" data-nav-group="intelligence">
         <details class="nav-group" {{ 'open' if ep in ('main.index', 'main.insights', 'main.alerts_list', 'main.macro_dashboard') else '' }}>
-          <summary class="nav-group-trigger" title="Intelligence feed, watchlists, digests.">Intelligence</summary>
+          <summary class="nav-group-trigger" title="Feed, insights, watchlists, macro.">Intelligence</summary>
           <ul class="nav-group-menu">
             <li><a href="{{ url_for('main.index') }}" class="{{ 'active' if ep == 'main.index' else '' }}">Intelligence Feed</a></li>
             <li><a href="{{ url_for('main.insights') }}" class="{{ 'active' if ep == 'main.insights' else '' }}">Insights</a></li>
@@ -78,15 +71,15 @@
 
       <li class="nav-group-wrap" data-nav-group="tools">
         <details class="nav-group" {{ 'open' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.reports_hub', 'main.export_briefing', 'main.workspace', 'main.workspace_tasks', 'main.ops_health_board') else '' }}>
-          <summary class="nav-group-trigger" title="Scenario Engine: run scenarios and export reports. Reports: briefings and outlook. Workspace: multi-panel views. Ops: scrape/job health.">Tools</summary>
+          <summary class="nav-group-trigger" title="Reports, Ops, Desk, labs.">Tools</summary>
           <ul class="nav-group-menu">
             <li><a href="{{ url_for('main.reports_hub') }}" class="{{ 'active' if ep == 'main.reports_hub' else '' }}">Reports</a></li>
             <li><a href="{{ url_for('main.ops_health_board') }}" class="{{ 'active' if ep == 'main.ops_health_board' else '' }}">Ops health</a></li>
             <li><a href="{{ url_for('main.launch_analyst_desk') }}">Analyst Desk</a></li>
             <li>
-              <details class="nav-labs"{% if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary', 'main.workspace', 'main.workspace_tasks') %} open{% endif %}>
-                <summary class="muted" style="cursor:pointer;list-style:none;">More labs</summary>
-                <ul style="list-style:none;padding-left:0.5rem;margin:0.25rem 0 0;">
+              <details class="nav-labs overflow-menu"{% if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary', 'main.workspace', 'main.workspace_tasks') %} open{% endif %}>
+                <summary>More</summary>
+                <ul class="overflow-panel" style="list-style:none;padding:0;margin:0;">
                   <li><a href="{{ url_for('main.scenario_engine') }}" class="{{ 'active' if ep in ('main.scenario_engine', 'main.scenario_engine_export', 'main.scenario_engine_summary') else '' }}">Scenario Engine</a></li>
                   <li><a href="{{ url_for('main.workspace') }}" class="{{ 'active' if ep == 'main.workspace' else '' }}">Workspace</a></li>
                   {% if current_user.is_authenticated %}
@@ -98,7 +91,6 @@
           </ul>
         </details>
       </li>
-      <li><a href="{{ url_for('main.help_page') }}" class="{{ 'active' if ep == 'main.help_page' else '' }}">Help</a></li>
     </ul>
   </nav>
 

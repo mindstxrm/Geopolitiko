@@ -7,21 +7,21 @@
   {% set w = window or '7d' %}
   <header class="intelligence-feed-header">
     <h1 class="page-title">Intelligence Feed</h1>
-    <p class="page-intro">Structured geopolitical stories with country, risk, and signal filters.</p>
+    <p class="page-intro section-label" style="text-transform:none;letter-spacing:0;font-size:0.8125rem;margin:0 0 8px;">Monitor → Investigate · country, risk, and signal filters</p>
     <div class="feed-header-actions feed-header-actions--compact">
       {% if country_filter or risk_category_filter or request.args.get('source') or request.args.get('topic') or topic_filter_list or country_filter_list or risk_category_filter_list or domain_filter or impact_filter or search_query or watchlist_id %}
       <a href="{{ url_for('main.index', window='7d') }}" class="feed-clear-link">Clear filters</a>
       {% endif %}
-      <details class="feed-more-menu">
+      <details class="overflow-menu feed-more-menu">
         <summary>More</summary>
-        <div class="feed-more-panel">
+        <div class="overflow-panel feed-more-panel">
           {% if last_scrape_time %}
           <p class="feed-meta">Last refresh: {{ (last_scrape_time or '')[:19].replace('T', ' ') }} UTC</p>
           {% endif %}
           {% if today_count is not none and yesterday_count is not none %}
           <p class="feed-trending-hint">Today: <strong>{{ today_count }}</strong>{% if yesterday_count is not none %} · yesterday: {{ yesterday_count }}{% endif %}</p>
           {% endif %}
-          <p class="feed-score-help-text">C = confidence (0–100). S = signal vs noise.</p>
+          <p class="feed-score-help-text">C = confidence (0–100). S = signal vs noise. Shown on hover.</p>
           <div class="feed-more-links">
             <button type="button" class="feed-copy-link-btn" data-feed-url="{{ request.url }}">Copy link</button>
             <a href="{{ url_for('main.feed_rss', **feed_query) }}" class="feed-rss-link">RSS</a>
@@ -51,9 +51,9 @@
       </div>
     </div>
 
-    <details class="feed-view-options">
-      <summary>More view options</summary>
-      <div class="feed-view-options-body">
+    <details class="overflow-menu feed-view-options">
+      <summary>Advanced</summary>
+      <div class="overflow-panel feed-view-options-body">
         <div class="sort-toggle" aria-label="Ranking sort">
           <span class="sort-label">Rank by</span>
           <a href="{{ url_for('main.index', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, window=w, sort='date', watchlist_id=watchlist_id, q=search_query) }}" class="sort-chip {{ 'active' if sort == 'date' else '' }}">Date</a>
@@ -61,8 +61,8 @@
         </div>
         <div class="layout-toggle" aria-label="Layout density">
           <span class="sort-label">Layout</span>
-          <a href="{{ url_for('main.index', **feed_query_layout_card) }}" class="sort-chip {{ 'active' if layout == 'card' else '' }}">Card</a>
           <a href="{{ url_for('main.index', **feed_query_layout_compact) }}" class="sort-chip {{ 'active' if layout == 'compact' else '' }}">Compact</a>
+          <a href="{{ url_for('main.index', **feed_query_layout_card) }}" class="sort-chip {{ 'active' if layout == 'card' else '' }}">Card</a>
           <a href="{{ url_for('main.index', **feed_query_layout_grid) }}" class="sort-chip {{ 'active' if layout == 'grid' else '' }}">Grid</a>
         </div>
       </div>
@@ -164,24 +164,16 @@
           {% if search_query %}<p><a href="{{ url_for('main.index', **feed_query_no_search) }}">Clear search</a> to see all articles in the current filters.</p>{% endif %}
           <p>Or browse <a href="{{ url_for('main.insights') }}">Insights &amp; clusters</a> for story clusters.</p>
           {% else %}
-          <p>Run these from the <strong>project root</strong> (<code>GeopoliticalNews</code>):</p>
-          <ol>
-            <li><code>python run_ingest_worker.py</code> — always-on scrape + jobs (or Compose <code>ingest</code>)</li>
-            <li><code>python scrape.py</code> — one-shot fetch into <code>data/news.db</code></li>
-            <li><code>python run_jobs.py --all</code> — topics, impact, analysis</li>
-          </ol>
-          <p>Then refresh this page. If scrape prints "Total: 0 articles", check your network or try again later (feeds can be temporarily empty).</p>
+          <p>Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a> for ingest freshness and scrape health.</p>
+          <p class="muted">CLI scrape/jobs steps are documented under <a href="{{ url_for('main.help_page') }}">Help</a> and <code>docs/LIVE_DATA.md</code>.</p>
           {% endif %}
         </div>
       {% else %}
-        <ul class="article-list layout-{{ layout }}" role="list" aria-label="Article list">
+        <ul class="article-list layout-{{ layout }} layout-institutional" role="list" aria-label="Article list">
           {% for a in articles %}
           <li class="article-card" data-article-id="{{ a.id }}" role="listitem">
             {% if feed_last_visit and a.published_utc and (a.published_utc[:19] > feed_last_visit[:19]) %}
             <span class="article-badge-new" aria-label="New since last visit">New</span>
-            {% endif %}
-            {% if a.cluster_id and cluster_count_by_id.get(a.cluster_id) %}
-            <a href="{{ url_for('main.cluster_detail', cluster_id=a.cluster_id) }}" class="article-related-link">Related ({{ cluster_count_by_id.get(a.cluster_id) }})</a>
             {% endif %}
             {% if a.image_url and layout != 'compact' %}
             <div class="article-card-media">
@@ -198,46 +190,50 @@
             <div class="article-card-header">
               <h2 class="article-title"><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
               <span class="card-badges">
-                {% if a.id in feed_seen_ids %}<span class="article-badge-seen" title="Marked seen">Seen</span>{% endif %}
-                <span class="confidence-score-pill" title="Confidence 0–100">C{{ a.confidence_score|default(0) }}</span>
-                {% if sort == 'signal' %}<span class="signal-score-pill" title="Signal vs noise">S{{ a.signal_score|default(0) }}</span>{% endif %}
-                {% if a.urgency %}<span class="urgency-pill urgency-{{ a.urgency }}">{{ a.urgency }}</span>{% endif %}
-                {% if a.impact_score is not none and a.impact_score > 0 %}
+                {# Badge budget: one primary severity visible; C/S/AI under hover. #}
+                {% if a.urgency %}<span class="urgency-pill urgency-{{ a.urgency }}">{{ a.urgency }}</span>
+                {% elif a.impact_score is not none and a.impact_score > 0 %}
                 <span class="impact-pill impact-{% if (a.impact_score or 0) >= 7 %}3{% elif (a.impact_score or 0) >= 4 %}2{% else %}1{% endif %}">
                   {% if (a.impact_score or 0) >= 7 %}High{% elif (a.impact_score or 0) >= 4 %}Med{% else %}Low{% endif %}
                 </span>
-                {% endif %}
-                {% if a.event_type %}<span class="event-type-pill">{{ a.event_type }}</span>{% endif %}
+                {% elif a.event_type %}<span class="event-type-pill">{{ a.event_type }}</span>{% endif %}
+                <span class="badge-extra">
+                  {% if a.id in feed_seen_ids %}<span class="article-badge-seen" title="Marked seen">Seen</span>{% endif %}
+                  <span class="confidence-score-pill" title="Confidence 0–100">C{{ a.confidence_score|default(0) }}</span>
+                  {% if sort == 'signal' %}<span class="signal-score-pill" title="Signal vs noise">S{{ a.signal_score|default(0) }}</span>{% endif %}
+                  {% if a.key_takeaways or a.why_it_matters %}<span class="confidence-badge" title="Analysis present">AI</span>{% endif %}
+                </span>
               </span>
             </div>
             <div class="article-meta">
+              {% if a.published_utc %}<span class="date">{{ a.published_utc[:16].replace('T', ' ') }}</span>{% endif %}
               <span class="source">{{ a.source_name }}</span>
-              {% if a.published_utc %}
-              <span class="date">{{ a.published_utc[:10] }}</span>
-              {% endif %}
-              {% if a.key_takeaways or a.why_it_matters %}<span class="confidence-badge" title="Analysis present">AI</span>{% endif %}
+              {% if a.event_type and a.urgency %}<span class="event-type-pill">{{ a.event_type }}</span>{% endif %}
               {% if a.topics_list %}
               <span class="topics-inline">
-                {% for t in a.topics_list[:3] %}
+                {% for t in a.topics_list[:2] %}
                 <a href="{{ url_for('main.index', topic=t, window=w, source=request.args.get('source'), domain=domain_filter, impact=impact_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}" class="topic-tag">{{ t }}</a>
                 {% endfor %}
               </span>
               {% endif %}
+              {% if a.cluster_id and cluster_count_by_id.get(a.cluster_id) %}
+              <a href="{{ url_for('main.cluster_detail', cluster_id=a.cluster_id) }}" class="article-related-link">Related ({{ cluster_count_by_id.get(a.cluster_id) }})</a>
+              {% endif %}
             </div>
-            {% if a.key_takeaways %}
+            {% if a.key_takeaways and layout != 'compact' %}
             <div class="article-analysis key-takeaways">
               <strong>Key takeaways</strong>
               <div class="takeaways-text">{{ a.key_takeaways }}</div>
             </div>
             {% endif %}
-            {% if a.why_it_matters %}{% set why_clean = a.why_it_matters | why_matters_only %}
+            {% if a.why_it_matters and layout != 'compact' %}{% set why_clean = a.why_it_matters | why_matters_only %}
             {% if why_clean %}
             <p class="article-why">Why it matters: {{ why_clean }}</p>
             {% endif %}{% endif %}
-            {% if a.summary and not a.key_takeaways %}
+            {% if a.summary and not a.key_takeaways and layout != 'compact' %}
             <p class="article-summary">{{ a.summary }}</p>
             {% endif %}
-            {% if a.video_url and a.image_url %}
+            {% if a.video_url and a.image_url and layout != 'compact' %}
             <div class="article-video-inline">
               <iframe src="{{ a.video_url }}" title="Video" class="article-video-embed-inline" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -245,30 +241,35 @@
             <div class="article-implications-inline" id="impl-{{ a.id }}" data-article-id="{{ a.id }}" role="region" aria-label="Implications" style="display:none;"></div>
             <div class="article-actions">
               <button type="button" class="link-implications" data-article-id="{{ a.id }}" data-article-url="{{ a.url }}" aria-expanded="false" aria-controls="feed-inspector-body">Implications</button>
-              <a href="https://web.archive.org/web/2/{{ a.url }}" target="_blank" rel="noopener" class="link-archive">Archive</a>
-              <a href="{{ url_for('main.article_detail', article_id=a.id) }}" class="link-notes">Notes</a>
-              <form action="{{ url_for('main.feed_mark_seen', article_id=a.id) }}" method="post" class="article-action-form">
-                <button type="submit" class="link-seen">{% if a.id in feed_seen_ids %}Unseen{% else %}Mark seen{% endif %}</button>
-              </form>
-              <button type="button" class="link-share" data-article-url="{{ a.url }}" title="Copy link">Share</button>
-              {% if watchlists and (a.topics_list or a.entities_list) %}
-              {% set first_topic = (a.topics_list or a.entities_list or [])[0] if (a.topics_list or a.entities_list) else '' %}
-              <div class="article-add-watchlist">
-                <form method="post" class="article-action-form add-topic-form" data-add-topic="{{ first_topic }}">
-                  <input type="hidden" name="topic" value="{{ first_topic }}">
-                  <select class="add-topic-watchlist-select" aria-label="Add topic to watchlist" required>
-                    <option value="">Add to watchlist…</option>
-                    {% for wl in watchlists %}
-                    <option value="{{ url_for('main.watchlist_add_topic_route', watchlist_id=wl.id) }}">{{ wl.name }}</option>
-                    {% endfor %}
-                  </select>
-                  <button type="submit" class="link-add-watchlist">Add</button>
-                </form>
-              </div>
-              {% endif %}
-              <form action="{{ url_for('main.feed_hide_article', article_id=a.id) }}" method="post" class="article-hide-form">
-                <button type="submit" class="link-hide">Hide</button>
-              </form>
+              <details class="overflow-menu article-row-more">
+                <summary>⋯</summary>
+                <div class="overflow-panel">
+                  <a href="https://web.archive.org/web/2/{{ a.url }}" target="_blank" rel="noopener" class="link-archive">Archive</a>
+                  <a href="{{ url_for('main.article_detail', article_id=a.id) }}" class="link-notes">Notes</a>
+                  <form action="{{ url_for('main.feed_mark_seen', article_id=a.id) }}" method="post" class="article-action-form">
+                    <button type="submit" class="link-seen">{% if a.id in feed_seen_ids %}Unseen{% else %}Mark seen{% endif %}</button>
+                  </form>
+                  <button type="button" class="link-share" data-article-url="{{ a.url }}" title="Copy link">Share</button>
+                  {% if watchlists and (a.topics_list or a.entities_list) %}
+                  {% set first_topic = (a.topics_list or a.entities_list or [])[0] if (a.topics_list or a.entities_list) else '' %}
+                  <div class="article-add-watchlist">
+                    <form method="post" class="article-action-form add-topic-form" data-add-topic="{{ first_topic }}">
+                      <input type="hidden" name="topic" value="{{ first_topic }}">
+                      <select class="add-topic-watchlist-select" aria-label="Add topic to watchlist" required>
+                        <option value="">Add to watchlist…</option>
+                        {% for wl in watchlists %}
+                        <option value="{{ url_for('main.watchlist_add_topic_route', watchlist_id=wl.id) }}">{{ wl.name }}</option>
+                        {% endfor %}
+                      </select>
+                      <button type="submit" class="link-add-watchlist">Add</button>
+                    </form>
+                  </div>
+                  {% endif %}
+                  <form action="{{ url_for('main.feed_hide_article', article_id=a.id) }}" method="post" class="article-hide-form">
+                    <button type="submit" class="link-hide">Hide</button>
+                  </form>
+                </div>
+              </details>
             </div>
           </li>
           {% endfor %}
@@ -310,7 +311,7 @@
           <li><a href="{{ url_for('main.index', window=w, impact='low', source=request.args.get('source'), topic=request.args.get('topic'), domain=domain_filter, country=country_filter, risk_category=risk_category_filter, sort=sort) }}"><span class="metric-label">Low</span> <span class="metric-value metric-low">{{ impact_summary.low }}</span></a></li>
         </ul>
         {% else %}
-        <p class="sidebar-empty">Run <code>python run_jobs.py --topics --impact</code> to populate impact data.</p>
+        <p class="sidebar-empty">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
         {% endif %}
       </section>
 

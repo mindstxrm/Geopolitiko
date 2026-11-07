@@ -26,7 +26,7 @@
 
   <section class="articles">
     {% if not articles %}
-      <p class="empty-state">No articles match this watchlist yet. Run <code>python run_jobs.py --topics</code> to tag articles, or add different topics.</p>
+      <p class="empty-state">No articles match this watchlist yet. Try different topics, or check <a href="{{ url_for('main.ops_health_board') }}">Ops</a> if ingest looks stale.</p>
     {% else %}
       <ul class="article-list">
         {% for a in articles %}

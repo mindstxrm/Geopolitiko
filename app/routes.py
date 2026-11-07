@@ -1493,9 +1493,10 @@ def index():
     page = max(1, int(request.args.get("page", 1) or 1))
     offset = (page - 1) * per_page
     q = request.args.get("q", "").strip() or None
-    layout = request.args.get("layout", "card").strip().lower()
+    # Institutional default: compact rows (time · source · risk · one severity).
+    layout = request.args.get("layout", "compact").strip().lower()
     if layout not in ("card", "compact", "grid"):
-        layout = "card"
+        layout = "compact"
 
     hidden_ids = list(session.get("feed_hidden_ids") or [])
     hidden_set = set(hidden_ids)

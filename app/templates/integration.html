@@ -22,9 +22,9 @@
     <a href="{{ url_for('main.integration_dashboard', sort='combined_systemic_risk_score', order='desc', per_page=50) }}">Top risk</a>
     <a href="{{ url_for('main.integration_dashboard', sort='geopolitical_fragility_score', order='desc', per_page=50) }}">Top fragility</a>
     <button type="button" class="integration-copy-link" data-url="{{ request.url }}">Copy link</button>
-    <details class="integration-quick-more">
+    <details class="overflow-menu integration-quick-more">
       <summary>More</summary>
-      <div class="integration-quick-more-menu">
+      <div class="overflow-panel integration-quick-more-menu">
         <a href="{{ url_for('main.diplomacy_alignment') }}">UN alignment</a>
         <a href="{{ url_for('main.diplomacy_dashboard') }}">Diplomacy</a>
       </div>

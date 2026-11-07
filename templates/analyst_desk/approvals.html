@@ -12,8 +12,8 @@
 <div class="panel">
   <h2>Pending proposals ({{ pending|length }})</h2>
   <form method="post" action="{{ url_for('analyst_desk.approvals_bulk') }}">
-    <details class="more-panel" style="margin-bottom:0.75rem;">
-      <summary style="cursor:pointer;font-weight:600;">More — bulk actions</summary>
+    <details class="overflow-menu more-panel" style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;list-style:none;">More</summary>
       <p class="muted" style="margin:0.5rem 0;">
         Prefer opening each proposal first. Bulk is for after you have skimmed.
       </p>

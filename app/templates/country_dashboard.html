@@ -375,7 +375,7 @@
         {% elif voting_alignment %}
         <p>Countries that vote most often with {{ country.country_name or country.country_code }}:</p><ul class="data-list">{% for v in voting_alignment[:15] %}<li>{% if v.country_a == country.country_code %}{{ v.country_b_name or v.country_b }}{% else %}{{ v.country_a_name or v.country_a }}{% endif %}: {{ v.alignment_score or 0 }}% alignment ({{ v.votes_agreed or 0 }}/{{ v.votes_total or 0 }} votes)</li>{% endfor %}</ul><p><a href="{{ url_for('main.diplomacy_alignment') }}?country={{ country.country_code }}">UN voting & alignment</a></p>
         {% else %}
-        <p class="empty-state">No UN voting alignment data. Run <code>python run_jobs.py --un-votes-gpi</code> after syncing votes.</p>
+        <p class="empty-state">No UN voting alignment data — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
         {% endif %}
       </div>
       <div class="tab-card">

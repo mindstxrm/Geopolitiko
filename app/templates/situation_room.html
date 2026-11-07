@@ -7,29 +7,38 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" crossorigin=""></script>
   <style>
-    .wm-dashboard { background: #1a1d23; color: #e2e8f0; margin: 24px 0 0; padding: 0; border-radius: 8px; border: 1px solid var(--t-border, #2d333b); overflow: hidden; }
-    .wm-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #3fb950; flex-shrink: 0; }
-    .wm-live-text { font-size: 0.75rem; font-weight: 600; color: #3fb950; text-transform: uppercase; letter-spacing: 0.05em; }
-    .wm-legend-bar { padding: 8px 16px; background: #21262d; border-top: 1px solid #2d333b; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 0.7rem; color: #8b949e; }
+    .wm-dashboard { background: var(--t-surface); color: var(--t-ink); margin: 24px 0 0; padding: 0; border-radius: var(--t-radius-sm); border: 1px solid var(--t-border); overflow: hidden; }
+    .wm-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--t-status-ok); flex-shrink: 0; }
+    .wm-live-text { font-size: 0.75rem; font-weight: 600; color: var(--t-status-ok); text-transform: uppercase; letter-spacing: 0.05em; }
+    .wm-legend-bar { padding: 8px 16px; background: var(--t-surface-elevated); border-top: 1px solid var(--t-border); display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 0.7rem; color: var(--t-ink-muted); }
     .wm-legend-bar span { display: inline-flex; align-items: center; gap: 6px; }
     .wm-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
     .wm-legend-square { border-radius: 2px !important; }
     .wm-legend-triangle { width: 0 !important; height: 0 !important; border-radius: 0 !important; border-left: 5px solid transparent !important; border-right: 5px solid transparent !important; border-bottom: 8px solid currentColor !important; background: none !important; }
-    .wm-panels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-top: 1px solid #2d333b; }
+    .wm-panels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-top: 1px solid var(--t-border); }
     @media (max-width: 900px) { .wm-panels { grid-template-columns: 1fr; } }
-    .wm-panel { background: #21262d; border-right: 1px solid #2d333b; padding: 16px; display: flex; flex-direction: column; min-height: 180px; }
+    .wm-panel { background: var(--t-surface-elevated); border-right: 1px solid var(--t-border); padding: 16px; display: flex; flex-direction: column; min-height: 180px; }
     .wm-panel:last-child { border-right: none; }
-    .wm-panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .wm-panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--t-ink-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .wm-panel-title .wm-live-badge { display: inline-flex; align-items: center; gap: 4px; }
-    .wm-panel-content { flex: 1; font-size: 0.85rem; color: #8b949e; min-height: 0; }
+    .wm-panel-content { flex: 1; font-size: 0.85rem; color: var(--t-ink-muted); min-height: 0; }
     .wm-panel-content .wm-stream-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .wm-panel-content .wm-stream-cell { position: relative; padding-bottom: 56.25%; background: #0d1117; border-radius: 4px; overflow: hidden; }
+    .wm-panel-content .wm-stream-cell { position: relative; padding-bottom: 56.25%; background: var(--t-bg); border-radius: var(--t-radius-sm); overflow: hidden; }
     .wm-panel-content .wm-stream-cell iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-    .wm-panel-content .wm-stream-label { font-size: 0.7rem; color: #c9d1d9; margin-bottom: 4px; }
+    .wm-panel-content .wm-stream-label { font-size: 0.7rem; color: var(--t-ink-secondary); margin-bottom: 4px; }
     .leaflet-popup-content { font-size: 0.8rem; min-width: 200px; color: #0d1117; }
     .leaflet-control-zoom { border: none !important; }
-    .leaflet-control-zoom a { background: #21262d !important; color: #c9d1d9 !important; border: 1px solid #30363d !important; }
-    .leaflet-control-zoom a:hover { background: #30363d !important; }
+    .leaflet-control-zoom a { background: var(--t-surface-elevated) !important; color: var(--t-ink-secondary) !important; border: 1px solid var(--t-border) !important; }
+    .leaflet-control-zoom a:hover { background: var(--t-surface) !important; }
+    .situation-legend-control { position: absolute; left: 12px; bottom: 12px; z-index: 500; max-width: min(360px, 90%); }
+    .situation-legend-control > summary {
+      list-style: none; cursor: pointer; font-size: 0.7rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--t-ink-secondary); background: var(--t-surface-elevated); border: 1px solid var(--t-border);
+      border-radius: var(--t-radius-sm); padding: 4px 10px; user-select: none;
+    }
+    .situation-legend-control > summary::-webkit-details-marker { display: none; }
+    .situation-legend-control[open] > summary { color: var(--t-accent); border-color: rgba(110, 168, 255, 0.4); }
+    .situation-legend-control .situation-map-overlay { position: static; margin-top: 6px; }
   </style>
 {% endblock %}
 
@@ -51,10 +60,8 @@
     <header class="situation-header">
       <h1 class="page-title">Situation Room</h1>
 
-      <div class="situation-top-strip" aria-label="Status and quick stats">
-        <span class="situation-strip-item">
-          <span class="status-pill {{ 'crit' if data_stale else 'ok' }}">{{ 'STALE' if data_stale else 'OK' }}</span>
-        </span>
+      {# Status OK/STALE lives in the global ticker — strip is stats + window only. #}
+      <div class="situation-top-strip" aria-label="Quick stats">
         {% if last_scrape_time %}
         <span class="situation-strip-item">as-of <strong>{{ last_scrape_time[:16].replace('T', ' ') }}</strong></span>
         {% endif %}
@@ -69,9 +76,9 @@
         </span>
       </div>
 
-      <details class="situation-help-collapsible">
-        <summary>More · Feed · Macro · Risk · Workspace</summary>
-        <div class="situation-help-body">
+      <details class="overflow-menu situation-help-collapsible">
+        <summary>More</summary>
+        <div class="overflow-panel situation-help-body">
           <p class="situation-system-status"><span class="situation-status-dot {{ 'stale' if data_stale else 'ok' }}"></span> {{ system_status }}</p>
           {% if new_sanctions_7d is defined and new_sanctions_7d %}<p class="contextual-help"><strong>{{ new_sanctions_7d }}</strong> new sanctions in the last 7 days.</p>{% endif %}
           <p class="contextual-help">Map combines stability, conflict, sanctions, trade, and supply signals. Click a country for its dashboard.</p>
@@ -87,38 +94,41 @@
     </header>
     <div class="situation-map-wrap">
       <div id="situation-map" class="situation-map" aria-live="polite" data-has-risk-data="{{ 'true' if (heat_map or integration_countries or risk_index) else 'false' }}">Loading map…</div>
-      <div class="situation-map-overlay" aria-hidden="true">
-        <div class="situation-map-overlay-block">
-          <div class="situation-map-overlay-title">Composite risk</div>
-          <div class="situation-map-overlay-legend">
-            <span class="legend-item"><span class="legend-swatch risk-swatch-1"></span></span>
-            <span class="legend-item"><span class="legend-swatch risk-swatch-2"></span></span>
-            <span class="legend-item"><span class="legend-swatch risk-swatch-3"></span></span>
-            <span class="legend-item"><span class="legend-swatch risk-swatch-4"></span></span>
-            <span class="legend-item"><span class="legend-swatch risk-swatch-5"></span></span>
-            <span class="legend-caption">Low → Critical</span>
+      <details class="situation-legend-control">
+        <summary>Legend</summary>
+        <div class="situation-map-overlay">
+          <div class="situation-map-overlay-block">
+            <div class="situation-map-overlay-title">Composite risk</div>
+            <div class="situation-map-overlay-legend">
+              <span class="legend-item"><span class="legend-swatch risk-swatch-1"></span></span>
+              <span class="legend-item"><span class="legend-swatch risk-swatch-2"></span></span>
+              <span class="legend-item"><span class="legend-swatch risk-swatch-3"></span></span>
+              <span class="legend-item"><span class="legend-swatch risk-swatch-4"></span></span>
+              <span class="legend-item"><span class="legend-swatch risk-swatch-5"></span></span>
+              <span class="legend-caption">Low → Critical</span>
+            </div>
+            <div class="situation-map-overlay-sub">Stability + Conflict + Sanctions + Trade + Supply</div>
           </div>
-          <div class="situation-map-overlay-sub">Stability + Conflict + Sanctions + Trade + Supply</div>
-        </div>
-        <div class="situation-map-overlay-block">
-          <div class="situation-map-overlay-title">Markers</div>
-          <div class="situation-map-overlay-markers">
-            <span><i class="wm-legend-dot" style="background:#dc2626;"></i> Conflict</span>
-            <span><i class="wm-legend-dot" style="background:#ea580c;"></i> Hotspot</span>
-            <span><i class="wm-legend-dot wm-legend-triangle" style="border-bottom-color:#2563eb;"></i> Base</span>
-            <span><i class="wm-legend-dot wm-legend-square" style="background:#ca8a04;"></i> Nuclear</span>
-            <span><i class="wm-legend-dot wm-legend-square" style="background:#7c3aed;"></i> Datacenter</span>
-            <span><i class="wm-legend-dot" style="background:#0ea5e9;"></i> Cables/Weather</span>
-            <span><i class="wm-legend-dot" style="background:#f59e0b;"></i> Pipelines</span>
+          <div class="situation-map-overlay-block">
+            <div class="situation-map-overlay-title">Markers</div>
+            <div class="situation-map-overlay-markers">
+              <span><i class="wm-legend-dot" style="background:var(--t-risk-5);"></i> Conflict</span>
+              <span><i class="wm-legend-dot" style="background:var(--t-risk-4);"></i> Hotspot</span>
+              <span><i class="wm-legend-dot wm-legend-triangle" style="border-bottom-color:var(--t-accent);"></i> Base</span>
+              <span><i class="wm-legend-dot wm-legend-square" style="background:var(--t-risk-3);"></i> Nuclear</span>
+              <span><i class="wm-legend-dot wm-legend-square" style="background:#7c3aed;"></i> Datacenter</span>
+              <span><i class="wm-legend-dot" style="background:#0ea5e9;"></i> Cables/Weather</span>
+              <span><i class="wm-legend-dot" style="background:var(--t-status-warn);"></i> Pipelines</span>
+            </div>
           </div>
         </div>
-      </div>
+      </details>
     </div>
     <p class="situation-map-meta">
       {% if heat_map or integration_countries or risk_index %}
       Layer reflects latest risk and integration data.
       {% else %}
-      No risk data loaded. Run <code>python run_jobs.py --all</code> (and ensure articles have topics/impact). Political Stability and Trade use seeded country data once the app has run.
+      Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a> for ingest health. Risk layers appear after scrape/jobs refresh.
       {% endif %}
     </p>
 
@@ -281,7 +291,7 @@
             </ul>
             <p class="situation-cta"><a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
           {% else %}
-            <p class="sidebar-empty">No risk data. Run <code>python run_jobs.py --risk</code>.</p>
+            <p class="sidebar-empty">Data unavailable — see <a href="{{ url_for('main.ops_health_board') }}">Ops</a>.</p>
           {% endif %}
         </section>
       </div>
@@ -362,35 +372,7 @@
         </section>
       </div>
     </div>
-
-    {% if trajectory_data %}
-    <section class="sidebar-panel situation-panel situation-panel-synthesis">
-      <h2 class="situation-panel-title">Escalation trajectory</h2>
-      <p class="situation-trajectory-trend">Trend: <strong>{{ trajectory_data.trend }}</strong> (last 30d)</p>
-      <p class="situation-trajectory-narrative">{{ (trajectory_data.narrative or '')[:200] }}{% if (trajectory_data.narrative or '')|length > 200 %}…{% endif %}</p>
-      <p class="situation-cta"><a href="{{ url_for('main.synthesis_trajectory') }}">Full trajectory</a> · <a href="{{ url_for('main.risk_dashboard') }}">Risk Engine</a></p>
-    </section>
-    {% endif %}
-
-    {% if divergences %}
-    <section class="sidebar-panel situation-panel situation-panel-synthesis situation-panel-divergences">
-      <h2 class="situation-panel-title">Signal divergences</h2>
-      <ul class="situation-list">
-        {% for d in divergences[:3] %}
-        <li class="situation-divergence-item">
-          <strong>{{ d.title }}</strong> — {{ (d.detail or '')[:80] }}{% if (d.detail or '')|length > 80 %}…{% endif %}
-        </li>
-        {% endfor %}
-      </ul>
-      <p class="situation-cta"><a href="{{ url_for('main.synthesis_divergences') }}">View all divergences</a></p>
-    </section>
-    {% endif %}
-
-    <section class="sidebar-panel situation-panel situation-panel-synthesis">
-      <h2 class="situation-panel-title">System state</h2>
-      <p class="situation-system-briefing-desc">Weekly meta-briefing: GEPI, risk heat map, fragility hotspots, spike/declining topics.</p>
-      <p class="situation-cta"><a href="{{ url_for('main.synthesis_meta_briefing') }}">Generate meta-briefing</a></p>
-    </section>
+    {# Trajectory / divergences / system live only in the System tab — no duplicate below. #}
   </aside>
 </div>
 

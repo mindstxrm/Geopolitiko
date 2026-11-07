@@ -4,6 +4,9 @@
 {% block content %}
 {% set status = health.status or 'unknown' %}
 {% set overall_sev = 'ok' if status == 'ok' else ('warn' if status == 'degraded' else 'crit') %}
+{% set news_mins = health.freshness.news_minutes_ago if health.freshness and health.freshness.news_minutes_ago is not none else none %}
+{% set pending = health.desk.pending_proposals if health.desk and health.desk.pending_proposals is not none else none %}
+{% set publish_ok = (health.desk and health.desk.publish_on_approve) and not (health.freshness and health.freshness.news_stale) %}
 
 <div class="ops-wall">
   <header class="ops-wall-header">
@@ -16,6 +19,39 @@
       <a href="{{ url_for('api.api_health') }}"><code>/api/health</code></a>
     </span>
   </header>
+
+  {# NOC board: 3 KPIs then severity table #}
+  <div class="ops-kpi-row" aria-label="Ops KPIs">
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Ingest freshness</p>
+      <p class="ops-kpi-value">
+        {% if news_mins is not none %}{{ news_mins }}m{% else %}—{% endif %}
+      </p>
+      <p class="ops-kpi-sub">
+        <span class="status-pill {{ 'crit' if health.freshness and health.freshness.news_stale else 'ok' }}">
+          {{ 'STALE' if health.freshness and health.freshness.news_stale else 'OK' }}
+        </span>
+        {% if health.news and health.news.last_scrape_time %} · {{ (health.news.last_scrape_time or '')[:16].replace('T',' ') }}{% endif %}
+      </p>
+    </div>
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Desk queue</p>
+      <p class="ops-kpi-value">{% if pending is not none %}{{ pending }}{% else %}—{% endif %}</p>
+      <p class="ops-kpi-sub">
+        pending · unpublished {{ health.desk.approved_unpublished if health.desk and health.desk.approved_unpublished is not none else '—' }}
+      </p>
+    </div>
+    <div class="ops-kpi">
+      <p class="ops-kpi-label">Publish health</p>
+      <p class="ops-kpi-value">
+        <span class="status-pill {{ 'ok' if publish_ok else 'warn' }}">{{ 'OK' if publish_ok else 'CHECK' }}</span>
+      </p>
+      <p class="ops-kpi-sub">
+        Terminal intel {{ health.terminal_intel.count if health.terminal_intel else 0 }}
+        · last {{ (health.terminal_intel.last_published_at or '—')[:16].replace('T',' ') if health.terminal_intel else '—' }}
+      </p>
+    </div>
+  </div>
 
   <section aria-label="Severity checks">
     <table class="mini-terminal-table" aria-label="Health checks">
@@ -55,11 +91,6 @@
         <li>Last scrape tick: {{ health.ingest_worker.last_scrape_at if health.ingest_worker else '—' }}</li>
         <li>Last jobs: {{ health.ingest_worker.last_jobs_at if health.ingest_worker else '—' }}</li>
         <li>Cadence: scrape {{ health.ingest_worker.scrape_seconds if health.ingest_worker else '—' }}s · jobs {{ health.ingest_worker.jobs_seconds if health.ingest_worker else '—' }}s</li>
-        {% if health.freshness %}
-        <li>News stale: <span class="status-pill {{ 'crit' if health.freshness.news_stale else 'ok' }}">{{ 'STALE' if health.freshness.news_stale else 'OK' }}</span>
-          {% if health.freshness.news_minutes_ago is not none %}({{ health.freshness.news_minutes_ago }}m){% endif %}
-        </li>
-        {% endif %}
         {% if health.source_http_cache %}
         <li>HTTP 304 rate: <strong>{{ health.source_http_cache.not_modified_rate or 0 }}</strong>
           ({{ health.source_http_cache.not_modified_count or 0 }}/{{ health.source_http_cache.fetch_count or 0 }})
@@ -76,7 +107,6 @@
         <li>Briefings: {{ health.desk.recent_briefings if health.desk.recent_briefings is not none else '—' }}</li>
         <li>Last desk task: {{ health.desk.last_task_at or '—' }}</li>
         <li>Publish on approve: {{ health.desk.publish_on_approve }}</li>
-        <li>Terminal intel: {{ health.terminal_intel.count }} · last {{ health.terminal_intel.last_published_at or '—' }}</li>
         <li>Worker HB: {{ health.desk_worker.last_heartbeat_at or 'never' }}
           · <span class="status-pill {{ 'ok' if health.desk_worker.fresh else 'warn' }}">{{ 'FRESH' if health.desk_worker.fresh else 'STALE' }}</span>
         </li>
@@ -99,66 +129,67 @@
         {% endif %}
       </ul>
     </section>
-
-    <section class="sidebar-panel">
-      <h3>Secrets / runtime</h3>
-      <ul class="data-list">
-        <li>Production: {{ health.secrets.production_runtime }}</li>
-        <li>SECRET_KEY set: {{ health.secrets.secret_key_set }}</li>
-        <li>Desk password: {{ health.secrets.desk_password_set }}</li>
-        <li>OpenAI: {{ health.secrets.openai_configured }}</li>
-        <li>DB: {{ health.news.database.path }}</li>
-        <li>Size: {{ health.news.database.size_bytes }} B · writable: {{ health.news.database.writable_dir }}</li>
-      </ul>
-    </section>
   </div>
 
-  <details class="more-panel" style="margin-bottom:1rem;">
-    <summary style="cursor:pointer;font-weight:600;margin-bottom:0.75rem;font-size:0.85rem;">More — platform / sources / indicators</summary>
-    <div class="ops-grid">
-      <section class="sidebar-panel">
-        <h3>Platform (P4)</h3>
-        <ul class="data-list">
-          <li>DB backend: <strong>{{ health.database_url.backend if health.database_url else '—' }}</strong>
-            · probe {{ 'ok' if health.database_url and health.database_url.ok else 'fail' }}</li>
-          <li>Celery preferred: {{ health.celery_preferred }}</li>
-          <li>Audit recent: {{ health.audit.recent_count if health.audit else 0 }}
-            {% if health.audit and health.audit.latest %}
-            · latest {{ health.audit.latest.action }} by {{ health.audit.latest.actor or '—' }}
-            {% endif %}
-          </li>
-          <li>In-process metrics: {{ (health.metrics.counters or {})|length if health.metrics else 0 }} counters</li>
-        </ul>
-        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;">See <code>docs/P4_PLATFORM.md</code></p>
-      </section>
-      <section class="sidebar-panel">
-        <h3>Source catalog (P3)</h3>
-        <ul class="data-list">
-          <li>Feeds: <strong>{{ health.sources.count if health.sources else 0 }}</strong></li>
-          <li>Tier A/B/C: {{ (health.sources.by_tier.A if health.sources and health.sources.by_tier else 0) }} /
-            {{ (health.sources.by_tier.B if health.sources and health.sources.by_tier else 0) }} /
-            {{ (health.sources.by_tier.C if health.sources and health.sources.by_tier else 0) }}</li>
-        </ul>
-        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_sources_catalog') }}"><code>/api/sources</code></a></p>
-      </section>
-      <section class="sidebar-panel">
-        <h3>Indicator coverage</h3>
-        <ul class="data-list">
-          <li>Macro stress: <strong>{{ health.indicators.macroeconomic_stress_countries if health.indicators else 0 }}</strong>
-            ({{ health.indicators.macroeconomic_stress_rows if health.indicators else 0 }} rows)</li>
-          <li>Energy exposure: {{ health.indicators.energy_commodity_countries if health.indicators else 0 }}</li>
-          <li>Sample: {{ (health.indicators.sample_macro_countries or [])|join(', ') or '—' }}</li>
-        </ul>
-        <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_indicators_coverage') }}"><code>/api/indicators/coverage</code></a></p>
-      </section>
-      <section class="sidebar-panel">
-        <h3>Scheduled regional briefs</h3>
-        <ul class="data-list">
-          <li>Last run: {{ health.scheduled_briefs.last_at if health.scheduled_briefs else '—' }}</li>
-          <li>Created: {{ health.scheduled_briefs.last_count if health.scheduled_briefs else '—' }} · errors: {{ health.scheduled_briefs.last_errors if health.scheduled_briefs else '—' }}</li>
-          <li>Agents: {{ (health.scheduled_briefs.last_agents or [])|join(', ') if health.scheduled_briefs else '—' }}</li>
-        </ul>
-      </section>
+  <details class="overflow-menu more-panel" style="margin-bottom:1rem;">
+    <summary>More</summary>
+    <div class="overflow-panel">
+      <div class="ops-grid">
+        <section class="sidebar-panel">
+          <h3>Secrets / runtime</h3>
+          <ul class="data-list">
+            <li>Production: {{ health.secrets.production_runtime }}</li>
+            <li>SECRET_KEY set: {{ health.secrets.secret_key_set }}</li>
+            <li>Desk password: {{ health.secrets.desk_password_set }}</li>
+            <li>OpenAI: {{ health.secrets.openai_configured }}</li>
+            <li>DB: {{ health.news.database.path }}</li>
+            <li>Size: {{ health.news.database.size_bytes }} B · writable: {{ health.news.database.writable_dir }}</li>
+          </ul>
+        </section>
+        <section class="sidebar-panel">
+          <h3>Platform (P4)</h3>
+          <ul class="data-list">
+            <li>DB backend: <strong>{{ health.database_url.backend if health.database_url else '—' }}</strong>
+              · probe {{ 'ok' if health.database_url and health.database_url.ok else 'fail' }}</li>
+            <li>Celery preferred: {{ health.celery_preferred }}</li>
+            <li>Audit recent: {{ health.audit.recent_count if health.audit else 0 }}
+              {% if health.audit and health.audit.latest %}
+              · latest {{ health.audit.latest.action }} by {{ health.audit.latest.actor or '—' }}
+              {% endif %}
+            </li>
+            <li>In-process metrics: {{ (health.metrics.counters or {})|length if health.metrics else 0 }} counters</li>
+          </ul>
+          <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;">See <code>docs/P4_PLATFORM.md</code></p>
+        </section>
+        <section class="sidebar-panel">
+          <h3>Source catalog (P3)</h3>
+          <ul class="data-list">
+            <li>Feeds: <strong>{{ health.sources.count if health.sources else 0 }}</strong></li>
+            <li>Tier A/B/C: {{ (health.sources.by_tier.A if health.sources and health.sources.by_tier else 0) }} /
+              {{ (health.sources.by_tier.B if health.sources and health.sources.by_tier else 0) }} /
+              {{ (health.sources.by_tier.C if health.sources and health.sources.by_tier else 0) }}</li>
+          </ul>
+          <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_sources_catalog') }}"><code>/api/sources</code></a></p>
+        </section>
+        <section class="sidebar-panel">
+          <h3>Indicator coverage</h3>
+          <ul class="data-list">
+            <li>Macro stress: <strong>{{ health.indicators.macroeconomic_stress_countries if health.indicators else 0 }}</strong>
+              ({{ health.indicators.macroeconomic_stress_rows if health.indicators else 0 }} rows)</li>
+            <li>Energy exposure: {{ health.indicators.energy_commodity_countries if health.indicators else 0 }}</li>
+            <li>Sample: {{ (health.indicators.sample_macro_countries or [])|join(', ') or '—' }}</li>
+          </ul>
+          <p class="muted" style="margin:0.4rem 0 0;font-size:0.75rem;"><a href="{{ url_for('api.api_indicators_coverage') }}"><code>/api/indicators/coverage</code></a></p>
+        </section>
+        <section class="sidebar-panel">
+          <h3>Scheduled regional briefs</h3>
+          <ul class="data-list">
+            <li>Last run: {{ health.scheduled_briefs.last_at if health.scheduled_briefs else '—' }}</li>
+            <li>Created: {{ health.scheduled_briefs.last_count if health.scheduled_briefs else '—' }} · errors: {{ health.scheduled_briefs.last_errors if health.scheduled_briefs else '—' }}</li>
+            <li>Agents: {{ (health.scheduled_briefs.last_agents or [])|join(', ') if health.scheduled_briefs else '—' }}</li>
+          </ul>
+        </section>
+      </div>
     </div>
   </details>
 
