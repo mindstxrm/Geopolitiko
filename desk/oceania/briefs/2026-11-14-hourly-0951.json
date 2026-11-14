@@ -1,0 +1,165 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-14T08:51:00Z",
+  "window_end_utc": "2026-11-14T09:51:00Z",
+  "generated_at_utc": "2026-11-14T10:00:00Z",
+  "scan_through_utc": "2026-11-14T09:55:13Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-11-14T08:51:00Z",
+  "parent_daily_pr": 162,
+  "parent_hourly_pr": 163,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Leftover Nadi TDS 140826 UTC HOLD: TD02F 1005 hPa at 09.5S 158.5W, LOW TO MODERATE; leftover JTWC 95P MEDIUM HOLD; no land warning",
+      "summary": "Recapture HTML /warnings/ 200 at 09:55:13 still prints FMS Tropical Disturbance Summary issued 140826 UTC: TD02F 1005 hPa analysed near 09.5S 158.5W at 140600UTC; potential LOW TO MODERATE in 24–36 hours; no other significant disturbance; no Special Weather Bulletin / Storm Warning / Hurricane Warning. Leftover JTWC ABPW10 PGTW 140600 (web LM still 05:47:13 GMT): INVEST 95P still 9.0S 157.8W, ~823 NM ENE of Pago Pago, 28–33 kt / 1005 mb, MEDIUM. Leftover AFD 140737. CAP GU/MP/AS empty (updated 09:48:35Z). Nadi 1005 hPa is not a named cyclone. No land TC Warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "COK", "FJI", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td02f", "invest_95p", "nadi_tds_140826", "jtwc_abpw_140600", "no_swb", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "NEW PC 09:48Z: North Fly MP warns on alleged illegal price increases; ICCC inspection announced; not a security pact",
+      "summary": "Post-Courier lastBuild 09:48:13Z (pub 09:48:08Z / 7:48 pm PNG): North Fly MP James Donald warns businesses against allegedly increasing prices of essential goods and fuel and announces an ICCC visit to inspect pricing practices. Domestic consumer-protection / fuel-price colour. Paywalled beyond the lede. Not extra-constitutional. Not a compact. Not FLASH.",
+      "countries": ["PNG"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["north_fly", "iccc", "fuel_prices", "png_domestic"],
+      "sources": [
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.postcourier.com.pg/north-fly-mp-warns-businesses-against-illegal-price-increases-announces-iccc-visit/"
+      ]
+    },
+    {
+      "title": "PDN FEMA EMPG leftover-dated Adelup now homepage lead; IB Ghemu PCRIC NEW collection; FBC 200 then recapture timeout; Forumsec PRF HOLD",
+      "summary": "PDN homepage lead is now leftover-dated FEMA FY2023 EMPG US$984,776 (article LM 09:30:00 GMT; GNN 12:00 PM ChST / 02:00 UTC) lifting a GHS/OCD drawdown hold — territorial reimbursement, not compact cash. Islands Business 14 Nov NEW collection: SLB minister Wayne Ghemu at PCRIC COP31 panel on disbursement speed (leftover Maila USD$500,000 / 10 days); not a new PRF table. Forumsec 10 Nov release HTTP LM HOLD 08:46:35 GMT; still more than US$300 million short. FBC RSS first-pass 200 leftover lastBuild 06:12:38Z, recapture timeout. ABC RSS 500 HOLD. SLB homepages 403 HOLD. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["GUM", "SLB", "PLW", "AUS", "FJI", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["prf", "cop31", "fema_empg", "ghemu_pcric", "fbc_flap", "collection_path"],
+      "sources": [
+        "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html",
+        "https://islandsbusiness.com/news-break/solomons-ministers-urges-faster-climate-finance-disbursement-for-pacific/",
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://www.fbcnews.com.fj/feed/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS Tropical Disturbance Summary 140826 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "FJI"],
+      "status": "leftover HOLD; LOW TO MODERATE; no SWB",
+      "date": "2026-11-14T08:26:00Z",
+      "notes": "Unchanged vs 08:51 hourly at recapture 09:55:13. Not named. Not FLASH."
+    },
+    {
+      "name": "JTWC INVEST 95P / ABPW 140600",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD MEDIUM",
+      "date": "2026-11-14T06:00:00Z",
+      "notes": "Web LM still 05:47:13 GMT. Next 150600Z."
+    },
+    {
+      "name": "North Fly ICCC price inspection (announced)",
+      "type": "domestic governance / consumer protection",
+      "parties": ["PNG"],
+      "status": "NEW announcement 09:48:08Z; inspection date unconfirmed",
+      "date": "2026-11-14T09:48:08Z",
+      "notes": "Not a security pact. Not FLASH."
+    },
+    {
+      "name": "FEMA FY2023 EMPG amendment (GUM)",
+      "type": "territorial disaster-management finance",
+      "parties": ["GUM", "USA"],
+      "status": "NEW PDN homepage lead of leftover-dated Adelup/GNN copy; US$984,776 drawdown-hold lift",
+      "date": "2026-11-14T02:00:00Z",
+      "notes": "Territorial reimbursement. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "Forumsec COP31 / Belau action release",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "PLW"],
+      "status": "HTTP LM HOLD 08:46:35 GMT; content HOLD",
+      "date": "2026-11-10",
+      "notes": "Still more than US$300 million short. File HOLD ≠ new table."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT/Defence timeout this hour."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P (ENE Pago Pago)",
+      "direction": "leftover Nadi TDS 140826 1005 hPa LOW–MODERATE HOLD; leftover JTWC MEDIUM HOLD; no SWB",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M development",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on leftover TDS LOW–MODERATE or leftover MEDIUM invest"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Ghemu PCRIC speed remarks NEW collection",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on an IB panel or HTTP LM HOLD"
+    },
+    {
+      "risk": "PNG Bougainville ratification / fuel-price stress",
+      "direction": "vote expected 24 Nov; NEW North Fly ICCC colour",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on an ICCC inspection notice"
+    }
+  ],
+  "open_questions": [
+    "Next JTWC ABPW 150600Z: 95P numbered, named, still MEDIUM, or downgraded vs leftover Nadi 1005 hPa / 09.5S 158.5W?",
+    "Next Nadi TDS / first SWB vs HTML no-SWB HOLD?",
+    "Forumsec official PRF pledge table vs spoken US$200m vs HTTP LM HOLD 08:46:35 GMT?",
+    "ICCC North Fly inspection date / any national price instrument behind the PC paywall?",
+    "AUS–SLB signature vs DFAT/Defence timeout?",
+    "FBC RSS flap: durable 200 vs recapture timeout vs leftover Vaturu lastBuild?",
+    "Guam EMPG official Adelup/FEMA PDF vs PDN/GNN restamp?"
+  ],
+  "sources": [
+    {"title": "FMS TDS 140826 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T08:26:00Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC ABPW 140600", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-14T06:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Post Courier — North Fly MP / ICCC", "url": "https://www.postcourier.com.pg/north-fly-mp-warns-businesses-against-illegal-price-increases-announces-iccc-visit/", "publisher": "Post-Courier", "published_at": "2026-11-14T09:48:08Z", "tier": "B", "confidence": "H"},
+    {"title": "PDN — FEMA EMPG US$984,776", "url": "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T09:30:00Z", "tier": "B", "confidence": "H"},
+    {"title": "Islands Business — Ghemu PCRIC", "url": "https://islandsbusiness.com/news-break/solomons-ministers-urges-faster-climate-finance-disbursement-for-pacific/", "publisher": "Islands Business", "published_at": "2026-11-14", "tier": "B", "confidence": "M"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H"},
+    {"title": "Daily Post homepage", "url": "https://www.dailypost.vu/", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-14T09:44:46Z", "tier": "B", "confidence": "H"}
+  ]
+}
