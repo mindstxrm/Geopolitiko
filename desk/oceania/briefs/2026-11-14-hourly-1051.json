@@ -1,0 +1,167 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-14T09:51:00Z",
+  "window_end_utc": "2026-11-14T10:51:00Z",
+  "generated_at_utc": "2026-11-14T10:58:00Z",
+  "scan_through_utc": "2026-11-14T10:55:18Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-11-14T09:51:00Z",
+  "parent_daily_pr": 162,
+  "parent_hourly_pr": 164,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Leftover Nadi TDS 140826 UTC HOLD: TD02F 1005 hPa at 09.5S 158.5W, LOW TO MODERATE; leftover JTWC 95P MEDIUM HOLD; no land warning",
+      "summary": "Recapture HTML /warnings/ 200 at 10:55:07 still prints FMS Tropical Disturbance Summary issued 140826 UTC: TD02F 1005 hPa analysed near 09.5S 158.5W at 140600UTC; potential LOW TO MODERATE in 24–36 hours; no other significant disturbance; no Special Weather Bulletin / Storm Warning / Hurricane Warning. Leftover JTWC ABPW10 PGTW 140600 (web LM still 05:47:13 GMT): INVEST 95P still 9.0S 157.8W, ~823 NM ENE of Pago Pago, 28–33 kt / 1005 mb, MEDIUM. Leftover AFD 140737. CAP GU/MP/AS empty (updated 10:47:49Z first-pass / 10:54:55Z recapture). Nadi 1005 hPa is not a named cyclone. No land TC Warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "COK", "FJI", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td02f", "invest_95p", "nadi_tds_140826", "jtwc_abpw_140600", "no_swb", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "Forumsec PRF HTTP LM NEW 10:32:23 GMT; content HOLD >US$300m short; homepage LM NEW 10:13:35 GMT; not a new capitalisation table",
+      "summary": "Forumsec 10 Nov Antalya release HTTP LM moved to 10:32:23 GMT from parent HOLD 08:46:35 GMT. Body still quotes Whipps that the Pacific Resilience Facility remains more than US$300 million short of its first target. Spoken stock remains US$200m vs US$500m. Homepage LM moved to 10:13:35 GMT from 12 Nov 04:32:35 GMT — Drupal file tick, no this-window Leaders communiqué. File tick is not a deposited capitalisation table. Not FLASH.",
+      "countries": ["PLW", "AUS", "TUR"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["prf", "cop31", "forumsec", "http_lm_tick"],
+      "sources": [
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://forumsec.org/",
+        "https://www.pm.gov.au/media/cop31-spotlight-pacific-resilience-facility"
+      ]
+    },
+    {
+      "title": "FBC 200 leftover Vaturu recovered; Daily Post Santo 429→200 leftover-dated; PDN FEMA article LM restamp 10:42:05 GMT; PC India Nite OOS",
+      "summary": "FBC RSS HTTP 200 leftover lastBuild 06:12:38Z recovered vs parent recapture timeout; Vaturu conservation still listed. Daily Post Santo airport slug 429→200 with article LM HOLD 13 Nov 22:35:24 GMT — collection-path recovery, not a new sitting. PDN FEMA EMPG US$984,776 still homepage lead; article LM restamp 10:42:05 GMT of leftover-dated Adelup copy — territorial reimbursement, not compact cash. PC lastBuild 10:47:57Z is India Nite culture (out of scope); leftover North Fly ICCC 09:48Z. ABC RSS 500 HOLD. SLB homepages 403 HOLD. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["FJI", "VUT", "GUM", "PNG", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["fbc_recovery", "santo_airport", "fema_empg", "collection_path"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.dailypost.vu/news/santo-losing-millions-because-of-airport-shambles/article_013d5c3a-021a-5592-a146-0c78c9fa833b.html",
+        "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html",
+        "https://www.postcourier.com.pg/feed/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS Tropical Disturbance Summary 140826 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "FJI"],
+      "status": "leftover HOLD; LOW TO MODERATE; no SWB",
+      "date": "2026-11-14T08:26:00Z",
+      "notes": "Unchanged vs 09:51 hourly at recapture 10:55:07. Not named. Not FLASH."
+    },
+    {
+      "name": "JTWC INVEST 95P / ABPW 140600",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD MEDIUM",
+      "date": "2026-11-14T06:00:00Z",
+      "notes": "Web LM still 05:47:13 GMT. Next 150600Z."
+    },
+    {
+      "name": "Forumsec COP31 / Belau action release",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "PLW"],
+      "status": "HTTP LM NEW 10:32:23 GMT; content HOLD",
+      "date": "2026-11-10",
+      "notes": "Still more than US$300 million short. File tick ≠ new table."
+    },
+    {
+      "name": "Forumsec homepage",
+      "type": "institutional",
+      "parties": ["PIF"],
+      "status": "HTTP LM NEW 10:13:35 GMT; no Leaders communiqué",
+      "date": "2026-11-14T10:13:35Z",
+      "notes": "File tick vs parent 12 Nov 04:32:35 GMT. Not FLASH."
+    },
+    {
+      "name": "FEMA FY2023 EMPG amendment (GUM)",
+      "type": "territorial disaster-management finance",
+      "parties": ["GUM", "USA"],
+      "status": "article LM restamp 10:42:05 GMT; leftover-dated Adelup US$984,776 still PDN lead",
+      "date": "2026-11-14T02:00:00Z",
+      "notes": "Territorial reimbursement. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT/Defence HTTP/2 INTERNAL_ERROR this hour."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P (ENE Pago Pago)",
+      "direction": "leftover Nadi TDS 140826 1005 hPa LOW–MODERATE HOLD; leftover JTWC MEDIUM HOLD; no SWB",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M development",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on leftover TDS LOW–MODERATE or leftover MEDIUM invest"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Forumsec HTTP LM tick 10:32:23 GMT with content HOLD",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on an HTTP LM tick"
+    },
+    {
+      "risk": "PNG Bougainville ratification / fuel-price stress",
+      "direction": "vote expected 24 Nov; leftover North Fly ICCC colour; PC India Nite OOS",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on leftover ICCC or culture copy"
+    }
+  ],
+  "open_questions": [
+    "Next JTWC ABPW 150600Z: 95P numbered, named, still MEDIUM, or downgraded vs leftover Nadi 1005 hPa / 09.5S 158.5W?",
+    "Next Nadi TDS / first SWB vs HTML no-SWB HOLD?",
+    "Forumsec official PRF pledge table vs spoken US$200m vs HTTP LM tick 10:32:23 GMT with content HOLD?",
+    "Forumsec homepage LM 10:13:35 GMT: cache/CDN vs unpublished CMS save vs forthcoming release?",
+    "AUS–SLB signature vs DFAT/Defence HTTP/2 INTERNAL_ERROR?",
+    "FBC RSS: durable 200 leftover lastBuild 06:12:38Z vs next lastBuild tick?",
+    "Daily Post Santo slug 200 durability vs parent 429; Pekoa reopening vs leftover-dated 13 Nov copy?",
+    "Guam EMPG official Adelup/FEMA PDF vs PDN article LM restamp 10:42:05 GMT?"
+  ],
+  "sources": [
+    {"title": "FMS TDS 140826 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T08:26:00Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC ABPW 140600", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-14T06:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T10:32:23Z"},
+    {"title": "Forumsec homepage", "url": "https://forumsec.org/", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14T10:13:35Z", "tier": "A", "confidence": "H"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "publisher": "FBC", "published_at": "2026-11-14T06:12:38Z", "tier": "B", "confidence": "H"},
+    {"title": "Daily Post — Santo airport", "url": "https://www.dailypost.vu/news/santo-losing-millions-because-of-airport-shambles/article_013d5c3a-021a-5592-a146-0c78c9fa833b.html", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-13T22:35:24Z", "tier": "B", "confidence": "H"},
+    {"title": "PDN — FEMA EMPG US$984,776", "url": "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T10:42:05Z", "tier": "B", "confidence": "H"}
+  ]
+}
