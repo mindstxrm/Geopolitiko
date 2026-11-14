@@ -1,0 +1,208 @@
+{
+  "product": "hourly",
+  "task": "asean.hourly_scan",
+  "desk": "asean",
+  "window_start_utc": "2026-11-14T08:00:00Z",
+  "window_end_utc": "2026-11-14T22:48:00Z",
+  "generated_at_utc": "2026-11-14T22:55:00Z",
+  "scan_through_utc": "2026-11-14T22:48:00Z",
+  "overall_confidence": "M",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "flash_id": null,
+  "sunday_addendum": true,
+  "weekend_product": true,
+  "parent_daily": "desk/asean/briefs/2026-11-14-daily.md",
+  "parent_daily_pr": "https://github.com/mindstxrm/Geopolitiko/pull/161",
+  "parent_hourly": null,
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "coverage_gap_note": "Intervening hourlies after PR #161 were FLASH-none holds and did not file a product. This Sunday addendum rolls AMM wrap / DEFA Tier A / sensor ticks 08:00–22:48 UTC. It does not rewrite the daily, backfill 17 Oct–13 Nov, or substitute for the 16 Nov weekly.",
+  "countries_touched": ["PHL", "MYS", "THA", "MMR", "IDN", "SGP", "AUS", "CHN", "TLS"],
+  "asean_institutional": true,
+  "cutoff_prints": {
+    "sgp_psi_0600_sgt_15_nov": {
+      "north": 45,
+      "central": 50,
+      "east": 38,
+      "south": 38,
+      "west": 54,
+      "band": "west_moderate_others_good",
+      "timestamp": "2026-11-15T06:00:00+08:00",
+      "update_timestamp": "2026-11-15T06:00:50+08:00",
+      "source": "https://api.data.gov.sg/v1/environment/psi"
+    },
+    "sgp_pm25_1hr_0600_sgt_15_nov": {
+      "max_ugm3": 10,
+      "max_region": "central",
+      "band": "normal",
+      "source": "https://www.haze.sg/"
+    },
+    "apims_0600_myt_15_nov": {
+      "complete_68_68": true,
+      "unhealthy": 1,
+      "good_or_moderate": 67,
+      "very_unhealthy": 0,
+      "max": 153,
+      "max_station": "Batu Muda, W.P. KUALA LUMPUR",
+      "source": "https://jerebumalaysia.com/en/unhealthy-areas/",
+      "doe_update": "2026-11-15T06:00:00+08:00"
+    },
+    "haze_gov_sitrep": {
+      "updated_on": "5:07 PM 14 November",
+      "note": "0300 UTC / 11:00 SGT 15 Nov sitrep unpublished this scan"
+    },
+    "jisdor_last_good": {
+      "date": "2026-11-13",
+      "usd_idr": 18218.00,
+      "note": "14–15 Nov unpublished (weekend)"
+    }
+  },
+  "priority_items": [
+    {
+      "title": "AMM wrap: Lazaro 'no easing' of 5PC; Myanmar FM seat on the table, not decided",
+      "summary": "FACT: After Saturday AMM, special envoy/PHL FS Lazaro said there is no easing of the Five-Point Consensus and no decision to seat Myanmar's foreign minister. MYS FM Hasan: ASEAN has yet to agree to restore Myanmar to ministerial/leaders' meetings; representation stays at senior non-political grade; not a membership suspension. Thai FM Sihasak restated calibrated re-engagement at the Extended Informal Consultation. Two non-papers (special-envoy ToR; elements to assess progress) still with senior officials.",
+      "countries": ["PHL", "MYS", "THA", "MMR"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["Myanmar", "Five-Point Consensus", "AMM", "Chair"],
+      "sources": [
+        "https://www.channelnewsasia.com/asia/asean-not-easing-myanmar-approach-blocs-special-envoy-says-6551711",
+        "https://www.thestar.com.my/news/nation/2026/11/14/asean-yet-to-agree-to-myanmar039s-return-to-ministerial-leaders039-meetings",
+        "https://www.mfa.go.th/en/content/ammmanila-eng?cate=5d5bcb4e15e39c306000683c",
+        "https://www.malaymail.com/news/malaysia/2026/11/14/foreign-minister-malaysia-urges-asean-china-to-redouble-efforts-to-finalise-south-china-sea-code/243268"
+      ]
+    },
+    {
+      "title": "DEFA signing confirmed by ASEAN SG; May 2027 in-effect is CLAIM",
+      "summary": "FACT: SG Kao (ABIS as-delivered) confirms DEFA was signed at the 28th AEC Council. PNA: 11 economies signed in Pasay; Roque framed it as the first region-wide digital economy agreement of its kind. SG CLAIM: fast-track ratification; implementation plan ready by May 2027 when DEFA goes into effect. Signed PDF unpublished. CNA 'legally binding' is CLAIM until chapters are posted.",
+      "countries": ["PHL", "IDN", "SGP"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["DEFA", "digital economy", "AEC", "Chair deliverable"],
+      "sources": [
+        "https://asean.org/wp-content/uploads/2026/11/SG-Dr-Kao-Remarks-for-ASEAN-Business-and-Investment-Summit-ABIS-2026-14-November-2026_As-Delivered.pdf",
+        "https://www.pna.gov.ph/article/asean-ministers-ink-framework-deal-to-support-regions-digital-economy"
+      ]
+    },
+    {
+      "title": "CoC co-chair Hasan: nature and geographic scope still open",
+      "summary": "FACT: Malaysia, co-chair since 2024, told AMM that CoC talks ran monthly this year but nature and geographical scope remain unresolved; urged renewed political will to meet the 2023 year-end 2026 aspirational timeline. Complements Imperial ~70% / four milestone leftovers. No AMM closing text.",
+      "countries": ["MYS", "PHL", "CHN", "VNM"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["South China Sea", "Code of Conduct", "AMM"],
+      "sources": [
+        "https://www.malaymail.com/news/malaysia/2026/11/14/foreign-minister-malaysia-urges-asean-china-to-redouble-efforts-to-finalise-south-china-sea-code/243268"
+      ]
+    },
+    {
+      "title": "AUS–PHL defence arrangement still expected Sunday; not signed this scan",
+      "summary": "FACT: Albanese arrived 14 Nov. DND advisory: Teodoro and Ambassador Innes-Brown to sign at Eva Macapagal Cruise Terminal on 15 Nov. ABC: maritime awareness, intel, training, interoperability, infrastructure. No signed text this scan. No dated 14–15 Nov kinetic FLASH.",
+      "countries": ["PHL", "AUS"],
+      "importance": 3,
+      "confidence": "M",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["defence", "minilateral", "Squad", "South China Sea"],
+      "sources": [
+        "https://globalnation.inquirer.net/347434/australian-pm-albanese-arrives-in-ph-for-asean-summit",
+        "https://www.abc.net.au/news/2026-11-14/major-defence-deal-astralia-philippines-clashes-china/107381694"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "ASEAN Digital Economy Framework Agreement (DEFA)",
+      "parties": ["ASEAN-11"],
+      "type": "digital economy agreement",
+      "status": "signed (SG Kao + PNA); EIF/ratification unpublished; SG CLAIM May 2027 in-effect",
+      "bindingness": "legal once in force; chapter bindingness unverified",
+      "date": "2026-11-14"
+    },
+    {
+      "name": "5PC / Myanmar high-level representation",
+      "parties": ["ASEAN"],
+      "type": "political arrangement",
+      "status": "AMM: no easing; FM seat on table not decided; two non-papers with SOMs",
+      "bindingness": "political",
+      "date": "2026-11-14"
+    },
+    {
+      "name": "ASEAN–China South China Sea Code of Conduct",
+      "parties": ["ASEAN", "CHN"],
+      "type": "code of conduct",
+      "status": "under negotiation; Hasan: nature + geographic scope open",
+      "bindingness": "contested",
+      "date": "2026-11-14"
+    },
+    {
+      "name": "AUS–PHL defence cooperation arrangement",
+      "parties": ["AUS", "PHL"],
+      "type": "defence",
+      "status": "announced; signing expected 2026-11-15; unsigned this scan",
+      "bindingness": "legal once signed",
+      "date": "2026-11-15"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "5PC / Myanmar representation split into leaders' meeting",
+      "direction": "hold after AMM no-easing; up into 15–17 Nov",
+      "horizon": "24-72h",
+      "confidence": "H",
+      "trigger": "Myanmar FM seated; emergency AMM; extra-constitutional event in Naypyidaw"
+    },
+    {
+      "risk": "SCS CoC year-end miss vs WPS gray-zone",
+      "direction": "process hold",
+      "horizon": "24h-weeks",
+      "confidence": "H",
+      "trigger": "shots; ramming with injuries; second-hull; emergency AMM"
+    },
+    {
+      "risk": "AUS–PHL DCA as minilateral hedge on summit morning",
+      "direction": "up if signed 15 Nov",
+      "horizon": "hours",
+      "confidence": "M",
+      "trigger": "posted text with access/basing verbs; PRC counter-move"
+    },
+    {
+      "risk": "Transboundary haze rebound",
+      "direction": "down vs parent W77 / BM155",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger": "PSI >=301 or APIMS >=200 with new capacity-break"
+    }
+  ],
+  "open_questions": [
+    "Posted DEFA signed text, depositary status, and side-letters",
+    "ADB–ASEAN MoU PDF",
+    "AUS–PHL arrangement text once signed 15 Nov",
+    "5PC review / Chair's Statement language vs Lazaro no-easing",
+    "haze.gov 0300 UTC / 11:00 SGT 15 Nov sitrep",
+    "Any dated 14–15 Nov WPS water-cannon or ramming"
+  ],
+  "sources": [
+    {"title": "NEA PSI API 06:00 SGT 15 Nov", "publisher": "data.gov.sg", "url": "https://api.data.gov.sg/v1/environment/psi", "published_at": "2026-11-14T22:00:50Z", "tier": "A"},
+    {"title": "haze.gov.sg sitrep 5:07 PM 14 November", "publisher": "NEA/ASMC", "url": "https://www.haze.gov.sg/", "published_at": "2026-11-14T09:07:00Z", "tier": "A"},
+    {"title": "ASEAN not easing Myanmar approach, bloc's special envoy says", "publisher": "CNA", "url": "https://www.channelnewsasia.com/asia/asean-not-easing-myanmar-approach-blocs-special-envoy-says-6551711", "published_at": "2026-11-14T12:35:00Z", "tier": "B"},
+    {"title": "Asean yet to agree to Myanmar's return to ministerial, leaders' meetings", "publisher": "The Star / Bernama", "url": "https://www.thestar.com.my/news/nation/2026/11/14/asean-yet-to-agree-to-myanmar039s-return-to-ministerial-leaders039-meetings", "published_at": "2026-11-14T11:53:00Z", "tier": "B"},
+    {"title": "Sihasak attends AMM and Extended Informal Consultation on Myanmar", "publisher": "Thai MFA", "url": "https://www.mfa.go.th/en/content/ammmanila-eng?cate=5d5bcb4e15e39c306000683c", "published_at": "2026-11-14T00:00:00Z", "tier": "A"},
+    {"title": "Malaysia urges ASEAN, China to redouble efforts to finalise SCS code", "publisher": "Malay Mail / Bernama", "url": "https://www.malaymail.com/news/malaysia/2026/11/14/foreign-minister-malaysia-urges-asean-china-to-redouble-efforts-to-finalise-south-china-sea-code/243268", "published_at": "2026-11-14T08:41:00Z", "tier": "B"},
+    {"title": "ASEAN ministers ink DEFA", "publisher": "PNA", "url": "https://www.pna.gov.ph/article/asean-ministers-ink-framework-deal-to-support-regions-digital-economy", "published_at": "2026-11-14T09:52:00Z", "tier": "A"},
+    {"title": "SG Kao remarks, ASEAN Business and Investment Summit (as delivered)", "publisher": "ASEAN Secretariat", "url": "https://asean.org/wp-content/uploads/2026/11/SG-Dr-Kao-Remarks-for-ASEAN-Business-and-Investment-Summit-ABIS-2026-14-November-2026_As-Delivered.pdf", "published_at": "2026-11-14T00:00:00Z", "tier": "A"},
+    {"title": "Australian PM Albanese arrives in PH for ASEAN Summit", "publisher": "Philippine Daily Inquirer", "url": "https://globalnation.inquirer.net/347434/australian-pm-albanese-arrives-in-ph-for-asean-summit", "published_at": "2026-11-14T00:00:00Z", "tier": "B"},
+    {"title": "Major defence deal for Australia, Philippines", "publisher": "ABC News", "url": "https://www.abc.net.au/news/2026-11-14/major-defence-deal-astralia-philippines-clashes-china/107381694", "published_at": "2026-11-13T19:48:00Z", "tier": "B"},
+    {"title": "Indonesia says Malaysia, Singapore welcome eased haze", "publisher": "Jakarta Globe", "url": "https://jakartaglobe.id/news/indonesia-says-malaysia-singapore-welcome-eased-haze", "published_at": "2026-11-14T13:09:00Z", "tier": "B"},
+    {"title": "APIMS 06:00 MYT 15 Nov — Batu Muda 153 (1/68 Unhealthy)", "publisher": "Jerebu Malaysia / DOE", "url": "https://jerebumalaysia.com/en/unhealthy-areas/", "published_at": "2026-11-14T22:00:00Z", "tier": "C"},
+    {"title": "ASEAN news headlines 10pm Saturday 14 Nov (Anwar arrival)", "publisher": "The Star / Bernama", "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/11/14/asean-news-headlines-at-10pm-on-saturday-nov-14-2026", "published_at": "2026-11-14T14:05:00Z", "tier": "B"},
+    {"title": "Aceh braces for hydrometeorological disaster until January", "publisher": "ANTARA", "url": "https://en.antaranews.com/news/441891/aceh-braces-for-hydrometeorological-disaster-until-january", "published_at": "2026-11-11T00:00:00Z", "tier": "A"}
+  ]
+}
