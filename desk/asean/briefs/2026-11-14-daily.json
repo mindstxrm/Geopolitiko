@@ -1,0 +1,352 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-11-13T08:00:00Z",
+  "window_end_utc": "2026-11-14T08:00:00Z",
+  "generated_at_utc": "2026-11-14T07:50:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["PHL", "SGP", "IDN", "THA", "MMR", "TLS", "VNM", "MYS", "AUS", "CHN", "USA", "JPN"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "weekend_product": true,
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "coverage_gap_note": "Last filed daily 2026-10-16 PR #137. This packet is the 14 Nov weekend daily only. It does not backfill 17 Oct–13 Nov dailies, 19/26 Oct or 2/9 Nov weeklies, or the November monthly. Do not rewrite PR #137 / #112 / #87 / #93 / #84 / #70 / #68 / #48. 16:00 SGT PSI unpublished at generation; last live 15:00 SGT.",
+  "cutoff_prints": {
+    "sgp_psi_1500_sgt": {
+      "north": 58,
+      "central": 61,
+      "east": 54,
+      "south": 56,
+      "west": 77,
+      "band": "all_moderate",
+      "update_timestamp": "2026-11-14T15:01:04+08:00",
+      "note": "16:00 SGT cutoff print unpublished at generation"
+    },
+    "sgp_psi_1400_sgt": {
+      "north": 59,
+      "central": 61,
+      "east": 55,
+      "south": 57,
+      "west": 77
+    },
+    "sgp_pm25_1hr_1500_sgt": {
+      "north": 3,
+      "central": 5,
+      "east": 6,
+      "south": 8,
+      "west": 7,
+      "band": "all_normal"
+    },
+    "apims_1500_myt": {
+      "complete_68_68": true,
+      "good": 33,
+      "moderate": 34,
+      "unhealthy": 1,
+      "very_unhealthy": 0,
+      "hazardous": 0,
+      "max": 155,
+      "max_station": "Batu Muda, W.P. KUALA LUMPUR",
+      "pasir_gudang": 66,
+      "larkin": 73,
+      "klang": 80,
+      "johan_setia": 83
+    },
+    "jisdor_last_good": {
+      "date": "2026-11-13",
+      "usd_idr": 18218.00,
+      "note": "14 Nov unpublished (Saturday)"
+    }
+  },
+  "priority_items": [
+    {
+      "title": "DEFA signed at 28th AEC Council in Manila; primary text unpublished",
+      "summary": "FACT: AEC Council ministers signed the ASEAN Digital Economy Framework Agreement on Saturday 14 Nov (Manila Times, JPNN/Airlangga, Rappler). Talks launched Sep 2023, concluded May 2026. PNA 09:27 GMT+8 still described signing as expected. Airlangga: accelerate an implementation plan vs AEC Strategic Plan 2026–2030. ADB pledges up to US$5bn by 2030 to operationalise DEFA. EIF/ratification unpublished. Do not use Manila Times $2 billion by 2023 figure.",
+      "countries": ["PHL", "IDN", "SGP"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["DEFA", "digital economy", "AEC", "Chair deliverable"],
+      "sources": [
+        "https://www.manilatimes.net/2026/11/14/business/asean-economic-chiefs-sign-first-digital-trade-agreement-in-the-world/2470008",
+        "https://www.jpnn.com/news/perjanjian-ekonomi-digital-asean-resmi-diteken-di-manila-indonesia-dorong-percepatan-implementasi",
+        "https://www.pna.gov.ph/article/ph-seeks-to-lock-in-asean-economic-agenda-ahead-of-leaders-meet",
+        "https://www.adb.org/news/speeches/asean-business-investment-summit-masato-kanda"
+      ]
+    },
+    {
+      "title": "49th ASEAN Summit eve: AMM Saturday, leaders 15–17 Nov, SGP 2027 chair; not emergency AMM",
+      "summary": "FACT: 49th ASEAN Summit and Related Summits 15–17 Nov in Manila under PHL chair; ministerial track Saturday 14 Nov. PNA names Trump, Carney, Albanese, Modi, Takaichi, Lee Jae-myung, Lula among expected partners; CNA names Li Qiang; APEC Shenzhen 18 Nov. Rappler: PHL hands gavel to SGP for 2027 at close. Arrivals this window include TLS PM Gusmão, VNM PM Le Minh Hung, AUS PM Albanese. Scheduled summit, not §8 emergency.",
+      "countries": ["PHL", "SGP", "TLS", "VNM", "AUS", "USA", "CHN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["ASEAN Summit", "Chair", "dialogue partners"],
+      "sources": [
+        "https://www.channelnewsasia.com/asia/asean-summit-manila-south-china-sea-myanmar-6549311",
+        "https://www.rappler.com/philippines/updates-videos-49th-asean-summit-manila-november-2026/",
+        "https://www.pna.gov.ph/article/ph-seeks-to-lock-in-asean-economic-agenda-ahead-of-leaders-meet",
+        "https://en.tatoli.tl/2026/11/13/pm-gusmao-heads-to-philippines-for-49th-asean-summit/12/"
+      ]
+    },
+    {
+      "title": "SCS CoC: Chair says ~70% of package agreed; four milestone issues open; year-end not pre-empted",
+      "summary": "FACT: DFA ASEAN spokesperson Dax Imperial (PNA 13 Nov; Philstar 12/14 Nov) said CoC negotiations are ~70% complete / 70% of the package agreed. Remaining issues include DOC relationship, legally binding character, geographic scope, and definitions (self-restraint). On 14 Nov ministerial and leaders’ agenda. Imperial will not pre-empt year-end conclusion. CNA 14 Nov analysis (Lin/Mantong) that a binding year-end text is unlikely is analysis, not a Chair claim.",
+      "countries": ["PHL", "CHN", "VNM", "MYS", "BRN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["SCS", "CoC", "diplomacy"],
+      "sources": [
+        "https://www.pna.gov.ph/article/south-china-sea-coc-negotiations-70-percent-complete-dfa",
+        "https://www.philstar.com/headlines/2026/11/14/2570011/dfa-sea-code-conduct-air",
+        "https://www.philstar.com/headlines/2026/11/12/2569677/south-china-sea-code-70-agreed"
+      ]
+    },
+    {
+      "title": "Myanmar/5PC: Chair holds MAH ban; Thai FM pushes AMM-level re-entry",
+      "summary": "FACT: DFA (Independent 13 Nov) — junta leaders barred; Myanmar represented by MFA ASEAN-affairs director. CLAIM (Sihasak after 12 Nov Naypyidaw visit, AFP/Manila Times 14 Nov; Reuters 13 Nov): next step should be Myanmar FM at foreign-minister level; no specific steps discussed; hoped for a decision by THA chair 2028 at the latest. Imperial: summit expected to issue a 5PC implementation review document. Not a coup; not emergency AMM.",
+      "countries": ["PHL", "THA", "MMR"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["Myanmar", "5PC", "ASEAN cohesion"],
+      "sources": [
+        "https://www.manilatimes.net/2026/11/14/world/asia-oceania/thai-fm-myanmar-should-rejoin-asean-meetings/2469535",
+        "https://www.reuters.com/world/asia-pacific/asean-faces-myanmar-dilemma-some-members-pursue-closer-ties-2026-11-13/",
+        "https://www.the-independent.com/asia/southeast-asia/philippines-asean-myanmar-junta-b3084503.html"
+      ]
+    },
+    {
+      "title": "AUS–PHL defence pact expected Sunday; AFP 29 WPS hulls 3–8 Nov; no kinetic FLASH",
+      "summary": "FACT (ABC 14 Nov): AUS–PHL defence cooperation agreement expected to be signed Sunday on ASEAN sidelines (reciprocal access, intel sharing, navy/coast-guard support — ABC). Squad Combined Coordination Centre announced after Cebu 28 Oct ADMM. FACT (ABS-CBN 12 Nov): AFP 29 Chinese vessels (20 CCG + 9 PLAN) at four WPS features 3–8 Nov; no shots/injuries/second-hull in that count. Do not FLASH undated Manila Times Scarborough water-cannon chrome or 8 Oct Ayungin medevac.",
+      "countries": ["PHL", "AUS", "USA", "JPN", "CHN"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["SCS", "WPS", "defence", "minilateral"],
+      "sources": [
+        "https://www.abc.net.au/news/2026-11-14/major-defence-deal-astralia-philippines-clashes-china/107381694",
+        "https://www.abs-cbn.com/news/nation/2026/11/12/29-chinese-naval-coast-guard-ships-in-wps-in-past-week-1656"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "ASEAN Digital Economy Framework Agreement (DEFA)",
+      "type": "digital economy agreement",
+      "parties": ["ASEAN-11"],
+      "status": "signed",
+      "date": "2026-11-14",
+      "venue": "Manila, 28th AEC Council",
+      "bindingness": "legal once in force (ratification/EIF unpublished)",
+      "in_window": true,
+      "note": "Roque chairing; Airlangga on implementation plan. Primary text unpublished."
+    },
+    {
+      "name": "ADB–ASEAN MoU (ADB as 'main bank')",
+      "type": "MoU",
+      "parties": ["ASEAN", "ADB"],
+      "status": "announced",
+      "date": "2026-11-14",
+      "venue": "Manila / ASEAN Business and Investment Summit",
+      "bindingness": "political / institutional",
+      "in_window": true,
+      "note": "Kanda speech used future tense ('will sign later today'); Rappler live reports signed; PDF unpublished. Cebu May pledge up to US$30bn by 2030; Resilient Rivers up to US$8bn; DEFA support up to US$5bn."
+    },
+    {
+      "name": "AUS–PHL defence cooperation agreement",
+      "type": "defence",
+      "parties": ["AUS", "PHL"],
+      "status": "announced",
+      "date": "2026-11-15",
+      "venue": "Manila, ASEAN sidelines (expected)",
+      "bindingness": "legal once signed",
+      "in_window": true,
+      "note": "ABC: signing expected Sunday. Text unpublished."
+    },
+    {
+      "name": "ASEAN–China South China Sea Code of Conduct",
+      "type": "code of conduct",
+      "parties": ["ASEAN", "CHN"],
+      "status": "under negotiation (~70% complete, Imperial CLAIM)",
+      "date": "2026-11-13",
+      "venue": "Manila ministerial / 49th Summit agenda",
+      "bindingness": "contested (bindingness is an open milestone issue)",
+      "in_window": true,
+      "note": "Remaining ~30% includes DOC relationship, legally binding character, geographic scope, definitions including self-restraint."
+    },
+    {
+      "name": "ASEAN 5PC implementation review document",
+      "type": "Chair/summit document",
+      "parties": ["ASEAN"],
+      "status": "expected",
+      "date": "2026-11-15",
+      "venue": "49th ASEAN Summit",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Imperial Friday: negotiated document reviewing Five-Point Consensus implementation. Text unpublished."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "5PC / Myanmar representation split (Chair freeze vs THA FM-level push)",
+      "direction": "up_into_summit",
+      "horizon": "48h-days",
+      "confidence": "H",
+      "trigger_to_escalate": "Myanmar FM seated at AMM; emergency AMM; extra-constitutional event in Naypyidaw"
+    },
+    {
+      "risk": "SCS CoC year-end miss vs WPS gray-zone",
+      "direction": "flat_process_up_political",
+      "horizon": "48h-weeks",
+      "confidence": "H",
+      "trigger_to_escalate": "Shots; ramming with injuries; second-hull; emergency AMM"
+    },
+    {
+      "risk": "Chair-year economic delivery (DEFA EIF / implementation)",
+      "direction": "up_signed",
+      "horizon": "weeks-months",
+      "confidence": "M",
+      "trigger_to_escalate": "Posted text with carve-outs that gut data/payments chapters"
+    },
+    {
+      "risk": "IDN VP vacancy + Prabowo travel",
+      "direction": "flat_constitutional",
+      "horizon": "days",
+      "confidence": "H",
+      "trigger_to_escalate": "Extra-constitutional seizure; capital-control gazette"
+    },
+    {
+      "risk": "Transboundary haze SGP/MYS/IDN",
+      "direction": "down_vs_mid_oct_vu",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "PSI >=301 or APIMS >=200 with new national-capacity break; IDN bencana; emergency AMM"
+    }
+  ],
+  "open_questions": [
+    "Posted DEFA signed text, depositary status, and any side-letters (asean.org still 307).",
+    "ADB–ASEAN MoU PDF (Kanda future-tense vs Rappler signed).",
+    "AUS–PHL defence pact text on 15 Nov (access vs training vs intel).",
+    "5PC review document / Chair’s Statement drafts.",
+    "Whether Myanmar’s AMM-level representative stays at director grade through 14 Nov ministers.",
+    "16:00 SGT PSI and APIMS 16:00 complete 68/68.",
+    "Independent corroboration of any dated 13–14 Nov Scarborough water-cannon.",
+    "MPR timetable for Gibran replacement vs Prabowo’s Manila schedule."
+  ],
+  "sources": [
+    {
+      "title": "NEA PSI API 14 Nov (15:00 SGT last live)",
+      "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-11-14",
+      "published_at": "2026-11-14T07:01:04Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "NEA PM2.5 API 14 Nov",
+      "url": "https://api.data.gov.sg/v1/environment/pm25?date=2026-11-14",
+      "published_at": "2026-11-14T07:45:49Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "DOE APIMS hourly 15:00 MYT 14 Nov complete 68/68",
+      "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+      "published_at": "2026-11-14T07:00:00Z",
+      "publisher": "DOE Malaysia",
+      "tier": "A"
+    },
+    {
+      "title": "haze.gov.sg sitrep 4:48 PM 13 November",
+      "url": "https://www.haze.gov.sg/",
+      "published_at": "2026-11-13T08:48:00Z",
+      "publisher": "NEA / ASMC",
+      "tier": "A"
+    },
+    {
+      "title": "Bank Indonesia JISDOR 13 Nov Rp 18,218.00",
+      "url": "https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/default.aspx",
+      "published_at": "2026-11-13T08:15:00Z",
+      "publisher": "Bank Indonesia",
+      "tier": "A"
+    },
+    {
+      "title": "CNA: ASEAN leaders gather in Manila with SCS, Myanmar in focus",
+      "url": "https://www.channelnewsasia.com/asia/asean-summit-manila-south-china-sea-myanmar-6549311",
+      "published_at": "2026-11-13T22:00:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "PNA: South China Sea COC negotiations 70 percent complete",
+      "url": "https://www.pna.gov.ph/article/south-china-sea-coc-negotiations-70-percent-complete-dfa",
+      "published_at": "2026-11-13T06:29:00Z",
+      "publisher": "PNA",
+      "tier": "A"
+    },
+    {
+      "title": "PNA: PH seeks to lock in ASEAN economic agenda",
+      "url": "https://www.pna.gov.ph/article/ph-seeks-to-lock-in-asean-economic-agenda-ahead-of-leaders-meet",
+      "published_at": "2026-11-14T01:27:00Z",
+      "publisher": "PNA",
+      "tier": "A"
+    },
+    {
+      "title": "Manila Times: ASEAN economic chiefs sign DEFA",
+      "url": "https://www.manilatimes.net/2026/11/14/business/asean-economic-chiefs-sign-first-digital-trade-agreement-in-the-world/2470008",
+      "published_at": "2026-11-14T00:00:00Z",
+      "publisher": "Manila Times",
+      "tier": "B"
+    },
+    {
+      "title": "JPNN: DEFA signed at 28th AEC Council; Airlangga on implementation",
+      "url": "https://www.jpnn.com/news/perjanjian-ekonomi-digital-asean-resmi-diteken-di-manila-indonesia-dorong-percepatan-implementasi",
+      "published_at": "2026-11-14T07:28:00Z",
+      "publisher": "JPNN",
+      "tier": "B"
+    },
+    {
+      "title": "ADB: Kanda speech at ASEAN Business and Investment Summit",
+      "url": "https://www.adb.org/news/speeches/asean-business-investment-summit-masato-kanda",
+      "published_at": "2026-11-14T00:00:00Z",
+      "publisher": "ADB",
+      "tier": "A"
+    },
+    {
+      "title": "Manila Times/AFP: Thai FM says Myanmar should rejoin ASEAN meetings",
+      "url": "https://www.manilatimes.net/2026/11/14/world/asia-oceania/thai-fm-myanmar-should-rejoin-asean-meetings/2469535",
+      "published_at": "2026-11-14T00:00:00Z",
+      "publisher": "Manila Times / AFP",
+      "tier": "B"
+    },
+    {
+      "title": "ABC: AUS–PHL defence deal expected Sunday",
+      "url": "https://www.abc.net.au/news/2026-11-14/major-defence-deal-astralia-philippines-clashes-china/107381694",
+      "published_at": "2026-11-13T19:48:00Z",
+      "publisher": "ABC",
+      "tier": "B"
+    },
+    {
+      "title": "ABS-CBN: 29 Chinese naval, coast guard ships in WPS in past week",
+      "url": "https://www.abs-cbn.com/news/nation/2026/11/12/29-chinese-naval-coast-guard-ships-in-wps-in-past-week-1656",
+      "published_at": "2026-11-12T08:56:00Z",
+      "publisher": "ABS-CBN",
+      "tier": "B"
+    },
+    {
+      "title": "ANTARA: Gibran resigns as vice president",
+      "url": "https://en.antaranews.com/news/442051/gibran-resigns-as-vice-president-letter-gives-no-reason-mpr",
+      "published_at": "2026-11-12T08:36:00Z",
+      "publisher": "ANTARA",
+      "tier": "A"
+    }
+  ]
+}
