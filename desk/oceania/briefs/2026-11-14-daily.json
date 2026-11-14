@@ -1,0 +1,214 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "task": "oceania.daily_brief",
+  "window_start_utc": "2026-11-13T07:00:00Z",
+  "window_end_utc": "2026-11-14T07:55:00Z",
+  "generated_at_utc": "2026-11-14T08:25:00Z",
+  "scan_through_utc": "2026-11-14T08:10:00Z",
+  "overall_confidence": "M",
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "pif_institutional": true,
+  "parent_daily": "2026-10-16",
+  "parent_hourly": "2026-10-17T06:51:00Z",
+  "collection_gap": "2026-10-17T06:51:00Z → 2026-11-13T07:00:00Z",
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "SAU"
+  ],
+  "priority_items": [
+    {
+      "title": "PIF/COP31 — PRF still ~US$200m vs US$500m; Heine rejects 1.5°C overshoot; pledging session did not close the gap",
+      "summary": "Forumsec 10 Nov release (HTTP LM 14 Nov 02:20 GMT) plus PC/PINA 14 Nov restamp of the Albanese–Whipps–Bowen Antalya presser: PRF spoken stock US$200 million (US$100 million Pacific+ANZ) against a US$500 million 2026 capitalisation target. Climate Home 12 Nov leftover: pledging session produced no new government money; Minderoo US$5 million. RNZ 14 Nov 00:35 UTC: Heine, Whipps and Simina reject a 1.5°C overshoot as an option. Not a security pact. Not FLASH.",
+      "countries": ["PLW", "AUS", "NZL", "MHL", "FSM", "FJI", "KIR", "TUV", "SLB", "TUR"],
+      "topics": ["climate", "economic", "governance"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://www.postcourier.com.pg/pacific-leaders-seek-us500m-resilience-fund-as-climate-impacts-worsen/",
+        "https://www.rnz.co.nz/news/pacific/2591454/cop31-hears-1-point-5-degreesc-overshoot-not-an-option-for-pacific",
+        "https://www.climatechangenews.com/2026/11/12/pacific-leaves-empty-handed-from-cop31-pledging-event-for-new-fund/"
+      ]
+    },
+    {
+      "title": "ASM/WSM/COK — JTWC INVEST 95P MEDIUM; Nadi TD02F LOW TO MODERATE; no land warning",
+      "summary": "JTWC ABPW 140600Z: Invest 95P at 9.0S 157.8W, ~823 NM ENE of Pago Pago, 28–33 kt / 1005 mb, MEDIUM potential within 24 hours. FMS TDS 132230 UTC: TD02F 1007 hPa near 09.0S 159.0W, LOW TO MODERATE, no other disturbance, no SWB. Marianas CAP empty. Not named. Not FLASH.",
+      "countries": ["ASM", "WSM", "COK", "FJI", "USA"],
+      "topics": ["climate", "humanitarian"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.met.gov.fj/warnings/",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt"
+      ]
+    },
+    {
+      "title": "PNG/TWN — this-window shell-investigation commentary; gap leftover Taiwan trade-office closure is not a recognition switch",
+      "summary": "PC/RFA 14 Nov: RPNGC confirmed a 130 mm round seized 29 Oct; four Chinese nationals detained; both US and PRC embassy public claims contested by a PNG commentator as narrative warfare. Gap leftover Taiwan MOFA 6 Nov: Taipei Economic Office in Port Moresby closed, aid ended, PNG spot LNG halted. PNG already recognizes the PRC. Not a recognition flip. Not FLASH.",
+      "countries": ["PNG", "TWN", "CHN", "USA"],
+      "topics": ["strategic", "governance", "economic"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.postcourier.com.pg/png-observers-call-for-restraint-from-china-and-u-s-over-wine-bottle-shell1/",
+        "https://en.mofa.gov.tw/News_Content.aspx?n=1329&s=123381&sms=272"
+      ]
+    },
+    {
+      "title": "VUT — PAC finds 1,390 diplomatic passports unaccounted for; NCM leftover withdrawn",
+      "summary": "PC 14 Nov syndicating OCCRP/PAC: 1,390 diplomatic passports missing 2019–2024 (1,301 in 2024). Alleged irregular special-envoy appointments involving Napat and Ati. Leftover 11 Nov: opposition withdrew no-confidence motion against Napat. Parliamentary. Not extra-constitutional. Not FLASH.",
+      "countries": ["VUT"],
+      "topics": ["governance"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.postcourier.com.pg/more-than-1300-diplomatic-passports-missing-in-vanuatu-report-finds/"
+      ]
+    },
+    {
+      "title": "NZL — 7 Nov election still uncertified; Pacific-vote copy this window; official 27 Nov",
+      "summary": "Electoral Commission preliminary: Labour 29.36% / National 29.21%; National–ACT–NZ First 67 of 131 on prelims; Opportunity 7 seats. Official results 27 Nov. RNZ Pacific 13–14 Nov: Pacific-heavy electorates and Pacific MPs. Uncertified. Not FLASH.",
+      "countries": ["NZL"],
+      "topics": ["governance"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.electionresults.govt.nz/",
+        "https://www.rnz.co.nz/news/pacific/2579668/pacific-mps-across-political-spectrum-pledge-to-work-hard-for-our-communities"
+      ]
+    },
+    {
+      "title": "AUS/USA/GBR — USS Colorado at HMAS Stirling; Brat first Perth visit; SRF-West still 2027",
+      "summary": "US Embassy 13 Nov: Ambassador Brat toured USS Colorado at Stirling with Marles and UK chargé. Colorado is in scheduled maintenance and is designated first SRF-West boat for late 2027. Leftover Marles 12 Nov workforce/housing spend. Maintenance visit ≠ rotation in force. Not FLASH.",
+      "countries": ["AUS", "USA", "GBR"],
+      "topics": ["strategic"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://au.usembassy.gov/media-release-u-s-ambassador-highlights-aukus-critical-minerals-and-trade-during-first-perth-visit/",
+        "https://www.minister.defence.gov.au/transcripts/2026-11-12/doorstop-hmas-stirling"
+      ]
+    },
+    {
+      "title": "KIR/MHL/FSM — Kiribati fisheries observer missing; MIMRA 13 Nov vessel in Majuro",
+      "summary": "Observer missing from Marshall Islands-flagged KOO’S 103 in the FSM EEZ about 2130 5 Nov; 72-hour search unsuccessful. MIMRA 13 Nov: vessel in Majuro, boarded, investigation open, no indication of foul play so far. Humanitarian / observer-safety. Not FLASH.",
+      "countries": ["KIR", "MHL", "FSM"],
+      "topics": ["humanitarian", "governance"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "humanitarian",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://rmimimra.com/updates/articles/21-general/233-mimra-update-on-the-investigation-into-the-missing-observer",
+        "https://pina.com.fj/2026/11/13/kiribati-fisheries-observer-missing-after-72-hour-search-in-fsm-waters/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "Pacific Resilience Facility capitalisation",
+      "type": "climate finance",
+      "parties": ["PIF", "AUS", "NZL", "partners"],
+      "status": "spoken US$200m vs US$500m; Minderoo US$5m; no new sovereign close at 12 Nov pledging session",
+      "bindingness": "treaty-backed facility; pledges political until deposited"
+    },
+    {
+      "name": "JTWC INVEST 95P / FMS TD02F",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA", "FJI"],
+      "status": "NEW ABPW 140600 MEDIUM; Nadi TDS 132230 LOW–MODERATE; no land SWB",
+      "bindingness": "meteorological advisory"
+    },
+    {
+      "name": "Taiwan Taipei Economic Office Port Moresby",
+      "type": "diplomatic / trade",
+      "parties": ["PNG", "TWN"],
+      "status": "gap leftover 6 Nov: office closed; aid/LNG spot halted",
+      "bindingness": "administrative; not a recognition switch"
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "bindingness": "political until signed"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "→ US$200m spoken / US$300m gap HOLD",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H/M",
+      "escalate_on": "Deposited capitalisation table — not FLASH on a restated pledge"
+    },
+    {
+      "risk": "TD02F / 95P east of Pago Pago",
+      "direction": "→ MEDIUM / LOW–MODERATE",
+      "horizon": "hours–4 days",
+      "confidence": "H/M",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on MEDIUM invest"
+    },
+    {
+      "risk": "PNG Bougainville ratification",
+      "direction": "→ vote expected 24 Nov",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a scheduled resume"
+    },
+    {
+      "risk": "SLB dual-track (AUS unsigned / PRC 2022 unrepealed)",
+      "direction": "→ unsigned HOLD",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_on": "Signed AUS–SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "Forumsec official PRF pledge table vs leftover 9 Oct US$190m vs this-window US$200m spoken?",
+    "Any new sovereign PRF pledge before COP31 close 20 Nov?",
+    "Next JTWC ABPW 150600Z / Nadi TDS: 95P numbered, named, or still MEDIUM/LOW–MODERATE?",
+    "RPNGC charging instrument on the 29 Oct 130 mm round vs embassy claims?",
+    "Bougainville: does 24 Nov resume produce a division, a further deferral, or a Marape yes/no paper?",
+    "AUS–SLB: any signature date? DFAT/Defence timeout this scan.",
+    "NZ official 27 Nov vs Opportunity talks vs caretaker MFAT line.",
+    "Vanuatu PAC PDF; any passport cancellations / NCM revival?",
+    "Papua LNG FID vs 15 Dec sunset?",
+    "Super Typhoon BAVI / Champi gap after-action if editors task it?"
+  ],
+  "sources": [
+    {"title": "Forumsec PRF / Belau COP31 release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "tier": "A", "published_at": "2026-11-10"},
+    {"title": "Post Courier / PINA PRF US$500m", "url": "https://www.postcourier.com.pg/pacific-leaders-seek-us500m-resilience-fund-as-climate-impacts-worsen/", "tier": "B", "published_at": "2026-11-14T05:29:24Z"},
+    {"title": "RNZ Heine 1.5 overshoot", "url": "https://www.rnz.co.nz/news/pacific/2591454/cop31-hears-1-point-5-degreesc-overshoot-not-an-option-for-pacific", "tier": "B", "published_at": "2026-11-14T00:35:23Z"},
+    {"title": "JTWC ABPW 140600 95P MEDIUM", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "tier": "A", "published_at": "2026-11-14T06:00:00Z"},
+    {"title": "FMS TDS 132230 TD02F", "url": "https://www.met.gov.fj/warnings/", "tier": "A", "published_at": "2026-11-13T22:30:00Z"},
+    {"title": "Taiwan MOFA Port Moresby closure", "url": "https://en.mofa.gov.tw/News_Content.aspx?n=1329&s=123381&sms=272", "tier": "A", "published_at": "2026-11-06"},
+    {"title": "PC Vanuatu diplomatic passports", "url": "https://www.postcourier.com.pg/more-than-1300-diplomatic-passports-missing-in-vanuatu-report-finds/", "tier": "B", "published_at": "2026-11-14T04:25:44Z"},
+    {"title": "US Embassy Brat / USS Colorado", "url": "https://au.usembassy.gov/media-release-u-s-ambassador-highlights-aukus-critical-minerals-and-trade-during-first-perth-visit/", "tier": "A", "published_at": "2026-11-13"},
+    {"title": "MIMRA missing observer", "url": "https://rmimimra.com/updates/articles/21-general/233-mimra-update-on-the-investigation-into-the-missing-observer", "tier": "A", "published_at": "2026-11-13"}
+  ]
+}
