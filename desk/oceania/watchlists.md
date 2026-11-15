@@ -1,0 +1,75 @@
+# Oceania Desk watchlists (living)
+
+Last updated: 2026-11-15T01:58:45Z (pending review; **15 Nov 01:51 UTC hourly**, window 00:51Z → 01:51Z; parent daily PR #162; parent hourly PR #180; prior dedicated hourlies PR #179 / #178 / #176 / #175 / #174 / #173 / #172 / #171 / #170 / #169 / #168 / #167 / #166 / #165 / #164 / #163; last dedicated hourly before the gap PR #160). Do not treat 17 Oct–13 Nov as scanned hour-by-hour. Do not rewrite the 14 Nov daily unless FLASH.
+
+## Solomon Islands security track
+- PM Matthew Wale. AUS–SLB comprehensive treaty still **in-principle, unsigned**. ~A$980m additional funding remains ABC/SMH leaked CLAIM (7 Sep leftover). DFAT `/news/media` **timeout** this scan. Defence listing **timeout / 000** both passes (parent recapture **200** leftover 11 Nov Remembrance Day). pm.gov.au first-pass **200** and recapture **200** leftover 13 Nov COP31/PRF cluster (parent 403); listing LM **HOLD 00:12:18 GMT**; **no 15 Nov title**.
+- **China–Solomons:** 2022 security agreement unrepealed.
+- Island Sun / SIBC / Solomon Star homepages **403 HOLD**.
+- Dual-track hedging unchanged. Whipps/Albanese COP31 presser names Solomon Islands among leaders present as spoken.
+- PC 14 Nov scabies-reduction health copy — not a security pact.
+- Islands Business 14 Nov NEW collection: Climate Change Minister Wayne Ghemu at PCRIC COP31 panel (disbursement speed; leftover Maila PCRIC USD$500,000 / 10 days). Not a new PRF table. Not a China security instrument.
+
+## PNG politics & Bougainville
+- **Bougainville ratification:** gap leftover debate 20–21 Oct; ABC Pacific 28 Oct leftover — House adjourned, **vote expected when parliament resumes 24 Nov**. Threshold **89/118**. **No division this cutoff.** PNG Haus Bung leftover-dated 14 Nov Toroama recap HOLD from 13:51 NEW collection: Toroama restates BPA / 97.7% / Melanesian Framework / 1 Sep 2027 self-government target; body says remarks were **“this week”**; visible dateline still **14 Nov**; schema `datePublished` restamp **01:52:57Z** first-pass is CMS — not a this-window sitting.
+- **Papua LNG:** leftover operatorship (not FID); sunset **15 Dec 2026** leftover. No this-window FID language.
+- **Taiwan TEO Port Moresby:** gap leftover **6 Nov** Taiwan MOFA — office closed, aid ended, PNG spot LNG halted. PNG–PRC diplomatic relations pre-existed. **Not a recognition switch.** Tkatchenko ABC leftover rejects China-pressure account.
+- **Wine-bottle / 130 mm round:** RPNGC confirmed projectile seized **29 Oct**; four Chinese nationals detained as printed; leftover RFA/PC commentary. Police investigation. Not a security pact.
+- NBC leftover: CASA CN-235 to Indonesia for overhaul — capability restoration, not a compact.
+- **Leftover 09:51 hourly:** Post-Courier 09:48Z — North Fly MP James Donald warns on alleged illegal price increases (essential goods and fuel); ICCC inspection announced. Domestic consumer-protection. Not a compact. **22:51 hourly NEW / 23:51–01:51 HOLD under NEW World News:** leftover third shipment of North Fly relief supplies to Aiambak (pubDate **22:49:43Z**; 120 tonnes; MV IBK; Daru Wharf ~2:00pm yesterday as printed; paywalled after lede). **00:51 leftover / 01:51 under NEW fuel lead:** PC lastBuild **NEW 01:26:04Z** — RNZ leftover fuel-crisis NZ$935m / US$518m (pubDate **01:25:59Z**; not a this-window briefing; not PRF) over leftover PINA-syndicated MDB US$103bn 2025 climate finance at COP31 (not PRF); leftover Pasifika Communities University 140 graduates; leftover USAF “three Pacific islands” headline with Hawaii 3rd MLR C2 body (title/body mismatch — not a PIC access deal). El Niño humanitarian logistics, not a disaster declaration. Leftover-dated PC/PINA PRF syndication remains not a new pledge table. USGS leftover-dated M4.9 south of Kermadec **13:17:20 UTC** (tsunami flag 0; before this window). USGS leftover OOS M4.9 Tagbina, Philippines **16:04:22 UTC** (tsunami flag 0). USGS leftover-dated OOS M4.7 east central Pacific **22:23:46 UTC** (tsunami flag 0; lon −99.11 / lat 3.73). Catalog count **16 / 16**.
+- OBEC paused third Community Government elections leftover (Nov 23–27 dates lost consensus).
+
+## AUKUS & ANZ posture
+- USS **Colorado** at HMAS Stirling for scheduled maintenance; designated first **SRF-West** boat **late 2027**. Brat first Perth visit **13 Nov**. Workforce plan / A$88m trainees / DHA 92 houses leftover 12 Nov. **Maintenance ≠ rotation in force.**
+- RBA cash **4.85%** (3 Nov; +25 bp from 4.60%; 6–3 split).
+- Defence.gov.au media listing **timeout / 000** both passes (parent recapture **200** leftover 11 Nov Remembrance Day / 09 Nov AUKUS Big Play / 27 Oct SRF-West 2027). DFAT `/news/media` **timeout**. pm.gov.au first-pass **200** and recapture **200** leftover 13 Nov COP31/PRF cluster (parent 403); listing LM **HOLD 00:12:18 GMT**.
+- NZ 7 Nov election **uncertified**; official **27 Nov**. National–ACT–NZ First 67/131 on prelims; Opportunity 7 seats. electionresults.govt.nz **403** this hour.
+- ABC News RSS **5115492 / 51832 HTTP 500 HOLD**; `/news/pacific` still **404**. ABC world RSS **200** lastBuild **HOLD 00:51:53Z** — leftover OOS NDIS lead then leftover tanker-collision / Lambie / Melbourne stabbing.
+
+## COFA funding
+- Compact cash implementation lag leftover. No this-window compact-cash instrument for PLW/FSM/MHL.
+- **No Marianas TC warning in force.** CAP GU/MP empty (`updated` 01:52:13Z / recapture 01:55:07Z). Leftover AFD **142000** (LM HOLD 20:00:23 GMT): near-red-flag fire-weather headline; drier period. Leftover CAP FM Yap High Surf Advisory (issued 18:57 UTC; until 17:00 ChST 15 Nov; 7–9 ft; Minor). GHS 13 Nov High Surf Advisory extension. Leftover 29 Oct Super Typhoon **BAVI** DRC at Guam Museum (gap; not reconstructed). Champi last NWS advisory **21 Oct** (Philippine Sea). PDN homepage **NEW amputation-conference lead** (first-pass LM **01:48:37 GMT** / recapture **01:54:08 GMT**) then leftover NWS El Niño long dry-season colour (article LM **HOLD 00:00:00 GMT**), leftover Guam Museum rematriation (article LM **HOLD 22:00:00 GMT**) and leftover FEMA EMPG.
+- Guam Ada/Calvo **unofficial** 3 Nov; absentee through **18 Nov**; certification ~**19 Nov**. CNMI gubernatorial runoff **20 Nov** (Torres/Jones vs Attao/Villagomez).
+- Whipps (PLW) remains PIF Chair; at COP31.
+
+## PIF calendar
+- COP31 Antalya **9–20 Nov** (live). PRF spoken **US$200m** vs **US$500m**; gap **~US$300m**. Minderoo **US$5m**. Do not replace until Forumsec tables a new figure. Leftover 9 Oct table was US$190m.
+- Forumsec homepage LM **HOLD 14 Nov 10:13:35 GMT** — file tick HOLD, no Leaders communiqué. 10 Nov Antalya release HTTP LM **HOLD 14 Nov 22:54:46 GMT** (content HOLD >US$300m short). Leftover-dated 14 Nov Pacific Political Champions roundtable HTTP LM **HOLD 22:19:38 GMT** — no new PRF dollar table. RNZ leftover-dated COP31 1.5°C Heine/Whipps/Simina HOLD. pm.gov.au first-pass **200** and recapture **200** leftover 13 Nov PRF spotlight (parent 403). ABC world lastBuild **HOLD 00:51:53Z** leftover OOS NDIS lead. PC leftover PINA-syndicated MDB US$103bn 2025 LMIC stock is **not** a PRF table. PC NEW RNZ leftover fuel-crisis NZ$935m is **not** PRF.
+- PACPOL leftover 16 Oct; no official PDF this cutoff.
+- PINA RSS still “No Feed Access”; stub pubDate **NEW 01:22:31Z** linking `/2026/11/15/` **404**; `/2026/11/14/` **404 HOLD**.
+- SPDMM SOFA leftover, not in force.
+
+## DSM / fisheries
+- Heine UNGA DSM moratorium leftover. No in-window ISA Mining Code decision.
+- **Glen Joseph** (MHL) leftover to lead **PNA Office** from January.
+- Kiribati observer missing from **KOO’S 103** (FSM EEZ 5 Nov); MIMRA 13 Nov: vessel in Majuro, investigation open, no foul play indicated so far.
+- FFA homepage 200 / LM 15 Nov 01:42:14 GMT HOLD vs parent 00:41:50 (tick; no this-window news-wrap extract).
+
+## Fiji CRC / elections / health / drought
+- GE by **6 Feb 2027**. PAP candidate batches leftover 9 Nov. CRC/referendum path leftover. FBC RSS lastBuild **NEW 00:52:15Z** NEW Rabuka CRC/referendum denial (pubDate **01:20:33Z**; yesterday’s consultation as printed) + public-submissions assurance / Bill 32 third reading expected **30 Nov–4 Dec sitting week** with a vote anticipated then as printed (pubDate **01:17:15Z**) + Tabuya COP31 Australia Pavilion renewable-energy / imported-fuel-shock ask (pubDate **01:07:25Z**). Leftover SODELPA / FEO remain related-rail, not in the 10-item RSS (articles still 200). Leftover PC/IB Pasifika Communities University 140 graduates (Radrodro officiated Friday as printed) — education ceremony, not extra-constitutional. Fiji Times leftover-dated Tuisawau water conservation + stale 13 Nov TD02F (not current Nadi). **Not extra-constitutional.**
+- HIV-AIDS Amendment Bill leftover passed 1 Oct; gazette unconfirmed (laws.gov.fj LM **20 Oct 08:53:18 GMT**).
+- NZSIS six-month intel partnership leftover Cabinet 13 Oct.
+
+## Vanuatu Matui / maritime / Nakamal
+- PAC diplomatic-passport report (1,390 missing 2019–2024) syndicated **14 Nov**. NCM against Napat **withdrawn** leftover 11 Nov.
+- Daily Post **200** (homepage first-pass LM **NEW 01:49:11 GMT**; recapture **NEW 01:54:22 GMT**). PAC/ICJ article LMs still **13 Nov 22:35–22:36 GMT**. Santo airport slug **200**; article LM HOLD **13 Nov 22:35:24 GMT**. Diplomatic-passport silence article LM HOLD **13 Nov 22:35:25 GMT**. ICJ article LM HOLD **13 Nov 22:36:52 GMT**. Pekoa reopen slug LM **09 Nov 22:09:09 GMT**. Homepage tick of leftover-dated copy, not a new sitting or reopening. Leftover-dated PAC non-response list (Napat / Ati / Mahe / Seremaiah / Allan) + leftover-dated Koanapo dual ICJ (31 Aug; France has not accepted jurisdiction) / UNCLOS Annex VII (Oct 2026) copy. **Not extra-constitutional.**
+- Nakamal in force (29 Jun leftover). Extraordinary session leftover closed. Ambrym leftover.
+- Tevi ICJ consent ask: Daily Post leftover-dated Koanapo copy — ICJ 31 Aug transmitted; **France has not accepted jurisdiction**; separate UNCLOS Annex VII arbitration **Oct 2026**. No French reply instrument collected.
+
+## Diplomatic recognition
+- TUV–TWN: no switch located.
+- PLW / MHL / TUV remain Taiwan’s Pacific diplomatic allies as printed.
+- PNG TEO closure is **not** a recognition switch.
+- NRU ICC withdrawal **deposited 23 Sep 2026**, effect **23 Sep 2027**. **Not** a Taiwan/PRC switch. All 19 MPs joined Adeang government leftover 11 Nov — no formal opposition until 2029 as printed.
+- SLB One-China leftover.
+
+## Cyclone / disaster
+- **95P / TD02F:** leftover JTWC **ABPW 141300 COR** HOLD — INVEST **95P** still **HIGH** at **9.2S 157.1W** (~853 NM ENE Pago Pago, 28–33 kt / **1004 mb**; web LM **HOLD 13:18:12 GMT**). Leftover **TCFA WTPS21 PGTW 141300** HOLD (tgftp LM **HOLD 13:00:33 GMT**; TCFA MSLP **998 mb**; numbered warnings not justified; 080 NM of 8.7S 157.0W–9.3S 161.5W; reissue by **151300Z**). Leftover **Nadi SWB Number ONE 142321 UTC** HOLD: Gale Warning in force for **Penrhyn, Manihiki and Rakahanga** on unnamed TD02F; **9.1S 158.2W / 1004 hPa**; RSS item **20023**; next issue **160300UTC as printed**. Leftover **Nadi International Marine Gale Warning 001 150037 UTC** HOLD: 35-kt N–NE gales in box **07–09S / 156–157W**; first marine warning for this system; RSS item **20000**. Leftover Nadi TDS **142116 UTC** still listed as item **20036**: TD02F **1004 hPa** at **09.0S 158.7W**, **LOW TO MODERATE**. **NEW Nadi Tropical Disturbance Advisory A01 150125 UTC:** first TDA on unnamed TD02F; **8.9S 158.5W / 1004 hPa / ~30 kt 10-min** at **150000 UTC**; potential **MODERATE TO HIGH** next 24–48h; next TDA around **150800 UTC**; lastBuild **NEW 01:25:49 +1200**; HTTP LM **NEW 13:25:49 GMT**. Next ABPW **150600Z**. JTWC/Nadi class split still wider on intensity (HIGH vs leftover land Gale Warning / leftover LOW–MODERATE / leftover 35-kt marine / NEW TDA 30 kt MODERATE TO HIGH); TDA/SWB longitude ~**158.5–158.2W**; marine box sits on leftover JTWC **157.1W**. ABPW/SWB/TDS/TDA pressure now both **1004**. Cook Islands News **403**. EMCI homepage **200** with leftover October NO-WARNING art; no matching this-window land product. **Not FLASH.**
+- **Marianas / FSM:** no Marianas TC watch/warning. CAP GU/MP empty (`updated` 01:52:13Z / recapture 01:55:07Z). Leftover AFD **142000** (LM **HOLD 20:00:23 GMT**): 600 AM ChST 15 Nov; drier period; near-red-flag fire-weather headline; Guam D0; Yap HSA likely expire 5 PM ChST. Leftover CAP FM Yap High Surf Advisory (issued 18:57 UTC; until 17:00 ChST 15 Nov; 7–9 ft north reefs; Minor). GHS still 13 Nov High Surf extension + leftover 29 Oct BAVI DRC. PDN **NEW amputation-conference homepage lead** (homepage first-pass LM **01:48:37 GMT** / recapture **01:54:08 GMT**) then leftover NWS El Niño long dry-season colour (article LM **HOLD 00:00:00 GMT**) then leftover FEMA EMPG **US$984,776** (article LM **HOLD 11:00:23 GMT**) — territorial reimbursement, not compact cash — and leftover museum rematriation (article LM **HOLD 22:00:00 GMT**). Port FY2026 remains later.
+- **Gap leftover (not reconstructed):** Champi STY last advisory 21 Oct; Marianas warnings cancelled 18 Oct; Super Typhoon BAVI DRC 29 Oct.
+- Season **1 Nov 2026–30 Apr 2027**; El Niño / east-of-Date-Line elevated TC risk leftover PICOF-19.
+- Fiji Western Division drought this window (FBC leftover Vaturu; leftover-parent-window Kuruleca dry-spell social-protection CLAIM; Fiji Times leftover-dated Tuisawau). PNG El Niño leftovers stand. Tonga drought leftover.
+
+## Cyber
+- Cook Islands government email Microsoft outage (PC 14 Nov) — disruption colour, not FLASH.
+- US Embassy Suva CLAIM leftover (unnamed regional org Jul–Aug 2026) still unnamed.
