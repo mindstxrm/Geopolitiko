@@ -1,0 +1,17 @@
+# Oceania Desk state
+
+- last_product: hourly
+- last_date: 2026-11-15
+- last_cutoff_utc: 2026-11-15T07:00:00Z
+- scheduled_daily_cutoff_utc: 2026-11-16T07:00:00Z
+- last_hourly_window_end_utc: 2026-11-15T19:51:00Z
+- last_generated_at_utc: 2026-11-15T20:05:00Z
+- pending_review: true
+- flash_open: false
+- collection_gap: 2026-10-17T06:51:00Z → 2026-11-13T07:00:00Z (not reconstructed); prior 2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z; prior 2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z
+
+Standing daily **2026-11-15** (`desk/oceania/briefs/2026-11-15-daily.md`, PR #188). This product: **15 Nov 19:51 UTC hourly** (`desk/oceania/briefs/2026-11-15-hourly-1951.md`). Window 2026-11-15T18:51:00Z → 2026-11-15T19:51:00Z (first-pass ~19:57:01–19:57:27 UTC; extra ~19:58:34–19:58:58 UTC; recapture ~19:59:36–19:59:58 UTC; scan-through JTWC RSS ~20:00:03–20:01:31 UTC). Parent daily: PR #188. Parent hourly: PR #199 (15 Nov 18:51 UTC). Last dedicated hourly absorbed into that daily: PR #187 (15 Nov 06:51 UTC). Last dedicated hourly before the gap: PR #160 (17 Oct 06:51 UTC). AEDT in force (UTC+11 from 4 Oct); NZDT UTC+13. Continuity cutoff remains **07:00 UTC**. Do **not** rewrite the 15 Nov daily unless FLASH.
+
+**No FLASH.** This-window lead: **NEW JTWC WTPS31 PGTW 152100 / 04P (XAVIER) Warning NR 002** — **040 kt** 1-min / **8.1S 160.1W** at **151800Z** / **1000 mb** / ~726 NM ENE of Pago Pago; 12h **050 kt**; 24h **070 kt**; next **160900Z / 162100Z**; tgftp LM **NEW 19:39:05 GMT**; sh0427 LM **NEW 19:38:13 GMT**; JTWC RSS lastBuild **NEW 20:00:03Z** Warning #02 Issued at 15/2100Z. **NEW RSMC Nadi TDA A05 151932 UTC** — Xavier **40 kt** 10-min / **8.3S 160.1W** at **151800 UTC** / **995 hPa**. **NEW marine Storm Warning 006 151903 UTC** — Cat **1** / 40 kt / cancels 005. **NEW FKPS01 TCA 2026/3 151859** — next **160100Z**. Leftover **SWB Number SIX 151816 UTC** HOLD — Storm remains Manihiki/Rakahanga, cancelled for Penrhyn; **about 75 km/h** at **151500 UTC**; **next 152100UTC outstanding at recapture 19:59**. Leftover ABPW 150900 still **FOUR / 35 kt**. Leftover Gale Warning 004 / TDS / EMCI JPEG / PPG HSA HOLD. **NEW recapture AFD 151957** KBDI **515**. **NEW FBC** CSO campaign-rules + Nand remittance-tax CLAIM. pm.gov.au **403** both passes (parent 18:51 **200** leftover Manila/PRF) — WAF regression. **NEW-to-collection** Haus Bung ABG supplementary **K628.86m** after Waigani cut. USGS catalog **9** leftover Tonga/Fiji / extra-regional tsunami flag 0. Still not SOP FLASH (40 kt / 75 km/h remains Nadi Cat 1 / not severe without mass-casualty or state-capacity breach; JTWC 70 kt is forecast). PRF spoken **US$200m vs US$500m** HOLD. AUS–SLB **unsigned**. PNG Taiwan TEO closure **not** a recognition switch.
+
+Next product: **15 Nov 20:51 UTC hourly**. Next Nadi SWB **152100UTC as printed** (outstanding at 19:59). Next Xavier TCA **160100Z as printed**. Next Nadi TDA around **160000–160200 UTC** (A05 printed 151400UTC is a typo). Next JTWC warnings **160900Z / 162100Z**. Next ABPW **160600Z as printed on the leftover reissue**. Next MetService TC Potential Bulletin by **1pm Mon 16 Nov NZDT / 00:00 UTC 16 Nov**. COP31 through **20 Nov**. CNMI runoff **20 Nov**. Bougainville vote expected **24 Nov**. NZ official **27 Nov**. Guam certification ~**19 Nov**. Fiji Bill 32 third reading sitting week **30 Nov–4 Dec** as printed. Next weekly due **Monday 2026-11-16** unless editors task a catch-up of missed 19 Oct–9 Nov weeklies. September and October monthlies still outstanding.
