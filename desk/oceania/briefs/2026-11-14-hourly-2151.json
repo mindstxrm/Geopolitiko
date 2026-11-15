@@ -1,0 +1,280 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-14T20:51:00Z",
+  "window_end_utc": "2026-11-14T21:51:00Z",
+  "generated_at_utc": "2026-11-14T22:00:00Z",
+  "scan_through_utc": "2026-11-14T21:57:45Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-11-14T20:51:00Z",
+  "parent_daily_pr": 162,
+  "parent_hourly_pr": 175,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "Leftover JTWC ABPW 141300 COR / 95P HIGH + leftover TCFA WTPS21 141300 HOLD; NEW Nadi TDS 142116 UTC still LOW TO MODERATE / no land warning",
+      "summary": "Recapture ABPW web 200 at 21:57:15 still prints ABPW10 PGTW 141300 COR (web LM HOLD 13:18:12 GMT; tgftp LM HOLD 13:21:05 GMT): INVEST 95P still 9.2S 157.1W, ~853 NM ENE of Pago Pago, 28–33 kt / 1004 mb, potential HIGH. Leftover WTPS21 PGTW 141300 TCFA (tgftp LM HOLD 13:00:33 GMT): formation possible within 080 NM of 8.7S 157.0W–9.3S 161.5W in 12–24h; numbered warnings not justified; centre 9.2S 157.1W; TCFA MSLP 998 mb (ABPW 1004 mb product split); reissue/upgrade/cancel by 151300Z. Recapture HTML /warnings/ 200 at 21:57:17 now prints FMS TDS 142116 UTC: TD02F 1004 hPa near 09.0S 158.7W at 141800UTC; LOW TO MODERATE; no SWB; RSS item 20036 updated in place (lastBuild NEW 21:16:49 +1200; HTTP LM NEW 09:16:49 GMT). Replaces leftover 140826 UTC / 1005 hPa / 09.5S 158.5W. CAP GU/MP/AS empty (updated 21:55:08Z recapture-pass). USGS catalog count 18 (parent 19). No this-window Oceania M4.5+. JTWC HIGH + TCFA HOLD is not a named cyclone and not a land warning. NEW Nadi LOW–MODERATE is not a numbered warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "COK", "FJI", "USA"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td02f", "invest_95p", "jtwc_abpw_141300", "tcfa_wtps21_141300", "nadi_tds_142116", "no_swb", "cyclone"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/ab/abpw10.pgtw..txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt",
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "FBC lastBuild NEW 21:13:18Z OOS rugby over leftover SODELPA/FEO; Forumsec LMs HOLD; pm.gov.au 403 both passes",
+      "summary": "FBC RSS lastBuild NEW 21:13:18Z (parent 20:39:06Z). Lead is OOS Farebrother rugby (pubDate 21:12:47Z). Leftover SODELPA leader Aseri Radrodro says unauthorised freehold/State-land remarks by Savenaca Komaisavai and Jolame Uludole will be handled internally (pubDate 20:35:04Z). Leftover FEO Supervisor Ana Mataiciwa will explain referendum voting process; Electoral Commission Chair Usaia Ratuvili welcomes public scrutiny (pubDate 20:33:05Z). Leftover-parent-window Ministry dry-spell social-protection CLAIM (Kuruleca; pubDate 20:20:51Z) still listed. Forumsec 10 Nov Antalya release HTTP LM HOLD 16:40:34 GMT. Body still quotes Whipps that the Pacific Resilience Facility remains more than US$300 million short of its first target. Spoken stock remains US$200m vs US$500m. Homepage LM HOLD 10:13:35 GMT. Champions leftover-dated 14 Nov HTTP LM HOLD 16:16:33 GMT — no new deposited figure. pm.gov.au media first-pass HTTP 403 and recapture HTTP 403. Defence timeout both passes. ABC world lastBuild NEW 21:29:32Z with OOS Chelsea / domestic youth-unemployment leads. OOS rugby ≠ extra-constitutional. 403 ≠ a new Sunday pledge. Not FLASH.",
+      "countries": ["FJI", "PLW", "MHL", "FSM", "PNG", "AUS", "TUR", "NIU", "TON", "VUT", "TUV", "KIR"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["sodelpa", "feo", "crc_referendum", "prf", "cop31", "forumsec", "pmgov_403", "abc_world_212932", "fbc_rugby_oos", "elnino_welfare"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fbcnews.com.fj/news/sodelpa-to-address-controversial-remarks-internally/",
+        "https://www.fbcnews.com.fj/news/feo-to-explain-referendum-voting-process/",
+        "https://www.fbcnews.com.fj/news/ministry-urges-support-for-vulnerable-groups-during-dry-spell/",
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31",
+        "https://forumsec.org/",
+        "https://www.pm.gov.au/media",
+        "https://www.abc.net.au/news/feed/51120/rss.xml",
+        "https://www.defence.gov.au/news-events/releases"
+      ]
+    },
+    {
+      "title": "NWS AFD 142000 HOLD + Yap HSA HOLD; Daily Post homepage LM 21:44:51 / recapture 21:54:25 GMT leftover-dated; PDN homepage LM 21:51:14 / recapture 21:56:40 GMT FEMA HOLD",
+      "summary": "NWS AFD FXPQ50 PGUM 142000 HOLD (LM HOLD 20:00:23 GMT): 600 AM ChST 15 Nov; Marianas drier period; near-red-flag fire-weather headline; Yap HSA likely expire 5 PM ChST. CAP FM Yap High Surf Advisory HOLD until 17:00 ChST 15 Nov; 7–9 ft north reefs; Minor. CAP GU/MP/AS empty (updated 21:55:08Z). Daily Post homepage first-pass LM 21:44:51 GMT / recapture NEW 21:54:25 GMT with Santo article LM HOLD 13 Nov 22:35:24 GMT — homepage tick, not a new sitting or reopening. PDN FEMA EMPG US$984,776 still the lead; first-pass homepage LM 21:51:14 GMT; recapture NEW 21:56:40 GMT; article LM HOLD 11:00:23 GMT — territorial reimbursement, not compact cash. PINA stub pubDate 21:43:18Z still linking 15 Nov 404. FFA homepage LM NEW 21:38:24 GMT. Haus Bung leftover-dated 14 Nov Toroama recap HOLD (schema restamp 21:54:45Z is CMS, not a sitting). AUS–SLB still unsigned. AFD fire-weather HOLD ≠ TC warning. Yap HSA HOLD ≠ Category-level cyclone. Not FLASH.",
+      "countries": ["GUM", "FSM", "MNP", "MHL", "PLW", "VUT", "PNG", "FJI", "USA", "AUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["afd_142000", "yap_hsa", "santo_airport", "fema_empg", "pina_stub", "collection_path"],
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://api.weather.gov/alerts/active?area=FM",
+        "https://www.dailypost.vu/",
+        "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html",
+        "https://pina.com.fj/feed/",
+        "https://www.ffa.int/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "JTWC INVEST 95P / ABPW 141300 COR",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD: HIGH",
+      "date": "2026-11-14T13:00:00Z",
+      "notes": "Web LM HOLD 13:18:12 GMT. 9.2S 157.1W / 28–33 kt / 1004 mb. Not numbered. Not FLASH."
+    },
+    {
+      "name": "JTWC TCFA WTPS21 PGTW 141300",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD: formation alert; numbered warnings not justified; reissue by 151300Z",
+      "date": "2026-11-14T13:00:00Z",
+      "notes": "tgftp LM HOLD 13:00:33 GMT. 080 NM of 8.7S 157.0W–9.3S 161.5W. TCFA MSLP 998 mb vs ABPW 1004 mb. Not FLASH."
+    },
+    {
+      "name": "FMS Tropical Disturbance Summary 142116 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "FJI"],
+      "status": "NEW: LOW TO MODERATE; no SWB",
+      "date": "2026-11-14T21:16:00Z",
+      "notes": "Replaces leftover 140826 UTC / 1005 hPa / 09.5S 158.5W. Now 09.0S 158.7W / 1004 hPa at 141800UTC. RSS item 20036 updated in place. JTWC/Nadi class split still wider. Not FLASH."
+    },
+    {
+      "name": "NWS AFD FXPQ50 PGUM 142000",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover HOLD: LM 20:00:23 GMT; 600 AM ChST 15 Nov; drier period; near-red-flag fire-weather headline; Yap HSA likely expire 5 PM ChST",
+      "date": "2026-11-14T20:00:00Z",
+      "notes": "Parent 20:51 NEW. Not a TC warning. Not FLASH."
+    },
+    {
+      "name": "NWS CAP FM Yap High Surf Advisory",
+      "type": "climate / MDA",
+      "parties": ["FSM", "USA"],
+      "status": "leftover HOLD: issued 18:57 UTC (parent window); until 17:00 ChST 15 Nov; 7–9 ft north reefs; Minor",
+      "date": "2026-11-14T18:57:00Z",
+      "notes": "Parent 20:51 NEW collection. Not a TC warning. Not FLASH."
+    },
+    {
+      "name": "Forumsec COP31 / Belau action release",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "PLW"],
+      "status": "HTTP LM HOLD 16:40:34 GMT; content HOLD",
+      "date": "2026-11-10",
+      "notes": "Still more than US$300 million short. File tick HOLD ≠ new table."
+    },
+    {
+      "name": "Forumsec Pacific Political Champions COP31 roundtable",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "FJI", "NIU", "TON", "VUT", "TUV", "MHL", "KIR"],
+      "status": "leftover-dated 14 Nov; HTTP LM HOLD 16:16:33 GMT; no new PRF dollar table",
+      "date": "2026-11-14",
+      "notes": "Australian Pavilion. Cohort ends after COP31 as printed. Not FLASH."
+    },
+    {
+      "name": "pm.gov.au media / COP31 PRF cluster",
+      "type": "climate / diplomatic",
+      "parties": ["AUS", "PIF"],
+      "status": "first-pass HTTP 403 and recapture HTTP 403",
+      "date": "2026-11-14T21:57:19Z",
+      "notes": "WAF HOLD. Listing body not recaptured this hour. Not FLASH."
+    },
+    {
+      "name": "FBC RSS lastBuild / OOS rugby",
+      "type": "media / OOS",
+      "parties": ["FJI"],
+      "status": "lastBuild NEW 21:13:18Z; Farebrother pubDate 21:12:47Z",
+      "date": "2026-11-14T21:12:47Z",
+      "notes": "OOS sport. Leftover SODELPA/FEO still items 2–3. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "FBC RSS / leftover SODELPA internal discipline",
+      "type": "domestic governance",
+      "parties": ["FJI"],
+      "status": "SODELPA article pubDate 20:35:04Z HOLD",
+      "date": "2026-11-14T20:35:04Z",
+      "notes": "Unauthorised committee remarks; internal process. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "FBC RSS / leftover FEO referendum voting process",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "FEO article pubDate 20:33:05Z HOLD",
+      "date": "2026-11-14T20:33:05Z",
+      "notes": "Process awareness. Not a gazetted CRC instrument. Not FLASH."
+    },
+    {
+      "name": "ABC world RSS / OOS leads",
+      "type": "media / OOS",
+      "parties": ["AUS"],
+      "status": "lastBuild NEW 21:29:32Z; Chelsea / youth-unemployment leads; leftover Flinders Ranges later in feed",
+      "date": "2026-11-14T21:29:32Z",
+      "notes": "Tier B OOS sport / domestic colour. Not a deposited PRF figure. Not FLASH."
+    },
+    {
+      "name": "Defence media listing",
+      "type": "collection path / official media",
+      "parties": ["AUS"],
+      "status": "first-pass timeout and recapture timeout",
+      "date": "2026-11-14T21:57:42Z",
+      "notes": "Collection-path regression HOLD. No this-window Oceania title isolated. Not FLASH."
+    },
+    {
+      "name": "FEMA FY2023 EMPG amendment (GUM)",
+      "type": "territorial disaster-management finance",
+      "parties": ["GUM", "USA"],
+      "status": "homepage first-pass LM 21:51:14 GMT; recapture NEW 21:56:40 GMT; article LM HOLD 11:00:23 GMT; leftover-dated Adelup US$984,776 still PDN lead",
+      "date": "2026-11-14T02:00:00Z",
+      "notes": "Territorial reimbursement. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT timeout this hour; Defence timeout; pm.gov.au 403."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P (ENE Pago Pago)",
+      "direction": "→ this-window JTWC HIGH + TCFA HOLD; ↑ NEW Nadi TDS 142116 1004 hPa LOW–MODERATE; no SWB",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M development",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on a TCFA / HIGH HOLD without numbered warnings, a new Nadi LOW–MODERATE TDS without SWB, a Yap HSA HOLD, or an AFD fire-weather HOLD"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Forumsec PRF HTTP LM HOLD 16:40:34 GMT content HOLD; Champions LM HOLD 16:16:33 GMT with no new table; pm.gov.au 403 both passes; ABC OOS leads",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy, leftover-dated Champions, a pm.gov.au 403 HOLD, or ABC OOS sport/domestic colour"
+    },
+    {
+      "risk": "Fiji CRC / referendum / GE clock / SODELPA land remarks / El Niño welfare",
+      "direction": "→ FBC lastBuild NEW 21:13:18Z OOS rugby over leftover SODELPA/FEO; leftover-parent-window dry-spell CLAIM still listed",
+      "horizon": "days–Feb 2027",
+      "confidence": "H (ledes) / M (disciplinary outcome / gazette)",
+      "escalate_on": "Extra-constitutional GE delay or sitting violence — not FLASH on leftover party-internal discipline, leftover FEO process explainers, OOS rugby, or a ministry dry-spell appeal"
+    },
+    {
+      "risk": "PNG Bougainville ratification / fuel-price stress",
+      "direction": "vote expected 24 Nov; leftover-dated Toroama recap HOLD (schema restamp ≠ sitting); leftover North Fly ICCC colour; PC India Nite OOS HOLD",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on leftover-dated recap, a CMS restamp, or culture copy"
+    }
+  ],
+  "open_questions": [
+    "Next JTWC ABPW 150600Z: 95P numbered, named, still HIGH, or cancelled vs NEW Nadi 1004 hPa / 09.0S 158.7W?",
+    "TCFA WTPS21: reissued, upgraded to numbered warning, or cancelled by 151300Z?",
+    "Next Nadi TDS / first SWB vs this-window TDS 142116 UTC LOW–MODERATE / no-SWB HOLD and vs JTWC HIGH split?",
+    "Which official pressure stands — ABPW 1004 mb vs TCFA 998 mb vs NEW Nadi 1004 hPa (ABPW/Nadi now match; TCFA split HOLD)?",
+    "Does JTWC adopt a closer fix toward Nadi 09.0S 158.7W, or does the ~1.6° longitude offset remain?",
+    "Forumsec official PRF pledge table vs spoken US$200m vs HTTP LM HOLD 16:40:34 GMT vs leftover-dated Champions LM HOLD 16:16:33 GMT?",
+    "Any new sovereign PRF pledge before COP31 close 20 Nov?",
+    "Does pm.gov.au recover from this-window 403 both passes with a Sunday-dated Oceania item, or does the leftover 13 Nov cluster remain the listing?",
+    "Defence listing: durable timeout vs 19:51 first-pass 200 / LM 19:40:58 GMT; any this-window Oceania release title on a later pass?",
+    "SODELPA: disciplinary outcome vs any restated official land policy after the Komaisavai/Uludole committee remarks?",
+    "FEO/Commission: referendum-awareness materials vs a gazetted CRC instrument / referendum date?",
+    "AUS–SLB signature vs DFAT timeout, Defence timeout, and pm.gov.au 403?",
+    "Bougainville: does 24 Nov resume produce a division vs leftover-dated 14 Nov Toroama recap / schema restamp?",
+    "Yap HSA: expire at 07:00 UTC 15 Nov as AFD 142000 and CAP FM print, or reissued?",
+    "AFD 142000 near-red-flag headline: any subsequent Red Flag Warning for Guam/CNMI?",
+    "Daily Post homepage first-pass LM 21:44:51 GMT / recapture 21:54:25 GMT durability vs leftover-dated Santo/PAC/Pekoa?",
+    "PINA stub 21:43:18Z / 15 Nov 404: durable date-line tick vs restored feed?"
+  ],
+  "sources": [
+    {"title": "JTWC ABPW 141300 COR", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-14T13:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T13:18:12Z"},
+    {"title": "JTWC TCFA WTPS21 PGTW 141300", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-14T13:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T13:00:33Z"},
+    {"title": "FMS TDS 142116 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T21:16:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS warnings RSS", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-14T21:16:49Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T09:16:49Z"},
+    {"title": "NWS AFD FXPQ50 PGUM 142000", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "publisher": "NWS Tiyan", "published_at": "2026-11-14T20:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T20:00:23Z"},
+    {"title": "NWS CAP FM Yap High Surf Advisory", "url": "https://api.weather.gov/alerts/active?area=FM", "publisher": "NWS", "published_at": "2026-11-14T18:57:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T16:40:34Z"},
+    {"title": "Forumsec homepage", "url": "https://forumsec.org/", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14T10:13:35Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec Pacific Political Champions COP31", "url": "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T16:16:33Z"},
+    {"title": "pm.gov.au media", "url": "https://www.pm.gov.au/media", "publisher": "Prime Minister of Australia", "published_at": "2026-11-14T21:57:19Z", "tier": "A", "confidence": "H", "http_status_first_pass": 403, "http_status_recapture": 403},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "publisher": "FBC", "published_at": "2026-11-14T21:13:18Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC — SODELPA to address controversial remarks internally", "url": "https://www.fbcnews.com.fj/news/sodelpa-to-address-controversial-remarks-internally/", "publisher": "FBC", "published_at": "2026-11-14T20:35:04Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC — FEO to explain referendum voting process", "url": "https://www.fbcnews.com.fj/news/feo-to-explain-referendum-voting-process/", "publisher": "FBC", "published_at": "2026-11-14T20:33:05Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC — Ministry urges support for vulnerable groups during dry spell", "url": "https://www.fbcnews.com.fj/news/ministry-urges-support-for-vulnerable-groups-during-dry-spell/", "publisher": "FBC", "published_at": "2026-11-14T20:20:51Z", "tier": "B", "confidence": "H"},
+    {"title": "ABC world RSS", "url": "https://www.abc.net.au/news/feed/51120/rss.xml", "publisher": "ABC News", "published_at": "2026-11-14T21:29:32Z", "tier": "B", "confidence": "H"},
+    {"title": "Defence media releases", "url": "https://www.defence.gov.au/news-events/releases", "publisher": "Australian Department of Defence", "published_at": "2026-11-14T21:57:42Z", "tier": "A", "confidence": "L", "http_status": null, "error": "timeout"},
+    {"title": "RNZ Pacific — COP31 1.5°C overshoot", "url": "https://www.rnz.co.nz/news/pacific/2591454/cop31-hears-1-point-5-degreesc-overshoot-not-an-option-for-pacific", "publisher": "RNZ Pacific", "published_at": "2026-11-13T22:35:23Z", "tier": "B", "confidence": "H"},
+    {"title": "Daily Post homepage", "url": "https://www.dailypost.vu/", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-14T21:44:51Z", "tier": "B", "confidence": "H", "http_lm_recapture": "2026-11-14T21:54:25Z"},
+    {"title": "PDN homepage", "url": "https://www.guampdn.com/", "publisher": "Pacific Daily News", "published_at": "2026-11-14T21:51:14Z", "tier": "B", "confidence": "H", "http_lm_recapture": "2026-11-14T21:56:40Z"},
+    {"title": "PDN — FEMA EMPG US$984,776", "url": "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T11:00:23Z", "tier": "B", "confidence": "H"},
+    {"title": "FFA homepage", "url": "https://www.ffa.int/", "publisher": "Pacific Islands Forum Fisheries Agency", "published_at": "2026-11-14T21:38:24Z", "tier": "A", "confidence": "H"},
+    {"title": "PINA feed stub", "url": "https://pina.com.fj/feed/", "publisher": "PINA", "published_at": "2026-11-14T21:43:18Z", "tier": "C", "confidence": "H"}
+  ]
+}
