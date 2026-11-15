@@ -1,0 +1,275 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-15T12:51:00Z",
+  "window_end_utc": "2026-11-15T13:51:00Z",
+  "generated_at_utc": "2026-11-15T14:08:00Z",
+  "scan_through_utc": "2026-11-15T13:56:26Z",
+  "first_pass_utc": "2026-11-15T13:54:13Z/2026-11-15T13:55:10Z",
+  "extra_pass_utc": "2026-11-15T13:55:26Z/2026-11-15T13:55:42Z",
+  "recapture_utc": "2026-11-15T13:55:26Z/2026-11-15T13:55:42Z",
+  "late_recapture_utc": "2026-11-15T13:56:19Z/2026-11-15T13:56:26Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-15",
+  "parent_hourly": "2026-11-15T12:51:00Z",
+  "parent_daily_pr": 188,
+  "parent_hourly_pr": 193,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN", "PHL"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW RSMC Nadi TDA A04 / Storm Warning 005 / TCA 2026/2 restamp Xavier to 151200 UTC at 35 kt; leftover SWB FIVE Storm Warning HOLD; JTWC 04P FOUR HOLD",
+      "summary": "Parent 12:51 hourly closed on NEW SWB Number FIVE 151207 UTC naming Xavier and placing a Storm Warning in force for Penrhyn/Manihiki/Rakahanga at leftover about 65 km/h / 995 hPa / 8.8S 159.5W at 150900 UTC, leftover Storm Warning 003 151037 UTC, leftover FKPS01 151028 TCA 2026/1 (next 151300Z), leftover TDA A03 151105 UTC, leftover WTPS31 04P FOUR Warning NR 001 at 35 kt 1-min, leftover TDS 150819 UTC (~30 kt 10-min), and asked whether the next Xavier TCA vs printed 151300Z would hold 35 kt / Cat 1 or 40+ kt. This window answers the TCA 2026/2 and TDA restamp watches. It does not restamp the land SWB. First-pass FMS warnings RSS 200 at 13:54:24 lastBuild Sun 15 Nov 2026 13:45:08 +1200 (HTTP LM NEW Sun 15 Nov 2026 01:45:08 GMT): TDA NUMBER A04 ISSUED 151345 UTC; TROPICAL CYCLONE XAVIER CENTRE 995HPA near 8.7S 159.6W at 151200 UTC; about 35 kt 10-min; Dvorak T3.0; next 152000UTC. Storm Warning 005 ISSUED 151315 UTC names Xavier Cat 1 same 151200 fix; 35 kt increasing to 50 kt by 161200 UTC; cancels Warning 003. FKPS01 NFFN 151311 TC ADVISORY 2026/2 — XAVIER; OBS 15/1200Z S0842 W15936; MAX WIND 35KT; next 151900Z. Recapture RSS 13:55:40 and late 13:56:19 HOLD same five items. Recapture/late HTML prints Storm Warning 005 Issued At 13:15; leftover SWB FIVE Issued At 12:07; TCA Issued At 13:11; TDA A04 Issued At 13:45. Recapture/late WTPS31 200 LM HOLD 08:45:04 GMT still WARNING NR 001 / 035 kt — no NR 002; body does not print Xavier. No Number SIX. CAP AS empty updated 13:55:19Z. PPG TCP none-issued. Cook Islands News 403. Xavier is an RSMC name; JTWC FOUR is not. 65 km/h / 35 kt / Nadi Category 1 floor is not SOP FLASH without mass-casualty or state-capacity breach. Land Storm Warning is not a land hurricane warning and is not collected current storm-force. TCA 2026/2 +24h 50 kt is forecast. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["tc_xavier", "td02f", "tc_04p", "fms_tda_a04", "fms_sw_005", "fms_tca_2026_2", "fms_swb_five", "jtwc_wtps31_150900", "storm_warning_northern_cooks", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "Leftover EMCI Xavier Storm Warning graphic HOLD; leftover PPG High Surf Advisory 150631; leftover MetService Cat 1 bulletin",
+      "summary": "Parent 12:51 hourly closed on EMCI Tropical-Cyclone-Xavier-Storm-Warning.jpg (LM 12:32:21 GMT) as the homepage matching product, with no NES sentence isolated. This window EMCI homepage 200; homepage still references the Xavier Storm Warning JPEG (image HTTP LM HOLD 12:32:21 GMT); leftover Bulletin 4 JPEG not referenced in HTML (file still 200 LM HOLD 09:14:43 GMT). No NES activation sentence isolated in static HTML. Cook Islands News homepage 403 HOLD. Cook Met / NES NXDOMAIN. NWS Pago Pago CFW leftover WHZS40 NSTU 150631 HOLD: High Surf Advisory remains through Sunday for Tutuila/Aunu'u/Manu'a/Swains/Rose; 10 to 14 feet south-to-east shores. CAP AS empty updated 13:55:19Z. PPG TCP/HLS none-issued. Leftover MetService TC Potential Bulletin still names Xavier at 10pm Sunday evening NZDT near 08.8S 159.5W, Cat 1, 35 kt (65 km/h); issued 12:46am Mon 16 Nov NZDT / ~11:46 UTC Sunday — leftover vs this-window Nadi 151200 fix; Cat 2 Monday evening / 110 km/h is forecast. Xavier Storm Warning JPEG HOLD is not a collected NES order. Leftover PPG HSA is not a TC warning. Leftover MetService Cat 2 Monday evening is not current intensity. Not FLASH.",
+      "countries": ["COK", "WSM", "ASM", "NZL", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["emci", "storm_warning_northern_cooks", "ppg_high_surf", "metservice_tc_bulletin", "civil_protection"],
+      "sources": [
+        "https://www.emci.gov.ck/",
+        "https://emci.gov.ck/wp-content/uploads/2026/11/Tropical-Cyclone-Xavier-Storm-Warning.jpg",
+        "https://emci.gov.ck/wp-content/uploads/2026/11/TD02F-Bulletin-4.jpg",
+        "https://forecast.weather.gov/product.php?site=PPG&issuedby=PPG&product=CFW&format=CI&version=1",
+        "https://www.metservice.com/warnings/tropical-cyclone-activity",
+        "http://www.cookislandsnews.com/"
+      ]
+    },
+    {
+      "title": "PRF stock HOLD; PC NEW fishing-vessel SAR + Alotau K40k; USGS leftover Tonga/Fiji + NEW extra-regional Philippines M5.5",
+      "summary": "Forumsec 10 Nov PRF release HTTP LM HOLD 10:58:00 GMT first-pass and recapture; content still more than US$300 million short. Champions leftover 14 Nov title HOLD; HTTP LM HOLD 10:25:04 GMT. Homepage LM HOLD 14 Nov 10:13:35 GMT. Spoken PRF still US$200m vs US$500m. pm.gov.au HTTP 200 (LM HOLD 12:13:51 GMT) leftover Manila/SE Asia titles over leftover COP31 PRF cluster. Defence/DFAT stream error. ABC world lastBuild HOLD 11:41:09Z NZ World Cup final sports — OOS. ABC News RSS 5115492 HTTP 500 HOLD. Post Courier lastBuild NEW 13:45:40Z; HTTP LM NEW 13:45:33 GMT: NEW Chinese fishing vessel rescues three Papua New Guineans adrift near Marshall Islands (pubDate 13:12:56Z; og three PNG citizens rescued after drifting at sea for nearly two weeks) + NEW Alotau Urban LLG K40,000 church support (pubDate 13:45:33Z) over leftover Carnegie climate-card. FBC lastBuild HOLD 04:03:00Z leftover Next Gen FICAC / El Niño small-business. Haus Bung leftover-dated Toroama recap schema datePublished restamp 2026-11-15T23:55:37+10:00 / 13:55:37Z is CMS, not a sitting. USGS M4.5+ day first-pass generated 13:54:30Z count 9/9 leftover M4.7 Tonga and M5.5 Fiji region tsunami flag 0; recapture generated 13:55:30Z count 10/10 adds NEW extra-regional M5.5 9 km E of Union, Philippines 13:41:35Z tsunami flag 0 (ASEAN desk handoff; not fused onto Xavier). Significant-day count 0. PTWC LM HOLD 13 Nov 23:30:41 GMT. PDN LM NEW 13:52:01 GMT leftover Walk for Water. Daily Post LM NEW 13:46:15 GMT leftover Santo. PINA 15 Nov and 16 Nov 404. FFA homepage LM HOLD 12:56:30 GMT; /news/ HTTP LM NEW 13:24:26 GMT with dateModified leftover 26 Oct. Drupal ticks are not a PRF deposit. Leftover 200 Manila titles with a HOLD 12:13:51 GMT LM tick are not a PIC pact. CMS restamp is not a 24 Nov division. Catalog 10 with an extra-regional Philippines add is not a Tonga/Fiji FLASH. PRC fishing-vessel SAR of three drifting PNGeans is not a security presence or recognition switch. Alotau K40k church program is not a compact. Not FLASH.",
+      "countries": ["PLW", "AUS", "PNG", "MHL", "FJI", "GUM", "SLB", "TUR", "TON", "PHL", "NZL", "CHN"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["prf", "cop31", "pmgov_lm_hold", "abc_oos", "bougainville", "usgs", "pc_sar", "collection_path"],
+      "sources": [
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31",
+        "https://www.pm.gov.au/media",
+        "https://www.abc.net.au/news/feed/51120/rss.xml",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.postcourier.com.pg/chinese-fishing-vessel-rescues-three-papua-new-guineans-adrift-near-marshall-islands/",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+        "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tyek",
+        "https://www.pnghausbung.com/president-toroama-reaffirms-bougainville-s-commitment-to-peace-agreement-as-national-parliament-considers-referendum-results/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS TDA A04 151345 UTC (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "NEW: names Tropical Cyclone Xavier; 995 hPa; 8.7S 159.6W at 151200 UTC; about 35 kt 10-min; Dvorak T3.0; next 152000UTC; RSS title still TD02F",
+      "date": "2026-11-15T13:45:00Z",
+      "notes": "TDA-channel restamp onto 151200 UTC fix. Not a land hurricane warning. 35 kt / Cat 1 floor is not SOP FLASH. Not FLASH."
+    },
+    {
+      "name": "FMS Marine Storm Warning 005 151315 UTC (TC Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "NEW: named Xavier Cat 1; 35 kt / 995 hPa / 8.7S 159.6W at 151200 UTC; increasing to 50 kt by 161200 UTC; cancels Warning 003",
+      "date": "2026-11-15T13:15:00Z",
+      "notes": "Marine storm warning, not a land hurricane warning. Not FLASH."
+    },
+    {
+      "name": "FMS FKPS01 NFFN 151311 TC Advisory 2026/2 (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "NEW: 35 kt / 995 hPa; OBS 15/1200Z S0842 W15936; INTSF; next 151900Z",
+      "date": "2026-11-15T13:11:00Z",
+      "notes": "ICAO TCA. Answers leftover 151300Z watch holding 35 kt. Not FLASH."
+    },
+    {
+      "name": "FMS TDA A03 151105 UTC (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "13:51 superseded by A04 151345",
+      "date": "2026-11-15T11:05:00Z",
+      "notes": "Closed leftover 150900-fix TDA. Not FLASH."
+    },
+    {
+      "name": "FMS Marine Storm Warning 003 151037 UTC (TC Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "13:51 superseded by Warning 005 151315",
+      "date": "2026-11-15T10:37:00Z",
+      "notes": "Closed leftover 150900-fix marine storm warning. Not FLASH."
+    },
+    {
+      "name": "FMS FKPS01 NFFN 151028 TC Advisory 2026/1 (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "FJI"],
+      "status": "13:51 superseded by 2026/2 151311",
+      "date": "2026-11-15T10:28:00Z",
+      "notes": "Closed leftover 150900-fix TCA. Not FLASH."
+    },
+    {
+      "name": "FMS SWB Number FIVE 151207 UTC (Xavier / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "leftover HOLD: names Tropical Cyclone Xavier; Storm Warning now in force for Penrhyn, Manihiki, Rakahanga; 995 hPa; 8.8S 159.5W at 150900 UTC; about 65 km/h current; storm-force expected later tonight; next 151800UTC",
+      "date": "2026-11-15T12:07:00Z",
+      "notes": "Land product still on leftover 150900 fix. Not a land hurricane warning. Current 65 km/h is not collected storm-force. Not FLASH."
+    },
+    {
+      "name": "EMCI Tropical Cyclone Xavier Storm Warning graphic",
+      "type": "climate / MDA / civil protection",
+      "parties": ["COK"],
+      "status": "leftover HOLD: homepage image LM HOLD 12:32:21 GMT",
+      "date": "2026-11-15T12:32:21Z",
+      "notes": "Matching-product HOLD. No NES sentence isolated. Not FLASH."
+    },
+    {
+      "name": "JTWC TC 04P (FOUR) Warning NR 001 / WTPS31 PGTW 150900",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "USA"],
+      "status": "leftover HOLD: still NR 001 / 035 kt / 8.4S 158.9W / 1001 mb; tgftp LM HOLD 08:45:04 GMT; web sh0427 LM HOLD 08:43:13 GMT; next 152100Z / 160900Z",
+      "date": "2026-11-15T08:45:04Z",
+      "notes": "Placeholder FOUR, not an RSMC name. Current 35 kt is not Category-level. Not FLASH."
+    },
+    {
+      "name": "JTWC ABPW10 PGTW 150900 REISSUE",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "USA"],
+      "status": "leftover HOLD: web LM HOLD 09:00:15 GMT; 04P FOUR 35 kt; INVEST 95P now-warning-status; WNP NONE",
+      "date": "2026-11-15T09:00:15Z",
+      "notes": "Not a new numbered warning. Not an intensity change. Not FLASH."
+    },
+    {
+      "name": "Pacific Resilience Facility capitalisation",
+      "type": "climate finance",
+      "parties": ["PIF"],
+      "status": "unchanged spoken US$200m vs US$500m; Forumsec PRF HTTP LM HOLD 10:58:00 GMT; Champions Drupal LM HOLD 10:25:04 GMT",
+      "notes": "Gap ~US$300m. File ticks are not a deposit. Not a security pact. Not FLASH."
+    },
+    {
+      "name": "pm.gov.au media",
+      "type": "official media / diplomatic",
+      "parties": ["AUS"],
+      "status": "HTTP 200 leftover Manila/PRF; LM HOLD 12:13:51 GMT",
+      "notes": "Collection-path HOLD. Not a PIC pact. Not FLASH."
+    },
+    {
+      "name": "PC Chinese fishing-vessel SAR",
+      "type": "humanitarian / MDA / media",
+      "parties": ["PNG", "MHL", "CHN"],
+      "status": "NEW: pubDate 13:12:56Z; three PNG citizens rescued after drifting ~two weeks",
+      "date": "2026-11-15T13:12:56Z",
+      "notes": "Humanitarian / MDA colour. Not a security presence. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "Defence/DFAT stream error this hour."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 04P / Xavier (Northern Cooks / ENE Pago Pago)",
+      "direction": "NEW Nadi TDA A04 / Storm Warning 005 / TCA 2026/2 restamp Xavier to 151200 UTC at 35 kt 10-min; leftover land SWB FIVE Storm Warning at 65 km/h current HOLD; leftover JTWC numbered 04P FOUR 35 kt 1-min HOLD + leftover TDS ~30 kt 10-min + leftover EMCI Xavier Storm Warning graphic",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M later-tonight storm-force",
+      "escalate_on": "Named severe / Category-level landfall with PIC mass-casualty or state-capacity breach — not FLASH on a leftover named land Storm Warning at 65 km/h current, a restamped Cat 1 marine storm warning, a restamped ICAO TCA holding 35 kt, a restamped named TDA at 35 kt 10-min, a leftover 35-kt numbered JTWC warning, a 30-kt 10-min TDS, an EMCI JPEG without NES text, leftover expected-later-tonight storm-force language, or 12–48h 45–55 kt forecast language"
+    },
+    {
+      "risk": "Tonga / Fiji-region seismicity",
+      "direction": "leftover M4.7 Tonga intermediate tsunami flag 0; leftover M5.5 Fiji deep HOLD; catalog recapture 10/10 with NEW extra-regional Philippines M5.5 tsunami flag 0",
+      "horizon": "hours",
+      "confidence": "H",
+      "escalate_on": "Quake-tsunami with mass-casualty — not FLASH on tsunami flag 0, no PTWC product, leftover Tonga/Fiji events, or an extra-regional Philippines add"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Drupal LM HOLD; pm.gov.au leftover 200 LM HOLD",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy, Drupal LM HOLD, or pm.gov.au leftover 200 LM HOLD"
+    },
+    {
+      "risk": "PNG Bougainville ratification",
+      "direction": "vote expected 24 Nov; CMS restamps only",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a schema restamp"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi SWB vs printed 151800UTC: Storm remains, hurricane, Number SIX, 151200-fix catch-up, or intensity restamp above 65 km/h?",
+    "Next Xavier TCA vs printed 151900Z: hold 35 kt / Cat 1, or 40+ kt?",
+    "Next TDA vs printed 152000 UTC: hold Xavier / 35 kt 10-min, or 40+ kt?",
+    "Next JTWC warning 152100Z: 04P still FOUR / 35–50 kt, adopt Xavier, NR 002, or upgraded toward the 50–80 kt forecast?",
+    "Next ABPW 160600Z as printed on the leftover reissue: hold 04P-only, or add another suspect area?",
+    "Does leftover TDS keep 30 kt 10-min / 1002 hPa, or catch the marine/TCA/TDA 35 kt / 995 hPa / 151200 UTC fix?",
+    "Any NES / Cook Islands Met text matching Xavier Storm Warning / leftover SWB FIVE? Cook Islands News 403 / Cook Met NXDOMAIN durability?",
+    "Any PTWC / Tonga NDMO product vs leftover M4.7 (none collected)? Any MIMRA/NDMO product on the PC fishing-vessel SAR (none collected)?",
+    "Forumsec official PRF pledge table vs spoken US$200m before 20 Nov?",
+    "Bougainville: does 24 Nov resume produce a division vs CMS restamps?",
+    "AUS–SLB: any signature date? pm.gov.au leftover 200 LM HOLD / Defence/DFAT stream error this hour.",
+    "Does leftover PPG HSA expire on Sunday SST as printed, or is it extended toward Xavier/04P swell?",
+    "Next MetService TC Potential Bulletin by 1pm Mon 16 Nov NZDT / 00:00 UTC 16 Nov as printed.",
+    "Next weekly Monday 16 Nov; September and October monthlies still outstanding."
+  ],
+  "sources": [
+    {"title": "FMS TDA A04 151345 UTC TC Xavier", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T13:45:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS marine Storm Warning 005 151315 UTC TC Xavier", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T13:15:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS FKPS01 NFFN 151311 TC Advisory 2026/2 Xavier", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-15T13:11:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS warnings RSS", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-15T13:45:08Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T01:45:08Z"},
+    {"title": "FMS SWB Number FIVE 151207 UTC TC Xavier Storm Warning Northern Cooks", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T12:07:00Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC WTPS31 PGTW 150900 TC 04P FOUR Warning NR 001", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-15T08:45:04Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC sh0427web.txt WTPS31 NR 001", "url": "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt", "publisher": "JTWC", "published_at": "2026-11-15T08:43:13Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T08:43:13Z"},
+    {"title": "JTWC ABPW10 PGTW 150900 REISSUE", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-15T09:00:15Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T09:00:15Z"},
+    {"title": "tgftp ABPW10 PGTW 150900", "url": "https://tgftp.nws.noaa.gov/data/raw/ab/abpw10.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-15T09:03:08Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T09:03:08Z"},
+    {"title": "JTWC leftover TCFA WTPS21 PGTW 141300", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-14T13:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T13:00:33Z"},
+    {"title": "EMCI Tropical Cyclone Xavier Storm Warning graphic", "url": "https://emci.gov.ck/wp-content/uploads/2026/11/Tropical-Cyclone-Xavier-Storm-Warning.jpg", "publisher": "EMCI", "published_at": "2026-11-15T12:32:21Z", "tier": "A", "confidence": "H"},
+    {"title": "EMCI leftover TD02F-Bulletin-4 graphic", "url": "https://emci.gov.ck/wp-content/uploads/2026/11/TD02F-Bulletin-4.jpg", "publisher": "EMCI", "published_at": "2026-11-15T09:14:43Z", "tier": "A", "confidence": "H"},
+    {"title": "EMCI homepage", "url": "https://www.emci.gov.ck/", "publisher": "EMCI", "published_at": "2026-11-15T13:55:28Z", "tier": "A", "confidence": "H"},
+    {"title": "NWS Pago Pago CFW leftover 150631", "url": "https://forecast.weather.gov/product.php?site=PPG&issuedby=PPG&product=CFW&format=CI&version=1", "publisher": "NWS Pago Pago", "published_at": "2026-11-15T06:31:00Z", "tier": "A", "confidence": "H"},
+    {"title": "NWS CAP AS", "url": "https://api.weather.gov/alerts/active?area=AS", "publisher": "NWS", "published_at": "2026-11-15T13:55:19Z", "tier": "A", "confidence": "H"},
+    {"title": "MetService tropical cyclone activity leftover Cat 1 Xavier", "url": "https://www.metservice.com/warnings/tropical-cyclone-activity", "publisher": "MetService", "published_at": "2026-11-15T11:46:00Z", "tier": "A", "confidence": "H"},
+    {"title": "USGS M4.5+ day GeoJSON", "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson", "publisher": "USGS", "published_at": "2026-11-15T13:55:30Z", "tier": "A", "confidence": "H"},
+    {"title": "USGS M5.5 Union Philippines extra-regional", "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tyek", "publisher": "USGS", "published_at": "2026-11-15T13:41:35Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T10:58:00Z"},
+    {"title": "Forumsec Champions 14 Nov", "url": "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T10:25:04Z"},
+    {"title": "pm.gov.au media", "url": "https://www.pm.gov.au/media", "publisher": "Prime Minister of Australia", "published_at": "2026-11-15T13:55:30Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T12:13:51Z"},
+    {"title": "ABC world RSS", "url": "https://www.abc.net.au/news/feed/51120/rss.xml", "publisher": "ABC News", "published_at": "2026-11-15T11:41:09Z", "tier": "B", "confidence": "H"},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "publisher": "Post Courier", "published_at": "2026-11-15T13:45:40Z", "tier": "B", "confidence": "H", "http_lm": "2026-11-15T13:45:33Z"},
+    {"title": "Post Courier Chinese fishing vessel SAR", "url": "https://www.postcourier.com.pg/chinese-fishing-vessel-rescues-three-papua-new-guineans-adrift-near-marshall-islands/", "publisher": "Post Courier", "published_at": "2026-11-15T13:12:56Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "publisher": "FBC", "published_at": "2026-11-15T04:03:00Z", "tier": "B", "confidence": "H"},
+    {"title": "FFA homepage", "url": "https://www.ffa.int/", "publisher": "Pacific Islands Forum Fisheries Agency", "published_at": "2026-11-15T12:56:30Z", "tier": "A", "confidence": "H"}
+  ]
+}
