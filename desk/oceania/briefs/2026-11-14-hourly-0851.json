@@ -1,0 +1,156 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-14T07:55:00Z",
+  "window_end_utc": "2026-11-14T08:51:00Z",
+  "generated_at_utc": "2026-11-14T09:05:00Z",
+  "scan_through_utc": "2026-11-14T08:56:42Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-10-17T06:51:00Z",
+  "parent_daily_pr": 162,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW Nadi TDS 140826 UTC: TD02F 1005 hPa at 09.5S 158.5W, LOW TO MODERATE HOLD; leftover JTWC 95P MEDIUM HOLD; no land warning",
+      "summary": "NEW FMS Tropical Disturbance Summary issued 140826 UTC (HTML /warnings/ 200 at 08:56 recapture): TD02F 1005 hPa analysed near 09.5S 158.5W at 140600UTC; position poor; slow moving then southwest after 24 hours with some intensification as forecast; potential LOW TO MODERATE in 24–36 hours; no other significant disturbance; no Special Weather Bulletin / Storm Warning / Hurricane Warning. Leftover JTWC ABPW10 PGTW 140600 (web LM still 05:47:13 GMT): INVEST 95P still 9.0S 157.8W, ~823 NM ENE of Pago Pago, 28–33 kt / 1005 mb, MEDIUM. Leftover AFD 140737. CAP GU/MP/AS empty. Nadi 1005 hPa is not a named cyclone. No land TC Warning. Not FLASH.",
+      "countries": ["ASM", "WSM", "COK", "FJI", "USA"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td02f", "invest_95p", "nadi_tds_140826", "jtwc_abpw_140600", "no_swb", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "Daily Post 429→200 recovers leftover-dated PAC non-response copy and dual ICJ / UNCLOS track vs France; not extra-constitutional",
+      "summary": "Daily Post homepage recovered HTTP 200 (LM 08:51:56 GMT) after parent 429. Leftover-dated 13 Nov 22:35–22:36 GMT first-party copy: PAC names Napat, Ati, Mahe, Seremaiah and Allan as non-respondents on diplomatic-passport findings (s.16(2A) Expenditure Review and Audit Act). Separate leftover-dated Koanapo copy: ICJ application 31 Aug on Umaenupne/Umaeneg sovereignty plus UNCLOS Annex VII arbitration commenced October 2026; France has not accepted ICJ jurisdiction. Parliamentary / legal. Dual-track is not a Nouméa rewrite and not extra-constitutional. Not FLASH.",
+      "countries": ["VUT", "FRA", "NCL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["vanuatu_pac", "diplomatic_passports", "matthew_hunter", "icj", "unclos", "daily_post_recovery"],
+      "sources": [
+        "https://www.dailypost.vu/",
+        "https://www.dailypost.vu/news/diplomatic-passport-silence/article_0405b887-1789-56e2-8e02-274cfcbc480f.html",
+        "https://www.dailypost.vu/news/two-separate-legal-cases-against-france-over-mathew-and-hunter/article_a6b1db05-f726-5c69-9d5d-1e7f635be3e3.html"
+      ]
+    },
+    {
+      "title": "Forumsec PRF HTTP tick, content HOLD; PC lastBuild India Nite; Guam PDN FY2026 port copy; leftover COP31 / shell / AUKUS",
+      "summary": "Forumsec 10 Nov PRF release HTTP LM ticked to 08:46:35 GMT; body still more than US$300 million short of the first target — not a new pledge table. Post Courier lastBuild 08:32:41Z on India Nite philanthropy (out of Oceania political-economy scope) plus leftover COP31 / wine-bottle shell. Guam PDN homepage lead: Port Authority FY2026 revenue up, costs down, most containers in almost a decade as printed — territorial commercial, not compact cash. FBC RSS timeout both passes. ABC RSS 500 HOLD. SLB homepages 403 HOLD. AUS–SLB still unsigned. Not FLASH.",
+      "countries": ["PLW", "AUS", "PNG", "GUM", "FJI", "SLB", "USA"],
+      "importance": 2,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": ["prf", "cop31", "forumsec_lm_tick", "pc_india_nite", "guam_port_fy2026", "collection_path"],
+      "sources": [
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.guampdn.com/news/port-sees-revenue-increases-lower-costs-most-containers-handled-since-2017/article_eed8066e-0619-4a3b-aad8-d1adb616a164.html"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS Tropical Disturbance Summary 140826 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "FJI"],
+      "status": "NEW restamp; LOW TO MODERATE; no SWB",
+      "date": "2026-11-14T08:26:00Z",
+      "notes": "Supersedes leftover 132230 UTC / 1007 hPa as latest Nadi TDS. Not named. Not FLASH."
+    },
+    {
+      "name": "JTWC INVEST 95P / ABPW 140600",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD MEDIUM",
+      "date": "2026-11-14T06:00:00Z",
+      "notes": "Web LM still 05:47:13 GMT. Next 150600Z."
+    },
+    {
+      "name": "Forumsec COP31 / Belau action release",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "PLW"],
+      "status": "HTTP LM tick 08:46:35 GMT; content HOLD",
+      "date": "2026-11-10",
+      "notes": "Still more than US$300 million short. File tick ≠ new table."
+    },
+    {
+      "name": "VUT–FRA ICJ + UNCLOS Annex VII (Umaenupne / Umaeneg)",
+      "type": "legal",
+      "parties": ["VUT", "FRA", "NCL"],
+      "status": "NEW collection of leftover-dated Daily Post copy; France has not accepted ICJ jurisdiction",
+      "date": "2026-08-31 / 2026-10",
+      "notes": "Dual-track. Consent gap HOLD. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT/Defence timeout this hour."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P (ENE Pago Pago)",
+      "direction": "NEW Nadi TDS 140826 1005 hPa LOW–MODERATE; leftover JTWC MEDIUM HOLD; no SWB",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M development",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on NEW TDS LOW–MODERATE or leftover MEDIUM invest"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Forumsec HTTP tick only",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on an HTTP LM tick"
+    },
+    {
+      "risk": "VUT passport integrity / France docket",
+      "direction": "Daily Post 200 recovers leftover-dated PAC non-response + dual ICJ/UNCLOS copy",
+      "horizon": "days–weeks",
+      "confidence": "H (ledes) / M (PDF / French reply)",
+      "escalate_on": "Capital-scale unrest or extra-constitutional seizure — not FLASH on leftover-dated PAC/ICJ copy"
+    }
+  ],
+  "open_questions": [
+    "Next JTWC ABPW 150600Z: 95P numbered, named, still MEDIUM, or downgraded vs NEW Nadi 1005 hPa / 09.5S 158.5W?",
+    "Next Nadi TDS / first SWB vs HTML no-SWB HOLD?",
+    "Forumsec official PRF pledge table vs spoken US$200m vs HTTP tick 08:46:35 GMT?",
+    "Vanuatu PAC PDF vs Daily Post five-name non-response list; French ICJ-consent or UNCLOS response?",
+    "AUS–SLB signature vs DFAT/Defence timeout?",
+    "FBC RSS timeout durability vs leftover Vaturu lastBuild?",
+    "Daily Post 200 durability after parent 429?"
+  ],
+  "sources": [
+    {"title": "FMS TDS 140826 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T08:26:00Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC ABPW 140600", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-14T06:00:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Daily Post — Diplomatic passport silence", "url": "https://www.dailypost.vu/news/diplomatic-passport-silence/article_0405b887-1789-56e2-8e02-274cfcbc480f.html", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-13T22:35:25Z", "tier": "B", "confidence": "H"},
+    {"title": "Daily Post — Two separate legal cases against France", "url": "https://www.dailypost.vu/news/two-separate-legal-cases-against-france-over-mathew-and-hunter/article_a6b1db05-f726-5c69-9d5d-1e7f635be3e3.html", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-13T22:36:52Z", "tier": "B", "confidence": "H"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H"},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "publisher": "Post-Courier", "published_at": "2026-11-14T08:32:41Z", "tier": "B", "confidence": "H"},
+    {"title": "PDN Guam port FY2026", "url": "https://www.guampdn.com/news/port-sees-revenue-increases-lower-costs-most-containers-handled-since-2017/article_eed8066e-0619-4a3b-aad8-d1adb616a164.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T08:30:00Z", "tier": "B", "confidence": "M"}
+  ]
+}
