@@ -1,0 +1,187 @@
+{
+  "product": "hourly",
+  "task": "asean.hourly_scan",
+  "desk": "asean",
+  "window_start_utc": "2026-11-14T22:48:00Z",
+  "window_end_utc": "2026-11-15T05:51:00Z",
+  "generated_at_utc": "2026-11-15T05:51:45Z",
+  "scan_through_utc": "2026-11-15T05:51:00Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "flash_id": null,
+  "sunday_addendum": true,
+  "weekend_product": true,
+  "parent_daily": "desk/asean/briefs/2026-11-14-daily.md",
+  "parent_daily_pr": "https://github.com/mindstxrm/Geopolitiko/pull/161",
+  "parent_hourly": "desk/asean/briefs/2026-11-14-hourly-2246.md",
+  "parent_hourly_pr": "https://github.com/mindstxrm/Geopolitiko/pull/177",
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "coverage_gap_note": "Hourlies after PR #177 / 2246 were FLASH-none holds. This second Sunday addendum files because AUS-PHL posted text (PNA 05:47:42Z + DFAT Albanese-Marles-Wong 15 Nov) hit the standing trigger. It does not rewrite PR #161 or 2246, backfill 17 Oct-13 Nov, or substitute for the 16 Nov weekly.",
+  "countries_touched": ["PHL", "AUS", "SGP", "MYS", "IDN", "CHN"],
+  "asean_institutional": true,
+  "cutoff_prints": {
+    "sgp_psi_1300_sgt_15_nov": {
+      "north": 32,
+      "central": 33,
+      "east": 33,
+      "south": 33,
+      "west": 34,
+      "band": "all_good",
+      "timestamp": "2026-11-15T13:00:00+08:00",
+      "update_timestamp": "2026-11-15T13:00:51+08:00",
+      "source": "https://api.data.gov.sg/v1/environment/psi",
+      "date_query_n": 13,
+      "note": "date=2026-11-15 n=13 is 01:00-13:00; 00:00 skipped on dated query"
+    },
+    "sgp_pm25_1hr_1300_sgt_15_nov": {
+      "north": 7,
+      "central": 6,
+      "east": 3,
+      "south": 9,
+      "west": 6,
+      "max_ugm3": 9,
+      "max_region": "south",
+      "band": "all_normal",
+      "updatedTimestamp": "2026-11-15T13:45:48+08:00",
+      "timestamp": "2026-11-15T13:00:00+08:00",
+      "source": "https://api-open.data.gov.sg/v2/real-time/api/pm25"
+    },
+    "apims_1300_myt_15_nov": {
+      "complete_68_68": true,
+      "null_api": ["CA57Q Samalaju, SARAWAK"],
+      "unhealthy": 1,
+      "moderate": 27,
+      "good": 39,
+      "very_unhealthy": 0,
+      "hazardous": 0,
+      "max": 140,
+      "max_station": "Batu Muda, W.P. KUALA LUMPUR",
+      "batu_muda": 140,
+      "johan_setia": 80,
+      "klang": 67,
+      "shah_alam": 64,
+      "larkin": 53,
+      "pasir_gudang": 44,
+      "source": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+      "doe_update": "2026-11-15T13:00:00"
+    },
+    "haze_gov_sitrep": {
+      "updated_on": "5:07 PM 14 November",
+      "footer_chrome": "Last updated 15 November 2026",
+      "cache": "Miss from cloudfront 2026-11-15T05:49:43Z",
+      "note": "0300 UTC / 11:00 SGT 15 Nov sitrep unpublished this scan; footer calendar chrome is not a new sitrep"
+    },
+    "asmc": {
+      "alert_level": 0,
+      "rawIssueDate": "2026-11-14 17:07:08",
+      "usedFallback": false,
+      "todayDate": "15 Nov, 2026",
+      "home_last_modified": "Sun, 15 Nov 2026 04:00:30 GMT",
+      "alerts_last_modified": "Thu, 12 Nov 2026 15:56:48 GMT",
+      "note": "latest southern downgrade still 12 Nov Level 0; not Alert Level 3"
+    },
+    "jisdor_last_good": {
+      "date": "2026-11-13",
+      "usd_idr": 18218.00,
+      "note": "14-15 Nov unpublished (weekend)"
+    }
+  },
+  "priority_items": [
+    {
+      "title": "AUS-PHL defence cooperation instrument signed; PNA + DFAT posted text",
+      "summary": "FACT: Teodoro and Ambassador Innes-Brown signed at Eva Macapagal Cruise Terminal, Manila South Harbor, 15 Nov, witnessed by Albanese. PNA (datePublished 05:47:42Z) names it a Defense Cooperation Agreement updating the 1995 MOU and complementing SOVFA. DFAT joint statement (Albanese, Marles, Wong, 15 Nov) names it a Defence Cooperation Arrangement covering maritime awareness, information-sharing, training, interoperability, and defence infrastructure. PHL CLAIM: SOVFA anti-red tape and WPS deterrence. PDF unpublished. ABC written still lags on 'set to be signed.' pm.gov.au/media still Antalya/COP31.",
+      "countries": ["PHL", "AUS"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["defence", "minilateral", "SOVFA", "South China Sea", "49th Summit"],
+      "sources": [
+        "https://www.pna.gov.ph/article/ph-australia-ink-updated-defense-pact",
+        "https://www.foreignminister.gov.au/minister/penny-wong/media-release/enhancing-defence-cooperation-and-maritime-security-southeast-asia",
+        "https://www.straitstimes.com/asia/se-asia/philippines-australia-sign-defence-pact-with-eye-on-china"
+      ]
+    },
+    {
+      "title": "49th ASEAN Summit opened on calendar at PICC; not emergency AMM",
+      "summary": "FACT: Marcos opened the 49th Summit at PICC (PNA dateModified 02:19:21Z). NCRPO venue-security slug (04:31:19Z) is scheduled summit color. AMM Saturday remains complete. 5PC Lazaro 'no easing' (CNA 6551711) held. No emergency AMM.",
+      "countries": ["PHL"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["Chair", "49th Summit", "AMM"],
+      "sources": [
+        "https://www.pna.gov.ph/article/marcos-opens-asean-summit-urges-unity-amid-global-challenges",
+        "https://www.pna.gov.ph/article/ncrpo-ready-to-secure-asean-delegates-beyond-summit-venues"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "AUS-PHL defence cooperation arrangement / DCA",
+      "parties": ["AUS", "PHL"],
+      "type": "defence",
+      "status": "signed 2026-11-15 (PNA + DFAT joint statement); PDF unpublished; ABC written and pm.gov.au/media lag",
+      "bindingness": "legal once in force; operative scope unverified until PDF",
+      "date": "2026-11-15"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "AUS-PHL DCA as minilateral hedge on summit day one",
+      "direction": "up (signed)",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger": "posted PDF with access/basing verbs; PRC counter-move; shots/second-hull"
+    },
+    {
+      "risk": "5PC / Myanmar representation split into leaders' meeting",
+      "direction": "hold after AMM no-easing",
+      "horizon": "24-48h",
+      "confidence": "H",
+      "trigger": "Myanmar FM seated; emergency AMM; extra-constitutional event in Naypyidaw"
+    },
+    {
+      "risk": "SCS CoC year-end miss vs WPS gray-zone",
+      "direction": "process hold",
+      "horizon": "24h-weeks",
+      "confidence": "H",
+      "trigger": "shots; ramming with injuries; second-hull; emergency AMM"
+    },
+    {
+      "risk": "Transboundary haze rebound",
+      "direction": "down vs 2246 W54 / BM153; now W34 / BM140",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger": "PSI >=301 or APIMS >=200 with new capacity-break"
+    }
+  ],
+  "open_questions": [
+    "Posted AUS-PHL instrument PDF / annexes (Agreement vs Arrangement title; access vs training vs intel)",
+    "pm.gov.au/media listing and ABC written 107381694 update off 'set to be signed'",
+    "PRC readout on the signing; any Li Qiang bilateral",
+    "Posted DEFA signed text, depositary status, and side-letters",
+    "5PC review / Chair's Statement language vs Lazaro no-easing",
+    "haze.gov 0300 UTC / 11:00 SGT 15 Nov sitrep",
+    "Any dated 15 Nov WPS water-cannon or ramming"
+  ],
+  "sources": [
+    {"title": "PH, Australia ink updated defense pact", "publisher": "PNA", "url": "https://www.pna.gov.ph/article/ph-australia-ink-updated-defense-pact", "published_at": "2026-11-15T05:47:42Z", "tier": "A"},
+    {"title": "Enhancing defence cooperation and maritime security in Southeast Asia", "publisher": "DFAT / PM Albanese, DPM Marles, FM Wong", "url": "https://www.foreignminister.gov.au/minister/penny-wong/media-release/enhancing-defence-cooperation-and-maritime-security-southeast-asia", "published_at": "2026-11-15T00:00:00Z", "tier": "A"},
+    {"title": "Philippines, Australia sign defence pact with eye on China", "publisher": "The Straits Times / Reuters", "url": "https://www.straitstimes.com/asia/se-asia/philippines-australia-sign-defence-pact-with-eye-on-china", "published_at": "2026-11-15T04:49:33Z", "tier": "B"},
+    {"title": "PH, Australia seal deal to fast-track military cooperation, joint activities", "publisher": "ABS-CBN", "url": "https://www.abs-cbn.com/news/nation/2026/11/15/ph-australia-seal-deal-to-fast-track-military-cooperation-joint-activities-1332", "published_at": "2026-11-15T05:32:29Z", "tier": "B"},
+    {"title": "PH, Australia sign defense cooperation agreement", "publisher": "GMA News", "url": "https://www.gmanetwork.com/news/topstories/nation/1009557/ph-australia-sign-defense-cooperation-agreement/story/", "published_at": "2026-11-15T03:26:06Z", "tier": "B"},
+    {"title": "Major defence deal for Australia, Philippines (still 'set to be signed')", "publisher": "ABC News", "url": "https://www.abc.net.au/news/2026-11-14/major-defence-deal-astralia-philippines-clashes-china/107381694", "published_at": "2026-11-13T19:48:45Z", "tier": "B"},
+    {"title": "NEA PSI API 13:00 SGT 15 Nov", "publisher": "data.gov.sg", "url": "https://api.data.gov.sg/v1/environment/psi", "published_at": "2026-11-15T05:00:51Z", "tier": "A"},
+    {"title": "NEA Open v2 1-hr PM2.5 13:00 SGT 15 Nov", "publisher": "data.gov.sg", "url": "https://api-open.data.gov.sg/v2/real-time/api/pm25", "published_at": "2026-11-15T05:45:48Z", "tier": "A"},
+    {"title": "APIMS 13:00 MYT 15 Nov — Batu Muda 140 (1/68 Unhealthy)", "publisher": "DOE Malaysia", "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly", "published_at": "2026-11-15T05:00:00Z", "tier": "A"},
+    {"title": "haze.gov.sg sitrep 5:07 PM 14 November", "publisher": "NEA/ASMC", "url": "https://www.haze.gov.sg/", "published_at": "2026-11-14T09:07:00Z", "tier": "A"},
+    {"title": "ASMC home Alert Level 0", "publisher": "ASMC", "url": "https://asmc.asean.org/home/", "published_at": "2026-11-15T04:00:30Z", "tier": "A"},
+    {"title": "JISDOR last-good 13 Nov Rp 18,218.00", "publisher": "Bank Indonesia", "url": "https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/Default.aspx", "published_at": "2026-11-13T00:00:00Z", "tier": "A"},
+    {"title": "Marcos opens ASEAN Summit, urges unity amid global challenges", "publisher": "PNA", "url": "https://www.pna.gov.ph/article/marcos-opens-asean-summit-urges-unity-amid-global-challenges", "published_at": "2026-11-15T02:19:21Z", "tier": "A"},
+    {"title": "USGS M4.5+ day feed", "publisher": "USGS", "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson", "published_at": "2026-11-15T05:48:30Z", "tier": "A"}
+  ]
+}

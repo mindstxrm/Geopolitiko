@@ -1,0 +1,31 @@
+# ASEAN Desk — agreements ledger (living)
+
+Status values: announced / signed / ratified / in force / suspended / convened / underway / adopted (claim) / operational / conducted / expected / under negotiation.
+
+Last updated: 2026-11-15T05:51:45Z. Prior-window rows retained for continuity; **bold** = this 05:47 UTC Sunday addendum.
+
+| Date (UTC) | Instrument | Parties | Type | Status | Bindingness | Strategic read | Source |
+|---|---|---|---|---|---|---|---|
+| **2026-11-15** | **AUS–PHL defence cooperation arrangement / DCA** | **AUS–PHL** | **defence** | **signed 15 Nov, Eva Macapagal Cruise Terminal (Teodoro + Innes-Brown; Albanese witnessed). PNA names Agreement updating 1995 MOU + SOVFA; DFAT names Arrangement. PDF unpublished. ABC written / pm.gov.au/media lag.** | **legal once in force; operative scope unverified until PDF (no access/basing verbs in posted readouts)** | **Chair-state minilateral hedge on 49th Summit day one, parallel to ASEAN–CHN CoC leftovers** | **PNA 05:47:42Z; DFAT Albanese–Marles–Wong 15 Nov; ST/Reuters 12:49 SGT** |
+| 2026-11-14 | ASEAN Digital Economy Framework Agreement (DEFA) | ASEAN-11 | digital economy agreement | signed, 28th AEC Council, Manila; SG Kao + PNA 11-economy photo; EIF/ratification unpublished; SG CLAIM May 2027 in-effect | legal once in force; chapter bindingness unverified | PHL chair economic deliverable now a ratification/implementation problem | ASEAN.org SG Kao ABIS PDF; PNA 17:52 GMT+8 |
+| 2026-11-14 | 5PC / Myanmar high-level representation | ASEAN | political arrangement | AMM wrap: Lazaro “no easing”; Hasan yet to agree to ministerial/leaders return; FM seat on table, not decided; two SOM non-papers open | political | Chair freeze held through AMM; cohesion test moves to 15–17 Nov leaders | CNA 6551711; The Star/Bernama; Thai MFA; Malay Mail |
+| 2026-11-14 | ASEAN–CHN South China Sea CoC | ASEAN–CHN | code of conduct | under negotiation; Imperial ~70%; Hasan: nature + geographical scope unresolved | contested (bindingness is itself open) | Chair delivery risk into 15–17 Nov leaders’ meeting | Malay Mail/Bernama AMM intervention; PNA 13 Nov Imperial |
+| 2026-11-14 | ADB–ASEAN MoU (ADB as “main bank”) | ASEAN–ADB | MoU | announced (Kanda “will sign later today”); Rappler reports signed; PDF still unpublished | political / institutional | Locks ADB financing into ASEAN priorities; Cebu May up to US$30bn by 2030 + Resilient Rivers US$8bn + DEFA US$5bn pledges | ADB Kanda speech 14 Nov; Rappler live; Daily Tribune |
+| 2026-11-15/17 (cal.) | 5PC implementation review document | ASEAN | summit document | expected; Lazaro: draft under negotiation; text unpublished | political | Cohesion test vs THA FM-level re-entry push | CNA Lazaro 14 Nov; Imperial via Zaobao/PNA color |
+| 2026-11-15/17 (cal.) | Updated ASEAN emblem/flag (TLS 11th member) | ASEAN-11 | Charter/symbols | showcase expected; TLS accession 26 Oct 2025; Cebu Protocol 8 May 2026 | Charter amendment once in force | Institutionalisation of TLS membership | TATOLI 13 Nov; agreement.asean.org Cebu Protocol |
+| 2026-10-15 | IDN–TLS Bilateral Investment Treaty | IDN–TLS | BIT | signed Jakarta (Rosan–Kalbuadi Lay); ratification unpublished | legal once in force | Accession-track overlay now sits under TLS-as-member | BKPM 15 Oct; ANTARA 16 Oct |
+| 2026-10-15 | MSCI Indonesia EM→Standalone consultation | MSCI / IDN market | index classification | consultation; comments to 30 Apr 2027; decision by 30 Jun 2027 | market (not a treaty) | Portfolio/FDI shock; not capital controls | MSCI 15 Oct |
+| 2026-10-15 | IDN foreign firefighting help (Prabowo approval) | IDN + unspecified | operational assistance | approved; technical BNPB; countries/form unpublished | political / operational | AATHP-adjacent; not bencana | CNA 15 Oct |
+| 2026-10-15 | SGP Transboundary Haze Pollution Act — company ID | SGP | domestic statute | announced (PM Wong); no filed prosecution as of last haze daily | legal if charged | Receptor legal hedge | CNA/ST 15 Oct |
+| 2026-10-16 | IDN CPTPP accession regulatory mapping | IDN / CPTPP | trade accession prep | announced; AWG still subject to consensus | political | Supply-chain hedge; not accession | ANTARA 16 Oct |
+| 2026-09-14 | UNCLOS Annex V TOA + Rules of Procedure | THA–KHM | compulsory conciliation | adopted (first meeting) | political (recommendations non-binding) | Legal hedging | Thai MFA; AKP |
+| 2026-10-14 | UNCLOS Annex V second round | THA–KHM | compulsory conciliation | day-one complete 14 Oct (sessions through 18 Oct) | political | Boundary-first (THA) vs treaty / joint development (KHM) | AKP 14 Oct |
+| 2026-09-29 | MYS–MMR first-tranche repatriation (~1,476) | MYS–MMR | returns / navy lift | operational (Lumut) | political; not 5PC | Bilateral hedging | Reuters; Bernama |
+| 2026-10-14 | MYS–MMR further depot returns (~3,000+, Fahmi CLAIM) | MYS–MMR | returns | announced; sailing still unpublished as of 16 Oct daily | political | 5PC legitimacy test | Malay Mail/Bernama 14 Oct |
+| 2026-10-13 | VNM–LAO defence cooperation plan 2027 | VNM–LAO | defence plan | signed Hanoi | political / operational | Special relationship; not ASEAN-11 pact | Vietnam News / VNA 13 Oct |
+| 2026-10-14/15 | 16th PH–US bilateral MCA | PHL–USA | bilateral exercise | conducted | operational | US hedge parallel to unpublished Chair WPS line | ABS-CBN 15 Oct |
+| 2026-10-14T13:00Z | SGP west 24-hr PSI FLASH (≥201) | SGP | air-quality print | triggered 21:00 SGT W203 (PR #93); **15 Nov 13:00 all-Good max W34 — not a second FLASH** | n/a | Receptor VU event inside Chair year; now closed | NEA API; PR #93 |
+
+No new FTA/RCEP/IPEF instrument this window.
+IDN national-disaster label remains **rejected** as of last haze daily (not re-opened 15 Nov).
+No convened emergency AMM.
