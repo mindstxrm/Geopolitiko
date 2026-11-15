@@ -1,0 +1,9 @@
+# Oceania Desk
+
+Workspace agent `oceania` (union of `oceania_i` + `oceania_ii` + COFA watch PLW/FSM/MHL). Drafts are **pending_review**.
+
+- Last standing daily: **2026-11-15** (`desk/oceania/briefs/2026-11-15-daily.md`, PR #188). Parent daily: **14 Nov catch-up** (PR #162). Last dedicated hourly: **15 Nov 10:51 UTC** (`desk/oceania/briefs/2026-11-15-hourly-1051.md`). Parent hourly: **15 Nov 09:51 UTC** (PR #190). Last dedicated hourly absorbed into the 15 Nov daily: **15 Nov 06:51 UTC** (PR #187). Last dedicated hourly before the gap: **17 Oct 06:51 UTC** (PR #160).
+- **This branch: Hourly 2026-11-15 10:51 UTC** after the 15 Nov 09:51 hourly. Window 15 Nov 09:55 → 10:51 UTC; recapture ~10:58 UTC. AEDT in force (UTC+11 from 4 Oct); NZDT UTC+13. Do **not** rewrite the 15 Nov daily unless FLASH.
+- **Collection gaps (not reconstructed):** 2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z; 2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z; **2026-10-17T06:51:00Z → 2026-11-13T07:00:00Z**. Hourlies 17 Oct 07:51–13 Nov and dailies 17 Oct–13 Nov **did not file**. Weeklies of 19 Oct, 26 Oct, 2 Nov and 9 Nov missed. September and October monthlies missed.
+- This-window lead: **NEW RSMC Nadi marine STORM WARNING 003 (WMO 151037 UTC) names Tropical Cyclone Xavier Category 1 at 35 kt / 995 hPa + recapture NEW FKPS01 TCA 2026/1. Leftover land SWB Number FOUR still unnamed Gale remains. Leftover JTWC 04P FOUR Warning NR 001 still 35 kt. Not FLASH.**
+- Next product: **15 Nov 11:51 UTC hourly**. Next Nadi SWB **151200UTC**. Next Xavier TCA **151300Z**. Next Nadi TDA **151400 UTC**. Next JTWC warnings **152100Z / 160900Z**. Next ABPW **160600Z as printed**. COP31 through 20 Nov. CNMI runoff 20 Nov. Bougainville vote expected 24 Nov. NZ official 27 Nov. Fiji Bill 32 third reading sitting week **30 Nov–4 Dec** as printed. Next weekly due **Monday 2026-11-16** unless editors task a catch-up. September and October monthlies still outstanding.
