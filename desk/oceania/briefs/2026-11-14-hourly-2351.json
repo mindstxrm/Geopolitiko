@@ -1,0 +1,295 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-14T22:51:00Z",
+  "window_end_utc": "2026-11-14T23:51:00Z",
+  "generated_at_utc": "2026-11-14T23:58:00Z",
+  "scan_through_utc": "2026-11-14T23:56:31Z",
+  "first_pass_utc": "2026-11-14T23:54:33Z/2026-11-14T23:55:45Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-11-14T22:51:00Z",
+  "parent_daily_pr": 162,
+  "parent_hourly_pr": 178,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW FMS SWB Number ONE 142321 UTC Gale Warning for Penrhyn–Manihiki–Rakahanga; leftover JTWC ABPW 141300 COR / 95P HIGH + leftover TCFA WTPS21 141300 HOLD",
+      "summary": "Recapture HTML /warnings/ 200 at 23:56 prints NEW Special Weather Bulletin Number ONE for Northern Cooks on Tropical Depression 02F ISSUED 142321 UTC. Gale Warning now in force for Penrhyn, Manihiki and Rakahanga. Centre [1004 HPA] near 9.1S 158.2W or about 20 km WSW of Penrhyn at 0900UTC as printed; slow moving, expected WSW movement next 6–12h; 65 km/h gusts 90 km/h within 24h; risk of coastal inundation during high tides. First SWB on TD02F for Northern Cooks; next issue 160300UTC as printed. FMS RSS item 20023 lastBuild NEW 23:22:06 +1200; HTTP LM NEW 11:22:06 GMT. Leftover TDS 142116 UTC still listed as item 20036 (09.0S 158.7W / 1004 hPa / LOW TO MODERATE). Recapture ABPW web 200 at 23:56:13 still prints ABPW10 PGTW 141300 COR (web LM HOLD 13:18:12 GMT; tgftp LM HOLD 13:21:05 GMT): INVEST 95P still 9.2S 157.1W, ~853 NM ENE of Pago Pago, 28–33 kt / 1004 mb, potential HIGH. Leftover WTPS21 PGTW 141300 TCFA (tgftp LM HOLD 13:00:33 GMT): numbered warnings not justified; TCFA MSLP 998 mb; reissue by 151300Z. WTPS31 leftover 19 Oct. CAP GU/MP/AS empty (updated 23:48:30Z first-pass / 23:55:08Z recapture-pass). Cook Islands News 403. USGS catalog count 18 first-pass / 17 recapture; catalog-add leftover-dated OOS M4.7 east central Pacific 22:23:46Z. No this-window Oceania M4.5+. NEW Nadi Gale Warning is not a named cyclone and not Category-level. JTWC HIGH + TCFA HOLD is not a numbered warning. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["td02f", "invest_95p", "fms_swb_142321", "gale_warning_northern_cooks", "jtwc_abpw_141300", "tcfa_wtps21_141300", "nadi_tds_142116", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/ab/abpw10.pgtw..txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "pm.gov.au 200 recovery of leftover 13 Nov cluster; FBC lastBuild NEW 23:14:13Z OOS over leftover SODELPA/FEO; PC North Fly lead HOLD; Forumsec LMs HOLD",
+      "summary": "pm.gov.au media first-pass HTTP 200 and recapture HTTP 200 (parent 403 both passes). LM HOLD 18:12:12 GMT. Listing still leftover Friday 13 November 2026 Antalya press conference / COP31 investor roundtable / PRF spotlight / PRF showcase — no Sunday-dated Oceania item. FBC RSS first-pass 200 (parent timeout) lastBuild NEW 23:14:13Z. Lead is OOS Pakistan pollution (pubDate 23:33:00Z) then OOS Nvidia; leftover Ireland rugby (22:35:32Z), leftover SODELPA (20:35:04Z) and leftover FEO (20:33:05Z) still in-feed. Post Courier RSS lastBuild NEW 23:05:03Z / HTTP LM NEW 23:05:18 GMT — still North Fly El Niño relief third shipment (pubDate 22:49:43Z). Forumsec Champions HTTP LM HOLD 22:19:38 GMT. Forumsec PRF HTTP LM HOLD 22:54:46 GMT — body HOLD more than US$300 million short. Homepage LM HOLD 10:13:35 GMT. Defence timeout both passes. ABC world lastBuild NEW 23:41:27Z with OOS Melbourne stabbing lead. OOS crime/sport ≠ extra-constitutional. 200 leftover cluster ≠ a new Sunday pledge. Not FLASH.",
+      "countries": ["AUS", "FJI", "PNG", "PLW", "MHL", "FSM", "TUR", "NIU", "TON", "VUT", "TUV", "KIR"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["prf", "cop31", "forumsec", "pmgov_200", "sodelpa", "feo", "crc_referendum", "north_fly_relief", "abc_world_234127", "fbc_oos"],
+      "sources": [
+        "https://www.pm.gov.au/media",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.postcourier.com.pg/third-shipment-of-north-fly-relief-supplies-heads-to-aiambak/",
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31",
+        "https://www.abc.net.au/news/feed/51120/rss.xml",
+        "https://www.defence.gov.au/news-events/releases"
+      ]
+    },
+    {
+      "title": "NWS AFD 142000 HOLD + Yap HSA HOLD; Daily Post homepage LM 23:49:33 GMT leftover-dated; PDN homepage LM 23:51:15 / recapture 23:56:17 GMT FEMA HOLD + museum HOLD",
+      "summary": "NWS AFD FXPQ50 PGUM 142000 HOLD (LM HOLD 20:00:23 GMT): 600 AM ChST 15 Nov; Marianas drier period; near-red-flag fire-weather headline; Yap HSA likely expire 5 PM ChST. CAP FM Yap High Surf Advisory HOLD until 17:00 ChST 15 Nov; 7–9 ft north reefs; Minor. CAP GU/MP/AS empty (updated 23:55:08Z). Daily Post homepage first-pass LM 23:49:33 GMT / recapture HOLD 23:49:33 GMT with Santo article LM HOLD 13 Nov 22:35:24 GMT — homepage tick, not a new sitting or reopening. PDN homepage first-pass LM NEW 23:51:15 GMT / recapture NEW 23:56:17 GMT; museum rematriation still lead (article LM HOLD 22:00:00 GMT); FEMA EMPG US$984,776 still on homepage; article LM HOLD 11:00:23 GMT. PINA stub pubDate 23:42:25Z still linking 15 Nov 404. FFA homepage LM NEW 23:40:17 GMT. Haus Bung leftover-dated 14 Nov Toroama recap HOLD (schema restamp 23:55:30Z / 23:56:31Z is CMS, not a sitting). Cook Islands News 403. AUS–SLB still unsigned. AFD fire-weather HOLD ≠ TC warning. Yap HSA HOLD ≠ Category-level cyclone. Not FLASH.",
+      "countries": ["GUM", "FSM", "MNP", "MHL", "PLW", "VUT", "PNG", "FJI", "USA", "AUS", "COK"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["afd_142000", "yap_hsa", "santo_airport", "fema_empg", "guam_museum_rematriation", "pina_stub", "collection_path"],
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://api.weather.gov/alerts/active?area=FM",
+        "https://www.dailypost.vu/",
+        "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html",
+        "https://www.guampdn.com/news/guam-museum-welcomes-second-wave-of-returned-artifacts/article_06adc675-9765-4aac-af9f-30b9e9fe7399.html",
+        "https://pina.com.fj/feed/",
+        "https://www.ffa.int/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS SWB Number ONE 142321 UTC (TD02F / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: Gale Warning in force for Penrhyn, Manihiki, Rakahanga; unnamed TD; next issue 160300UTC as printed",
+      "date": "2026-11-14T23:21:00Z",
+      "notes": "9.1S 158.2W / 1004 hPa; ~20 km WSW of Penrhyn at 0900UTC as printed. RSS item 20023. Not named. Not Category-level. Not FLASH."
+    },
+    {
+      "name": "JTWC INVEST 95P / ABPW 141300 COR",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD: HIGH",
+      "date": "2026-11-14T13:00:00Z",
+      "notes": "Web LM HOLD 13:18:12 GMT. 9.2S 157.1W / 28–33 kt / 1004 mb. Not numbered. Not FLASH."
+    },
+    {
+      "name": "JTWC TCFA WTPS21 PGTW 141300",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "USA"],
+      "status": "leftover HOLD: formation alert; numbered warnings not justified; reissue by 151300Z",
+      "date": "2026-11-14T13:00:00Z",
+      "notes": "tgftp LM HOLD 13:00:33 GMT. 080 NM of 8.7S 157.0W–9.3S 161.5W. TCFA MSLP 998 mb vs ABPW/SWB 1004. Not FLASH."
+    },
+    {
+      "name": "FMS Tropical Disturbance Summary 142116 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["ASM", "WSM", "COK", "FJI"],
+      "status": "leftover HOLD: LOW TO MODERATE; still listed as RSS item 20036 under NEW SWB 20023",
+      "date": "2026-11-14T21:16:00Z",
+      "notes": "Still 09.0S 158.7W / 1004 hPa at 141800UTC. JTWC/Nadi class split still wider. Not FLASH."
+    },
+    {
+      "name": "NWS AFD FXPQ50 PGUM 142000",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "leftover HOLD: LM 20:00:23 GMT; 600 AM ChST 15 Nov; drier period; near-red-flag fire-weather headline; Yap HSA likely expire 5 PM ChST",
+      "date": "2026-11-14T20:00:00Z",
+      "notes": "Parent 20:51 NEW. Not a TC warning. Not FLASH."
+    },
+    {
+      "name": "NWS CAP FM Yap High Surf Advisory",
+      "type": "climate / MDA",
+      "parties": ["FSM", "USA"],
+      "status": "leftover HOLD: issued 18:57 UTC; until 17:00 ChST 15 Nov; 7–9 ft north reefs; Minor",
+      "date": "2026-11-14T18:57:00Z",
+      "notes": "Parent 20:51 NEW collection. Not a TC warning. Not FLASH."
+    },
+    {
+      "name": "Forumsec COP31 / Belau action release",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "PLW"],
+      "status": "HTTP LM HOLD 22:54:46 GMT; content HOLD",
+      "date": "2026-11-10",
+      "notes": "Still more than US$300 million short. File tick HOLD ≠ new table."
+    },
+    {
+      "name": "Forumsec Pacific Political Champions COP31 roundtable",
+      "type": "climate / diplomatic",
+      "parties": ["PIF", "FJI", "NIU", "TON", "VUT", "TUV", "MHL", "KIR"],
+      "status": "leftover-dated 14 Nov; HTTP LM HOLD 22:19:38 GMT; no new PRF dollar table",
+      "date": "2026-11-14",
+      "notes": "Australian Pavilion. Cohort ends after COP31 as printed. Not FLASH."
+    },
+    {
+      "name": "pm.gov.au media / COP31 PRF cluster",
+      "type": "climate / diplomatic",
+      "parties": ["AUS", "PIF"],
+      "status": "NEW path: first-pass HTTP 200 and recapture HTTP 200 (parent 403); LM 18:12:12 GMT; leftover 13 Nov cluster; no Sunday Oceania item",
+      "date": "2026-11-14T23:56:28Z",
+      "notes": "WAF recovery. Listing body leftover. Not FLASH."
+    },
+    {
+      "name": "FBC RSS lastBuild / OOS leads",
+      "type": "media / OOS",
+      "parties": ["FJI"],
+      "status": "first-pass 200 (parent timeout); lastBuild NEW 23:14:13Z; Pakistan pollution pubDate 23:33:00Z",
+      "date": "2026-11-14T23:14:13Z",
+      "notes": "OOS. Leftover SODELPA/FEO still in-feed. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "PC RSS / North Fly El Niño relief third shipment",
+      "type": "humanitarian / climate",
+      "parties": ["PNG"],
+      "status": "lastBuild NEW 23:05:03Z / HTTP LM NEW 23:05:18 GMT; pubDate 22:49:43Z HOLD",
+      "date": "2026-11-14T22:49:43Z",
+      "notes": "Parent 22:51 NEW. Not a disaster declaration. Not FLASH."
+    },
+    {
+      "name": "ABC world RSS / OOS leads",
+      "type": "media / OOS",
+      "parties": ["AUS"],
+      "status": "lastBuild NEW 23:41:27Z; Melbourne stabbing lead; leftover NT book / swimming / Winton Exmouth later in feed",
+      "date": "2026-11-14T23:41:27Z",
+      "notes": "Tier B OOS. Not a deposited PRF figure. Not FLASH."
+    },
+    {
+      "name": "Defence media listing",
+      "type": "collection path / official media",
+      "parties": ["AUS"],
+      "status": "first-pass timeout and recapture timeout",
+      "date": "2026-11-14T23:56:31Z",
+      "notes": "Collection-path regression HOLD. No this-window Oceania title isolated. Not FLASH."
+    },
+    {
+      "name": "FEMA FY2023 EMPG amendment (GUM)",
+      "type": "territorial disaster-management finance",
+      "parties": ["GUM", "USA"],
+      "status": "homepage first-pass LM 23:51:15 GMT; recapture NEW 23:56:17 GMT; article LM HOLD 11:00:23 GMT; leftover-dated Adelup US$984,776 still on homepage",
+      "date": "2026-11-14T02:00:00Z",
+      "notes": "Territorial reimbursement. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "PDN Guam Museum rematriation",
+      "type": "cultural / territorial",
+      "parties": ["GUM", "USA"],
+      "status": "article LM HOLD 22:00:00 GMT; still homepage lead",
+      "date": "2026-11-14T22:00:00Z",
+      "notes": "Cultural restitution. Not compact cash. Not FLASH."
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "notes": "DFAT timeout this hour; Defence timeout; pm.gov.au 200 leftover cluster."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P (Northern Cooks / ENE Pago Pago)",
+      "direction": "↑ NEW Nadi SWB Number ONE Gale Warning Penrhyn–Manihiki–Rakahanga; leftover JTWC HIGH + TCFA HOLD; leftover TDS 142116 still listed LOW–MODERATE",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M development",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on a first Gale Warning / SWB on an unnamed TD without collected mass-casualty or state-capacity breach, a TCFA / HIGH HOLD without numbered warnings, leftover Nadi LOW–MODERATE TDS, a Yap HSA HOLD, or an AFD fire-weather HOLD"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "US$200m spoken / US$300m gap HOLD; Forumsec Champions/PRF LM HOLD; pm.gov.au 200 leftover 13 Nov cluster; ABC OOS Melbourne lead",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H (stock as spoken) / M (final table)",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy, a Drupal LM HOLD, a pm.gov.au 200 recovery of leftover 13 Nov titles, or ABC OOS"
+    },
+    {
+      "risk": "Fiji CRC / referendum / GE clock / SODELPA land remarks / El Niño welfare",
+      "direction": "→ FBC first-pass 200 lastBuild NEW 23:14:13Z OOS over leftover SODELPA/FEO; leftover-parent-window dry-spell CLAIM still listed",
+      "horizon": "days–Feb 2027",
+      "confidence": "H (ledes) / M (disciplinary outcome / gazette)",
+      "escalate_on": "Extra-constitutional GE delay or sitting violence — not FLASH on leftover party-internal discipline, leftover FEO process explainers, OOS wire, or a ministry dry-spell appeal"
+    },
+    {
+      "risk": "PNG El Niño / North Fly relief / Bougainville / fuel-price stress",
+      "direction": "→ leftover PC North Fly 120-tonne relief lede (lastBuild NEW 23:05:03Z); leftover ICCC colour; leftover-dated Toroama recap HOLD (schema restamp ≠ sitting)",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI, sitting violence, or state-capacity breach — not FLASH on a paywalled relief lede, leftover-dated recap, or a CMS restamp"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi SWB vs printed 160300UTC: cadence / possible 150300 typo; any upgrade from Gale Warning to storm/hurricane / named cyclone?",
+    "SWB centre time 0900UTC as printed: reconcile vs leftover TDS 141800UTC and issue 142321 UTC?",
+    "Next JTWC ABPW 150600Z: 95P numbered, named, still HIGH, or cancelled vs NEW Nadi SWB 9.1S 158.2W?",
+    "TCFA WTPS21: reissued, upgraded to numbered warning, or cancelled by 151300Z?",
+    "Which official pressure stands — ABPW 1004 mb vs TCFA 998 mb vs NEW SWB 1004 hPa vs leftover Nadi TDS 1004 hPa?",
+    "Does JTWC adopt a closer fix toward Nadi SWB 9.1S 158.2W, or does the ~1.1° longitude offset remain?",
+    "Any EMCI / NES / Cook Islands Met / Samoa NDMO product matching the Gale Warning? Cook Islands News 403 this hour.",
+    "Forumsec official PRF pledge table vs spoken US$200m vs HTTP LM HOLD vs pm.gov.au 200 leftover 13 Nov cluster?",
+    "Any new sovereign PRF pledge before COP31 close 20 Nov?",
+    "Does pm.gov.au add a Sunday-dated Oceania item on a later pass, or does the leftover 13 Nov cluster remain the listing?",
+    "Defence listing: durable timeout vs 19:51 first-pass 200 / LM 19:40:58 GMT; any this-window Oceania release title on a later pass?",
+    "SODELPA: disciplinary outcome vs any restated official land policy after the Komaisavai/Uludole committee remarks?",
+    "FEO/Commission: referendum-awareness materials vs a gazetted CRC instrument / referendum date?",
+    "PC North Fly 120-tonne lede: official NDMO / provincial confirmation vs paywall remainder; vessel name / donor?",
+    "AUS–SLB signature vs DFAT timeout, Defence timeout, and pm.gov.au 200 leftover cluster?",
+    "Bougainville: does 24 Nov resume produce a division vs leftover-dated 14 Nov Toroama recap / schema restamp?",
+    "Yap HSA: expire at 07:00 UTC 15 Nov as AFD 142000 and CAP FM print, or reissued?",
+    "AFD 142000 near-red-flag headline: any subsequent Red Flag Warning for Guam/CNMI?",
+    "Daily Post homepage first-pass LM 23:49:33 GMT durability vs leftover-dated Santo/PAC/Pekoa?",
+    "PINA stub 23:42:25Z / 15 Nov 404: durable date-line tick vs restored feed?",
+    "USGS catalog count 18→17: durable vs any GeoNet / PTWC product (none collected this hour)?"
+  ],
+  "sources": [
+    {"title": "FMS SWB Number ONE 142321 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T23:21:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS warnings RSS", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-14T23:22:06Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T11:22:06Z"},
+    {"title": "JTWC ABPW 141300 COR", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-14T13:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T13:18:12Z"},
+    {"title": "JTWC TCFA WTPS21 PGTW 141300", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-14T13:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T13:00:33Z"},
+    {"title": "FMS TDS 142116 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-14T21:16:00Z", "tier": "A", "confidence": "H"},
+    {"title": "NWS AFD FXPQ50 PGUM 142000", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "publisher": "NWS Tiyan", "published_at": "2026-11-14T20:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T20:00:23Z"},
+    {"title": "NWS CAP FM Yap High Surf Advisory", "url": "https://api.weather.gov/alerts/active?area=FM", "publisher": "NWS", "published_at": "2026-11-14T18:57:00Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T22:54:46Z"},
+    {"title": "Forumsec homepage", "url": "https://forumsec.org/", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14T10:13:35Z", "tier": "A", "confidence": "H"},
+    {"title": "Forumsec Pacific Political Champions COP31", "url": "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-14", "tier": "A", "confidence": "H", "http_lm": "2026-11-14T22:19:38Z"},
+    {"title": "pm.gov.au media", "url": "https://www.pm.gov.au/media", "publisher": "Prime Minister of Australia", "published_at": "2026-11-14T18:12:12Z", "tier": "A", "confidence": "H", "http_status_first_pass": 200, "http_status_recapture": 200},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "publisher": "FBC", "published_at": "2026-11-14T23:14:13Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC — SODELPA to address controversial remarks internally", "url": "https://www.fbcnews.com.fj/news/sodelpa-to-address-controversial-remarks-internally/", "publisher": "FBC", "published_at": "2026-11-14T20:35:04Z", "tier": "B", "confidence": "H"},
+    {"title": "FBC — FEO to explain referendum voting process", "url": "https://www.fbcnews.com.fj/news/feo-to-explain-referendum-voting-process/", "publisher": "FBC", "published_at": "2026-11-14T20:33:05Z", "tier": "B", "confidence": "H"},
+    {"title": "ABC world RSS", "url": "https://www.abc.net.au/news/feed/51120/rss.xml", "publisher": "ABC News", "published_at": "2026-11-14T23:41:27Z", "tier": "B", "confidence": "H"},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "publisher": "Post Courier", "published_at": "2026-11-14T23:05:03Z", "tier": "B", "confidence": "H", "http_lm": "2026-11-14T23:05:18Z"},
+    {"title": "Post Courier — Third shipment of North Fly relief supplies heads to Aiambak", "url": "https://www.postcourier.com.pg/third-shipment-of-north-fly-relief-supplies-heads-to-aiambak/", "publisher": "Post Courier", "published_at": "2026-11-14T22:49:43Z", "tier": "B", "confidence": "H"},
+    {"title": "Defence media releases", "url": "https://www.defence.gov.au/news-events/releases", "publisher": "Australian Department of Defence", "published_at": "2026-11-14T23:56:31Z", "tier": "A", "confidence": "L", "http_status": null, "error": "timeout"},
+    {"title": "RNZ Pacific — COP31 1.5°C overshoot", "url": "https://www.rnz.co.nz/news/pacific/2591454/cop31-hears-1-point-5-degreesc-overshoot-not-an-option-for-pacific", "publisher": "RNZ Pacific", "published_at": "2026-11-13T22:35:23Z", "tier": "B", "confidence": "H"},
+    {"title": "Daily Post homepage", "url": "https://www.dailypost.vu/", "publisher": "Vanuatu Daily Post", "published_at": "2026-11-14T23:49:33Z", "tier": "B", "confidence": "H", "http_lm_recapture": "2026-11-14T23:49:33Z"},
+    {"title": "PDN homepage", "url": "https://www.guampdn.com/", "publisher": "Pacific Daily News", "published_at": "2026-11-14T23:51:15Z", "tier": "B", "confidence": "H", "http_lm_recapture": "2026-11-14T23:56:17Z"},
+    {"title": "PDN — FEMA EMPG US$984,776", "url": "https://www.guampdn.com/news/fema-releases-nearly-1m-in-grant-funding/article_240905c3-f6b9-451a-b51d-1dc35b869a6f.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T11:00:23Z", "tier": "B", "confidence": "H"},
+    {"title": "PDN — Guam Museum rematriation", "url": "https://www.guampdn.com/news/guam-museum-welcomes-second-wave-of-returned-artifacts/article_06adc675-9765-4aac-af9f-30b9e9fe7399.html", "publisher": "Pacific Daily News", "published_at": "2026-11-14T22:00:00Z", "tier": "B", "confidence": "H"},
+    {"title": "FFA homepage", "url": "https://www.ffa.int/", "publisher": "Pacific Islands Forum Fisheries Agency", "published_at": "2026-11-14T23:40:17Z", "tier": "A", "confidence": "H"},
+    {"title": "PINA feed stub", "url": "https://pina.com.fj/feed/", "publisher": "PINA", "published_at": "2026-11-14T23:42:25Z", "tier": "C", "confidence": "H"}
+  ]
+}
