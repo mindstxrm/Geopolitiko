@@ -1,0 +1,268 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "task": "oceania.daily_brief",
+  "window_start_utc": "2026-10-15T07:00:00Z",
+  "window_end_utc": "2026-10-16T07:55:00Z",
+  "generated_at_utc": "2026-10-16T08:25:00Z",
+  "overall_confidence": "M",
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "pif_institutional": true,
+  "collection_gap": "2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z",
+  "parent_daily": "2026-10-15",
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "IDN", "PHL", "JPN", "GUM", "MNP", "ASM"],
+  "priority_items": [
+    {
+      "title": "GUM/MNP/FSM — TS Champi (29W) Typhoon Warning in force; still a 50 mph / 50 kt tropical storm",
+      "summary": "Parent daily closed on a Watch and a 35 mph depression. This cutoff: NWS Intermediate Advisory 7A CCA (524 PM ChST / 07:24 UTC) CHANGES None; Typhoon Warning remains Guam/Rota; TS Warning remains Tinian/Saipan; still 50 mph at 11.4N 152.7E. JTWC NR 008 now 50 kt. Leftover JMA STS 55 kt / CMA STS 25 m/s. GHS JIC Release No. 2 (5:15 pm ChST) closes the judiciary under leftover COR 2. TCV none. Weekend typhoon / Sunday Guam passage is forecast. Not Category now. Not FLASH.",
+      "countries": ["GUM", "MNP", "FSM", "USA", "JPN"],
+      "topics": ["climate", "humanitarian", "strategic"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt",
+        "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt",
+        "https://ghs.guam.gov/jic-release-no-2-judiciary-guam-closure-fuel-permit-temporary-waiver-988-lifeline-available"
+      ]
+    },
+    {
+      "title": "COK/ASM/WSM — JTWC numbers TC 01P (ONE) at 35 kt; Nadi still unnamed TD01F with Suwarrow Warning",
+      "summary": "Parent daily closed on 92P MEDIUM and a waters-only gale. This cutoff: JTWC WTPS31 PGTW 160900 Warning NR 001 numbers Tropical Cyclone 01P (ONE) at 35 kt near 10.8S 163.3W. ABPW 160700: 92P now on a tropical cyclone warning. RSMC Nadi has not named the system. FMS SWB FOUR (160750 UTC) keeps a Tropical Cyclone Warning on Suwarrow and Alert on Palmerston/Aitutaki; still 30 kt unnamed TD01F. RNZ 07:08 UTC quotes CIMS Director Vaiimene on household preparedness (copy still lags the Warning). Forecast Category 1 ≠ now. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "topics": ["climate", "humanitarian"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "sources": [
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.rnz.co.nz/news/pacific/1958250/cook-islanders-urged-to-be-prepared-for-potential-cyclone"
+      ]
+    },
+    {
+      "title": "Regional policing — PINA: Pacific police chiefs endorse PACPOL constitution; Manning inaugural chair",
+      "summary": "PINA 16 Oct byline: PICP and the Pacific Policing Initiative brought under a Pacific Community of Policing (PACPOL) constitution. RPNGC Commissioner David Manning elected inaugural Chair; Tuvalu Police Commissioner Matatia Makaili Deputy Chair. Implementation and structures still to be built. No this-cutoff official PICP/PACPOL PDF. Not a foreign security pact. Not FLASH.",
+      "countries": ["PNG", "TUV"],
+      "topics": ["strategic", "governance"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://pina.com.fj/2026/10/16/pacific-police-chiefs-endorse-constitution-establishing-pacpol/"
+      ]
+    },
+    {
+      "title": "FJI — CRC sittings held 15 Oct (Suva + Nausori); no SO.129; NZSIS/maritime strategy remain Cabinet-endorsed",
+      "summary": "Civic Centre and Nausori Vunimono Hall sittings held. Rabuka time-pressure FACT; Mataiciwa rushed-process FACT; Lal self-coup remains CLAIM. Written submissions to 23 Oct 16:00. No SO.129. Leftover FBC lastBuild still 05:42:05Z. NZSIS six-month review and Maritime Security Strategy 2026–2035 remain Cabinet-endorsed, ungazetted. HIV gazette still missing. Parliamentary. Not FLASH.",
+      "countries": ["FJI", "NZL"],
+      "topics": ["governance", "strategic"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "governance",
+      "sources": [
+        "https://www.fiji.gov.fj/decisions-of-the-18th-cabinet-meeting-held-on-13-october-2026/",
+        "https://www.fbcnews.com.fj/news/ngochr-warns-constitution-talks-are-rushed/",
+        "https://www.fbcnews.com.fj/news/referendum-may-align-with-2027-polls/"
+      ]
+    },
+    {
+      "title": "PNG — Bougainville still listed 20–21 Oct; Papua LNG operatorship (not FID); Wewak exam-disruption CLAIM",
+      "summary": "No division this cutoff. National 20–21 Oct / 89 of 118 listing still live; calendar collision with Haley Tuesday and PICOF-19. Intra-day EMPNGA/ExxonMobil assumed Papua LNG operatorship effective 15 Oct as printed — not FID (sunset 15 Dec leftover). NBC 41347/41333 Wewak Bishop Leo exam disruption is a provincial armed-intruder CLAIM, not capital-scale unrest. Kapa Pisin 16–24 Oct is an exercise. Not FLASH.",
+      "countries": ["PNG", "AUS"],
+      "topics": ["governance", "economic"],
+      "importance": 3,
+      "confidence": "M",
+      "claim_type": "FACT/CLAIM",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/",
+        "https://www.nbc.com.pg/post/41347/grade-12-exam-disrupted-by-armed-intruders-in-wewak-2",
+        "https://www.postcourier.com.pg/exxonmobil-assumes-operatorship-of-papua-lng/"
+      ]
+    },
+    {
+      "title": "SLB — AUS–SLB still unsigned; Ombudsman fill remains 14 Oct leftover",
+      "summary": "No DFAT/Defence signature text (timeout 12s). Honiara homepages still 403. SIBC article-path leftover: Dick Stanley Pirione sworn 14 Oct. PALM expo 20–22 Oct leftover. 2022 China security pact unrepealed. Dual-track hedging unchanged. Not FLASH.",
+      "countries": ["SLB", "AUS"],
+      "topics": ["governance", "strategic"],
+      "importance": 2,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "strategic",
+      "sources": [
+        "https://www.sibconline.com.sb/new-ombudsman-sworn-in-to-office/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "NWS Typhoon Warning / TS Champi 29W",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "USA"],
+      "status": "Warning in force; TCP 7A CCA still 50 mph; JTWC NR 008 50 kt; TCV none",
+      "bindingness": "meteorological advisory",
+      "assess": "Watch→Warning in 24h. Still TS. Not FLASH."
+    },
+    {
+      "name": "GHS JIC Release No. 2 / leftover COR 2",
+      "type": "climate / civil defence",
+      "parties": ["GUM", "USA"],
+      "status": "judiciary closed ADM26-009; fuel-permit waiver to 31 Oct; leftover COR 2 / TCCOR 2",
+      "bindingness": "gubernatorial / administrative",
+      "assess": "Preparedness under COR 2. JIC 1 still says Watch. Not FLASH."
+    },
+    {
+      "name": "JTWC TC 01P (ONE) Warning NR 001",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "USA"],
+      "status": "NEW: 35 kt at 10.8S 163.3W; 92P upgraded to warning status on ABPW 160700",
+      "bindingness": "meteorological advisory",
+      "assess": "JTWC numbering ≠ RSMC name. Not FLASH."
+    },
+    {
+      "name": "FMS SWB FOUR / A04 HIGH / Gale 008",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "Warning remains Suwarrow; Alert remains Palmerston/Aitutaki; still unnamed 30 kt",
+      "bindingness": "meteorological advisory",
+      "assess": "Island Warning ≠ naming ≠ Category now."
+    },
+    {
+      "name": "PACPOL constitution",
+      "type": "security / capacity-building",
+      "parties": ["PNG", "TUV"],
+      "status": "PINA 16 Oct endorsement; Manning Chair / Makaili Deputy; no official PDF this cutoff",
+      "bindingness": "political / institutional until a deposited instrument",
+      "assess": "Regional policing architecture. Not a foreign pact."
+    },
+    {
+      "name": "FJI–NZSIS six-month intelligence partnership",
+      "type": "security / capacity-building",
+      "parties": ["FJI", "NZL"],
+      "status": "leftover Cabinet 13 Oct; no this-cutoff MOU/gazette",
+      "bindingness": "political / programme until MOU or gazette",
+      "assess": "Assessment/recommend. Not a base. Not FLASH."
+    },
+    {
+      "name": "Fiji Constitution Amendment Bill / CRC sittings",
+      "type": "domestic constitutional",
+      "parties": ["FJI"],
+      "status": "Suva + Nausori sittings held; submissions to 23 Oct 16:00; no SO.129",
+      "bindingness": "statute + referendum path",
+      "assess": "Time-pressure FACT; Lal self-coup is CLAIM. Parliamentary."
+    },
+    {
+      "name": "Bougainville referendum ratification",
+      "type": "domestic constitutional / Peace Agreement",
+      "parties": ["PNG", "ABG"],
+      "status": "debate listed 20–21 Oct; no division",
+      "bindingness": "constitutional if passed",
+      "assess": "89/118. Calendar collision with Haley / PICOF-19. Not FLASH."
+    },
+    {
+      "name": "Papua LNG operatorship",
+      "type": "resources / commercial governance",
+      "parties": ["PNG"],
+      "status": "EMPNGA assumed operatorship 15 Oct as printed; not FID",
+      "bindingness": "commercial",
+      "assess": "Operatorship ≠ FID. Sunset 15 Dec leftover."
+    },
+    {
+      "name": "AUS–SLB treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "in-principle, unsigned",
+      "bindingness": "political",
+      "assess": "DFAT/Defence timeout ≠ signature."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TS 29W / CHAMPI (FSM now; GUM/MNP weekend forecast corridor)",
+      "direction": "up",
+      "horizon": "hours–4 days",
+      "confidence": "H",
+      "escalate_trigger": "Named system plus Category-level landfall with mass-casualty or state-capacity breach — not FLASH on a Typhoon Warning, 7A CHANGES None, JTWC 50 kt, leftover COR 2, or forecast Sunday typhoon language"
+    },
+    {
+      "risk": "TC 01P / TD01F (ENE Pago Pago; Suwarrow Warning)",
+      "direction": "up",
+      "horizon": "hours–3 days",
+      "confidence": "H",
+      "escalate_trigger": "RSMC-named October out-of-season cyclone with PIC landfall / mass-casualty — not FLASH on JTWC numbering, unnamed Suwarrow Warning continuation, or forecast Category-1 language"
+    },
+    {
+      "risk": "FJI CRC process vs GE clock",
+      "direction": "up",
+      "horizon": "hours–December",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional GE delay or sitting violence — not FLASH on time-pressure or a self-coup CLAIM"
+    },
+    {
+      "risk": "PACPOL constitution vs implementation",
+      "direction": "up",
+      "horizon": "weeks–months",
+      "confidence": "M",
+      "escalate_trigger": "Official confirmation of a radically expanded foreign security presence — not FLASH on a chiefs-level constitution"
+    },
+    {
+      "risk": "PNG Bougainville ratification arithmetic (89/118)",
+      "direction": "unchanged",
+      "horizon": "4–5 days",
+      "confidence": "M",
+      "escalate_trigger": "Extra-constitutional UDI or sitting violence — not FLASH on a scheduled debate"
+    },
+    {
+      "risk": "SLB dual-track AUS treaty unsigned / PRC 2022 pact unrepealed",
+      "direction": "unchanged",
+      "horizon": "weeks–CHOGM",
+      "confidence": "M",
+      "escalate_trigger": "Signed AUS–SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "800 PM ChST TCP: intensity/track change vs 7A 50 mph / Warning points? First TCV?",
+    "29W 161500Z: still 50 kt, or JTWC typhoon (≥64 kt)?",
+    "JIC / Governor HTML matching leftover Advisory 7 Warning (JIC 1 still Watch; Governor still silent)?",
+    "Port Yankee in force vs leftover anticipated?",
+    "Official Chuuk SCA WMO product vs leftover AFD-stated in-effect vs TKK NSH none-issued?",
+    "Next Nadi SWB 161130 UTC: RSMC name, expanded Warning, or still unnamed TD01F 30 kt?",
+    "EMCI / Cook Islands Government civil-defence instrument vs RNZ/CIMS household-prepare copy?",
+    "PACPOL: official constitution PDF / PICP readout vs PINA byline?",
+    "Any SO.129 motion before 23 Oct 16:00? Turaga committee instrument? HIV gazette?",
+    "Will PNG Parliament divide on 20–21 Oct given Haley Tuesday and PICOF-19?",
+    "Papua LNG FID language vs 15 Dec sunset?",
+    "AUS–SLB signature date? DFAT/Defence still timeout.",
+    "Name the Suva regional organisation in the US Embassy cyber CLAIM.",
+    "PRF Tier A table reconciling US$190m with PINA half of US$500m?",
+    "Bill 371-38 Public Law vs leftover PDN $12m copy?",
+    "Daily Post first-pass 429 vs Chrome-UA 200 — standing or transient?",
+    "France ICJ consent/refusal text on Matthew and Hunter?",
+    "ABC /news/pacific still 404 despite RSS recovery?"
+  ],
+  "sources": [
+    {"title": "TS Champi Intermediate Advisory Number 7A CORRECTED", "publisher": "NWS Guam", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq32.pgum.tcp.pq2.txt", "published_at": "2026-10-16T07:24:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"},
+    {"title": "TS Champi Local Statement HLS 411 PM", "publisher": "NWS Guam", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq82.pgum.hls.pq2.txt", "published_at": "2026-10-16T06:11:20Z", "countries": ["GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "TS 29W (CHAMPI) Warning NR 008", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/wp2926web.txt", "published_at": "2026-10-16T09:00:00Z", "countries": ["FSM", "GUM", "MNP"], "tier": "A", "confidence": "H"},
+    {"title": "TC 01P (ONE) Warning NR 001", "publisher": "JTWC", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt", "published_at": "2026-10-16T09:00:00Z", "countries": ["COK", "ASM", "WSM"], "tier": "A", "confidence": "H"},
+    {"title": "ABPW10 PGTW 160700 reissue", "publisher": "JTWC", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "published_at": "2026-10-16T07:00:00Z", "countries": ["COK", "ASM", "WSM", "GUM"], "tier": "A", "confidence": "H"},
+    {"title": "SWB Number FOUR / A04 / Gale 008", "publisher": "FMS / RSMC Nadi", "url": "https://www.met.gov.fj/feed/warnings/", "published_at": "2026-10-16T07:50:52+12:00", "countries": ["COK", "ASM", "WSM"], "tier": "A", "confidence": "H"},
+    {"title": "JIC Release No. 2", "publisher": "GHS/OCD", "url": "https://ghs.guam.gov/jic-release-no-2-judiciary-guam-closure-fuel-permit-temporary-waiver-988-lifeline-available", "published_at": "2026-10-16T07:15:00Z", "countries": ["GUM"], "tier": "A", "confidence": "H"},
+    {"title": "Cook Islanders urged to be prepared for potential cyclone", "publisher": "RNZ", "url": "https://www.rnz.co.nz/news/pacific/1958250/cook-islanders-urged-to-be-prepared-for-potential-cyclone", "published_at": "2026-10-16T07:08:27Z", "countries": ["COK", "NZL"], "tier": "B", "confidence": "H"},
+    {"title": "Pacific police chiefs endorse constitution establishing PACPOL", "publisher": "PINA", "url": "https://pina.com.fj/2026/10/16/pacific-police-chiefs-endorse-constitution-establishing-pacpol/", "published_at": "2026-10-16", "countries": ["PNG", "TUV"], "tier": "B", "confidence": "M"},
+    {"title": "Decisions of the 18th Cabinet Meeting held on 13 October 2026", "publisher": "Fiji Government", "url": "https://www.fiji.gov.fj/decisions-of-the-18th-cabinet-meeting-held-on-13-october-2026/", "published_at": "2026-10-13", "countries": ["FJI", "NZL"], "tier": "A", "confidence": "H"},
+    {"title": "Grade 12 exam disrupted by armed intruders in Wewak", "publisher": "NBC PNG", "url": "https://www.nbc.com.pg/post/41347/grade-12-exam-disrupted-by-armed-intruders-in-wewak-2", "published_at": "2026-10-16T05:35:00Z", "countries": ["PNG"], "tier": "B", "confidence": "M"},
+    {"title": "MPs given 2 days to debate referendum results", "publisher": "The National", "url": "https://www.thenational.com.pg/mps-given-2-days-to-debate-referendum-results/", "published_at": "2026-10-14", "countries": ["PNG"], "tier": "B", "confidence": "H"},
+    {"title": "New Ombudsman sworn-in to office", "publisher": "SIBC", "url": "https://www.sibconline.com.sb/new-ombudsman-sworn-in-to-office/", "published_at": "2026-10-14", "countries": ["SLB"], "tier": "B", "confidence": "H"},
+    {"title": "STS Champi 160600", "publisher": "JMA RSMC", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtpq50.rjtd..txt", "published_at": "2026-10-16T06:00:00Z", "countries": ["GUM", "MNP", "FSM"], "tier": "A", "confidence": "H"}
+  ]
+}
