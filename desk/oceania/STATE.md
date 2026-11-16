@@ -1,0 +1,17 @@
+# Oceania Desk state
+
+- last_product: hourly
+- last_date: 2026-11-16
+- last_cutoff_utc: 2026-11-15T07:00:00Z
+- scheduled_daily_cutoff_utc: 2026-11-16T07:00:00Z
+- last_hourly_window_end_utc: 2026-11-16T03:51:00Z
+- last_generated_at_utc: 2026-11-16T04:03:00Z
+- pending_review: true
+- flash_open: false
+- collection_gap: 2026-10-17T06:51:00Z → 2026-11-13T07:00:00Z (not reconstructed); prior 2026-09-29T21:07:00Z → 2026-10-13T07:00:00Z; prior 2026-09-18T20:51:00Z → 2026-09-28T07:00:00Z
+
+Standing daily **2026-11-15** (`desk/oceania/briefs/2026-11-15-daily.md`, PR #188). This product: **16 Nov 03:51 UTC hourly** (`desk/oceania/briefs/2026-11-16-hourly-0351.md`). Window 2026-11-16T02:51:00Z → 2026-11-16T03:51:00Z (first-pass official ~03:56:10–03:57:58 UTC; extra ~03:58:38–04:01:02 UTC; recapture ~04:01:20–04:01:59 UTC). Parent daily: PR #188. Parent hourly: PR #207 (16 Nov 02:51 UTC). Last dedicated hourly absorbed into that daily: PR #187 (15 Nov 06:51 UTC). Last dedicated hourly before the gap: PR #160 (17 Oct 06:51 UTC). AEDT in force (UTC+11 from 4 Oct); NZDT UTC+13. Continuity cutoff remains **07:00 UTC**. Do **not** rewrite the 15 Nov daily unless FLASH.
+
+**No FLASH.** This-window lead: leftover **FMS SWB Number NINE ISSUED 160250 UTC** HOLD (RSS lastBuild **HOLD 02:50:51 +1200** / HTTP LM **HOLD 14:50:51 GMT**; HTML Issued At **02:50**) — Storm remains Manihiki/Rakahanga; TC Alert remains Pukapuka/Nassau; Xavier **[993 HPA] Category 1** near **8.2S 160.8W at 160000 UTC**; max sustained **about 85 km/h** gusts **120 km/h**; next **160600UTC** (watch OPEN; not yet due). Leftover **TDA A06 160145** / leftover **Storm Warning 007 160044** / leftover **TCA 2026/4 160038** HOLD **45 kt / 993 hPa / 160000 UTC** Cat 1. Leftover **TDS 152241** named Xavier 40 kt / 151800 UTC. Leftover **JTWC WTPS31 152100 / 04P (XAVIER) Warning NR 002** HOLD **040 kt** 1-min. Leftover EMCI Bulletin 7 JPEG LM **HOLD 21:12:22 GMT**; Bulletin 8 **404**; Bulletin 9 **404**. **NEW FBC lastBuild 03:06:40Z** OOS Yemen / tobacco-vaping / Lalabalavu business-excellence / **$400m EFL guarantee** catch-up of leftover FT. **NEW PC lastBuild 03:41:51Z** Tivimasiai mothers / Hakalitz Bougainville music obituary. Leftover PINA Toatu mourns; **president.gov.ki still no Toatu**. pm.gov.au first-pass **403** / extra **200** LM **NEW 03:14:47 GMT** leftover Manila/PRF / recapture **403**. USGS catalog **10→9** on recapture (extra-regional Argentina aged off). 85 km/h land / 45 kt TDA remain Nadi Cat 1. Not SOP FLASH.
+
+Next product: **16 Nov 04:51 UTC hourly**. Next Nadi SWB **160600UTC as printed**. Next Xavier TCA **160700Z as printed**. Next Nadi TDA **160800UTC as printed**. Next JTWC warnings **160900Z / 162100Z**. Next ABPW **160600Z as printed on the leftover reissue**. COP31 through **20 Nov**. CNMI runoff **20 Nov**. Bougainville vote expected **24 Nov**. NZ official **27 Nov**. Guam certification ~**19 Nov**. Fiji Bill 32 third reading sitting week **30 Nov–4 Dec** as printed. WCPFC 23rd Regular Session Port Vila **from 30 Nov**. Tunabuna El Niño packages / Prasad Cabinet swearing-in **16 Nov FJT leftover FT Sunday “tomorrow” language still on homepage**. Gulf 14-day Papua LNG clock from 15 Nov. Marape APEC Shenzhen **18–19 Nov** as printed. Next daily **07:00 UTC 16 Nov**. Next weekly due **Monday 2026-11-16** unless editors task a catch-up of missed 19 Oct–9 Nov weeklies. September and October monthlies still outstanding.

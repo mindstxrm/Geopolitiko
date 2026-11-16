@@ -1,0 +1,199 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-15T19:51:00Z",
+  "window_end_utc": "2026-11-15T20:51:00Z",
+  "generated_at_utc": "2026-11-15T21:00:00Z",
+  "scan_through_utc": "2026-11-15T20:54:28Z",
+  "first_pass_utc": "2026-11-15T20:52:23Z/2026-11-15T20:52:28Z",
+  "extra_pass_utc": "2026-11-15T20:53:08Z/2026-11-15T20:53:49Z",
+  "recapture_utc": "2026-11-15T20:54:18Z/2026-11-15T20:54:28Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-15",
+  "parent_hourly": "2026-11-15T19:51:00Z",
+  "parent_daily_pr": 188,
+  "parent_hourly_pr": 200,
+  "countries_touched": ["AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU", "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR", "GUM", "MNP", "ASM", "NIU", "IDN", "PHL", "AFG"],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW FMS SWB Number SEVEN 152037 UTC land catch-up / Pukapuka–Nassau Alert; leftover JTWC NR 002 / Nadi marine-TDA-TCA 40 kt HOLD",
+      "summary": "Parent 19:51 hourly closed on JTWC WTPS31 152100 / 04P (XAVIER) Warning NR 002 at 40 kt 1-min / 8.1S 160.1W at 151800Z / 1000 mb, Nadi TDA A05 / Storm Warning 006 / TCA 2026/3 at 40 kt 10-min / 8.3S 160.1W at 151800 UTC / 995 hPa / Cat 1, leftover SWB SIX Storm remaining for Manihiki/Rakahanga and cancelled for Penrhyn at about 75 km/h / 8.3S 159.9W at 151500 UTC with next 152100UTC outstanding, leftover ABPW FOUR / 35 kt, leftover Gale Warning 004 / TDS, and asked whether land 152100UTC would Storm-remain, hurricane, Number SEVEN, or Cat 2. This window answers the land watch: Number SEVEN ISSUED 152037 UTC (~23 min early vs printed 152100UTC). Storm Warning remains Manihiki/Rakahanga; Tropical Cyclone Alert now in force for Pukapuka and Nassau; Strong Wind Warning remains rest of Northern Cooks. Land catch-up onto 8.3S 160.1W at 151800 UTC / 995 hPa / about 75 km/h gusts 100 km/h / ~240 km WNW of Penrhyn; moving NW ~12 km/h; cyclone intensifying; next 160000UTC. First-pass FMS warnings RSS 200 lastBuild NEW 20:38:19 +1200 / HTTP LM NEW 08:38:19 GMT: six items, SEVEN lead. Recapture RSS HOLD 20:38:19 +1200. Recapture WTPS31 200 LM HOLD 19:39:05 GMT still NR 002 / 040 kt. Recapture ABPW 200 LM HOLD 09:00:15 GMT still FOUR / 35 kt. CAP AS empty updated 20:49:41Z. Cook Islands News 403. 75 km/h / 40 kt remains Nadi Category 1 and is not SOP FLASH without mass-casualty or state-capacity breach. Land Storm Warning is not a land hurricane warning. Pukapuka/Nassau Alert is not current storm-force on those atolls. Penrhyn not restored is not Northern Cooks all-clear. Printed 95M/HR remains a product typo. Number SEVEN is not Number EIGHT. JTWC 70 kt / prog 90 kt are forecast. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["tc_xavier", "td02f", "tc_04p", "fms_swb_seven_152037", "pukapuka_nassau_alert", "storm_warning_northern_cooks", "jtwc_wtps31_152100", "cyclone"],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt",
+        "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "NEW collection JTWC WDPS31 152100 prog (NR 002; 90 kt TAU-48 forecast); leftover EMCI / PPG HSA / empty CAP / RNZ-SIX lag HOLD",
+      "summary": "Parent 19:51 did not isolate the NR 002 prognostic-reasoning companion. Recapture sh0427prog.txt 200 LM NEW 20:38:13 GMT prints WDPS31 PGTW 152100 for leftover Warning NR 002: current 40 kt; SMOS 40 kt southern flank; Dvorak T2.5 / 35 kt; SATCON 45 kt; RI after TAU 24; peak 90 kt by TAU 48 forecast then weakening after TAU 60. Warning-text LM remains HOLD 19:38:13 GMT / NR 002. Leftover AFD 151957 KBDI 515 HOLD. EMCI Xavier Storm Warning JPEG LM HOLD 12:32:21 GMT; no Number SEVEN graphic; no NES sentence isolated. CAP GU/MP/AS/FM empty updated 20:49:41Z. Leftover PPG HSA WHZS40 NSTU 151756 independently recaptured LM HOLD 17:56:25 GMT 10–14 ft through Wednesday. Leftover RNZ Xavier pubDate 18:13 UTC still SIX language (Penrhyn cancelled; no Pukapuka/Nassau). Cook Islands News 403. WDPS31 90 kt is forecast. AFD KBDI 515 is not a TC warning. RNZ leftover-SIX copy is not a this-hour upgrade. Not FLASH.",
+      "countries": ["GUM", "FSM", "MHL", "PLW", "COK", "ASM", "USA", "NZL"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": ["jtwc_wdps31_152100", "ri_forecast", "afd_151957", "kbdi_515", "emci_xavier_graphic", "rnz_six_lag"],
+      "sources": [
+        "https://www.metoc.navy.mil/jtwc/products/sh0427prog.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://emci.gov.ck/wp-content/uploads/2026/11/Tropical-Cyclone-Xavier-Storm-Warning.jpg",
+        "https://tgftp.nws.noaa.gov/data/raw/wh/whzs40.nstu.cfw.ppg.txt",
+        "https://www.rnz.co.nz/news/pacific/2620097/tropical-cyclone-xavier-to-bring-damaging-winds-to-northern-cook-islands",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "FBC sport lastBuild over leftover CSO/Nand; pm.gov.au 200→403 flicker; NEW-to-collection Gulf Papua LNG ultimatum + Fiji Times EC / El Niño / Prasad",
+      "summary": "FBC RSS lastBuild NEW 20:52:12Z (parent 19:39:34Z): OOS Farebrother/Sukuna Bowl and Ra boxers over leftover CSO Electoral Commission Campaigns and Foreign Funding Rules 2026 and leftover Nand ≥10% remittance-tax CLAIM. Leftover gender LoA / food-safety remain in-feed. PC lastBuild HOLD 18:34:29Z / HTTP LM HOLD 19:28:21 GMT leftover editorial WHY THE SACKING? paywalled — no collected named sacking. pm.gov.au first-pass 200 leftover Manila/PRF LM HOLD 18:14:15 GMT then recapture 403 — WAF flicker. Forumsec PRF LM HOLD 17:01:55 GMT leftover >US$300m short. NEW-to-collection Haus Bung 15 Nov: Gulf Provincial Government 14-day ultimatum — 13 Papua LNG Tier 1 conditions + K100m; Tiers 2–5 withdrawal CLAIM (Taudevin / Malaisa) — not FID, not extra-constitutional. NEW-to-collection Fiji Times EC no-go zones (Limitations on Election Campaign Rules 2026 adopted 24 April as printed; ~19:57 UTC), El Niño packages tomorrow (Tunabuna 2pm Raiwaqa), Prasad Cabinet swearing-in tomorrow (portfolio not finalised). USGS catalog 9/9 leftover Tonga/Fiji plus extra-regional; tsunami flag 0. OOS sport, April campaign-rules syndication, Cabinet reconstitution, and a provincial LNG process ultimatum are not extra-constitutional. Not FLASH.",
+      "countries": ["FJI", "PNG", "NZL", "AUS", "PLW", "TUR"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": ["feo", "bill_32", "prasad_cabinet", "gulf_papua_lng", "pmgov_flicker", "prf"],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.pm.gov.au/media",
+        "https://www.pnghausbung.com/gulf-province-issues-14-day-ultimatum-to-national-government-over-papua-lng/",
+        "https://www.fijitimes.com.fj/ec-sets-no-go-zones-for-election-campaigns/",
+        "https://www.fijitimes.com.fj/government-to-announce-el-nino-response-packages-tomorrow/",
+        "https://www.fijitimes.com.fj/prof-prasad-to-be-sworn-into-cabinet-tomorrow-pm/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS SWB Number SEVEN 152037 UTC (Xavier / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: Storm remains Manihiki/Rakahanga; TC Alert now Pukapuka/Nassau; 75 km/h / 8.3S 160.1W at 151800 UTC / 995 hPa; next 160000UTC",
+      "date": "2026-11-15T20:37:00Z",
+      "notes": "Answers parent 152100UTC land watch ~23 min early. Land catch-up onto 151800 fix. Not hurricane. Not Cat 2. Not FLASH."
+    },
+    {
+      "name": "FMS SWB Number SIX 151816 UTC (Xavier / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "superseded as live land SWB by Number SEVEN",
+      "date": "2026-11-15T18:16:00Z",
+      "notes": "Closed leftover 151500-fix land product. Penrhyn cancel carries forward. Not FLASH."
+    },
+    {
+      "name": "JTWC WDPS31 PGTW 152100 prognostic reasoning (04P XAVIER NR 002)",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "USA"],
+      "status": "NEW collection: current 40 kt; RI after TAU 24; peak 90 kt by TAU 48 forecast; LM 20:38:13 GMT",
+      "date": "2026-11-15T21:00:00Z",
+      "notes": "Companion to leftover NR 002. 90 kt is forecast. Not a new numbered warning. Not FLASH."
+    },
+    {
+      "name": "JTWC TC 04P (XAVIER) Warning NR 002 / WTPS31 PGTW 152100",
+      "type": "climate / MDA",
+      "parties": ["COK", "ASM", "WSM", "USA"],
+      "status": "leftover HOLD: 040 kt / 8.1S 160.1W / 151800Z / 1000 mb",
+      "date": "2026-11-15T21:00:00Z",
+      "notes": "No NR 003. 40 kt current. 70 kt forecast. Not FLASH."
+    },
+    {
+      "name": "Gulf Provincial Government 14-day Papua LNG ultimatum",
+      "type": "domestic resource governance",
+      "parties": ["PNG", "Gulf Province"],
+      "status": "NEW-to-collection: 13 conditions + K100m; Tiers 2–5 withdrawal CLAIM",
+      "date": "2026-11-15",
+      "notes": "Provincial process conditionality. Not FID. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "FJI Electoral Commission Limitations on Election Campaign Rules 2026 (FT syndication)",
+      "type": "domestic constitutional / electoral",
+      "parties": ["FJI"],
+      "status": "NEW-to-this-hour: Fiji Times ~19:57 UTC; adopted 24 April as printed",
+      "date": "2026-11-15T19:57:00Z",
+      "notes": "Complements leftover FBC CSO item. Not extra-constitutional. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Xavier / 04P / TD02F Northern Cooks land Storm Warning + Pukapuka/Nassau Alert + numbered JTWC 40 kt with 24h 70 kt / TAU-48 90 kt forecast",
+      "direction": "↑",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M 24–48h hurricane-force",
+      "escalate_on": "Named severe / Category-level landfall with PIC mass-casualty or state-capacity breach — not FLASH on 75 km/h current Cat 1, a Pukapuka Alert, 40 kt leftover JTWC, or 70–90 kt forecast"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "→",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H/M",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy or pm.gov.au 200→403 flicker"
+    },
+    {
+      "risk": "PNG Bougainville ratification / ABG fiscal squeeze / Gulf Papua LNG process",
+      "direction": "→",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a supplementary budget, a BPA funding CLAIM, or a provincial LNG ultimatum"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi SWB vs printed 160000UTC: Storm remains, hurricane, Number EIGHT, or intensity restamp into Cat 2?",
+    "Next TDA vs A05 printed next-issue (151400UTC typo): hold 40 kt / 151800, or restamp toward 160200-class?",
+    "Next Xavier TCA vs printed 160100Z: hold 40 kt / Cat 1, or 45–50 kt?",
+    "Next JTWC warning 160900Z: hold 40 kt / Xavier, verify 50 kt, or jump toward the 70 kt 24h / 90 kt TAU-48 forecast?",
+    "Next ABPW 160600Z: drop FOUR, print Xavier, or add another suspect area?",
+    "Does leftover TDS keep 30 kt 10-min, or catch the marine/TDA/land 40 kt / 75 km/h / 151800 UTC fix?",
+    "Is leftover Gale Warning 004 Xavier's northern gale field or a separate box?",
+    "Any NES / Cook Islands Met gazette/HTML matching SWB SEVEN / Pukapuka Alert beyond leftover RNZ SIX copy? Cook Islands News 403 durability?",
+    "Forumsec official PRF pledge table vs spoken US$200m before 20 Nov?",
+    "Bougainville 24 Nov resume vs leftover ABG supplementary / leftover CMS restamps?",
+    "AUS–SLB signature vs pm.gov.au 200→403 / Defence/DFAT timeout?",
+    "Any PNG named sacking behind the PC editorial paywall (none collected)?",
+    "Does Waigani meet the Gulf 14-day Papua LNG clock, and is there a signed FID vs a process ultimatum only?",
+    "Tunabuna El Niño packages tomorrow / Prasad portfolio tomorrow — any gazette?"
+  ],
+  "sources": [
+    {"title": "FMS SWB Number SEVEN 152037 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T20:37:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS warnings RSS", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-15T20:38:19Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T08:38:19Z"},
+    {"title": "FMS TDA A05 151932 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T19:32:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS Storm Warning 006 151903 UTC", "url": "https://www.met.gov.fj/warnings/", "publisher": "FMS", "published_at": "2026-11-15T19:03:00Z", "tier": "A", "confidence": "H"},
+    {"title": "FMS FKPS01 TCA 2026/3 151859", "url": "https://www.met.gov.fj/feed/warnings/", "publisher": "FMS", "published_at": "2026-11-15T18:59:00Z", "tier": "A", "confidence": "H"},
+    {"title": "JTWC WTPS31 PGTW 152100 — 04P (XAVIER) Warning NR 002", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt", "publisher": "JTWC", "published_at": "2026-11-15T21:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T19:39:05Z"},
+    {"title": "JTWC sh0427web.txt NR 002", "url": "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt", "publisher": "JTWC", "published_at": "2026-11-15T21:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T19:38:13Z"},
+    {"title": "JTWC WDPS31 PGTW 152100 prognostic reasoning NR 002", "url": "https://www.metoc.navy.mil/jtwc/products/sh0427prog.txt", "publisher": "JTWC", "published_at": "2026-11-15T21:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T20:38:13Z"},
+    {"title": "JTWC RSS", "url": "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss", "publisher": "JTWC", "published_at": "2026-11-15T20:52:02Z", "tier": "A", "confidence": "H", "notes": "Warning #02 Issued at 15/2100Z; timestamp tick vs parent 20:00:03Z"},
+    {"title": "JTWC ABPW 150900 REISSUE", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "publisher": "JTWC", "published_at": "2026-11-15T09:00:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T09:00:15Z"},
+    {"title": "NWS AFD FXPQ50 PGUM 151957", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "publisher": "NWS Tiyan", "published_at": "2026-11-15T19:57:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T19:57:21Z"},
+    {"title": "NWS CAP AS", "url": "https://api.weather.gov/alerts/active?area=AS", "publisher": "NWS", "published_at": "2026-11-15T20:49:41Z", "tier": "A", "confidence": "H"},
+    {"title": "NWS PPG High Surf Advisory WHZS40 NSTU 151756", "url": "https://tgftp.nws.noaa.gov/data/raw/wh/whzs40.nstu.cfw.ppg.txt", "publisher": "NWS Pago Pago", "published_at": "2026-11-15T17:56:00Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T17:56:25Z"},
+    {"title": "Forumsec COP31 PRF release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "publisher": "Pacific Islands Forum Secretariat", "published_at": "2026-11-10", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T17:01:55Z"},
+    {"title": "pm.gov.au media", "url": "https://www.pm.gov.au/media", "publisher": "Prime Minister of Australia", "published_at": "2026-11-15T20:54:18Z", "tier": "A", "confidence": "H", "http_status_first_pass": 200, "http_status_recapture": 403, "http_lm_first_pass": "2026-11-15T18:14:15Z"},
+    {"title": "FBC RSS", "url": "https://www.fbcnews.com.fj/feed/", "publisher": "FBC", "published_at": "2026-11-15T20:52:12Z", "tier": "B", "confidence": "H"},
+    {"title": "Post Courier RSS", "url": "https://www.postcourier.com.pg/feed/", "publisher": "Post Courier", "published_at": "2026-11-15T18:34:29Z", "tier": "B", "confidence": "H", "http_lm": "2026-11-15T19:28:21Z"},
+    {"title": "PNG Haus Bung — Gulf 14-day Papua LNG ultimatum", "url": "https://www.pnghausbung.com/gulf-province-issues-14-day-ultimatum-to-national-government-over-papua-lng/", "publisher": "PNG Haus Bung", "published_at": "2026-11-15", "tier": "B", "confidence": "H"},
+    {"title": "Fiji Times — EC sets no-go zones for election campaigns", "url": "https://www.fijitimes.com.fj/ec-sets-no-go-zones-for-election-campaigns/", "publisher": "The Fiji Times", "published_at": "2026-11-15T19:57:00Z", "tier": "B", "confidence": "H"},
+    {"title": "Fiji Times — El Niño response packages tomorrow", "url": "https://www.fijitimes.com.fj/government-to-announce-el-nino-response-packages-tomorrow/", "publisher": "The Fiji Times", "published_at": "2026-11-15", "tier": "B", "confidence": "H"},
+    {"title": "Fiji Times — Prasad sworn into Cabinet tomorrow", "url": "https://www.fijitimes.com.fj/prof-prasad-to-be-sworn-into-cabinet-tomorrow-pm/", "publisher": "The Fiji Times", "published_at": "2026-11-15", "tier": "B", "confidence": "H"},
+    {"title": "RNZ Pacific — Tropical Cyclone Xavier", "url": "https://www.rnz.co.nz/news/pacific/2620097/tropical-cyclone-xavier-to-bring-damaging-winds-to-northern-cook-islands", "publisher": "RNZ Pacific", "published_at": "2026-11-15T18:13:00Z", "tier": "B", "confidence": "H", "notes": "leftover SIX language; no Pukapuka/Nassau"},
+    {"title": "ABC world RSS", "url": "https://www.abc.net.au/news/feed/51120/rss.xml", "publisher": "ABC News", "published_at": "2026-11-15T20:27:46Z", "tier": "B", "confidence": "H"},
+    {"title": "USGS M4.5+ day GeoJSON", "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson", "publisher": "USGS", "published_at": "2026-11-15T20:53:30Z", "tier": "A", "confidence": "H"},
+    {"title": "EMCI Xavier Storm Warning image", "url": "https://emci.gov.ck/wp-content/uploads/2026/11/Tropical-Cyclone-Xavier-Storm-Warning.jpg", "publisher": "EMCI", "published_at": "2026-11-15T12:32:21Z", "tier": "A", "confidence": "H", "http_lm": "2026-11-15T12:32:21Z"}
+  ]
+}
