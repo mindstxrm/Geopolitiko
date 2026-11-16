@@ -1,0 +1,377 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-15T23:51:00Z",
+  "window_end_utc": "2026-11-16T00:51:00Z",
+  "generated_at_utc": "2026-11-16T01:05:00Z",
+  "scan_through_utc": "2026-11-16T00:58:14Z",
+  "first_pass_utc": "2026-11-16T00:55:50Z/2026-11-16T00:56:04Z",
+  "news_pass_utc": "2026-11-16T00:56:42Z/2026-11-16T00:57:08Z",
+  "extra_pass_utc": "2026-11-16T00:57:31Z/2026-11-16T00:57:43Z",
+  "recapture_utc": "2026-11-16T00:58:03Z/2026-11-16T00:58:14Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-15",
+  "parent_hourly": "2026-11-15T23:51:00Z",
+  "parent_daily_pr": 188,
+  "parent_hourly_pr": 204,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN", "PHL", "AFG", "RUS", "KOR"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW Nadi SWB EIGHT 152355 / marine 007 160044 / TCA 2026/4 160038; land 75 km/h Cat 1; marine 45 kt Cat 1",
+      "summary": "Parent 23:51 hourly closed on leftover FMS SWB Number SEVEN 152244 UTC Storm remaining for Manihiki/Rakahanga with a Tropical Cyclone Alert in force for Pukapuka and Nassau, land 8.3S 160.1W at 151800 UTC / about 75 km/h / 995 hPa, leftover JTWC WTPS31 152100 / 04P (XAVIER) Warning NR 002 at 40 kt 1-min, leftover TDA A05 152245 / Storm Warning 006 / TCA 2026/3 at 40 kt 10-min, leftover TDS 152241 named Xavier 40 kt, leftover EMCI Bulletin 7 matching SEVEN with no NES, leftover RNZ still SIX language, and asked whether land 160000UTC would Storm-remain, hurricane, Number EIGHT, or Cat 2. This window answers that watch: FMS RSS lastBuild NEW 00:44:31 +1200 / HTTP LM NEW 12:44:31 GMT. SWB Number EIGHT ISSUED 152355 UTC Storm remains Manihiki/Rakahanga, TC Alert remains Pukapuka/Nassau, 75 km/h / 8.0S 160.4W at 152100 UTC / 995 hPa, next 160300UTC. NEW Storm Warning 007 160044 UTC / NEW TCA 2026/4 160038: 45 kt / 993 hPa / 8.2S 160.8W at 160000 UTC, still Category 1; cancels Warning 006 / TCA 2026/3. TDA A05 ISSUED 152245 UTC still 40 kt 10-min / 151800 UTC. TDS 152241 UTC still names Xavier Category 1 / 40 kt / 995 hPa / 8.3S 160.1W at 151800 UTC. Recapture WTPS31 200 LM HOLD 19:39:05 GMT still NR 002 / 040 kt. Recapture ABPW 200 LM HOLD 09:00:15 GMT still FOUR / 35 kt. CAP AS empty updated 00:55:08Z. Leftover EMCI Bulletin 7 LM HOLD 21:12:22 GMT; Bulletin 8 404. Gale Warning 004 rolled off the live 5-item page. 75 km/h land / 45 kt marine remain Nadi Category 1 and are not SOP FLASH without mass-casualty or state-capacity breach. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": [
+        "tc_xavier", "td02f", "tc_04p", "fms_swb_eight_152355", "storm_warning_007_160044",
+        "tca_2026_4_160038", "tda_a05_152245", "tds_152241", "pukapuka_nassau_alert",
+        "storm_warning_northern_cooks", "jtwc_wtps31_152100", "cyclone"
+      ],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt",
+        "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://emci.gov.ck/wp-content/uploads/2026/11/Bulletin-7.jpg",
+        "https://api.weather.gov/alerts/active?area=AS"
+      ]
+    },
+    {
+      "title": "NEW RNZ corroborates PACNEWS/PC Toatu-death CLAIM; still no gazette / PINA homepage",
+      "summary": "Parent 23:51 closed on leftover PACNEWS/PC Kiribati mourns death of Vice President Toatu and asked for gazette / RNZ / PINA homepage corroboration. RNZ now files: Kiribati vice president Dr Teuea Toatu dies, RSS pubDate 00:06:13 UTC, citing Cabinet colleague Ruth Cross Kwansing Sunday-night social-media announcement and a Chinese embassy tribute as printed. Post Courier / PACNEWS article:published_time HOLD 22:56:02Z; schema dateModified HOLD 23:24:58Z. PC lastBuild NEW 00:28:40Z / HTTP LM NEW 00:28:36 GMT with NEW OOS Silktails over leftover Toatu. president.gov.ki 200 both passes with no Toatu string isolated. PINA homepage and /?s=Toatu have leftover development copy, no mourns. Two-outlet PACNEWS/PC + RNZ corroboration pending official gazette. RNZ is not a gazette. Chinese embassy tribute is not a recognition switch. Not extra-constitutional. Not FLASH.",
+      "countries": ["KIR", "NZL", "PNG", "CHN"],
+      "importance": 4,
+      "confidence": "H/M",
+      "oceania_centrality": "direct",
+      "claim_type": "CLAIM",
+      "oceania_relevance": "governance",
+      "topics": ["kiribati_vp", "toatu", "succession", "pacnews", "rnz", "rerf", "gcf"],
+      "sources": [
+        "https://www.rnz.co.nz/news/pacific/2628417/kiribati-vice-president-dr-teuea-toatu-dies",
+        "https://www.postcourier.com.pg/kiribati-mourns-death-of-vice-president-toatu/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.president.gov.ki/",
+        "https://pina.com.fj/?s=Toatu"
+      ]
+    },
+    {
+      "title": "NEW FBC lastBuild OOS rugby / Xavier no-threat; NEW PC Silktails; leftover PRF; USGS HOLD 10",
+      "summary": "Parent 23:51 closed on NEW FBC lastBuild 23:47:37Z / 23:55:11Z NFP Qereqetabua deputy / climate-bridge / drug enforcement, leftover PC editorial, pm.gov.au 200 leftover Manila/PRF, Forumsec PRF LM 23:02:55 GMT, USGS catalog 10, leftover Gulf / FT EC–El Niño–Prasad, and asked whether land 160000UTC would file. Land 160000UTC watch is answered as Number EIGHT / Storm remains / Cat 1. NEW FBC lastBuild 00:44:33Z first-pass and recapture: OOS Matawalu Dubai 7s over leftover Qereqetabua (23:54:15Z) / NEW-to-this-hour No direct threat from TC Xavier (23:52:59Z; Cat 1 current; Cat 2 tonight forecast; Fiji out of threat) / leftover Narain Jetty / leftover High Court exhibits / leftover Seoul embassy (22:03:47Z). NEW PC lastBuild 00:28:40Z OOS Silktails over leftover Toatu/Champions/Tuvalu. pm.gov.au 200 both passes LM HOLD 21:27:54 GMT leftover Manila/PRF. Forumsec PRF LM HOLD 23:02:55 GMT leftover >US$300m-short content. Leftover Haus Bung Gulf 14-day Papua LNG ultimatum and leftover Fiji Times EC no-go zones / El Niño packages today local / Prasad Cabinet today local remain. NEW-to-this-hour RNZ WCPFC tuna / Port Vila from 30 Nov. USGS first-pass and recapture catalog 10 leftover Tonga/Fiji plus leftover extra-regional Kamchatka tsunami flag 0. NFP deputy is not extra-constitutional. FBC Xavier no-threat is not a Fiji-land warning. Seoul embassy is not a security pact. Extra-regional seismicity is not a Pacific tsunami. Not FLASH.",
+      "countries": ["FJI", "TUV", "KIR", "PNG", "NZL", "AUS", "PLW", "TUR", "NIU", "MHL", "TON", "VUT", "KOR", "RUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": [
+        "nfp_qereqetabua", "fbc_xavier_no_threat", "prf", "cop31", "seoul_embassy",
+        "prasad_cabinet", "gulf_papua_lng", "nontraditional_crime", "wcpfc", "usgs_extraterritorial"
+      ],
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fbcnews.com.fj/news/no-direct-threat-from-tc-xavier/",
+        "https://www.fbcnews.com.fj/news/qereqetabua-named-nfp-deputy-leader/",
+        "https://www.fbcnews.com.fj/news/cabinet-approves-reopening-of-fijis-embassy-in-seoul/",
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://www.pm.gov.au/media",
+        "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+        "https://www.rnz.co.nz/news/pacific/2626606/pacific-tuna-stocks-at-centre-of-regional-fisheries-talks-in-port-vila"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS SWB Number EIGHT 152355 UTC (Xavier / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: ISSUED 152355 UTC; Storm remains Manihiki/Rakahanga; TC Alert remains Pukapuka/Nassau; 75 km/h / 8.0S 160.4W at 152100 UTC / 995 hPa; next 160300UTC",
+      "date": "2026-11-15T23:55:00Z",
+      "notes": "Answers parent 160000UTC land watch. Not Number NINE. Not hurricane. Not Cat 2. Not FLASH."
+    },
+    {
+      "name": "FMS Storm Warning 007 160044 UTC (TC Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: ISSUED 160044 UTC; 45 kt / 993 hPa / 8.2S 160.8W at 160000 UTC; Cat 1; cancels Warning 006",
+      "date": "2026-11-16T00:44:00Z",
+      "notes": "Marine storm warning, not a land hurricane warning. 45 kt remains Cat 1. Not FLASH."
+    },
+    {
+      "name": "FMS FKPS01 NFFN 160038 TC Advisory 2026/4 (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: 45KT / 993HPA / 16/0000Z S0812 W16048; next 160700Z",
+      "date": "2026-11-16T00:38:00Z",
+      "notes": "Answers parent 160100Z TCA watch ~22 min early. Not FLASH."
+    },
+    {
+      "name": "RNZ — Kiribati vice president Dr Teuea Toatu dies",
+      "type": "governance / succession",
+      "parties": ["KIR", "NZL"],
+      "status": "NEW: RSS pubDate 00:06:13 UTC; Kwansing Sunday-night announcement; Chinese embassy tribute as printed; no gazette",
+      "date": "2026-11-16T00:06:13Z",
+      "notes": "Independent Tier B corroboration of leftover PACNEWS/PC CLAIM. Not extra-constitutional. Not a recognition switch. Not FLASH."
+    },
+    {
+      "name": "FBC — No direct threat from TC Xavier",
+      "type": "climate / media",
+      "parties": ["FJI", "COK"],
+      "status": "NEW-to-this-hour: pubDate 23:52:59Z; Cat 1 current; Cat 2 tonight forecast; Fiji out of threat",
+      "date": "2026-11-15T23:52:59Z",
+      "notes": "Matches leftover FT. Not a Fiji-land warning. Not FLASH."
+    },
+    {
+      "name": "PACNEWS/PC — Kiribati mourns death of Vice President Toatu",
+      "type": "governance / succession",
+      "parties": ["KIR"],
+      "status": "leftover CLAIM HOLD: published 22:56:02Z; schema dateModified HOLD 23:24:58Z; now RNZ-corroborated; still no gazette / PINA homepage",
+      "date": "2026-11-15T22:56:02Z",
+      "notes": "Two-outlet pending gazette. CMS tick ≠ gazette. Not extra-constitutional. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Xavier / 04P / TD02F Northern Cooks land Storm Warning on Number EIGHT + Pukapuka/Nassau Alert + leftover EMCI Bulletin 7 without NES + marine 45 kt Cat 1 + numbered JTWC 40 kt with 24h 70 kt / TAU-48 90 kt / FT/FBC Cat 2 tonight forecast",
+      "direction": "↑",
+      "horizon": "hours–4 days",
+      "confidence": "H current / M 24–48h hurricane-force",
+      "escalate_on": "Named severe / Category-level landfall with PIC mass-casualty or state-capacity breach — not FLASH on Number EIGHT at 75 km/h current Cat 1, 45 kt marine/TCA Cat 1, leftover TDA A05, leftover TDS named Xavier 40 kt, Bulletin 7 without NES, a Pukapuka Alert, 40 kt leftover JTWC, or 70–90 kt / Cat 2 forecast"
+    },
+    {
+      "risk": "Kiribati vice-presidential succession (PACNEWS/PC Toatu-death CLAIM now RNZ-corroborated; still no gazette)",
+      "direction": "↑",
+      "horizon": "hours–days",
+      "confidence": "H/M",
+      "escalate_on": "Extra-constitutional seizure or a collected recognition switch — not FLASH on PACNEWS+RNZ tributes, a Kwansing social-media announcement, or a Chinese embassy tribute"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "→",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H/M",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy, Forumsec Drupal LM HOLD 23:02:55 GMT, pm.gov.au 200 leftover, or PACNEWS Champions syndication"
+    },
+    {
+      "risk": "PNG Bougainville ratification / ABG fiscal squeeze / Gulf Papua LNG process",
+      "direction": "→",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a supplementary budget, a BPA funding CLAIM, or a provincial LNG ultimatum"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi SWB vs printed 160300UTC: Storm remains, hurricane, Number NINE, or intensity restamp into Cat 2 (89+ km/h / 48+ kt)?",
+    "Next TDA vs A05 (still 151800 / 40 kt): A06 catch-up onto 160000 / 45 kt, or remain stale vs marine/TCA?",
+    "Next Xavier TCA vs printed 160700Z: hold 45 kt / Cat 1, or 50–55 kt?",
+    "Next JTWC warning 160900Z: hold 40 kt / Xavier, verify 45–50 kt, or jump toward the 70 kt 24h / 90 kt TAU-48 forecast?",
+    "Next ABPW 160600Z: drop FOUR, print Xavier, or add another suspect area?",
+    "Any NES / Cook Islands Met HTML beyond EMCI Bulletin 7 public advice, and does Bulletin 8 / an EIGHT graphic file? Cook Islands News 403 durability? RNZ restamp onto EIGHT / Bulletin 7?",
+    "Kiribati official gazette / PINA homepage corroboration of the now RNZ+PACNEWS Toatu-death CLAIM? Any acting-VP or Finance appointment? RNZ is not that instrument.",
+    "Forumsec official PRF pledge table vs spoken US$200m before 20 Nov? Drupal LM HOLD 23:02:55 GMT did not add a table.",
+    "Bougainville 24 Nov resume vs leftover ABG supplementary?",
+    "AUS–SLB signature vs pm.gov.au 200 leftover Manila/PRF / Defence/DFAT fail?",
+    "Any PNG named sacking behind the PC editorial paywall (none collected)?",
+    "Does Waigani meet the Gulf 14-day Papua LNG clock, and is there a signed FID vs a process ultimatum only?",
+    "Tunabuna El Niño packages today local / Prasad portfolio today local — any gazette? How does leftover Cabinet swearing-in copy sit with leftover FBC Prasad-as-NFP-Leader / Qereqetabua deputy copy?",
+    "WCPFC 23rd Regular Session from 30 Nov Port Vila — albacore implementing measure / bigeye management procedure as printed.",
+    "Next weekly Monday 16 Nov (not this hourly packet); next daily 07:00 UTC 16 Nov."
+  ],
+  "sources": [
+    {
+      "title": "FMS SWB Number EIGHT 152355 UTC",
+      "url": "https://www.met.gov.fj/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-15T23:55:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "FMS warnings RSS",
+      "url": "https://www.met.gov.fj/feed/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T00:44:31Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T12:44:31Z"
+    },
+    {
+      "title": "FMS Storm Warning 007 160044 UTC",
+      "url": "https://www.met.gov.fj/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T00:44:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "FMS FKPS01 TCA 2026/4 160038 UTC",
+      "url": "https://www.met.gov.fj/feed/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T00:38:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "FMS TDA A05 152245 UTC",
+      "url": "https://www.met.gov.fj/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-15T22:45:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "JTWC WTPS31 PGTW 152100 — 04P (XAVIER) Warning NR 002",
+      "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+      "publisher": "JTWC",
+      "published_at": "2026-11-15T21:00:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T19:39:05Z"
+    },
+    {
+      "title": "JTWC RSS",
+      "url": "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss",
+      "publisher": "JTWC",
+      "published_at": "2026-11-16T00:56:02Z",
+      "tier": "A",
+      "confidence": "H",
+      "notes": "Warning #02 Issued at 15/2100Z; timestamp tick vs first-pass HTTP LM 00:54:20 GMT"
+    },
+    {
+      "title": "JTWC ABPW 150900 REISSUE",
+      "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+      "publisher": "JTWC",
+      "published_at": "2026-11-15T09:00:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T09:00:15Z"
+    },
+    {
+      "title": "EMCI Bulletin 7 JPEG",
+      "url": "https://emci.gov.ck/wp-content/uploads/2026/11/Bulletin-7.jpg",
+      "publisher": "EMCI",
+      "published_at": "2026-11-15T21:12:22Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T21:12:22Z"
+    },
+    {
+      "title": "NWS CAP AS",
+      "url": "https://api.weather.gov/alerts/active?area=AS",
+      "publisher": "NWS",
+      "published_at": "2026-11-16T00:55:08Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "RNZ Pacific — Kiribati vice president Dr Teuea Toatu dies",
+      "url": "https://www.rnz.co.nz/news/pacific/2628417/kiribati-vice-president-dr-teuea-toatu-dies",
+      "publisher": "RNZ",
+      "published_at": "2026-11-16T00:06:13Z",
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Post Courier / PACNEWS — Kiribati mourns death of Vice President Toatu",
+      "url": "https://www.postcourier.com.pg/kiribati-mourns-death-of-vice-president-toatu/",
+      "publisher": "Post Courier / PACNEWS",
+      "published_at": "2026-11-15T22:56:02Z",
+      "tier": "B",
+      "confidence": "M",
+      "notes": "dateModified HOLD 23:24:58Z; now RNZ-corroborated"
+    },
+    {
+      "title": "FBC RSS",
+      "url": "https://www.fbcnews.com.fj/feed/",
+      "publisher": "FBC",
+      "published_at": "2026-11-16T00:44:33Z",
+      "tier": "B",
+      "confidence": "H",
+      "notes": "first-pass and recapture lastBuild 00:44:33Z"
+    },
+    {
+      "title": "FBC — No direct threat from TC Xavier",
+      "url": "https://www.fbcnews.com.fj/news/no-direct-threat-from-tc-xavier/",
+      "publisher": "FBC",
+      "published_at": "2026-11-15T23:52:59Z",
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Forumsec COP31 PRF release",
+      "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+      "publisher": "Pacific Islands Forum Secretariat",
+      "published_at": "2026-11-10",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T23:02:55Z"
+    },
+    {
+      "title": "pm.gov.au media",
+      "url": "https://www.pm.gov.au/media",
+      "publisher": "Prime Minister of Australia",
+      "published_at": "2026-11-15T21:27:54Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_status_first_pass": 200,
+      "http_status_recapture": 200,
+      "http_lm": "2026-11-15T21:27:54Z"
+    },
+    {
+      "title": "Post Courier RSS",
+      "url": "https://www.postcourier.com.pg/feed/",
+      "publisher": "Post Courier",
+      "published_at": "2026-11-16T00:28:40Z",
+      "tier": "B",
+      "confidence": "H",
+      "http_lm": "2026-11-16T00:28:36Z"
+    },
+    {
+      "title": "USGS M4.5+ day GeoJSON",
+      "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+      "publisher": "USGS",
+      "published_at": "2026-11-16T00:57:30Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "Office of Te Beretitenti",
+      "url": "https://www.president.gov.ki/",
+      "publisher": "Government of Kiribati",
+      "published_at": "2026-11-16T00:58:15Z",
+      "tier": "A",
+      "confidence": "H",
+      "notes": "200; no Toatu death item isolated"
+    },
+    {
+      "title": "RNZ Pacific — Pacific tuna stocks / WCPFC Port Vila",
+      "url": "https://www.rnz.co.nz/news/pacific/2626606/pacific-tuna-stocks-at-centre-of-regional-fisheries-talks-in-port-vila",
+      "publisher": "RNZ",
+      "published_at": "2026-11-15T23:27:49Z",
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Daily Post homepage",
+      "url": "https://www.dailypost.vu/",
+      "publisher": "Vanuatu Daily Post",
+      "published_at": "2026-11-16T00:56:29Z",
+      "tier": "B",
+      "confidence": "H",
+      "http_lm": "2026-11-16T00:56:29Z"
+    }
+  ]
+}
