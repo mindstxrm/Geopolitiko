@@ -1,0 +1,228 @@
+{
+  "product": "daily",
+  "desk": "oceania",
+  "task": "oceania.daily_brief",
+  "window_start_utc": "2026-11-14T07:00:00Z",
+  "window_end_utc": "2026-11-15T07:55:00Z",
+  "generated_at_utc": "2026-11-15T08:20:00Z",
+  "scan_through_utc": "2026-11-15T07:59:04Z",
+  "first_pass_utc": "2026-11-15T07:57:18Z/2026-11-15T07:58:24Z",
+  "recapture_utc": "2026-11-15T07:58:56Z/2026-11-15T07:59:04Z",
+  "overall_confidence": "H",
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "pif_institutional": true,
+  "parent_daily": "2026-11-14",
+  "parent_hourly": "2026-11-15T06:51:00Z",
+  "parent_daily_pr": 162,
+  "parent_hourly_pr": 187,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL", "TUR",
+    "GUM", "MNP", "ASM", "NIU", "IDN", "PHL"
+  ],
+  "priority_items": [
+    {
+      "title": "24h: TD02F / 95P from MEDIUM/no land warning to HIGH + land Gale Warning + NEW TDA A02 HIGH in 3–6 hours (still ~30 kt / unnamed)",
+      "summary": "Parent 14 Nov daily closed on JTWC ABPW 140600 MEDIUM and Nadi TDS 132230 LOW–MODERATE with no SWB. Overnight hourlies then collected TCFA WTPS21 141300, SWB Numbers ONE–THREE (Gale Warning remains Penrhyn/Manihiki/Rakahanga; last restamp 150650 UTC), marine GW 001, TDA A01, and ABPW 150600 HIGH at 8.5S 158.0W / 28–33 kt / 1002 mb. This cutoff recapture 07:59 prints NEW TDA Number A02 ISSUED 150752 UTC: 8.6S 158.7W / 1002 hPa / ~30 kt 10-min at 150600 UTC; Dvorak T2.5; potential HIGH in the next 3–6 hours; 12h 40 kt / 24h 50 kt / 36h 60 kt forecast; next TDA 151400 UTC. NEW marine Gale Warning 002 ISSUED 150706 UTC (35 kt within 060–110 NM; cancels GW 001). SWB THREE HOLD next 150900UTC. MetService bulletin (issued 12:30pm Sun 15 Nov NZDT): presently no tropical cyclones; MODERATE later today / HIGH tomorrow. Cook Islands News homepage 403; Saturday CIMS article 200 stale low-moderate. EMCI leftover October NO-WARNING. Unnamed. Not numbered JTWC. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "NZL", "USA"],
+      "topics": ["climate", "humanitarian"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt",
+        "https://www.metservice.com/warnings/tropical-cyclone-activity",
+        "http://www.cookislandsnews.com/internal/national/weather/tropical-disturbance-prompts-strong-wind-warnings-and-rain/",
+        "https://www.emci.gov.ck/"
+      ]
+    },
+    {
+      "title": "COP31: PRF still ~US$200m vs US$500m; pm.gov.au 200 recovery is leftover 13 Nov PRF + Sunday Manila/SE Asia, not a deposited table",
+      "summary": "Forumsec 10 Nov release HTTP LM HOLD 04:55:42 GMT still prints >US$300m PRF shortfall. Champions 14 Nov LM HOLD 04:20:38 GMT has no new dollar table. Spoken stock remains US$200m vs US$500m. IB 14 Nov 07:14 UTC restates Whipps US$200m / US$100m Pacific money. pm.gov.au recovered HTTP 200 (LM NEW 06:04:25 GMT) after overnight 403: Sunday-dated cards are Manila press conference / remarks / Jollibee / SE Asia defence-maritime (ASEAN-adjacent, not a PIC access deal) plus leftover 13 Nov PRF cluster. ABC world lastBuild NEW 07:25:02Z OOS. Not a security pact. Not FLASH.",
+      "countries": ["PLW", "AUS", "NZL", "MHL", "FSM", "FJI", "KIR", "TUV", "SLB", "TUR", "PHL"],
+      "topics": ["climate", "economic", "governance"],
+      "importance": 4,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://forumsec.org/publications/release-pacific-political-champions-call-less-talk-and-more-action-cop-31",
+        "https://islandsbusiness.com/news-break/pacific-seeks-usd-500-million-to-sclae-up-community-led-climate-resilience/",
+        "https://www.pm.gov.au/media",
+        "https://www.abc.net.au/news/2026-11-15/climate-ambition-political-reality-cop31-albanese/107383424"
+      ]
+    },
+    {
+      "title": "Fiji CRC / Bill 32 sitting week 30 Nov–4 Dec HOLD; Next Gen opposes FICAC repeal; El Niño small-business colour",
+      "summary": "FBC lastBuild HOLD 04:03:00Z. Overnight cluster: Rabuka denies CRC/party instructed a no referendum vote; submissions before Bill 32 third reading sitting week 30 Nov–4 Dec. Next Gen FICAC-retention CRC submission pubDate 05:07:37Z. El Niño small-business colour pubDate 05:05:17Z. Leftover NFP will not support third reading. RSMC Nadi is issuer of Northern Cooks products, not a Fiji-land warning. Leftover USGS M5.5 Fiji region is deep seismicity. Committee process. Not extra-constitutional. Not FLASH.",
+      "countries": ["FJI"],
+      "topics": ["governance", "climate"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fbcnews.com.fj/news/next-gen-opposes-ficac-removal/",
+        "https://www.fbcnews.com.fj/news/el-nino-puts-small-businesses-under-pressure/"
+      ]
+    },
+    {
+      "title": "PNG leftover-dated Toroama BPA recap; vote still expected 24 Nov; Taiwan TEO closure still not a recognition switch",
+      "summary": "Haus Bung leftover-dated 14 Nov Toroama restates BPA / 97.7% / 1 Sep 2027 self-government target; schema restamps are CMS, not a sitting. Threshold leftover 89/118. No division this cutoff. PC lastBuild HOLD 05:59:04Z scam-loss / Carnegie climate-card ASSESS (not a PRC pledge) / UN DRF (not PRF) / North Fly relief. Taiwan Port Moresby TEO closure remains 6 Nov MOFA leftover. Not a recognition switch. Not FLASH.",
+      "countries": ["PNG", "TWN", "CHN", "USA"],
+      "topics": ["governance", "climate"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://www.pnghausbung.com/president-toroama-reaffirms-bougainville-s-commitment-to-peace-agreement-as-national-parliament-considers-referendum-results/",
+        "https://www.postcourier.com.pg/feed/",
+        "https://en.mofa.gov.tw/News_Content.aspx?n=1329&s=123381&sms=272"
+      ]
+    },
+    {
+      "title": "Yap HSA expired as printed; NEW AFD 150747; NEW USGS M4.7 Tonga catalog add (intermediate, tsunami flag 0); VUT PAC HOLD",
+      "summary": "CAP FM Yap HSA expired 07:00 UTC as printed (Update 150637 O.EXP); recapture CAP FM/GU/MP/AS empty updated 07:55:05Z. NEW AFD FXPQ50 PGUM 150747 (LM 07:47:51 GMT): GU/MP none; Guam D0; Yap/Chuuk D0 Palau D1; Pena remnants ESE Majuro are WNP colour, not 95P. PDN Walk for Water article LM HOLD 06:00:00 GMT of Saturday Ritidian walk — territorial civil, not compact cash. Recapture USGS generated 07:58:30Z count 12 adds NEW M4.7 92 km NW of Houma, Tonga 07:36:37Z (depth 177.5 km; tsunami flag 0) absent from 07:56:30Z count 11. Leftover M5.5 Fiji region HOLD. PTWC LM leftover 13 Nov. Daily Post 429 then 200 leftover PAC/Santo. Not FLASH.",
+      "countries": ["FSM", "GUM", "MNP", "MHL", "PLW", "TON", "FJI", "VUT"],
+      "topics": ["climate", "governance"],
+      "importance": 3,
+      "confidence": "H",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "oceania_centrality": "direct",
+      "sources": [
+        "https://api.weather.gov/alerts/active?area=FM",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+        "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tyd3",
+        "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+        "https://www.guampdn.com/news/walk-for-water-raises-voices-against-militarization-advocates-for-land-return/article_2e94e43f-1783-4f27-8f66-35c7c23067b1.html",
+        "https://www.dailypost.vu/"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS TDA A02 150752 UTC (TD02F)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW this cutoff: 8.6S 158.7W / 1002 hPa / ~30 kt; HIGH in 3–6 hours; next 151400 UTC",
+      "bindingness": "meteorological advisory"
+    },
+    {
+      "name": "FMS Marine Gale Warning 002 150706 UTC",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: 35 kt 060–110 NM; cancels GW 001",
+      "bindingness": "meteorological warning"
+    },
+    {
+      "name": "FMS SWB Number THREE 150650 UTC",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "leftover HOLD: Gale Warning remains Penrhyn/Manihiki/Rakahanga; next 150900UTC",
+      "bindingness": "meteorological warning"
+    },
+    {
+      "name": "JTWC INVEST 95P / ABPW 150600",
+      "type": "climate / MDA",
+      "parties": ["USA", "COK", "ASM", "WSM"],
+      "status": "leftover HIGH 8.5S 158.0W / 28–33 kt / 1002 mb",
+      "bindingness": "meteorological advisory"
+    },
+    {
+      "name": "Pacific Resilience Facility capitalisation",
+      "type": "climate finance",
+      "parties": ["PIF"],
+      "status": "unchanged spoken US$200m vs US$500m",
+      "bindingness": "treaty-backed facility; pledges political until deposited"
+    },
+    {
+      "name": "AUS–SLB comprehensive treaty",
+      "type": "development compact / security-adjacent",
+      "parties": ["AUS", "SLB"],
+      "status": "unchanged: in-principle, unsigned",
+      "bindingness": "political until signed"
+    },
+    {
+      "name": "Taiwan TEO Port Moresby",
+      "type": "diplomatic / trade",
+      "parties": ["PNG", "TWN"],
+      "status": "gap leftover 6 Nov: office closed",
+      "bindingness": "administrative; not a recognition switch"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "TD02F / 95P Northern Cooks / ENE Pago Pago",
+      "direction": "↑ 24h MEDIUM/no-SWB → HIGH + land Gale Warning + NEW TDA A02 HIGH in 3–6 hours (still ~30 kt / unnamed)",
+      "horizon": "hours–4 days",
+      "confidence": "H/M",
+      "escalate_on": "Named cyclone with PIC landfall / mass-casualty — not FLASH on unnamed TD + Gale Warning + HIGH forecast without collected mass-casualty"
+    },
+    {
+      "risk": "Tonga / Fiji-region seismicity",
+      "direction": "→ NEW M4.7 Tonga 07:36Z intermediate tsunami flag 0; leftover M5.5 Fiji deep HOLD",
+      "horizon": "hours",
+      "confidence": "H",
+      "escalate_on": "Quake-tsunami with mass-casualty — not FLASH on tsunami flag 0 and no PTWC product"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "→ US$200m spoken / US$300m gap HOLD",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H/M",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy or Manila titles"
+    },
+    {
+      "risk": "PNG Bougainville ratification",
+      "direction": "→ vote expected 24 Nov",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a CMS restamp"
+    },
+    {
+      "risk": "SLB dual-track (AUS unsigned / PRC 2022 unrepealed)",
+      "direction": "→ unsigned HOLD",
+      "horizon": "weeks",
+      "confidence": "M",
+      "escalate_on": "Signed AUS–SLB text or a new China security instrument"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi SWB vs printed 150900UTC: Number FOUR / storm-hurricane / named, or Gale Warning remains?",
+    "Next TDA 151400 UTC: still ~30 kt / HIGH, or numbered/named?",
+    "TCFA WTPS21: reissued, upgraded to numbered warning, or cancelled by 151300Z?",
+    "Next ABPW 160600Z: 95P numbered, named, still HIGH, or cancelled?",
+    "Any EMCI / NES / Cook Islands Met product matching the land Gale Warning?",
+    "USGS M4.7 Tonga: any later PTWC / Tonga NDMO product?",
+    "Forumsec official PRF pledge table vs spoken US$200m before 20 Nov?",
+    "Bougainville: does 24 Nov resume produce a division?",
+    "AUS–SLB: any signature date? DFAT/Defence timeout this scan.",
+    "NZ official 27 Nov vs Opportunity talks.",
+    "Next weekly Monday 16 Nov; September and October monthlies still outstanding."
+  ],
+  "sources": [
+    {"title": "FMS TDA A02 / SWB THREE / GW 002", "url": "https://www.met.gov.fj/warnings/", "tier": "A", "published_at": "2026-11-15T07:52:00Z"},
+    {"title": "JTWC ABPW 150600 95P HIGH", "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt", "tier": "A", "published_at": "2026-11-15T06:00:00Z"},
+    {"title": "JTWC TCFA WTPS21 141300", "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps21.pgtw..txt", "tier": "A", "published_at": "2026-11-14T13:00:00Z"},
+    {"title": "MetService TC Potential Bulletin", "url": "https://www.metservice.com/warnings/tropical-cyclone-activity", "tier": "A", "published_at": "2026-11-14T23:30:00Z"},
+    {"title": "Forumsec PRF / Belau COP31 release", "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action", "tier": "A", "published_at": "2026-11-10"},
+    {"title": "pm.gov.au media recovery", "url": "https://www.pm.gov.au/media", "tier": "A", "published_at": "2026-11-15T06:04:25Z"},
+    {"title": "NWS AFD 150747", "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt", "tier": "A", "published_at": "2026-11-15T07:47:00Z"},
+    {"title": "USGS M4.7 Tonga", "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tyd3", "tier": "A", "published_at": "2026-11-15T07:36:37Z"},
+    {"title": "FBC Next Gen FICAC", "url": "https://www.fbcnews.com.fj/news/next-gen-opposes-ficac-removal/", "tier": "B", "published_at": "2026-11-15T05:07:37Z"}
+  ]
+}
