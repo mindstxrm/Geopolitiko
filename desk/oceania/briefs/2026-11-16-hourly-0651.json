@@ -1,0 +1,398 @@
+{
+  "product": "hourly",
+  "task": "oceania.hourly_scan",
+  "desk": "oceania",
+  "window_start_utc": "2026-11-16T05:51:00Z",
+  "window_end_utc": "2026-11-16T06:51:00Z",
+  "generated_at_utc": "2026-11-16T06:58:00Z",
+  "scan_through_utc": "2026-11-16T06:57:40Z",
+  "first_pass_utc": "2026-11-16T06:52:34Z/2026-11-16T06:54:31Z",
+  "extra_pass_utc": "2026-11-16T06:55:23Z/2026-11-16T06:56:55Z",
+  "recapture_utc": "2026-11-16T06:57:20Z/2026-11-16T06:57:40Z",
+  "overall_confidence": "H",
+  "status": "pending_review",
+  "pending_review": true,
+  "flash": false,
+  "parent_daily": "2026-11-15",
+  "parent_hourly": "2026-11-16T05:51:00Z",
+  "parent_daily_pr": 188,
+  "parent_hourly_pr": 210,
+  "countries_touched": [
+    "AUS", "NZL", "PNG", "FJI", "SLB", "VUT", "TON", "WSM", "KIR", "TUV", "NRU",
+    "MHL", "FSM", "PLW", "COK", "USA", "CHN", "TWN", "GBR", "FRA", "NCL",
+    "GUM", "MNP", "ASM", "NIU", "IDN", "PHL", "AFG", "RUS", "KOR", "JPN", "AUT"
+  ],
+  "pif_institutional": true,
+  "priority_items": [
+    {
+      "title": "NEW Nadi marine Hurricane Warning 008 / TCA 2026/5 Cat 2; land SWB TEN restamp still Gale Cat 1",
+      "summary": "Parent 05:51 hourly closed on leftover FMS SWB Number TEN 160549 UTC Gale remaining for Manihiki/Rakahanga with a Tropical Cyclone Alert in force for Pukapuka and Nassau, land 8.3S 161.0W at 160300 UTC / about 85 km/h / 987 hPa, leftover TDA A06 160145 UTC Xavier 45 kt / 993 hPa / 8.2S 160.8W at 160000 UTC, leftover Storm Warning 007 160044 UTC 45 kt, leftover TCA 2026/4 160038 45KT, leftover JTWC WTPS31 152100 / 04P (XAVIER) Warning NR 002 at 40 kt 1-min, leftover ABPW 160600 Xavier 40 kt / 151800Z, leftover EMCI Bulletin 7 matching leftover SEVEN with no NES, leftover RNZ still storm-warning / Penrhyn language, and asked whether the next land SWB after TEN's printed 160600UTC would hold Gale / 85 km/h Cat 1, hurricane, Number ELEVEN, or a Cat 2 restamp, and whether next Xavier TCA vs printed 160700Z would hold 45 kt or print 50-55 kt. This window answers both watches: FMS RSS lastBuild NEW 06:51:26 +1200 / HTTP LM NEW 18:51:26 GMT first-pass extra and recapture. Hurricane Warning 008 ISSUED 160651 UTC marine Cat 2 / 50 kt / 985 hPa / 8.3S 161.2W at 160600 UTC; cancels leftover 007. TCA 2026/5 ISSUED 160642 UTC 50KT / 985HPA / 16/0600Z S0818 W16112; next 1601300Z. SWB Number TEN restamp ISSUED 160609 UTC Gale remains Manihiki/Rakahanga; TC Alert remains Pukapuka/Nassau; Xavier 987 hPa Category 1 near 8.3S 161.0W at 160300 UTC; about 85 km/h gusts 120 km/h; printed next 160900UTC. Leftover TDA A06 / TDS 152241 HOLD 45 kt / 40 kt. Recapture WTPS31 200 LM HOLD 19:39:05 GMT still NR 002 / 040 kt. Recapture ABPW 200 LM HOLD 05:50:14 GMT still 160600 / Xavier 40 kt. CAP AS empty updated 06:52:31Z / 06:55:10Z. Leftover EMCI Bulletin 7 LM HOLD 21:12:22 GMT; Bulletin 8/9/10 404. Leftover PPG HSA 160600 HOLD. NEW AFD 160646 KBDI 515. 85 km/h land remains Nadi Category 1. 50 kt marine/TCA is Nadi Category 2 on water/aviation products only and is not SOP FLASH without mass-casualty or state-capacity breach. Not FLASH.",
+      "countries": ["COK", "ASM", "WSM", "FJI", "USA", "NZL"],
+      "importance": 4,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "climate",
+      "topics": [
+        "tc_xavier", "td02f", "tc_04p", "fms_hw_008_160651", "fms_tca_2026_5_160642",
+        "fms_swb_ten_160609", "fms_tda_a06_160145", "pukapuka_nassau_alert",
+        "gale_warning_northern_cooks", "marine_hurricane_warning", "jtwc_abpw_160600",
+        "jtwc_wtps31_152100", "cyclone"
+      ],
+      "sources": [
+        "https://www.met.gov.fj/warnings/",
+        "https://www.met.gov.fj/feed/warnings/",
+        "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+        "https://www.metoc.navy.mil/jtwc/products/sh0427web.txt",
+        "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss",
+        "https://emci.gov.ck/wp-content/uploads/2026/11/Bulletin-7.jpg",
+        "https://api.weather.gov/alerts/active?area=AS",
+        "https://tgftp.nws.noaa.gov/data/raw/wh/whzs40.nstu.cfw.ppg.txt",
+        "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt"
+      ]
+    },
+    {
+      "title": "NEW PC lastBuild OOS over leftover Papua LNG FSA + K2.4bn NEC CLAIM; leftover Toroama BPA / Haus PNGDF FOBs",
+      "summary": "Parent 05:51 closed on NEW PC lastBuild 05:53:21Z / 05:59:10Z Papua LNG Fiscal Stability Agreement / K2.4bn NEC infrastructure / Toroama BPA, leftover Haus PNGDF FOB/relocation over leftover APEC/Gulf 14-day, and asked whether SWB vs 160600UTC would file ELEVEN, whether next TCA vs 160700Z would print 50 kt, and whether Waigani would meet the Gulf 14-day Papua LNG clock. HW 008 / TCA 2026/5 / TEN restamp answer the marine/TCA/land watches as marine Cat 2 against land Gale Cat 1. NEW PC lastBuild 06:40:42Z first-pass extra and recapture: OOS Sione 06:39:56Z / St. Sebastian confirmation 06:35:39Z over leftover Tedesco / leftover K2.4bn 05:34:22Z / leftover Toroama BPA 05:21:45Z / leftover FSA 05:03:10Z / leftover NDoH workshops / leftover NCDPHA plan / leftover DLIR MoU. Haus leftover PNGDF FOB/relocation colour (no locations, count, or cost as printed) over leftover solar/Gereka/BSP / leftover Marape APEC Shenzhen 18-19 Nov / leftover Gulf 14-day Papua LNG ultimatum. pm.gov.au 200 leftover Manila/PRF LM HOLD 03:14:47 GMT. Forumsec PRF LM HOLD 05:31:17 GMT leftover >US$300m-short content. USGS first-pass generated 06:53:30Z count 9 / extra and recapture generated 06:56:30Z count 9 leftover extra-regional Japan tsunami flag 0 plus leftover Tonga tsunami flag 0. Loop PNG NXDOMAIN. FSA is not FID. K2.4bn is a domestic NEC CLAIM, not compact cash. Toroama BPA is not a 24 Nov division. Haus PNGDF FOBs with no locations/cost are not a foreign security presence. Extra-regional Japan seismicity is not a Pacific tsunami. Not FLASH.",
+      "countries": ["PNG", "AUS", "CHN", "FJI", "TUV", "KIR", "PLW", "TON", "VUT", "JPN", "RUS"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "economic",
+      "topics": [
+        "papua_lng_fsa", "papua_lng_k24bn", "gulf_papua_lng", "bougainville", "toroama_bpa",
+        "pngdf_fob", "prf", "cop31", "apec_shenzhen", "usgs_catalog_hold"
+      ],
+      "sources": [
+        "https://www.postcourier.com.pg/feed/",
+        "https://www.postcourier.com.pg/pm-marape-hails-papua-lng-fiscal-agreement-as-major-milestone-towards-fid/",
+        "https://www.postcourier.com.pg/pm-marape-announces-k2-4-billion-infrastructure-commitment-for-papua-lng-provinces-and-landowners/",
+        "https://www.postcourier.com.pg/toroama-reaffirms-bougainvilles-commitment-to-peace-agreement-as-parliament-weighs-referendum-results/",
+        "https://www.pnghausbung.com/pngdf-seeks-stronger-military-infrastructure/",
+        "https://www.pnghausbung.com/gulf-province-issues-14-day-ultimatum-to-national-government-over-papua-lng/",
+        "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+        "https://www.pm.gov.au/media",
+        "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"
+      ]
+    },
+    {
+      "title": "NEW FT Prasad-declines catch-up; FBC lastBuild HOLD with NEW OOS; leftover Toatu still no gazette",
+      "summary": "Parent 05:51 closed on leftover PACNEWS/RNZ/PINA Toatu pending gazette, president.gov.ki 200 no Toatu, NEW FBC lastBuild 05:42:34Z OOS boxing/basketball over leftover RFMF-oversight / leftover partners / NEW-to-feed Prasad-declines, leftover FT Prasad Cabinet Sunday-tomorrow, and asked for Kiribati gazette / whether RNZ Xavier would restamp onto TEN / whether leftover FT swearing-in copy would catch-up onto FBC decline. Gazette still does not. RNZ Xavier still does not restamp (now onto HW 008 / TCA 5 / TEN 160609). FT catch-up did. FT Prasad-declines article:published_time NEW 06:13:41Z; homepage modified_time matches; leftover swearing-in copy dated 12 Nov remains on the homepage. FBC lastBuild HOLD 05:42:34Z first-pass extra and recapture: NEW-to-10-item-feed OOS Phil Collins 06:12:21Z over leftover boxing / leftover basketball / leftover military-oversight / leftover partners / leftover Prasad-declines. Leftover Panapasa rolled off the 10-item feed. Leftover PINA Toatu mourns datetime 14:39:46 +12 / 02:39:46 UTC HOLD on the article URL; homepage and /2026/11/16/ listing no longer isolate Toatu. president.gov.ki 200 all passes with no Toatu string isolated. Three-outlet PACNEWS/PC + RNZ + PINA still pending official gazette. PINA mourns is not a gazette. Homepage roll-off is not a withdrawal. FT Prasad-declines / leftover FBC Prasad-declines / leftover RFMF-bill civilian-oversight consultation / leftover development-partner roundtable are not extra-constitutional. Leftover Rokobili is a pitch, not a signed port-access deal. PINA IPCC is not PRF. Not FLASH.",
+      "countries": ["FJI", "KIR", "TUV", "NZL", "PNG", "CHN"],
+      "importance": 3,
+      "confidence": "H",
+      "oceania_centrality": "direct",
+      "claim_type": "FACT",
+      "oceania_relevance": "governance",
+      "topics": [
+        "kiribati_vp", "toatu", "succession", "pacnews", "pina", "rnz",
+        "prasad_declines_cabinet", "nfp_mandate", "rfmf_bill_2026_oversight",
+        "ft_prasad_declines", "fbc_phil_collins_oos"
+      ],
+      "sources": [
+        "https://www.fijitimes.com.fj/prof-prasad-declines-offer-to-re-join-cabinet/",
+        "https://www.fijitimes.com.fj/prof-prasad-to-be-sworn-into-cabinet-tomorrow-pm/",
+        "https://www.fbcnews.com.fj/feed/",
+        "https://www.fbcnews.com.fj/news/prasad-declines-invitation-to-rejoin-cabinet/",
+        "https://pina.com.fj/2026/11/16/kiribati-mourns-death-of-vice-president-toatu/",
+        "https://www.president.gov.ki/",
+        "https://www.postcourier.com.pg/kiribati-mourns-death-of-vice-president-toatu/",
+        "https://www.rnz.co.nz/news/pacific/2628417/kiribati-vice-president-dr-teuea-toatu-dies",
+        "https://www.rnz.co.nz/news/pacific/2620097/tropical-cyclone-xavier-to-bring-damaging-winds-to-northern-cook-islands"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "FMS Hurricane Warning 008 160651 UTC (Xavier marine)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: ISSUED 160651 UTC; marine Cat 2 / 50 kt / 985 hPa / 8.3S 161.2W at 160600 UTC; cancels leftover Warning 007",
+      "date": "2026-11-16T06:51:00Z",
+      "notes": "Marine hurricane warning. Not a land hurricane warning. Not FLASH."
+    },
+    {
+      "name": "FMS FKPS01 TCA 2026/5 160642 (Xavier)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW: ISSUED 160642 UTC; 50KT / 985HPA / 16/0600Z S0818 W16112; next 1601300Z; answers parent 160700Z TCA watch ~18 min early",
+      "date": "2026-11-16T06:42:00Z",
+      "notes": "Aviation Cat 2. Not a land product. Not FLASH."
+    },
+    {
+      "name": "FMS SWB Number TEN restamp 160609 UTC (Xavier / Northern Cooks)",
+      "type": "climate / MDA",
+      "parties": ["COK", "FJI"],
+      "status": "NEW restamp: ISSUED 160609 UTC; Gale Warning remains Manihiki/Rakahanga; TC Alert remains Pukapuka/Nassau; 85 km/h / 987 hPa / 8.3S 161.0W at 160300 UTC; Cat 1; next printed 160900UTC or earlier",
+      "date": "2026-11-16T06:09:00Z",
+      "notes": "Answers parent 160600UTC land watch as TEN restamp / Gale / Cat 1. Not ELEVEN. Not hurricane. Not land Cat 2. Not FLASH."
+    },
+    {
+      "name": "NWS Guam AFD FXPQ50 PGUM 160646",
+      "type": "climate / MDA",
+      "parties": ["GUM", "MNP", "FSM", "PLW", "MHL"],
+      "status": "NEW: LM NEW 06:46:29 GMT; KBDI 515 HIGH FIRE DANGER; GU/MP none",
+      "date": "2026-11-16T06:46:00Z",
+      "notes": "Fire-weather / ENSO. Not Xavier/04P. Not FLASH."
+    },
+    {
+      "name": "FT — Prof Prasad declines offer to re-join Cabinet",
+      "type": "governance / coalition",
+      "parties": ["FJI"],
+      "status": "NEW: article:published_time 06:13:41Z; homepage modified_time matches; catch-up onto leftover FBC decline",
+      "date": "2026-11-16T06:13:41Z",
+      "notes": "Coalition reconstitution. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "PC lastBuild OOS Sione / St. Sebastian confirmation",
+      "type": "media / OOS",
+      "parties": ["PNG"],
+      "status": "NEW lastBuild: 06:40:42Z over leftover FSA/K2.4bn/Toroama",
+      "date": "2026-11-16T06:40:42Z",
+      "notes": "OOS. Not a compact. Not FLASH."
+    },
+    {
+      "name": "FBC lastBuild OOS Phil Collins",
+      "type": "media / OOS",
+      "parties": ["FJI"],
+      "status": "NEW-to-10-item-feed: pubDate 06:12:21Z; lastBuild HOLD 05:42:34Z",
+      "date": "2026-11-16T06:12:21Z",
+      "notes": "OOS. Not extra-constitutional. Not FLASH."
+    },
+    {
+      "name": "PINA homepage Toatu roll-off",
+      "type": "governance / succession",
+      "parties": ["KIR"],
+      "status": "NEW listing delta: homepage and /2026/11/16/ no longer isolate Toatu; article URL 200 datetime HOLD 14:39:46 +12",
+      "date": "2026-11-16T06:51:00Z",
+      "notes": "Editorial. Not a gazette. Not FLASH."
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Xavier / 04P / TD02F Northern Cooks NEW marine Hurricane Warning 008 Cat 2 / 50 kt + NEW TCA 2026/5 50 kt against land still Gale / 85 km/h Cat 1 on TEN restamp 160609 + leftover EMCI Bulletin 7 without NES + leftover TDA A06 45 kt Cat 1 + leftover numbered JTWC 40 kt + leftover ABPW Xavier 40 kt with 12-48h 50-90 kt / HW 008 75 kt by 170600 / FT Cat 2 tonight forecast",
+      "direction": "↑",
+      "horizon": "hours–4 days",
+      "confidence": "H current land Cat 1 / H current marine Cat 2 / M 24–48h hurricane-force on land",
+      "escalate_on": "Named severe / Category-level landfall with PIC mass-casualty or state-capacity breach — not FLASH on Number TEN restamp at 85 km/h current Cat 1, a Gale Warning, a marine Hurricane Warning 008 at 50 kt current Cat 2, leftover TDA A06 at 45 kt Cat 1, leftover 40 kt numbered JTWC, leftover EMCI Bulletin 7 without NES, a Pukapuka Alert, leftover ABPW Xavier 40 kt, or 50-90 kt / Cat 2 forecast"
+    },
+    {
+      "risk": "Kiribati vice-presidential succession (PACNEWS/PC + RNZ + leftover PINA Toatu-death CLAIM; homepage rolled off; still no gazette)",
+      "direction": "→",
+      "horizon": "hours–days",
+      "confidence": "H/M",
+      "escalate_on": "Extra-constitutional seizure or a collected recognition switch — not FLASH on PACNEWS+RNZ+PINA tributes, a homepage roll-off, a Kwansing social-media announcement, a Chinese embassy tribute, or a PINA archive 200 with mourns"
+    },
+    {
+      "risk": "PRF under-capitalisation at COP31",
+      "direction": "→",
+      "horizon": "days (to 20 Nov)",
+      "confidence": "H/M",
+      "escalate_on": "Deposited capitalisation table — not FLASH on leftover copy, Forumsec Drupal LM HOLD 05:31:17 GMT, pm.gov.au 200 leftover LM HOLD 03:14:47 GMT, PACNEWS Champions syndication, or a PINA IPCC/GCF stock tick"
+    },
+    {
+      "risk": "PNG Bougainville ratification / ABG fiscal squeeze / Gulf Papua LNG process / APEC travel / leftover FSA+K2.4bn CLAIM / PNGDF FOB colour",
+      "direction": "→",
+      "horizon": "days",
+      "confidence": "M",
+      "escalate_on": "Extra-constitutional UDI or sitting violence — not FLASH on a supplementary budget, a BPA funding CLAIM, a provincial LNG ultimatum, an FSA lede, a K2.4bn NEC CLAIM, APEC travel, a domestic CASA recapitalisation CLAIM, an unlocated FOB colour piece, a GESI/labour MoU, or a Toroama BPA reaffirmation"
+    }
+  ],
+  "open_questions": [
+    "Next Nadi land SWB vs printed 160900UTC or earlier: hold Gale / 85 km/h Cat 1, hurricane, Number ELEVEN, or intensity restamp into land Cat 2 (89+ km/h / 48+ kt)?",
+    "Next TDA vs printed 160800UTC: hold 45 kt / A06 / Cat 1, or A07 50 kt catching up onto HW 008 / TCA 5 160600 UTC / 985 hPa / 50 kt?",
+    "Next Xavier TCA vs printed 1601300Z: hold 50 kt / Cat 2, or 55-75 kt?",
+    "Next JTWC warning 160900Z: hold 40 kt / Xavier, verify 45-50 kt, or jump toward the 70 kt 24h / 90 kt TAU-48 forecast?",
+    "Any NES / Cook Islands Met HTML beyond EMCI Bulletin 7 public advice, and does Bulletin 8/9/10 / a TEN-160609 or HW 008 graphic file? Cook Islands News 403 durability? RNZ restamp onto HW 008 / TCA 5 / TEN 160609 / Bulletin 7 / Gale?",
+    "Kiribati official gazette / president.gov.ki corroboration of the RNZ+PACNEWS+PINA Toatu-death CLAIM? Any acting-VP or Finance appointment? PINA mourns is PACNEWS copy, not a gazette. Homepage roll-off is not a withdrawal.",
+    "Forumsec official PRF pledge table vs spoken US$200m before 20 Nov? Drupal LM HOLD 05:31:17 GMT did not add a table. pm.gov.au LM HOLD 03:14:47 GMT leftover Manila/PRF did not add a table. PINA IPCC datetime tick is not PRF.",
+    "Bougainville 24 Nov resume vs leftover ABG supplementary vs leftover Toroama BPA colour?",
+    "AUS-SLB signature vs pm.gov.au 200 leftover Manila/PRF / Defence/DFAT timeout?",
+    "DFAT / Australian High Commission Port Moresby corroboration of the leftover PC AUS-PNG DLIR GESI MoU (single-outlet lede; body paywalled)?",
+    "Project-partner corroboration of the leftover PC Papua LNG Fiscal Stability Agreement vs FID, and of the K2.4bn / K120m NEC figures? Loop PNG NXDOMAIN this hour.",
+    "Official PNGDF readout vs Haus FOB/relocation colour — locations, count, cost, any foreign partner?",
+    "Does Waigani's leftover FSA/K2.4bn CLAIM meet, reset, or ignore the Gulf 14-day Papua LNG clock?",
+    "Does leftover FT swearing-in copy get withdrawn now that FT has catch-up onto FBC decline, or is a later State House swearing-in still live?",
+    "RFMF Military Justice / RFMF Bill 2026: any gazette or bill text vs leftover FBC consultation copy plus leftover civilian-oversight companion?",
+    "Any signed instrument vs the leftover FBC Rokobili trans-shipment / CWM Hospital / Nadi Flood Alleviation pitches?",
+    "WCPFC 23rd Regular Session from 30 Nov Port Vila — albacore implementing measure / bigeye management procedure as printed.",
+    "Next daily 07:00 UTC 16 Nov (not this hourly packet); next weekly Monday 16 Nov; next hourly 07:51 UTC 16 Nov after the daily."
+  ],
+  "sources": [
+    {
+      "title": "FMS Hurricane Warning 008 160651 UTC",
+      "url": "https://www.met.gov.fj/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T06:51:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "FMS warnings RSS",
+      "url": "https://www.met.gov.fj/feed/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T06:51:26Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T18:51:26Z"
+    },
+    {
+      "title": "FMS FKPS01 TCA 2026/5 160642",
+      "url": "https://www.met.gov.fj/feed/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T06:42:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "FMS SWB Number TEN restamp 160609 UTC",
+      "url": "https://www.met.gov.fj/warnings/",
+      "publisher": "FMS",
+      "published_at": "2026-11-16T06:09:00Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "JTWC ABPW10 PGTW 160600",
+      "url": "https://www.metoc.navy.mil/jtwc/products/abpwweb.txt",
+      "publisher": "JTWC",
+      "published_at": "2026-11-16T06:00:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-16T05:50:14Z"
+    },
+    {
+      "title": "JTWC WTPS31 PGTW 152100 — 04P (XAVIER) Warning NR 002",
+      "url": "https://tgftp.nws.noaa.gov/data/raw/wt/wtps31.pgtw..txt",
+      "publisher": "JTWC",
+      "published_at": "2026-11-15T21:00:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T19:39:05Z"
+    },
+    {
+      "title": "JTWC RSS",
+      "url": "https://www.metoc.navy.mil/jtwc/rss/jtwc.rss",
+      "publisher": "JTWC",
+      "published_at": "2026-11-16T06:56:02Z",
+      "tier": "A",
+      "confidence": "H",
+      "notes": "Warning #02 Issued at 15/2100Z; ABPW10 Issued at 16/0600Z; timestamp ticks vs first-pass 06:52:02Z / extra and recapture HTTP LM 06:56:37 GMT"
+    },
+    {
+      "title": "EMCI Bulletin 7 JPEG",
+      "url": "https://emci.gov.ck/wp-content/uploads/2026/11/Bulletin-7.jpg",
+      "publisher": "EMCI",
+      "published_at": "2026-11-15T21:12:22Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-15T21:12:22Z"
+    },
+    {
+      "title": "NWS CAP AS",
+      "url": "https://api.weather.gov/alerts/active?area=AS",
+      "publisher": "NWS",
+      "published_at": "2026-11-16T06:55:10Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "NWS PPG High Surf Advisory WHZS40 NSTU 160600",
+      "url": "https://tgftp.nws.noaa.gov/data/raw/wh/whzs40.nstu.cfw.ppg.txt",
+      "publisher": "NWS Pago Pago",
+      "published_at": "2026-11-16T06:00:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-16T06:00:40Z"
+    },
+    {
+      "title": "NWS Guam AFD FXPQ50 PGUM 160646",
+      "url": "https://tgftp.nws.noaa.gov/data/raw/fx/fxpq50.pgum.afd.gum.txt",
+      "publisher": "NWS Tiyan",
+      "published_at": "2026-11-16T06:46:00Z",
+      "tier": "A",
+      "confidence": "H",
+      "http_lm": "2026-11-16T06:46:29Z"
+    },
+    {
+      "title": "FBC RSS",
+      "url": "https://www.fbcnews.com.fj/feed/",
+      "publisher": "FBC",
+      "published_at": "2026-11-16T05:42:34Z",
+      "tier": "B",
+      "confidence": "H",
+      "notes": "first-pass extra and recapture lastBuild HOLD 05:42:34Z; NEW-to-feed Phil Collins 06:12:21Z"
+    },
+    {
+      "title": "Fiji Times — Prof Prasad declines offer to re-join Cabinet",
+      "url": "https://www.fijitimes.com.fj/prof-prasad-declines-offer-to-re-join-cabinet/",
+      "publisher": "Fiji Times",
+      "published_at": "2026-11-16T06:13:41Z",
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "Post Courier RSS",
+      "url": "https://www.postcourier.com.pg/feed/",
+      "publisher": "Post Courier",
+      "published_at": "2026-11-16T06:40:42Z",
+      "tier": "B",
+      "confidence": "H",
+      "notes": "first-pass extra and recapture lastBuild 06:40:42Z"
+    },
+    {
+      "title": "Post Courier — PM Marape hails Papua LNG fiscal agreement",
+      "url": "https://www.postcourier.com.pg/pm-marape-hails-papua-lng-fiscal-agreement-as-major-milestone-towards-fid/",
+      "publisher": "Post Courier",
+      "published_at": "2026-11-16T05:03:10Z",
+      "tier": "B",
+      "confidence": "M",
+      "notes": "lede/og only; body paywalled; leftover in 10-item feed under NEW OOS lastBuild; Loop PNG NXDOMAIN this hour"
+    },
+    {
+      "title": "PNG Haus Bung — PNGDF seeks stronger military infrastructure",
+      "url": "https://www.pnghausbung.com/pngdf-seeks-stronger-military-infrastructure/",
+      "publisher": "PNG Haus Bung",
+      "published_at": "2026-11-16T05:46:00Z",
+      "tier": "B",
+      "confidence": "H"
+    },
+    {
+      "title": "PINA — Kiribati mourns death of Vice President Toatu",
+      "url": "https://pina.com.fj/2026/11/16/kiribati-mourns-death-of-vice-president-toatu/",
+      "publisher": "PINA",
+      "published_at": "2026-11-16T02:39:46Z",
+      "tier": "B",
+      "confidence": "H",
+      "notes": "article URL 200; homepage rolled off"
+    },
+    {
+      "title": "USGS M4.5+ day GeoJSON",
+      "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+      "publisher": "USGS",
+      "published_at": "2026-11-16T06:56:30Z",
+      "tier": "A",
+      "confidence": "H"
+    },
+    {
+      "title": "pm.gov.au media",
+      "url": "https://www.pm.gov.au/media",
+      "publisher": "PMO Australia",
+      "published_at": "2026-11-16T03:14:47Z",
+      "tier": "A",
+      "confidence": "H",
+      "notes": "200 leftover Manila/PRF LM HOLD 03:14:47 GMT"
+    },
+    {
+      "title": "Forumsec 10 Nov PRF / Belau action",
+      "url": "https://forumsec.org/publications/release-pacific-urges-world-turn-climate-commitments-action",
+      "publisher": "PIF Secretariat",
+      "published_at": "2026-11-16T05:31:17Z",
+      "tier": "A",
+      "confidence": "H",
+      "notes": "HTTP LM HOLD 05:31:17 GMT leftover >US$300m-short content"
+    }
+  ]
+}
