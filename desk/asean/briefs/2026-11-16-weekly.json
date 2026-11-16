@@ -1,0 +1,115 @@
+{
+  "product": "weekly",
+  "desk": "asean",
+  "window_start_utc": "2026-11-09T00:00:00Z",
+  "window_end_utc": "2026-11-16T08:00:00Z",
+  "generated_at_utc": "2026-11-16T07:56:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["PHL", "SGP", "IDN", "MYS", "THA", "MMR", "TLS", "VNM", "KHM", "LAO", "BRN", "AUS", "CHN", "USA", "JPN"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "theme_of_the_week": "PHL chair-close week: DEFA signed, CoC 50%→80% provisionally agreed, 5PC freeze-plus-pathway, AUS–PHL Arrangement + Kasandigan hedge — centrality staged, hedging densified.",
+  "companion_daily": "desk/asean/briefs/2026-11-16-daily.md",
+  "coverage_gap_note": "Weeklies of 19/26 Oct and 2/9 Nov unfiled; this packet does not backfill them or the November monthly.",
+  "priority_items": [
+    {
+      "title": "DEFA signed 14 Nov at 28th AEC Council",
+      "summary": "AEC Council ministers signed DEFA in Manila 14 Nov. Primary ASEAN text unpublished. Implementation plan still to be written.",
+      "countries": ["PHL", "IDN", "SGP"],
+      "importance": 4,
+      "confidence": "H"
+    },
+    {
+      "title": "CoC process metric 50%→80%; not concluded",
+      "summary": "Imperial ~70% mid-week; Lazaro 15 Nov ~80% of text provisionally agreed. No conclusion. SGP 2027 inherits leftovers.",
+      "countries": ["PHL", "CHN", "SGP", "MYS", "VNM"],
+      "importance": 4,
+      "confidence": "H"
+    },
+    {
+      "title": "5PC Review and Decision: freeze held, pathway language added",
+      "summary": "AMM no-easing 14 Nov. Leaders issued Review and Decision 15 Nov. CNA quotes gradual restoration subject to 5PC progress. MAH barred; DG Han Win Aung sat.",
+      "countries": ["PHL", "MMR", "THA"],
+      "importance": 4,
+      "confidence": "M"
+    },
+    {
+      "title": "AUS–PHL Arrangement signed 15 Nov; Kasandigan 16 Nov",
+      "summary": "Signing 0547. Kasandigan names Arrangement, SCS coercive-action concern, 2016 Award. PDF unpublished. No access/basing verbs.",
+      "countries": ["PHL", "AUS", "CHN"],
+      "importance": 4,
+      "confidence": "H"
+    },
+    {
+      "title": "Prabowo haze apology; sensors Good/Moderate — not FLASH",
+      "summary": "Apology to SGP/MYS 15 Nov. 16 Nov 15:00 PSI max W55 Moderate. No emergency AMM.",
+      "countries": ["IDN", "SGP", "MYS"],
+      "importance": 3,
+      "confidence": "H"
+    }
+  ],
+  "agreements_delta": [
+    {"name": "DEFA", "status": "signed 14 Nov", "parties": ["ASEAN-11"]},
+    {"name": "SCS CoC", "status": "80% provisional; not concluded", "parties": ["ASEAN", "CHN"]},
+    {"name": "5PC Review and Decision", "status": "issued 15 Nov; PDF unpublished", "parties": ["ASEAN"]},
+    {"name": "AUS–PHL Defence Cooperation Arrangement", "status": "signed 15 Nov; PDF unpublished", "parties": ["AUS", "PHL"]},
+    {"name": "Kasandigan leaders’ statement", "status": "issued 16 Nov", "parties": ["PHL", "AUS"]},
+    {"name": "ASEAN–Australia CSP-5 joint leaders’ statement", "status": "issued 16 Nov", "parties": ["ASEAN", "AUS"]},
+    {"name": "ACAFTA 3.0 Upgrade", "status": "Wong: EIF next month; gazette unpublished", "parties": ["ASEAN", "CHN"]}
+  ],
+  "risks": [
+    {
+      "risk": "CoC year-end miss vs WPS gray-zone",
+      "direction": "flat_process_up_political",
+      "horizon": "days-weeks",
+      "confidence": "H",
+      "trigger_to_escalate": "Shots; ramming with injuries; second-hull; emergency AMM"
+    },
+    {
+      "risk": "5PC restoration pathway vs freeze",
+      "direction": "up_formula_flat_seating",
+      "horizon": "days",
+      "confidence": "M",
+      "trigger_to_escalate": "Myanmar FM seated; extra-constitutional event in Naypyidaw"
+    },
+    {
+      "risk": "Chair-state minilateral hedge (Arrangement + Kasandigan)",
+      "direction": "up_texted",
+      "horizon": "days",
+      "confidence": "H",
+      "trigger_to_escalate": "PDF with access/basing verbs; PRC kinetic/MFA counter-move"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Base",
+      "probability": 0.55,
+      "summary": "Summit closes without concluded CoC or Myanmar FM seating; SGP takes 2027; sensors stay Good/Moderate."
+    },
+    {
+      "name": "Upside",
+      "probability": 0.25,
+      "summary": "Tuesday “substantially concluded” CoC language; 5PC PDF posted; ACAFTA 3.0 EIF gazette."
+    },
+    {
+      "name": "Downside",
+      "probability": 0.20,
+      "summary": "WPS kinetic with injuries; 5PC operationalised as FM re-entry without violence pause; IDN extra-constitutional or capital-control gazette."
+    }
+  ],
+  "forward_calendar": [
+    "17 Nov: 49th Summit close / SGP 2027 chair / Trump ASEAN–US",
+    "18 Nov: APEC Shenzhen",
+    "19 Nov: ICJ Rohingya judgment (listed)",
+    "Dec 2026: ACAFTA 3.0 EIF (Wong calendar)"
+  ],
+  "open_questions": [
+    "Posted CoC / 5PC / DEFA / Arrangement / ADB MoU PDFs.",
+    "ACAFTA 3.0 EIF gazette vs Wong next-month calendar.",
+    "PRC MFA or Li Qiang readout on Kasandigan / 80% CoC.",
+    "Prabowo 16-dead / 104-firm corroboration."
+  ],
+  "cross_country_comparison": "PHL minilateral overlay (AUS Arrangement/Kasandigan + Squad carry) vs IDN haze-apology + constitutional VP vacancy vs VNM quiet/LAO-defence carry vs SGP institutional-legal hedge (incoming chair, DEFA, ACAFTA 3.0 clock, UNCLOS CoC ask)."
+}

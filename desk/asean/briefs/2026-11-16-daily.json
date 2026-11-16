@@ -1,0 +1,360 @@
+{
+  "product": "daily",
+  "desk": "asean",
+  "window_start_utc": "2026-11-15T08:00:00Z",
+  "window_end_utc": "2026-11-16T08:00:00Z",
+  "generated_at_utc": "2026-11-16T07:56:00Z",
+  "overall_confidence": "M",
+  "countries_touched": ["PHL", "SGP", "IDN", "MYS", "THA", "MMR", "TLS", "VNM", "AUS", "CHN", "USA"],
+  "asean_institutional": true,
+  "pending_review": true,
+  "status": "pending_review",
+  "flash": false,
+  "flash_id": null,
+  "weekend_product": false,
+  "prior_flash": "PR #93 west 24-hr PSI 203 Very Unhealthy at 21:00 SGT 14 Oct; no second FLASH this window",
+  "parent_daily_pr": "https://github.com/mindstxrm/Geopolitiko/pull/161",
+  "parent_hourly_pr": "https://github.com/mindstxrm/Geopolitiko/pull/185",
+  "prior_hourly_pr": "https://github.com/mindstxrm/Geopolitiko/pull/177",
+  "coverage_gap_note": "Last filed daily 2026-11-14 PR #161. Sunday addenda 2246 PR #177 and 0547 PR #185 are not rewritten. This packet is the Monday 16 Nov business daily. It does not backfill 17 Oct–13 Nov dailies, 19/26 Oct or 2/9 Nov weeklies, or the November monthly. 16:00 SGT PSI unpublished at generation; last live 15:00 SGT.",
+  "cutoff_prints": {
+    "sgp_psi_1500_sgt": {
+      "north": 49,
+      "central": 53,
+      "east": 42,
+      "south": 50,
+      "west": 55,
+      "band": "3_good_2_moderate",
+      "update_timestamp": "2026-11-16T15:01:08+08:00",
+      "note": "16:00 SGT cutoff print unpublished at generation; max 55 ≪ 301"
+    },
+    "sgp_psi_1400_sgt": {
+      "north": 49,
+      "central": 53,
+      "east": 43,
+      "south": 50,
+      "west": 55
+    },
+    "sgp_pm25_1hr_1545_sgt": {
+      "north": 5,
+      "central": 7,
+      "east": 6,
+      "south": 8,
+      "west": 3,
+      "band": "all_normal",
+      "updated_timestamp": "2026-11-16T15:45:48+08:00"
+    },
+    "apims_1500_myt": {
+      "complete_68_68": true,
+      "good": 51,
+      "moderate": 16,
+      "unhealthy": 0,
+      "very_unhealthy": 0,
+      "hazardous": 0,
+      "null": 1,
+      "max": 61,
+      "max_station": "Tasek Ipoh, PERAK",
+      "tangkak": 60,
+      "larkin": 58,
+      "pasir_gudang": 53,
+      "batu_muda": 33,
+      "johan_setia": 55,
+      "klang": 54,
+      "shah_alam": 36,
+      "kulim_hi_tech": null
+    },
+    "jisdor_last_good": {
+      "date": "2026-11-13",
+      "usd_idr": 18218.00,
+      "note": "14–16 Nov unpublished"
+    },
+    "yahoo_cash_open_0753z": {
+      "USDIDR": 18263,
+      "USDSGD": 1.2884,
+      "USDMYR": 4.091,
+      "USDPHP": 63.86,
+      "USDTHB": 33.88,
+      "USDVND": 25711,
+      "STI": 5198.79,
+      "KLSE": 1587.75,
+      "JKSE": 5301.10,
+      "JKSE_vs_pc_pct": -0.81,
+      "note": "cash OPEN; not a halt; not capital controls"
+    }
+  },
+  "priority_items": [
+    {
+      "title": "SCS CoC: Lazaro says ~80% of text provisionally agreed; no conclusion yet",
+      "summary": "FACT (CNA 6553056, 15 Nov 22:41+08): PHL FS Lazaro — ASEAN and China reached provisional agreement on about 80% of the CoC negotiating text. Quote: “Definitely, there is no conclusion yet.” Chair-year lift ~50%→~80%; nine rounds + two SOMs; MYS+CHN co-chair. DOC relationship provisionally agreed; code is to manage differences, not settle claims. CLAIM (Lazaro): another 5–6 months; SGP 2027 to finish. PNA Marcos 03:17:18Z and PNA lawmakers 05:53:08Z restate ~80%. Not a concluded/binding code.",
+      "countries": ["PHL", "CHN", "SGP", "MYS", "VNM", "BRN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["SCS", "CoC", "diplomacy", "Chair deliverable"],
+      "sources": [
+        "https://www.channelnewsasia.com/asia/asean-philippines-south-china-sea-myanmar-haze-6553056",
+        "https://www.pna.gov.ph/article/marcos-urges-asean-china-to-uphold-peaceful-dispute-settlement",
+        "https://www.pna.gov.ph/article/lawmakers-hail-pbbms-diplomatic-gains-as-80-of-sea-code-draft-secures-provisional-deal"
+      ]
+    },
+    {
+      "title": "5PC Review and Decision issued; gradual-restoration language is CNA-quoted, PDF unpublished",
+      "summary": "FACT (PNA 23:12:22Z): leaders publicly issued an ASEAN Leaders’ Review and Decision on the Implementation of the Five-Point Consensus among ≥150 documents. CLAIM (CNA 6552716 quoting joint decision): ASEAN may consider gradual restoration of Myanmar’s full political representation subject to sustained 5PC progress; bilateral outreach encouraged in consultation with the Chair. FACT: MAH still barred; DG Han Win Aung represented MMR. AMM Lazaro “no easing” held. asean.org 307.",
+      "countries": ["PHL", "MMR", "THA"],
+      "importance": 4,
+      "confidence": "M",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["Myanmar", "5PC", "ASEAN cohesion"],
+      "sources": [
+        "https://www.pna.gov.ph/article/asean-leaders-approve-note-over-150-documents-in-productive-49th-summit-lazaro",
+        "https://www.channelnewsasia.com/asia/asean-myanmar-engagement-peace-plan-6552716",
+        "https://www.pna.gov.ph/article/pbbm-asean-to-continue-dealing-with-myanmar-in-constructive-principled-manner"
+      ]
+    },
+    {
+      "title": "Kasandigan PHL–AUS leaders’ statement posts; DCA PDF still unpublished",
+      "summary": "FACT (pm.gov.au 16 Nov, lm 07:40:11 GMT): Marcos–Albanese Kasandigan statement names the Defence Cooperation Arrangement signed 15 Nov (0547) and lists MDA, littoral, logistics, cyber, joint planning, force protection, defence infrastructure. Contingency consultations; SCS coercive-action concern; 2016 Award final and binding; continue SCS maritime cooperative activities. No access/basing verbs. ASEAN–Australia CSP-5 joint leaders’ statement also issued (lm 07:23:08 GMT). PRC MFA latest still 13 Nov Mao Ning.",
+      "countries": ["PHL", "AUS", "CHN"],
+      "importance": 4,
+      "confidence": "H",
+      "asean_centrality": "indirect",
+      "claim_type": "fact",
+      "topics": ["defence", "minilateral", "SCS", "WPS"],
+      "sources": [
+        "https://www.pm.gov.au/media/kasandigan-philippines-australia-leaders-statement-expanded-security-and-defense-cooperation",
+        "https://www.pm.gov.au/media/asean-australia-joint-leaders-statement-5th-anniversary-asean-australia-comprehensive",
+        "https://www.pna.gov.ph/article/ph-australia-ink-updated-defense-pact"
+      ]
+    },
+    {
+      "title": "Wong: ACAFTA 3.0 EIF next month; ASEAN–China digital/AI 2027 proposal",
+      "summary": "FACT (CNA 6553926, 16 Nov 12:51+08): PM Wong at 29th ASEAN–China Summit (Li Qiang present) — DEFA as digital-connectivity hook; welcomes PRC proposal to designate 2027 Year of ASEAN–China AI Cooperation; ACAFTA 3.0 Upgrade protocol “entering into force next month”; calls for expeditious CoC consistent with UNCLOS. Li CLAIM (PNA): two-way trade >USD 1tn last year. Gazette/depositary unpublished.",
+      "countries": ["SGP", "CHN", "PHL"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["ACAFTA", "DEFA", "AI", "trade"],
+      "sources": [
+        "https://www.channelnewsasia.com/singapore/asean-china-summit-lawrence-wong-6553926",
+        "https://www.pna.gov.ph/article/marcos-urges-asean-china-to-uphold-peaceful-dispute-settlement"
+      ]
+    },
+    {
+      "title": "Prabowo apologises to SGP/MYS on haze; sensors still Moderate/Good — not FLASH",
+      "summary": "FACT (CNA 6553166): Prabowo apologised 15 Nov for transboundary haze. CLAIM: 16 firefighters dead, 2 helicopters lost, 104 firms under investigation, 17 concessions revoked. Wong proposed expanding the IDN–SGP company task force ASEAN-wide. Lazaro: leaders encouraged ACC THPC ratification. 15:00 SGT PSI max W55 Moderate; APIMS 0 Unhealthy max 61. Not FLASH / not bencana / not emergency AMM.",
+      "countries": ["IDN", "SGP", "MYS"],
+      "importance": 3,
+      "confidence": "H",
+      "asean_centrality": "direct",
+      "claim_type": "fact",
+      "topics": ["haze", "AATHP", "non-traditional"],
+      "sources": [
+        "https://www.channelnewsasia.com/asia/indonesia-prabowo-apology-haze-6553166",
+        "https://www.channelnewsasia.com/asia/asean-philippines-south-china-sea-myanmar-haze-6553056",
+        "https://api.data.gov.sg/v1/environment/psi?date=2026-11-16"
+      ]
+    }
+  ],
+  "agreements_delta": [
+    {
+      "name": "ASEAN–China South China Sea Code of Conduct",
+      "type": "code of conduct",
+      "parties": ["ASEAN", "CHN"],
+      "status": "under negotiation; ~80% of text provisionally agreed (Lazaro); no conclusion",
+      "date": "2026-11-15",
+      "venue": "Manila, 49th Summit day one presser",
+      "bindingness": "contested (bindingness still an open milestone)",
+      "in_window": true,
+      "note": "Process metric up from Imperial ~70% on 14 Nov daily. DOC relationship provisionally agreed."
+    },
+    {
+      "name": "ASEAN Leaders’ Review and Decision on the Implementation of the Five-Point Consensus",
+      "type": "summit document",
+      "parties": ["ASEAN"],
+      "status": "issued (PNA); PDF unpublished",
+      "date": "2026-11-15",
+      "venue": "49th ASEAN Summit, Manila",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "CNA quotes gradual-restoration clause subject to 5PC progress."
+    },
+    {
+      "name": "Kasandigan: PHL–AUS Leaders’ Statement on Expanded Security and Defense Cooperation",
+      "type": "joint leaders’ statement",
+      "parties": ["PHL", "AUS"],
+      "status": "issued",
+      "date": "2026-11-16",
+      "venue": "Manila, related summits",
+      "bindingness": "political",
+      "in_window": true,
+      "note": "Names the 15 Nov Defence Cooperation Arrangement; Arrangement PDF unpublished."
+    },
+    {
+      "name": "ASEAN–Australia Joint Leaders’ Statement on the 5th Anniversary of the CSP",
+      "type": "joint leaders’ statement",
+      "parties": ["ASEAN", "AUS"],
+      "status": "issued",
+      "date": "2026-11-16",
+      "venue": "6th ASEAN–Australia Summit, Manila",
+      "bindingness": "political",
+      "in_window": true
+    },
+    {
+      "name": "AUS–PHL Defence Cooperation Arrangement / DCA",
+      "type": "defence",
+      "parties": ["AUS", "PHL"],
+      "status": "signed 15 Nov (0547); Kasandigan names it 16 Nov; PDF unpublished",
+      "date": "2026-11-15",
+      "venue": "Eva Macapagal Cruise Terminal / Manila",
+      "bindingness": "legal once in force; scope unverified until PDF",
+      "in_window": false,
+      "note": "Signing was 0547. This daily adds Kasandigan overlay, not a second signing."
+    },
+    {
+      "name": "ASEAN–China FTA 3.0 Upgrade protocol",
+      "type": "FTA upgrade",
+      "parties": ["ASEAN", "CHN"],
+      "status": "Wong: EIF next month (Dec 2026); gazette unpublished",
+      "date": "2026-11-16",
+      "venue": "29th ASEAN–China Summit",
+      "bindingness": "legal once in force",
+      "in_window": true
+    }
+  ],
+  "risks": [
+    {
+      "risk": "SCS CoC year-end miss vs WPS gray-zone",
+      "direction": "flat_process_up_political",
+      "horizon": "24h-weeks",
+      "confidence": "H",
+      "trigger_to_escalate": "Shots; ramming with injuries; second-hull; emergency AMM"
+    },
+    {
+      "risk": "5PC restoration pathway vs freeze (unpublished PDF)",
+      "direction": "up_formula_flat_seating",
+      "horizon": "24h-days",
+      "confidence": "M",
+      "trigger_to_escalate": "Myanmar FM seated; extra-constitutional event in Naypyidaw; emergency AMM"
+    },
+    {
+      "risk": "AUS–PHL Arrangement as minilateral hedge (Kasandigan posted; PDF missing)",
+      "direction": "up_texted",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "Posted PDF with access/basing verbs; PRC kinetic/MFA counter-move"
+    },
+    {
+      "risk": "Transboundary haze",
+      "direction": "down_vs_mid_oct_vu",
+      "horizon": "hours-days",
+      "confidence": "H",
+      "trigger_to_escalate": "PSI >=301 or APIMS >=200 with new national-capacity break; IDN bencana; emergency AMM"
+    },
+    {
+      "risk": "IDN VP vacancy + Prabowo travel",
+      "direction": "flat_constitutional",
+      "horizon": "days",
+      "confidence": "H",
+      "trigger_to_escalate": "Extra-constitutional seizure; capital-control gazette"
+    }
+  ],
+  "open_questions": [
+    "Posted CoC draft / 5PC Review and Decision / DEFA / ADB–ASEAN MoU / AUS–PHL Arrangement PDFs (asean.org still 307).",
+    "Official ACAFTA 3.0 EIF gazette vs Wong “next month.”",
+    "PRC MFA or Li Qiang readout on Kasandigan / 80% CoC.",
+    "Tuesday Chair’s Statement and SGP 2027 handover communiqué.",
+    "Independent corroboration of Prabowo 16-dead / 104-firm CLAIMs.",
+    "16:00 SGT PSI (unpublished at generation).",
+    "Independent corroboration of any dated 15–16 Nov WPS water-cannon/ramming.",
+    "MPR timetable for Gibran replacement."
+  ],
+  "sources": [
+    {
+      "title": "NEA PSI API 16 Nov (15:00 SGT last live)",
+      "url": "https://api.data.gov.sg/v1/environment/psi?date=2026-11-16",
+      "published_at": "2026-11-16T07:01:08Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "NEA Open v2 1-hr PM2.5",
+      "url": "https://api-open.data.gov.sg/v2/real-time/api/pm25",
+      "published_at": "2026-11-16T07:45:48Z",
+      "publisher": "NEA",
+      "tier": "A"
+    },
+    {
+      "title": "DOE APIMS hourly 15:00 MYT 16 Nov complete 68/68",
+      "url": "https://eqms.doe.gov.my/api3/publicportalapims/apitablehourly",
+      "published_at": "2026-11-16T07:00:00Z",
+      "publisher": "DOE Malaysia",
+      "tier": "A"
+    },
+    {
+      "title": "haze.gov.sg sitrep 4:56 PM 15 November",
+      "url": "https://www.haze.gov.sg/",
+      "published_at": "2026-11-15T08:56:00Z",
+      "publisher": "NEA / ASMC",
+      "tier": "A"
+    },
+    {
+      "title": "Bank Indonesia JISDOR 13 Nov Rp 18,218.00",
+      "url": "https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/Default.aspx",
+      "published_at": "2026-11-13T08:15:00Z",
+      "publisher": "Bank Indonesia",
+      "tier": "A"
+    },
+    {
+      "title": "CNA: ASEAN, China reach provisional agreement on 80% of SCS code",
+      "url": "https://www.channelnewsasia.com/asia/asean-philippines-south-china-sea-myanmar-haze-6553056",
+      "published_at": "2026-11-15T14:41:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "CNA: ASEAN keeps Myanmar restrictions but opens path to political return",
+      "url": "https://www.channelnewsasia.com/asia/asean-myanmar-engagement-peace-plan-6552716",
+      "published_at": "2026-11-15T08:53:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "PNA: ASEAN leaders approve, note over 150 documents",
+      "url": "https://www.pna.gov.ph/article/asean-leaders-approve-note-over-150-documents-in-productive-49th-summit-lazaro",
+      "published_at": "2026-11-15T23:12:22Z",
+      "publisher": "PNA",
+      "tier": "A"
+    },
+    {
+      "title": "pm.gov.au: Kasandigan PHL–AUS leaders’ statement",
+      "url": "https://www.pm.gov.au/media/kasandigan-philippines-australia-leaders-statement-expanded-security-and-defense-cooperation",
+      "published_at": "2026-11-16T07:40:11Z",
+      "publisher": "PM Australia",
+      "tier": "A"
+    },
+    {
+      "title": "pm.gov.au: ASEAN–Australia CSP-5 joint leaders’ statement",
+      "url": "https://www.pm.gov.au/media/asean-australia-joint-leaders-statement-5th-anniversary-asean-australia-comprehensive",
+      "published_at": "2026-11-16T07:23:08Z",
+      "publisher": "PM Australia",
+      "tier": "A"
+    },
+    {
+      "title": "CNA: Prabowo apologises to Singapore, Malaysia over haze",
+      "url": "https://www.channelnewsasia.com/asia/indonesia-prabowo-apology-haze-6553166",
+      "published_at": "2026-11-15T15:32:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    },
+    {
+      "title": "CNA: Wong at ASEAN–China Summit — digital/AI, ACAFTA 3.0",
+      "url": "https://www.channelnewsasia.com/singapore/asean-china-summit-lawrence-wong-6553926",
+      "published_at": "2026-11-16T04:51:00Z",
+      "publisher": "CNA",
+      "tier": "B"
+    }
+  ]
+}
